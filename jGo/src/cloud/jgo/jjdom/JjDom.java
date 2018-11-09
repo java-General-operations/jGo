@@ -23,6 +23,7 @@
 package cloud.jgo.jjdom;
 import static cloud.jgo.jjdom.JjDom.$;
 import static cloud.jgo.jjdom.JjDom.jquery;
+
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -44,6 +45,7 @@ import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JOptionPane;
+
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.css.CSSSelection;
@@ -59,6 +61,7 @@ import cloud.jgo.jjdom.dom.HTMLNodeList;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
 import cloud.jgo.jjdom.dom.concrete.HTMLDefaultDocument;
 import cloud.jgo.jjdom.jquery.Event;
+import cloud.jgo.jjdom.jquery.jQueryNotInitializedException;
 import cloud.jgo.jjdom.jquery.jQuerySupport;
 import cloud.jgo.jjdom.jquery.jQueryfunction;
 import cloud.jgo.net.tcp.http.headers.Header;
@@ -1139,6 +1142,12 @@ public final class JjDom implements jQuerySupport, Serializable{
 		}
 		else{
 			// jquery non impostata : aggiornare qui ...
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -1146,15 +1155,25 @@ public final class JjDom implements jQuerySupport, Serializable{
 					
 	@Override
 	public JjDom show(String jqEffect) {
-		if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
-			jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
-			final String jsCode = ".show('"+jqEffect+"');";
-			executeMethod(jsCode);
-			return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
+					jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
+					final String jsCode = ".show('"+jqEffect+"');";
+					executeMethod(jsCode);
+					return inst = instance ;
+				}
 		}
-		else{
-			return null ;
+		else
+		{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		return inst ;
 	}
 	
 	
