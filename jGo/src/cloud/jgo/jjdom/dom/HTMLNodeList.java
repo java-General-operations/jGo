@@ -1,0 +1,142 @@
+/**
+ * JGO - A pure Java library,
+ * its purpose is to make life easier for the programmer.
+ *
+ * J - Java
+ * G - General
+ * O - Operations
+ *
+ * URL Software : https://www.jgo.cloud/
+ * URL Documentation : https://www.jgo.cloud/docs/
+ *
+ * Copyright © 2018 - Marco Martire (www.jgo.cloud)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the MIT License.
+ *
+ * You may obtain a copy of License at :
+ * https://www.jgo.cloud/LICENSE.txt
+ *
+ * To collaborate on this project, you need to do it from the software site.
+ * 
+ */
+package cloud.jgo.jjdom.dom;
+import java.io.Serializable;
+import java.util.LinkedList;
+/**
+ * 
+ * @author Martire91<br>
+ * This class represents a list of html nodes ({@link HTMLNode})
+ *
+ */
+public class HTMLNodeList implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private LinkedList<HTMLNode>nodeList = null ;
+	
+	public HTMLNodeList() {
+		// TODO Auto-generated constructor stub
+		this.nodeList = new LinkedList<>();
+	}
+	/**
+	 * This method adds a node
+	 * @param node the node
+	 * @return true if the node is added
+	 */
+	public boolean addNode(HTMLNode node){
+		return this.nodeList.add(node);
+	}
+	// return -1 come valore non valido 
+	/**
+	 * This method returns the node index.
+	 * @param node the node
+	 * @return the node index
+	 */
+	public int getIndexOf(HTMLNode node){
+		int index = -1 ;
+		for (int i = 0; i < this.nodeList.size(); i++) {
+			if (this.nodeList.get(i).equals(node)) {
+				index = i ;
+				break ;
+			}
+		}
+		return index ;
+	}
+	
+	/**
+	 * This method adds the last node
+	 * @param node the node
+	 */
+	public void addLastNode(HTMLNode node){
+		this.nodeList.addLast(node);
+	}
+	
+	/**
+	 * This method adds the first node
+	 * @param node the node
+	 */
+	public void addFirstNode(HTMLNode node){
+		this.nodeList.addFirst(node);
+	}
+	
+	/**
+	 * This method checks if the node passed as a parameter
+	 * is contained in the list
+	 * @param node the node
+	 * @return true if is contained
+	 */
+	public boolean contains(HTMLNode node){
+		return this.nodeList.contains(node);
+	}
+	
+	/**
+	 * This method removes a node from list
+	 * @param node the node
+	 * @return true if the node has been deleted
+	 */
+	public boolean remove(HTMLNode node){
+		return this.nodeList.remove(node);
+	}
+	/**
+	 * This method returns the item to the index position
+	 * @param index the item index
+	 * @return the item
+	 */
+	public HTMLNode item(int index){
+			return this.nodeList.get(index);
+	}
+	/**
+	 * This method returns the list length
+	 * @return the list length
+	 */
+	public int getLength(){
+		return this.nodeList.size();
+	}
+	
+	/**
+	 * This method returns the first item
+	 * @return the first item
+	 */
+	public HTMLNode getFirstItem(){
+		return this.nodeList.getFirst();
+	}
+	/**
+	 * This method returns the last item
+	 * @return the last item
+	 */
+	public HTMLNode getLastItem(){
+		return this.nodeList.getLast();
+	}
+	/**
+	 * This method sets a node
+	 * @param index the list index
+	 * @param node the node
+	 * @return {@link LinkedList#set(int, Object)}
+	 */
+	public HTMLNode setNode(int index, HTMLNode node){
+		return this.nodeList.set(index, node);
+	}
+
+}

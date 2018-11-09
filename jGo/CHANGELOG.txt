@@ -1,0 +1,34 @@
+Version 1.0.1 - 29/10/2018
+
+- An ftp support has been integrated to manage the migration, download and update the html document
+
+- The "createAJorServer ()" method has been added to the jGo access point
+
+- Some generic method has been added to the jGo access point
+
+- The serialization version of some classes has been changed
+
+- Some bugs have been fixed, and some test prints are eliminated in the packages: cloud.jgo.net.tcp - cloud.jgo.net.tcp.login
+
+(Thanks to Marco Martire)
+
+
+
+
+Version 1.0.2 - 07/11/2018
+
+- Some bugs have been fixed
+
+(Thanks to Marco Martire)
+
+
+
+
+Version 1.0.3 - in development
+
+- Added methods for conversions between lists and arrays in the jGo access point
+
+- Fixed some bugs in JON technology 
+
+(Thanks to Marco Martire)
+

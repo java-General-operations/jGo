@@ -1,0 +1,12 @@
+£_test.Organization
+£_Organization{
+£_organizationName java-General-operations
+£_organizationEmail staff@jgo.cloud
+£_softwareName jGo
+£_inceptionYear 2018
+£_authorName Marco Martire
+£_authorEmail author@jgo.cloud
+£_softwareWebsite https://www.jgo.cloud/
+£_sourceWebsite https://www.github.com/java-General-operations/jGo
+£_licenseType Mit License
+}
