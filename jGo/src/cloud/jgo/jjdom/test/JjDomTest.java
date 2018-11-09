@@ -12,6 +12,8 @@ public static void main(String[] args) {
 	// start
 	
 	
+	// Ciao Valentina 
+	
 	// creazione del documento ....
 	
 	JjDom.newDocument().useDoctype(true).setMinimalTags().home().jqueryInit();
