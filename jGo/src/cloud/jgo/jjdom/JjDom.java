@@ -1116,7 +1116,6 @@ public final class JjDom implements jQuerySupport, Serializable{
 			
 			// 2 passo : controllo se il documento è selezionato
 			if (isSelectedDocument()) {
-				
 				// 3 passo : controllo della locazione jquery
 					// 5 passo : controllo se non vi è un tag script source impostato nel documento
 					if(!called){
@@ -1126,9 +1125,19 @@ public final class JjDom implements jQuerySupport, Serializable{
 						
 						JjDom.document.getBody().appendChild(document.getJsSourceTag());
 					}
+					//1) passo : sostituisco : "$('document')"
+					
+					document.setJsSource(new StringBuffer(
+					document.jsSource().toString().replace
+					("$('document')","").trim()));
+					
+					String currentValue = document.jsSource().toString();
+					
+					document.setJsSource(new StringBuffer());
 					
 					// a questo punto scriviamo il codice relativo a ready
-					document.jsSource().append(start_ready.replace("$('document')",""));
+					document.jsSource().append(start_ready);
+					document.jsSource().append(currentValue+"\n");
 					document.jsSource().append(end_ready);
 					
 					// okok aggiorno
