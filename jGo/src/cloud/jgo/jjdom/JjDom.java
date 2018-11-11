@@ -1140,6 +1140,11 @@ public final class JjDom implements jQuerySupport, Serializable{
 					document.jsSource().append(currentValue+"\n");
 					document.jsSource().append(end_ready);
 					
+					£.alert(document.jsSource().toString()).forceClosingProgram();
+					
+					// errore forse capito : testare
+					
+					
 					// okok aggiorno
 					document.getJsSourceTag().setTextContent("\n"+document.jsSource());
 				

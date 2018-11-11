@@ -1,5 +1,6 @@
 package cloud.jgo.jjdom.test;
 
+import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.HTMLElement;
 import cloud.jgo.jjdom.jquery.Event;
@@ -8,9 +9,7 @@ import static cloud.jgo.jjdom.JjDom.*;
 public class JjDomTest {
 public static void main(String[] args) {
 	
-	
-	// start
-	
+
 	
 	// creazione del documento ....
 	
@@ -33,22 +32,28 @@ public static void main(String[] args) {
 	JjDom.document.getTitle().setTextContent("Titolo del sito");
 	
 	// aggiungo gli elementi 
-	
 	JjDom.document.getBody().appendChilds(h1,h2,p,p2);
 	
+	// in tanto chiamo una istruzione jquery
 	
 	
 	$("document").ready(new jQueryfunction() {
 		
 		@Override
 		public void function(Event event) {
-			jquery("p").hide("slow");
+			
+			
+			$("p").hide("slow");
+			
+			
 		}
 	});
 	
 	
+	// stampo il documento 
 	
-	printDocumentMarkup();
-
+	JjDom.document.printMarkup();
+	
+	
 }
 }
