@@ -1,6 +1,6 @@
 [![Maven Central](https://img.shields.io/maven-central/v/cloud.jgo/jGo.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22cloud.jgo%22%20AND%20a:%22jGo%22)
 <html>
-   <h1><img id='logo'src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo2.png' alt='logo jgo'></h1>
+   <h1><img id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'></h1>
    <h2>java General operations</h2>
    jGo-Website:<a href='https://www.jgo.cloud/'>https://www.jgo.cloud/</a><br>
    <strong>Description :</strong><br> This class facilitates all the difficult tasks
