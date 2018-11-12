@@ -39,10 +39,6 @@ Version 1.0.3 - 12/11/2018
 
 Version 1.0.4 - 12/11/2018
 
-- Added methods for conversions between lists and arrays in the jGo access point
-
-- Fixed some bugs in JON technology 
-
-- Some bugs have been fixed in JjDom
+- test package deleted
 
 (Thanks to Marco Martire)
