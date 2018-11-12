@@ -24,7 +24,7 @@ Version 1.0.2 - 07/11/2018
 
 
 
-Version 1.0.3 - in development
+Version 1.0.3 - 12/11/2018
 
 - Added methods for conversions between lists and arrays in the jGo access point
 
