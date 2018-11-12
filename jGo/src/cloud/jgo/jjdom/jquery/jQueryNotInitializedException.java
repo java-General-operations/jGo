@@ -17,6 +17,6 @@ public class jQueryNotInitializedException extends Exception{
 		// TODO Auto-generated method stub
 		return "Exception in "+getStackTrace()[0].getClassName()+""
 				+ getMessage()+" : \n"+"the jquery reference is absent."
-						+ "No jquery reference was found >\n"+getClass().getName();
+						+ " No jquery reference was found >\n"+getClass().getName();
 	}
 }

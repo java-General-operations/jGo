@@ -30,5 +30,7 @@ Version 1.0.3 - in development
 
 - Fixed some bugs in JON technology 
 
+- Some bugs have been fixed in JjDom
+
 (Thanks to Marco Martire)
 
