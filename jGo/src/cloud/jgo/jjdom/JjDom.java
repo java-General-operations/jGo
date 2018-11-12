@@ -76,7 +76,7 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  * @see jQuerySupport
  * @see JjDom#$(String)
  * @see JjDom#jquery(String)
- * @version 1.0.1
+ * @version 1.0.2
  <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'>-->
     <!--Author : *** Marco Martire *** -->  
    <h1 style='color: #282828;'>jGo<span style='color: green;'>.cloud</span>/<a id='link'href='https://www.jgo.cloud/jjdom'>JjDom</a></h1>
@@ -1089,23 +1089,59 @@ public final class JjDom implements jQuerySupport, Serializable{
 
 	@Override
 	public JjDom addClass(String className) {
-		final String jsCode = ".addClass('"+className+"');";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".addClass('"+className+"');";
+			executeMethod(jsCode);
+			inst = instance ;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
 	}
 
 	@Override
 	public JjDom removeClass(String className) {
-		final String jsCode = ".removeClass('"+className+"');";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".removeClass('"+className+"');";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
 	}
 
 	@Override
 	public JjDom toggleClass(String className) {
-		final String jsCode = ".toggleClass('"+className+"');";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".toggleClass('"+className+"');";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
 	}
 
 	// questo metodo se non viene selezionato il documento
@@ -1191,9 +1227,21 @@ public final class JjDom implements jQuerySupport, Serializable{
 	
 	@Override
 	public JjDom show(int millisec) {
-		final String jsCode = ".show("+millisec+");";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if(jqueryIsSet()){
+			final String jsCode = ".show("+millisec+");";
+			executeMethod(jsCode);	
+			inst = instance ;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	public JjDom show(final jQueryEffect effect){
@@ -1203,43 +1251,83 @@ public final class JjDom implements jQuerySupport, Serializable{
 
 	@Override
 	public JjDom show(String jqEffect, jQueryfunction callBack) {
-		if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
-				jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
-				final String jsCode = ".show('"+jqEffect+"',function(){\n";
-				executeMethodWithFunction(callBack, jsCode);
-				return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
+					jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
+					final String jsCode = ".show('"+jqEffect+"',function(){\n";
+					executeMethodWithFunction(callBack, jsCode);
+					inst = instance ;
 			}
-			else{
-				return null ;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+		}
+		return inst ;
 	}
 	
 	@Override
 	public JjDom show(int millisec, jQueryfunction callBack) {
-		final String jsCode = ".show("+(millisec)+",function(){\n";
-		executeMethodWithFunction(callBack, jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".show("+(millisec)+",function(){\n";
+			executeMethodWithFunction(callBack, jsCode);
+			inst = instance ;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
 	}
 
 	@Override
 	public JjDom hide(String jqEffect) {
-		if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
-				jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
-				final String jsCode = ".hide('"+jqEffect+"');";
-				executeMethod(jsCode);
-				return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
+					jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
+					final String jsCode = ".hide('"+jqEffect+"');";
+					executeMethod(jsCode);
+					inst = instance ;
 			}
-			else{
-				return null ;
-			}
+		}
+		else{try {
+			throw new jQueryNotInitializedException();
+		} catch (jQueryNotInitializedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}}
+	return inst ;
 	}
 	
 	
 	@Override
 	public JjDom hide(int millisec) {
-		final String jsCode = ".hide("+millisec+");";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".hide("+millisec+");";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	
@@ -1249,62 +1337,123 @@ public final class JjDom implements jQuerySupport, Serializable{
 	
 	@Override
 	public JjDom hide(String jqEffect, jQueryfunction callBack) {
-		if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
-				jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
-				final String jsCode = ".hide('"+jqEffect+"',function(){\n";
-				executeMethodWithFunction(callBack, jsCode);
-				return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
+					jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
+					final String jsCode = ".hide('"+jqEffect+"',function(){\n";
+					executeMethodWithFunction(callBack, jsCode);
+					inst = instance;
+				}
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			else{
-				return null ;
-			}
+		}
+		return inst;
 	}
 
 	@Override
 	public JjDom hide(int millisec, jQueryfunction callBack) {
-		final String jsCode = ".hide("+(millisec)+",function(){\n";
-		executeMethodWithFunction(callBack, jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".hide("+(millisec)+",function(){\n";
+			executeMethodWithFunction(callBack, jsCode);	
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
 	}
 
 	@Override
 	public JjDom slideUp(String jqEffect) {
-		if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
-				jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
-				final String jsCode = ".slideUp('"+jqEffect+"');";
-				executeMethod(jsCode);
-				return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
+					jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
+					final String jsCode = ".slideUp('"+jqEffect+"');";
+					executeMethod(jsCode);
+					inst = instance;
+				}
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			else{
-				return null ;
-			}
+		}
+		return inst ;
 	}
 	
 	@Override
 	public JjDom slideUp(int millisec) {
-		final String jsCode = ".slideUp("+millisec+");";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".slideUp("+millisec+");";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	@Override
 	public JjDom slideUp(String jqEffect, jQueryfunction callBack) {
-		if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
-				jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
-				final String jsCode = ".slideUp('"+jqEffect+"',function(){\n";
-				executeMethodWithFunction(callBack, jsCode);
-				return instance ;
-			}
-			else{
-				return null ;
-			}
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
+					jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
+					final String jsCode = ".slideUp('"+jqEffect+"',function(){\n";
+					executeMethodWithFunction(callBack, jsCode);
+					inst = instance;
+				}
+		}
+		else{try {
+			throw new jQueryNotInitializedException();
+		} catch (jQueryNotInitializedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}}
+			return inst ;
 	}
 
 	@Override
 	public JjDom slideUp(int millisec, jQueryfunction callBack) {
-		final String jsCode = ".slideUp("+(millisec)+",function(){\n";
-		executeMethodWithFunction(callBack, jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".slideUp("+(millisec)+",function(){\n";
+			executeMethodWithFunction(callBack, jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	public JjDom slideUp(final jQueryEffect effect){
@@ -1313,42 +1462,84 @@ public final class JjDom implements jQuerySupport, Serializable{
 
 	@Override
 	public JjDom slideDown(String jqEffect) {
-		if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
-				jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
-				final String jsCode = ".slideDown('"+jqEffect+"');";
-				executeMethod(jsCode);
-				return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
+					jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
+					final String jsCode = ".slideDown('"+jqEffect+"');";
+					executeMethod(jsCode);
+					inst = instance;
+				}	
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			else{
-				return null ;
-			}
+		}
+		return inst ;
 	}
 	
 	@Override
 	public JjDom slideDown(int millisec) {
-		final String jsCode = ".slideDown("+millisec+");";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".slideDown("+millisec+");";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	@Override
 	public JjDom slideDown(String jqEffect, jQueryfunction callBack) {
-		if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
-				jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
-				final String jsCode = ".slideDown('"+jqEffect+"',function(){\n";
-				executeMethodWithFunction(callBack, jsCode);
-				return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
+					jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
+					final String jsCode = ".slideDown('"+jqEffect+"',function(){\n";
+					executeMethodWithFunction(callBack, jsCode);
+					inst = instance;
+				}
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			else{
-				return null ;
-			}
+		}
+		return inst ;
 	}
 
 	@Override
 	public JjDom slideDown(int millisec, jQueryfunction callBack) {
-		final String jsCode = ".slideDown("+(millisec)+",function(){\n";
-		executeMethodWithFunction(callBack, jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".slideDown("+(millisec)+",function(){\n";
+			executeMethodWithFunction(callBack, jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	public JjDom slideDown(final jQueryEffect effect){
@@ -1357,42 +1548,84 @@ public final class JjDom implements jQuerySupport, Serializable{
 
 	@Override
 	public JjDom slideToggle(String jqEffect) {
-		if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
-				jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
-				final String jsCode = ".slideToggle('"+jqEffect+"');";
-				executeMethod(jsCode);
-				return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
+					jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
+					final String jsCode = ".slideToggle('"+jqEffect+"');";
+					executeMethod(jsCode);
+					inst = instance;
+				}
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			else{
-				return null ;
-			}
+		}
+		return inst ;
 	}
 	
 	@Override
 	public JjDom slideToggle(int millisec) {
-		final String jsCode = ".slideToggle("+millisec+");";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".slideToggle("+millisec+");";
+			executeMethod(jsCode);	
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	@Override
 	public JjDom slidetoggle(String jqEffect, jQueryfunction callBack) {
-		if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
-				jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
-				final String jsCode = ".slideToggle('"+jqEffect+"',function(){\n";
-				executeMethodWithFunction(callBack, jsCode);
-				return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (jqEffect.equals(jQueryEffect.SLOW.name().toLowerCase())		||
+					jqEffect.equals(jQueryEffect.FAST.name().toLowerCase())) {
+					final String jsCode = ".slideToggle('"+jqEffect+"',function(){\n";
+					executeMethodWithFunction(callBack, jsCode);
+					inst = instance;
+				}
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			else{
-				return null ;
-			}
+		}
+		return inst ;	
 	}
 
 	@Override
 	public JjDom slideToggle(int millisec, jQueryfunction callBack) {
-		final String jsCode = ".slideToggle("+(millisec)+",function(){\n";
-		executeMethodWithFunction(callBack, jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".slideToggle("+(millisec)+",function(){\n";
+			executeMethodWithFunction(callBack, jsCode);	
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	public JjDom slideToggle(final jQueryEffect effect){
@@ -1401,9 +1634,21 @@ public final class JjDom implements jQuerySupport, Serializable{
 
 	@Override
 	public JjDom css(String cssProp, String cssValue) {
-		final String cssMethodCode = ".css('"+cssProp+"','"+cssValue+"');";
-		executeMethod(cssMethodCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String cssMethodCode = ".css('"+cssProp+"','"+cssValue+"');";
+			executeMethod(cssMethodCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	// c'è anche un piccolo trucco : se selezioniamo il documento, ci restituisce
@@ -1412,36 +1657,46 @@ public final class JjDom implements jQuerySupport, Serializable{
 	@Override
 	public String html() {
 		String htmlString = null ;
-		if (currentSelection!=null || isSelectedDocument()) {
-			if (isSelectedDocument()) {
-				String markup = document.getMarkup().trim();
-				if (markup.startsWith("<html")&&markup.endsWith("</html>")) {
-					int first = markup.indexOf("<");
-					String subString = markup.substring(first,markup.indexOf("\n"));
-					markup = markup.replace(subString,"");
-					String subString2 = "</html>";
-					int lastIndex = markup.lastIndexOf(subString2);
-					markup = markup.substring(0,lastIndex);
-					htmlString = markup.trim();
-				}
-			}
-			else{
-				HTMLElement el = elements.element();
-				if (!el.hasChildNodes()) {
-					htmlString = el.getTextContent();
-				}
-				else{
-					String markup = el.getMarkup().trim();
-					if (markup.startsWith("<"+el.getNodeName())&&markup.endsWith("</"+el.getNodeName()+">")) {
+		if (jqueryIsSet()) {
+			if (currentSelection!=null || isSelectedDocument()) {
+				if (isSelectedDocument()) {
+					String markup = document.getMarkup().trim();
+					if (markup.startsWith("<html")&&markup.endsWith("</html>")) {
 						int first = markup.indexOf("<");
 						String subString = markup.substring(first,markup.indexOf("\n"));
 						markup = markup.replace(subString,"");
-						String subString2 = "</"+el.getNodeName()+">";
+						String subString2 = "</html>";
 						int lastIndex = markup.lastIndexOf(subString2);
 						markup = markup.substring(0,lastIndex);
 						htmlString = markup.trim();
 					}
 				}
+				else{
+					HTMLElement el = elements.element();
+					if (!el.hasChildNodes()) {
+						htmlString = el.getTextContent();
+					}
+					else{
+						String markup = el.getMarkup().trim();
+						if (markup.startsWith("<"+el.getNodeName())&&markup.endsWith("</"+el.getNodeName()+">")) {
+							int first = markup.indexOf("<");
+							String subString = markup.substring(first,markup.indexOf("\n"));
+							markup = markup.replace(subString,"");
+							String subString2 = "</"+el.getNodeName()+">";
+							int lastIndex = markup.lastIndexOf(subString2);
+							markup = markup.substring(0,lastIndex);
+							htmlString = markup.trim();
+						}
+					}
+				}
+			}
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		return htmlString ;
@@ -1449,45 +1704,74 @@ public final class JjDom implements jQuerySupport, Serializable{
 	
 	@Override
 	public JjDom html(String htmlString) {
-		final String jsCode = ".html('"+htmlString+"');";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;if (jqueryIsSet()) {
+			final String jsCode = ".html('"+htmlString+"');";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		return inst;
 	}
 	
 	@Override
 	public JjDom next() {
-		if (currentSelection!=null) {
-			final String jsCode = ".next();";
-			executeMethod(jsCode);
-			HTMLElements listNodes = new HTMLElements();
-			for (HTMLElement htmlElement : elements) {
-				HTMLNode next = htmlElement.next();
-				listNodes.add((HTMLElement) next);
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (currentSelection!=null) {
+				final String jsCode = ".next();";
+				executeMethod(jsCode);
+				HTMLElements listNodes = new HTMLElements();
+				for (HTMLElement htmlElement : elements) {
+					HTMLNode next = htmlElement.next();
+					listNodes.add((HTMLElement) next);
+				}
+				elements = listNodes ;
+				inst = instance;
 			}
-			elements = listNodes ;
-			return instance ;
 		}
 		else{
-			return null ;
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
+		return inst ;
 	}
 	
 	@Override
 	public JjDom prev() {
-		if (currentSelection!=null) {
-			final String jsCode = ".prev();";
-			executeMethod(jsCode);
-			HTMLElements listNodes = new HTMLElements();
-			for (HTMLElement htmlElement : elements) {
-				HTMLNode prev = htmlElement.previous();
-				listNodes.add((HTMLElement)prev);
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			if (currentSelection!=null) {
+				final String jsCode = ".prev();";
+				executeMethod(jsCode);
+				HTMLElements listNodes = new HTMLElements();
+				for (HTMLElement htmlElement : elements) {
+					HTMLNode prev = htmlElement.previous();
+					listNodes.add((HTMLElement)prev);
+				}
+				elements = listNodes ;
+				inst = instance;
 			}
-			elements = listNodes ;
-			return instance ;
 		}
 		else{
-			return null ;
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
+		return inst;
 	}
 	
 	// metodi per la restituzione dei nodi della selezione jquery
@@ -1571,6 +1855,10 @@ public final class JjDom implements jQuerySupport, Serializable{
 	}
 	
 	
+	// i metodi della classe JavaScriptSupport
+	// pure che non trovano jquery init
+	// danno l'eccezzione ma kmq restituiscono
+	// l'oggetto window
 	/**
 	 * 
 	 * @author Martire91<br>
@@ -1630,6 +1918,12 @@ public final class JjDom implements jQuerySupport, Serializable{
 				}
 				else{
 					// jquery non impostata: non inizializzata
+					try {
+						throw new jQueryNotInitializedException();
+					} catch (jQueryNotInitializedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			
 		}
@@ -1674,6 +1968,12 @@ public final class JjDom implements jQuerySupport, Serializable{
 			}
 			else{
 				// eccezzione ...
+				try {
+					throw new jQueryNotInitializedException();
+				} catch (jQueryNotInitializedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		
@@ -1721,6 +2021,12 @@ public final class JjDom implements jQuerySupport, Serializable{
 			}
 			else{
 				// eccezzione ...
+				try {
+					throw new jQueryNotInitializedException();
+				} catch (jQueryNotInitializedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		// chiude la finestra del browser
@@ -1829,8 +2135,14 @@ public final class JjDom implements jQuerySupport, Serializable{
 				}
 				else{
 					// jquery non impostata: non inizializzata
+					try {
+						throw new jQueryNotInitializedException();
+					} catch (jQueryNotInitializedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
-					return window ;
+				return window ;
 		}
 		private static int callsConfirm = 0 ;
 		/**
@@ -1886,6 +2198,12 @@ public final class JjDom implements jQuerySupport, Serializable{
 							}
 							else{
 								// jquery non impostata: non inizializzata
+								try {
+									throw new jQueryNotInitializedException();
+								} catch (jQueryNotInitializedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 							}
 								return window ;
 		}
@@ -1909,116 +2227,293 @@ public final class JjDom implements jQuerySupport, Serializable{
 
 	@Override
 	public JjDom click(jQueryfunction handler) {
-		String clickCode = ".click(function(event){\n";
-		currentEvent = new DefaultEvent(EventType.CLICK);
-		executeMethodWithFunction(handler, clickCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			String clickCode = ".click(function(event){\n";
+			currentEvent = new DefaultEvent(EventType.CLICK);
+			executeMethodWithFunction(handler, clickCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	// da segnalare : la divergenza rispetto a gli altri metodi
 	@Override
 	public String attr(String attributeName) {
-		final String jsCode = ".attr('"+attributeName+"');";
-		executeMethod(jsCode);
-		if (currentSelection!=null) {
-			// ottengo gli elementi
-			HTMLElement firstElement = currentSelection.getSelectedItems().element();
-			return firstElement.getAttributeValue(attributeName);
+		String attributeValue = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".attr('"+attributeName+"');";
+			executeMethod(jsCode);
+			if (currentSelection!=null) {
+				// ottengo gli elementi
+				HTMLElement firstElement = currentSelection.getSelectedItems().element();
+				attributeValue = firstElement.getAttributeValue(attributeName);
+			}
 		}
 		else{
-			return null ;	
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		return attributeValue;
 	}
 	
 	@Override
 	public JjDom attr(String attrName, String attrValue) {
-		final String jsCode = ".attr('"+attrName+"','"+attrValue+"');";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".attr('"+attrName+"','"+attrValue+"');";
+			executeMethod(jsCode);	
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	@Override
 	public JjDom fadeOut(String jqEfect) {
-		final String jsCode = ".fadeOut('"+jqEfect+"');";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeOut('"+jqEfect+"');";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		return inst;
 	}
 
 	@Override
 	public JjDom fadeOut(int millisec) {
-		final String jsCode = ".fadeOut("+millisec+");";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeOut("+millisec+");";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		return inst;
 	}
 
 	@Override
 	public JjDom fadeOut(String jqEffect, jQueryfunction callBack) {
-		final String jsCode = ".fadeOut('"+jqEffect+"',function(){\n";
-		executeMethodWithFunction(callBack, jsCode);	
-		return instance;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeOut('"+jqEffect+"',function(){\n";
+			executeMethodWithFunction(callBack, jsCode);	
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		return inst;
 	}
 
 	@Override
 	public JjDom fadeOut(int millisec, jQueryfunction callBack) {
-		final String jsCode = ".fadeOut("+millisec+",function(){\n";
-		executeMethodWithFunction(callBack, jsCode);	
-		return instance;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeOut("+millisec+",function(){\n";
+			executeMethodWithFunction(callBack, jsCode);
+			inst = instance ;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		return inst;
 	}
 
 	@Override
 	public JjDom fadeIn(String jqEfect) {
-		final String jsCode = ".fadeIn('"+jqEfect+"');";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeIn('"+jqEfect+"');";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		return inst ;
 	}
 
 	@Override
 	public JjDom fadeIn(int millisec) {
-		final String jsCode = ".fadeIn("+millisec+");";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeIn("+millisec+");";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
 	}
 
 	@Override
 	public JjDom fadeIn(String jqEffect, jQueryfunction callBack) {
-		final String jsCode = ".fadeIn('"+jqEffect+"',function(){\n";
-		executeMethodWithFunction(callBack, jsCode);	
-		return instance;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeIn('"+jqEffect+"',function(){\n";
+			executeMethodWithFunction(callBack, jsCode);	
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 
 	@Override
 	public JjDom fadeIn(int millisec, jQueryfunction callBack) {
-		final String jsCode = ".fadeIn("+millisec+",function(){\n";
-		executeMethodWithFunction(callBack, jsCode);	
-		return instance;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeIn("+millisec+",function(){\n";
+			executeMethodWithFunction(callBack, jsCode);
+			inst = instance;
+		}
+		else {
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 	
 	@Override
 	public JjDom fadeToggle(String jqEffect) {
-		final String jsCode = ".fadeToggle('"+jqEffect+"');";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeToggle('"+jqEffect+"');";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
 	}
 
 	@Override
 	public JjDom fadeToggle(int millisec) {
-		final String jsCode = ".fadeToggle("+millisec+");";
-		executeMethod(jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeToggle("+millisec+");";
+			executeMethod(jsCode);
+			inst = instance;
+		}
+		else{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 
 	@Override
 	public JjDom fadeToggle(String jqEffect, jQueryfunction callBack) {
-		final String jsCode = ".fadeToggle('"+jqEffect+"',function(){\n";
-		executeMethodWithFunction(callBack, jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeToggle('"+jqEffect+"',function(){\n";
+			executeMethodWithFunction(callBack, jsCode);
+			inst = instance;
+		}
+		else {
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst;
 	}
 
 	@Override
 	public JjDom fadeToggle(int millisec, jQueryfunction callBack) {
-		final String jsCode = ".fadeToggle("+millisec+",function(){\n";
-		executeMethodWithFunction(callBack, jsCode);
-		return instance ;
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".fadeToggle("+millisec+",function(){\n";
+			executeMethodWithFunction(callBack, jsCode);
+			inst = instance;
+		}
+		else {
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
 	}
 
 	// metodi di supporto : in questi metodi se qualcosa non va mi deve dare eccezzione
