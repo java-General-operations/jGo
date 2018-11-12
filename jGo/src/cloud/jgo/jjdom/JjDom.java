@@ -1108,10 +1108,14 @@ public final class JjDom implements jQuerySupport, Serializable{
 		return instance ;
 	}
 
+	// questo metodo se non viene selezionato il documento
+	// non restituisce niente, e anche se viene richiamato + volte
+	// non restituisce niente
 	@Override
 	public void ready(jQueryfunction handler) {
+		// verifico che il metodo ready non sia già presente nel documento
+		if(!document.isReady()){
 		// 1 passo : controllo se jquery è stata impostata
-		
 		if (jqueryIsSet()) {
 			
 			// 2 passo : controllo se il documento è selezionato
@@ -1137,21 +1141,14 @@ public final class JjDom implements jQuerySupport, Serializable{
 					
 					// a questo punto scriviamo il codice relativo a ready
 					document.jsSource().append(start_ready);
-					document.jsSource().append(currentValue+"\n");
+					if (!currentValue.isEmpty() && !currentValue.equals(" ")) {
+						document.jsSource().append(currentValue+"\n");
+					}
 					document.jsSource().append(end_ready);
-					
-					£.alert(document.jsSource().toString()).forceClosingProgram();
-					
-					// errore forse capito : testare
-					
-					
 					// okok aggiorno
 					document.getJsSourceTag().setTextContent("\n"+document.jsSource());
 				
 				handler.function(null);
-			}
-			else{
-				// aggiornare qui ...
 			}
 		}
 		else{
@@ -1162,6 +1159,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
 		}
 	}
 	
@@ -1588,7 +1586,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 			return JjDom.document ;
 		}
 		
-		private static void executeJsMethod(String jsCode){
+		public static void executeJsMethod(String jsCode){
 			if (jqueryIsSet()) {
 				// controllo che non ci sia selezione 
 					// controllo il tipo di locazione javascript
@@ -2248,7 +2246,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 			}
 		}
 	
-	public static void executeMethod(String jsCode){
+	private static void executeMethod(String jsCode){
 		if (jqueryIsSet()) {
 			// controllo che non ci sia selezione 
 				// controllo il tipo di locazione javascript

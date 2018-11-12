@@ -9,8 +9,6 @@ import static cloud.jgo.jjdom.JjDom.*;
 public class JjDomTest {
 public static void main(String[] args) {
 	
-
-	
 	// creazione del documento ....
 	
 	JjDom.newDocument().useDoctype(true).setMinimalTags().home().jqueryInit();
@@ -34,26 +32,27 @@ public static void main(String[] args) {
 	// aggiungo gli elementi 
 	JjDom.document.getBody().appendChilds(h1,h2,p,p2);
 	
-	// in tanto chiamo una istruzione jquery
 	
+	// jQuery Code :
 	
-	$("document").ready(new jQueryfunction() {
-		
+	JjDom.jquery("document").ready(new jQueryfunction() {
 		@Override
 		public void function(Event event) {
-			
-			
-			$("p").hide("slow");
-			
-			
+			JjDom.jquery("p").hide("slow").show("slow");
 		}
 	});
 	
 	
-	// stampo il documento 
+	// questo metodo ready non viene scritto, bene :)
+	JjDom.jquery("document").ready(new jQueryfunction() {
+		
+		@Override
+		public void function(Event event) {
+			JjDom.window.alert("Ciao mondo");
+		}
+	});
 	
-	JjDom.document.printMarkup();
-	
+	JjDom.printDocumentMarkup();
 	
 }
 }

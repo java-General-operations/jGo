@@ -869,7 +869,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	@Override
 	public HTMLDocument write(String text) {
 		final String jsCode = "document.write('"+text+"');";
-		JjDom.executeMethod(jsCode);
+		JjDom.window.executeJsMethod(jsCode);
 		return this ;
 	}
 
