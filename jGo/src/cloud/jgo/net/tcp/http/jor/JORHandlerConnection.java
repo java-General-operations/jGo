@@ -67,6 +67,8 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 			final String originalUrlPattern = url_pattern ;
 			cloud.jgo.net.tcp.http.jor.JORServer.JOR.ResponseType typeRes = annotation.responseType();
 			String idField = annotation.field_id();
+			
+			
 			Object found = null ;
 			String nameObject = null ;
 			if (servObject.getClass().getComponentType().getDeclaredField(idField)!=null && servObject.getClass().getComponentType().getDeclaredField(idField).getType().getSimpleName().equals("String")) {
