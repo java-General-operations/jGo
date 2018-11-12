@@ -101,7 +101,7 @@ public String getUsername() {
 /**
  * 
  * @param filter il filtro per selezionare solo alcunui tipi di file
- * @throws IOException
+ * @throws IOException 1 exception
  */
 public void setProfileImage(FileFilter filter) throws IOException{
 		

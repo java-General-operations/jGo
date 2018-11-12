@@ -70,7 +70,7 @@ public final class JON extends Home{ // java general object notation
 	 * 
 	 * @author Martire91<br>
 	 * This class will be deepened in the next version.
-	 * @param <T>
+	 * @param <T> the file type
 	 *
 	 */
 	public static class JONFile<T> implements Serializable{

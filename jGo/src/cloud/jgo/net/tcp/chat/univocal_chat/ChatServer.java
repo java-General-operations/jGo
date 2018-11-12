@@ -133,7 +133,7 @@ public class ChatServer extends DefaultTCPServer{
 	/**
 	 * Questo metodo da per scontato che sia sia inizializzato sia il reiceve che il sent model
 	 * e non fa altro che attivare i modelli
-	 * @throws NoReadingSourceException 
+	 * @throws NoReadingSourceException 1 exception
 	 */
 	@Override
 	public void acceptRequestWithModel()
