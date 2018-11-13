@@ -14,6 +14,8 @@ public static void main(String[] args) {
 	
 	// risolto bug : bisogna dare un array tipizzato
 	
+	// okok prossima mossa : inserire nuova features in JOR:sappiamo quale
+	
 	JORServer server = £.createJORServer();
 	Account a = new Account("wasp91", "wasp91dayno");
 	Account a1 = new Account("marco91", "marco91dayno");
