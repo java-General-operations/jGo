@@ -178,9 +178,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 	 * @param flag the flag
 	 */
 	public void setOneConnectionAtATime(boolean flag){
-		
 		this.oneConnectionAtATime  = flag ;
-		
 	}
 	
 	/**
@@ -585,7 +583,6 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 	
 	@Override
 	public void setLocalPort(int localPort) {
-	
 		this.localPort = localPort ;
 	    this.configuration.setLport(this.localPort);
 	}

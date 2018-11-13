@@ -18,22 +18,23 @@ public static void main(String[] args) {
 	// eppoi lanciamo il metodo reloadConfiguration, risolvere e dopo
 	// aggiungere funzionalità JOR
 	
-	JORServer server = £.createJorServer();
+	JORServer server = £.createJORServer();
 	
-	HTTPServerConfiguration conf = new HTTPServerConfiguration();
-	conf.setMultiConnections(true);
-	conf.setLport(80);
-	conf.setRootFolder("C:\\test");
-	conf.setModel(new JORHandlerTest());
+	// configuro il server 
 	
-	try {
-		server.configure(conf);
-	} catch (SocketException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+	server.getConfiguration().setLport(80);
+	server.getConfiguration().setMultiConnections(true);
+	server.getConfiguration().setAcceptedSocket("Ciao come stai ?");
+	server.getConfiguration().setServerName("Mio server");
+	server.getConfiguration().setModel(new JORHandlerTest());
+	server.getConfiguration().setMaximumSockets(10);
+	server.getConfiguration().setRootFolder("C:\\test");
+	server.getConfiguration().setTimer(10);
 	
-	System.out.println("Configurazione corretta del server @");
 	
+	server.reloadConfiguration();
+	
+	StringBuffer buffer = server.getConfiguration().AllConfigurations();
+	System.out.println(buffer.toString());
 }
 }

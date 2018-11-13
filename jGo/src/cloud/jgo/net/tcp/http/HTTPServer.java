@@ -196,8 +196,8 @@ public class HTTPServer extends TCPServer{
 	
 	@Override
 	public void configure(Configuration configuration) throws SocketException {
+			super.configure(configuration);
 		    this.configuration = (HTTPServerConfiguration) configuration;
-		    super.configure(configuration);
 			if(this.configuration.getRootFolder()!=null){
 				(this).setRootFolder(((HTTPServerConfiguration)this.configuration).getRootFolder());
 			}
@@ -206,6 +206,48 @@ public class HTTPServer extends TCPServer{
 			}
 	}
 	
+	
+
+	@Override
+	public void reloadConfiguration() {
+		// TODO Auto-generated method stub
+		try {
+			configure(this.configuration);
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void setServerName(String nameServer) {
+		// TODO Auto-generated method stub
+		super.setServerName(nameServer);
+		this.configuration.setServerName(nameServer);
+	}
+	
+	
+	@Override
+	public void setLocalPort(int localPort) {
+		// TODO Auto-generated method stub
+		super.setLocalPort(localPort);
+		this.configuration.setLport(localPort);
+	}
+	
+	@Override
+	public void setTextOfAcceptedSocket(String output) {
+		// TODO Auto-generated method stub
+		super.setTextOfAcceptedSocket(output);
+		this.configuration.setAcceptedSocket(output);
+	}
+
+	@Override
+	public void setMultiConnections(boolean multiConnections) {
+		// TODO Auto-generated method stub
+		super.setMultiConnections(multiConnections);
+		this.configuration.setMultiConnections(true);
+	}
+
 	@Override
 	public void setModel(Handler handler) {
 		HTTPServerConfiguration config = (HTTPServerConfiguration) this.configuration;
