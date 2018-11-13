@@ -1,4 +1,4 @@
-package cloud.jgo.net.tcp.http.jor.test;
+package test;
 
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -12,29 +12,36 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
 public class JORTest {
 public static void main(String[] args) {
 	
-	// creo il server JOR
-	
-	// trovato bug, quando impostiamo dei settaggi sulla configurazione del server
-	// eppoi lanciamo il metodo reloadConfiguration, risolvere e dopo
-	// aggiungere funzionalità JOR
+	// risolto bug : bisogna dare un array tipizzato
 	
 	JORServer server = £.createJORServer();
+	Account a = new Account("wasp91", "wasp91dayno");
+	Account a1 = new Account("marco91", "marco91dayno");
+	
 	
 	// configuro il server 
 	
 	server.getConfiguration().setLport(80);
 	server.getConfiguration().setMultiConnections(true);
-	server.getConfiguration().setAcceptedSocket("Ciao come stai ?");
 	server.getConfiguration().setServerName("Mio server");
 	server.getConfiguration().setModel(new JORHandlerTest());
-	server.getConfiguration().setMaximumSockets(10);
-	server.getConfiguration().setRootFolder("C:\\test");
-	server.getConfiguration().setTimer(10);
+	server.getConfiguration().setRootFolder(System.getProperty("user.home")+"\\Desktop\\test");
+	server.addToMatrix(new Account[]{a,a1});
+	
+	System.out.println("Modalità array #");
 	
 	
 	server.reloadConfiguration();
 	
-	StringBuffer buffer = server.getConfiguration().AllConfigurations();
-	System.out.println(buffer.toString());
+	
+	try {
+		server.listen();
+		System.out.println("Server in ascolto ...");
+	} catch (NegativeListeningException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	server.startServer();
 }
 }

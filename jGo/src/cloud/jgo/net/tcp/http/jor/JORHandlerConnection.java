@@ -47,7 +47,6 @@ import cloud.jgo.net.tcp.http.ResponseCode;
 import cloud.jgo.net.tcp.http.Transport;
 import cloud.jgo.net.tcp.http.headers.Header;
 import cloud.jgo.net.tcp.http.headers.MimeHeader;
-import cloud.jgo.net.tcp.http.jor.JORServer.JOR;
 import cloud.jgo.net.tcp.http.mime.MimeTypeFactory;
 /**
  * @author Martire91<br>
@@ -65,7 +64,7 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 			Object[]objects = (Object[]) servObject ;
 			String url_pattern = annotation.url_Pattern() ;
 			final String originalUrlPattern = url_pattern ;
-			cloud.jgo.net.tcp.http.jor.JORServer.JOR.ResponseType typeRes = annotation.responseType();
+			ResponseType typeRes = annotation.responseType();
 			String idField = annotation.field_id();
 			
 			
