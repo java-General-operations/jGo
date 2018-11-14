@@ -32,7 +32,7 @@ import cloud.jgo.net.tcp.http.HTTPServer;
  * @author Martire91
  * @see JOR
  * @see JORHandlerConnection
- * @version 1.0.1
+ * @version 1.0.2
     <!--Author : *** Marco Martire *** -->  
    <h1 style='color: #282828;'>jGo<span style='color: green;'>.cloud</span>/<a id='link'href='https://www.jgo.cloud/jor'>JOR</a></h1>
    <img id='logo'src='https://www.jgo.cloud/imgs/logo.png' alt='logo jgo' width='50px' height='50px'><br>

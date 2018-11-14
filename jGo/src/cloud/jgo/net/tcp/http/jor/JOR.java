@@ -33,4 +33,10 @@ public @interface JOR{
    * @return the URL JOR separator
    */
   public String separator()default "-";
+  /**
+   * This method allows you to choose <br>
+   * whether or not to save the files created by JOR
+   * @return the flag
+   */
+  public boolean SaveFiles()default false;
 }

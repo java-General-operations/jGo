@@ -91,7 +91,9 @@ public class HTTPServerConfiguration extends TCPServerConfiguration{
 				this.counterSettings++ ;
 			}
 			else{
-				this.getProps().replace(KEY_ROOT, this.rootFolder);
+				if (rootFolder!=null) {
+					this.getProps().replace(KEY_ROOT, this.rootFolder);
+				}
 			}
 		}
 	}

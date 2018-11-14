@@ -61,6 +61,7 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 			int lastSlash = locationResource.lastIndexOf("/");
 			locationResource = locationResource.substring(0,lastSlash);
 		}
+			boolean toSave = annotation.SaveFiles();
 			String sep = annotation.separator();
 			Map<Object,String> structure = new HashMap<>();
 			Object[]objects = (Object[]) servObject ;
@@ -202,9 +203,8 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 							// confronto questo url con quello digitato dal client
 							
 							if (locationResource.equals(finalURL)) {
-								 
 								found = objects[i];
-								nameObject = null ; // provvisorio
+								nameObject = urlBuffer.toString().replaceAll("/","");
 								break ;
 							}
 							else if(locationResource.equals(url_pattern)){
@@ -240,19 +240,7 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 							}	
 						}
 					}
-					
 					if (found!=null) {
-						// adesso qui devo 
-						// verificare che tipo di ritorno è
-						// quindi se è un tipo : jgon oppure xml
-						// allora diamo una risposta predefinita mostrando
-						// il sorgente del formato richiesto
-						// tuttavia se è in html dobbiamo definire un metodo
-						// con il quale andiamo a rappresentare l'oggetto richiesto
-						// in html customizzando a modo nostro
-						
-						// 1 passo imposto lo status line 
-						
 						res.setStatusLine(ResponseCode.RESPONSE_CODE_OK, HTTPServer.HTTP_VERSION);
 						switch(typeRes){
 						case JON_TYPE :
@@ -260,7 +248,13 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 							try {
 								try {
 									try {
-										file = £.JON.marsh(found,getServer().getRootFolder()+File.separator+nameObject+".jon");
+										if (getServer().getRootFolder()!=null) {
+											file = £.JON.marsh(found,getServer().getRootFolder()+File.separator+nameObject+".jon");
+										}
+										else{
+											
+											file = £.JON.marsh(found,nameObject+".jon");
+										}
 									} catch (JONNotSupportedTypeException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
@@ -301,16 +295,29 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 								res.getBody().ready();
 								
 								// invio la risposta al client 
-								
+		
 								Transport.trasfer(res);
+								if (toSave==false) {
+									boolean deleted = file.getFile().delete();
+									System.out.println("Eliminazione file:"+deleted);
+									if (!deleted) {
+										file.getFile().deleteOnExit();
+										System.out.println("File eliminato @");
+									}
+								}
 							}
 							
 							break ;
 							
 						case XML_TYPE:
-							cloud.jgo.io.File fileXML = £.convertFromObjectToXML(found.getClass(),nameObject+".xml",found);
+							cloud.jgo.io.File fileXML=null;
+							if (getServer().getRootFolder()!=null) {
+								fileXML = £.convertFromObjectToXML(found.getClass(),getServer().getRootFolder()+File.separator+nameObject+".xml",found);	
+							}
+							else{
+								fileXML = £.convertFromObjectToXML(found.getClass(),nameObject+".xml",found);	
+							}
 							if (fileXML!=null) {
-								
 								int content = fileXML.getBytes().length;
 								Header header = Header.getDefaultInstance(Header.Type.CONTENT_LENGTH);
 								
@@ -323,7 +330,6 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-								
 								res.addHeaders(header,headerMime);
 								
 								// inserisco una stringa vuota
@@ -338,6 +344,14 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 								// invio la risposta al client 
 								
 								Transport.trasfer(res);
+								
+								// elimino il file 
+								if (toSave==false) {
+									boolean deleted = fileXML.delete();
+									if (!deleted) {
+										fileXML.deleteOnExit();
+									}
+								}
 							}
 					
 							break ;
@@ -351,17 +365,13 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							
 							res.addHeader(mimeHeader);
 							html_represents(found,res,nameObject);
 							break ;
 						}
-						
 					}
 					
 				}
-					
-			
 	}
 	// spiegare questo metodo : da implementare
 	/**
