@@ -34,6 +34,7 @@ import java.util.Map;
 
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
+import javax.swing.JOptionPane;
 
 import cloud.jgo.£;
 import cloud.jgo.io.jon.JON.JONFile;
@@ -60,63 +61,106 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 			int lastSlash = locationResource.lastIndexOf("/");
 			locationResource = locationResource.substring(0,lastSlash);
 		}
+			String sep = annotation.separator();
 			Map<Object,String> structure = new HashMap<>();
 			Object[]objects = (Object[]) servObject ;
 			String url_pattern = annotation.url_Pattern() ;
 			final String originalUrlPattern = url_pattern ;
 			ResponseType typeRes = annotation.responseType();
 			String idField = annotation.field_id();
-			
-			
+			boolean concat = false ;
+			String[]idFields=null ;
+			// okok qui dobbiamo controllare se è solo un 
+			// idField oppure ce ne sono diversi ...
+			if (idField.contains("+")) {
+				concat = true ;
+				// qui dentro mi faccio lo split
+				idFields = idField.split("\\+");
+			}
 			Object found = null ;
 			String nameObject = null ;
-			if (servObject.getClass().getComponentType().getDeclaredField(idField)!=null && servObject.getClass().getComponentType().getDeclaredField(idField).getType().getSimpleName().equals("String")) {
 				if (url_pattern !=null && typeRes!=null && idField!=null) {
-					// organizzo la struttura da qui a @
 					for (int i = 0; i < objects.length; i++) {
-						Field field = servObject.getClass().getComponentType().getDeclaredField(idField);
-						field.setAccessible(true);
-						// prendo l'id dell'oggetto in questione 
-						String objectId = (String) field.get(objects[i]);
-						if (objectId!=null) {
-							String finalURL = url_pattern.concat("/"+objectId);
-							structure.put(objects[i], finalURL);
+						if (concat) {
+							StringBuffer urlBuffer = new StringBuffer();urlBuffer.append("/");
+							// c'è un concatenamento 
+							// faccaio iterare i campi
+							for (int j = 0; j < idFields.length; j++) {
+								String currentIdField = idFields[j].trim();
+								if (!currentIdField.isEmpty()) {
+									Field field = servObject.getClass().getComponentType().getDeclaredField(currentIdField);
+									field.setAccessible(true);	
+									Object objectId = field.get(objects[i]);
+									String objId = null ;
+									if (objectId!=null) {
+										if (String.class.isInstance(objectId)) {
+											objId = (String) objectId;
+										}
+										else if(objectId.getClass().isPrimitive()){
+											objId = String.valueOf(objectId);
+										}
+									// String,int,double,char,boolean,long,float
+										if (i < idFields.length-1) {
+											urlBuffer.append(objId+sep);
+										}
+										else{
+											// qui siamo alla fine 
+											urlBuffer.append(objId);
+										}	
+									}
+								}
+							}
+						}
+						else{
+							// quindi se non c'è un concatenament si opera come prima @
+							Field field = servObject.getClass().getComponentType().getDeclaredField(idField);
+							field.setAccessible(true);
+							// prendo l'id dell'oggetto in questione 
+							String objectId = (String) field.get(objects[i]);
+							if (objectId!=null) {
+								String finalURL = url_pattern.concat("/"+objectId);
+								structure.put(objects[i], finalURL);
+							}
 						}
 					}
 					// @
 					// faccio iterare gli oggetti in tanto giacchè si tratti di un array 
 					
 					for (int i = 0; i < objects.length; i++) {
-						Field field = servObject.getClass().getComponentType().getDeclaredField(idField);
-						field.setAccessible(true);
-						
-						// prendo l'id dell'oggetto in questione 
-						
-						String objectId = (String) field.get(objects[i]);
-						if (objectId!=null) {
-							
-							
-							// completo l'url giusto dell'oggetto 
-							String finalURL = url_pattern.concat("/"+objectId);
-							
-							// confronto questo url con quello digitato dal client
-							
-							if (locationResource.equals(finalURL)) {
-								
-							
-								// abbiamo trovato l'oggetto
-								// quindi possiamo 
-								found = objects[i];
-								nameObject = objectId ;
-								break ;
-							}
-							else if(locationResource.equals(url_pattern)){
-								
-								organizesObjectsRootPage(structure,res,originalUrlPattern);
-							}
-							
+						if (concat) {
+							// da sviluppare ...
 						}
-						
+						else{
+							Field field = servObject.getClass().getComponentType().getDeclaredField(idField);
+							field.setAccessible(true);
+							
+							// prendo l'id dell'oggetto in questione 
+							
+							String objectId = (String) field.get(objects[i]);
+							if (objectId!=null) {
+								
+								
+								// completo l'url giusto dell'oggetto 
+								String finalURL = url_pattern.concat("/"+objectId);
+								
+								// confronto questo url con quello digitato dal client
+								
+								if (locationResource.equals(finalURL)) {
+									
+								
+									// abbiamo trovato l'oggetto
+									// quindi possiamo 
+									found = objects[i];
+									nameObject = objectId ;
+									break ;
+								}
+								else if(locationResource.equals(url_pattern)){
+									
+									organizesObjectsRootPage(structure,res,originalUrlPattern);
+								}
+								
+							}	
+						}
 					}
 					
 					if (found!=null) {
@@ -238,7 +282,7 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 					}
 					
 				}
-			}		
+					
 			
 	}
 	// spiegare questo metodo : da implementare

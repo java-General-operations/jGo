@@ -61,7 +61,7 @@ public class JORHandlerTest extends JORHandlerConnection{
 
 	@Override
 	protected void html_represents(Object obj, HTTPResponse res, String nameObj) {
-		Account a = (Account) obj ;
+		Persona a = (Persona) obj ;
 		res.setStatusLine(ResponseCode.RESPONSE_CODE_OK,HTTPServer.HTTP_VERSION);
 		
 		// creo gli headers + importanti 
@@ -83,8 +83,8 @@ public class JORHandlerTest extends JORHandlerConnection{
 		h1 = JjDom.document.createElement(HTMLElement.HTMLElementType.H1);
 		h2 = JjDom.document.createElement(HTMLElement.HTMLElementType.H2);
 		
-		h1.setTextContent("Account di "+a.getUsername());
-		h1.setTextContent("La password dell'account e "+a.getPassword());
+		h1.setTextContent("Account di "+a.getNome());
+		h1.setTextContent("Persona :"+a);
 		
 		JjDom.document.getBody().appendChilds(h1,h2);
 		

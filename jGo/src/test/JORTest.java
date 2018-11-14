@@ -17,8 +17,9 @@ public static void main(String[] args) {
 	// okok prossima mossa : inserire nuova features in JOR:sappiamo quale
 	
 	JORServer server = £.createJORServer();
-	Account a = new Account("wasp91", "wasp91dayno");
-	Account a1 = new Account("marco91", "marco91dayno");
+	Persona persona = new Persona("Marco", "Martire", 27);
+	Persona persona2 = new Persona("Giovanni", "Martire", 30);
+	
 	
 	
 	// configuro il server 
@@ -28,7 +29,7 @@ public static void main(String[] args) {
 	server.getConfiguration().setServerName("Mio server");
 	server.getConfiguration().setModel(new JORHandlerTest());
 	server.getConfiguration().setRootFolder(System.getProperty("user.home")+"\\Desktop\\test");
-	server.addToMatrix(new Account[]{a,a1});
+	server.addToMatrix(new Persona[]{persona,persona2});
 	
 	System.out.println("Modalità array #");
 	

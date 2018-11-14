@@ -27,4 +27,10 @@ public @interface JOR{
    * @return the field id
    */
   public String field_id(); // da spiegare a cosa serve, deve essere un field stringa
+  
+  /**
+   * This method returns the URL JOR separator
+   * @return the URL JOR separator
+   */
+  public String separator()default "-";
 }
