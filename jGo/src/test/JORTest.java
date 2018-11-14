@@ -17,8 +17,8 @@ public static void main(String[] args) {
 	// okok prossima mossa : inserire nuova features in JOR:sappiamo quale
 	
 	JORServer server = £.createJORServer();
-	Persona persona = new Persona("Marco", "Martire", 27);
-	Persona persona2 = new Persona("Giovanni", "Martire", 30);
+	Persona persona = new Persona("Marco", "Mariuss", 27);
+	Persona persona2 = new Persona("Giovanni", "Mariuus", 30);
 	
 	
 	
