@@ -161,7 +161,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
  * @see £#_A
  * @see £#_S
  * @see £#_W
- * @version 1.0.4
+ * @version 1.0.5
    <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'> -->
     <!--Author : *** Marco Martire *** -->  
    <h1 style='color: #282828;'>jGo<span style='color: green;'>.cloud</span></h1>

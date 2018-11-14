@@ -48,3 +48,14 @@ Version 1.0.4 - 14/11/2018
 - JOR has been completed
 
 (Thanks to Marco Martire)
+
+
+
+
+Version 1.0.5 - in development
+
+- Added methods to write and read json files
+
+- Added new return type in JOR: JSON
+
+(Thanks to Marco Martire)
