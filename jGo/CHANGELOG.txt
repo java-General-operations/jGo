@@ -34,3 +34,16 @@ Version 1.0.3 - 12/11/2018
 
 (Thanks to Marco Martire)
 
+
+
+
+Version 1.0.4 - in development
+
+- Test package deleted
+
+- Some bugs in the HTTPServer class have been eliminated
+
+- Added JOR functionality for chaining
+
+
+(Thanks to Marco Martire)

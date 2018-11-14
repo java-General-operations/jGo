@@ -32,7 +32,7 @@ import cloud.jgo.net.tcp.http.HTTPServer;
  * @author Martire91
  * @see JOR
  * @see JORHandlerConnection
- * @version 1.0.1
+ * @version 1.0.2
     <!--Author : *** Marco Martire *** -->  
    <h1 style='color: #282828;'>jGo<span style='color: green;'>.cloud</span>/<a id='link'href='https://www.jgo.cloud/jor'>JOR</a></h1>
    <img id='logo'src='https://www.jgo.cloud/imgs/logo.png' alt='logo jgo' width='50px' height='50px'><br>
@@ -104,36 +104,5 @@ public class JORServer extends HTTPServer{
 	 */
 	public void removeAllFromMatrix(){
 		matrix.clear();
-	}
-	@Retention(value = RetentionPolicy.RUNTIME)
-	@Target(value = { ElementType.TYPE})
-	/**
-	 * @author Martire91<br>
-	 *	This annotation allows the definition of the URL of the object
-	 */
-	public static @interface JOR{
-		/**
-		 * This method gets the url pattern
-		 * @return the url pattern
-		 */
-	  public String url_Pattern();
-	  /**
-	   * This method gets the response type
-	   * @return the response type
-	   */
-	  public ResponseType responseType()default ResponseType.HTML_TYPE;
-	  /**
-	   * This method gets the field id
-	   * @return the field id
-	   */
-	  public String field_id(); // da spiegare a cosa serve, deve essere un field stringa
-	  /**
-	   * This enum represents the response type
-	   * @author Martire91<br>
-	   *
-	   */
-	  public enum ResponseType{
-		  XML_TYPE,JON_TYPE,HTML_TYPE
-	  }
 	}
 }

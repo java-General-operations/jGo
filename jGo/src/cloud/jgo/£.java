@@ -147,6 +147,7 @@ import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.tcp.TCPServer;
 import cloud.jgo.net.tcp.TCPServerTypes;
 import cloud.jgo.net.tcp.http.HTTPServer;
+import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
 import cloud.jgo.net.tcp.http.headers.Header;
 import cloud.jgo.net.tcp.http.jor.JORServer;
 import cloud.jgo.net.tcp.login.TCPLoginServer;
@@ -160,7 +161,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
  * @see £#_A
  * @see £#_S
  * @see £#_W
- * @version 1.0.3
+ * @version 1.0.4
    <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'> -->
     <!--Author : *** Marco Martire *** -->  
    <h1 style='color: #282828;'>jGo<span style='color: green;'>.cloud</span></h1>
@@ -948,9 +949,26 @@ public final class £{
 	 * This method creates a JOR server
 	 * @return the jor server
 	 */
-	public static cloud.jgo.net.tcp.http.jor.JORServer createJorServer(){
+	public static cloud.jgo.net.tcp.http.jor.JORServer createJORServer(){
 		return new JORServer();
 	}
+	
+	/**
+	 * This method creates a JOR server
+	 * @param conf the server configuration
+	 * @return the jor server
+	 */
+	public static cloud.jgo.net.tcp.http.jor.JORServer createJORServer(HTTPServerConfiguration conf){
+		JORServer serv = createJORServer();
+		try {
+			serv.configure(conf);
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return serv ;
+	}
+	
 	/**
 	 * it is equivalent to "\n"
 	 * @return the new line

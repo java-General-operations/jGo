@@ -34,6 +34,7 @@ import java.util.Map;
 
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
+import javax.swing.JOptionPane;
 
 import cloud.jgo.£;
 import cloud.jgo.io.jon.JON.JONFile;
@@ -47,7 +48,6 @@ import cloud.jgo.net.tcp.http.ResponseCode;
 import cloud.jgo.net.tcp.http.Transport;
 import cloud.jgo.net.tcp.http.headers.Header;
 import cloud.jgo.net.tcp.http.headers.MimeHeader;
-import cloud.jgo.net.tcp.http.jor.JORServer.JOR;
 import cloud.jgo.net.tcp.http.mime.MimeTypeFactory;
 /**
  * @author Martire91<br>
@@ -61,75 +61,186 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 			int lastSlash = locationResource.lastIndexOf("/");
 			locationResource = locationResource.substring(0,lastSlash);
 		}
+			boolean toSave = annotation.SaveFiles();
+			String sep = annotation.separator();
 			Map<Object,String> structure = new HashMap<>();
 			Object[]objects = (Object[]) servObject ;
 			String url_pattern = annotation.url_Pattern() ;
 			final String originalUrlPattern = url_pattern ;
-			cloud.jgo.net.tcp.http.jor.JORServer.JOR.ResponseType typeRes = annotation.responseType();
+			ResponseType typeRes = annotation.responseType();
 			String idField = annotation.field_id();
+			boolean concat = false ;
+			String[]idFields=null ;
+			// okok qui dobbiamo controllare se è solo un 
+			// idField oppure ce ne sono diversi ...
+			if (idField.contains("+")) {
+				concat = true ;
+				// qui dentro mi faccio lo split
+				idFields = idField.split("\\+");
+			}
 			Object found = null ;
 			String nameObject = null ;
-			if (servObject.getClass().getComponentType().getDeclaredField(idField)!=null && servObject.getClass().getComponentType().getDeclaredField(idField).getType().getSimpleName().equals("String")) {
 				if (url_pattern !=null && typeRes!=null && idField!=null) {
-					// organizzo la struttura da qui a @
 					for (int i = 0; i < objects.length; i++) {
-						Field field = servObject.getClass().getComponentType().getDeclaredField(idField);
-						field.setAccessible(true);
-						// prendo l'id dell'oggetto in questione 
-						String objectId = (String) field.get(objects[i]);
-						if (objectId!=null) {
-							String finalURL = url_pattern.concat("/"+objectId);
+						if (concat) {
+							StringBuffer urlBuffer = new StringBuffer();urlBuffer.append("/");
+							// c'è un concatenamento 
+							// faccaio iterare i campi
+							for (int j = 0; j < idFields.length; j++) {
+								String currentIdField = idFields[j].trim();
+								if (!currentIdField.isEmpty()) {
+									Field field = servObject.getClass().getComponentType().getDeclaredField(currentIdField);
+									field.setAccessible(true);	
+									String objId=null;
+									if (field.getType().getSimpleName().equals("String")) {
+										// si tratta di una stringa 
+										objId = (String) field.get(objects[i]);
+									}
+									else if(field.getType().isPrimitive()){
+
+										if (field.getType().getSimpleName().equals("int")) {
+											objId = String.valueOf(field.getInt(objects[i]));
+										}
+										else if(field.getType().getSimpleName().equals("double")){
+											objId = String.valueOf(field.getDouble(objects[i]));
+										}
+										else if(field.getType().getSimpleName().equals("float")){
+											objId = String.valueOf(field.getFloat(objects[i]));
+										}
+										else if(field.getType().getSimpleName().equals("long")){
+											objId = String.valueOf(field.getLong(objects[i]));	
+										}
+										else if(field.getType().getSimpleName().equals("char")){
+											objId = String.valueOf(field.getChar(objects[i]));
+										}
+										else if(field.getType().getSimpleName().equals("boolean")){
+											objId = String.valueOf(field.getBoolean(objects[i]));
+										}
+										else if(field.getType().getSimpleName().equals("short")){
+											objId = String.valueOf(field.getShort(objects[i]));
+										}
+									}
+									else{
+										// qui si tratta di un oggetto quindi va gestito...
+									}
+									if (j<idFields.length-1) {
+										urlBuffer.append(objId+sep);
+									}
+									else{
+										urlBuffer.append(objId);	
+									}
+								}
+							}
+							// organizzo la struttura :
+							String finalURL = url_pattern.concat(urlBuffer.toString());
 							structure.put(objects[i], finalURL);
+						}
+						else{
+							// quindi se non c'è un concatenament si opera come prima @
+							Field field = servObject.getClass().getComponentType().getDeclaredField(idField);
+							field.setAccessible(true);
+							// prendo l'id dell'oggetto in questione 
+							String objectId = (String) field.get(objects[i]);
+							if (objectId!=null) {
+								String finalURL = url_pattern.concat("/"+objectId);
+								structure.put(objects[i], finalURL);
+							}
 						}
 					}
 					// @
 					// faccio iterare gli oggetti in tanto giacchè si tratti di un array 
 					
 					for (int i = 0; i < objects.length; i++) {
-						Field field = servObject.getClass().getComponentType().getDeclaredField(idField);
-						field.setAccessible(true);
-						
-						// prendo l'id dell'oggetto in questione 
-						
-						String objectId = (String) field.get(objects[i]);
-						if (objectId!=null) {
-							
-							
-							// completo l'url giusto dell'oggetto 
-							String finalURL = url_pattern.concat("/"+objectId);
+						if (concat) {
+							StringBuffer urlBuffer = new StringBuffer();
+							String objId = null ;
+							urlBuffer.append("/");
+							// da sviluppare ...
+							for (int j = 0; j < idFields.length; j++) {
+								String currentIdField = idFields[j].trim();
+								Field field = servObject.getClass().getComponentType().getDeclaredField(currentIdField);
+								field.setAccessible(true);
+								if (field.getType().getSimpleName().equals("String")) {
+									// si tratta di una stringa 
+									objId = (String) field.get(objects[i]);
+								}
+								else if(field.getType().isPrimitive()){
+
+									if (field.getType().getSimpleName().equals("int")) {
+										objId = String.valueOf(field.getInt(objects[i]));
+									}
+									else if(field.getType().getSimpleName().equals("double")){
+										objId = String.valueOf(field.getDouble(objects[i]));
+									}
+									else if(field.getType().getSimpleName().equals("float")){
+										objId = String.valueOf(field.getFloat(objects[i]));
+									}
+									else if(field.getType().getSimpleName().equals("long")){
+										objId = String.valueOf(field.getLong(objects[i]));	
+									}
+									else if(field.getType().getSimpleName().equals("char")){
+										objId = String.valueOf(field.getChar(objects[i]));
+									}
+									else if(field.getType().getSimpleName().equals("boolean")){
+										objId = String.valueOf(field.getBoolean(objects[i]));
+									}
+									else if(field.getType().getSimpleName().equals("short")){
+										objId = String.valueOf(field.getShort(objects[i]));
+									}
+								}
+								else{
+									// qui si tratta di un oggetto quindi va gestito...
+								}
+								if (j<idFields.length-1) {
+									urlBuffer.append(objId+sep);
+								}
+								else{
+									urlBuffer.append(objId);	
+								}
+							}
+							String finalURL = url_pattern.concat(urlBuffer.toString());
 							
 							// confronto questo url con quello digitato dal client
 							
 							if (locationResource.equals(finalURL)) {
-								
-							
-								// abbiamo trovato l'oggetto
-								// quindi possiamo 
 								found = objects[i];
-								nameObject = objectId ;
+								nameObject = urlBuffer.toString().replaceAll("/","");
 								break ;
 							}
 							else if(locationResource.equals(url_pattern)){
 								
 								organizesObjectsRootPage(structure,res,originalUrlPattern);
 							}
-							
 						}
-						
+						else{
+							Field field = servObject.getClass().getComponentType().getDeclaredField(idField);
+							field.setAccessible(true);
+							// prendo l'id dell'oggetto in questione 
+							String objectId = (String) field.get(objects[i]);
+							if (objectId!=null) {
+								// completo l'url giusto dell'oggetto 
+								String finalURL = url_pattern.concat("/"+objectId);
+								
+								// confronto questo url con quello digitato dal client
+								
+								if (locationResource.equals(finalURL)) {
+									
+								
+									// abbiamo trovato l'oggetto
+									// quindi possiamo 
+									found = objects[i];
+									nameObject = objectId ;
+									break ;
+								}
+								else if(locationResource.equals(url_pattern)){
+									
+									organizesObjectsRootPage(structure,res,originalUrlPattern);
+								}
+								
+							}	
+						}
 					}
-					
 					if (found!=null) {
-						// adesso qui devo 
-						// verificare che tipo di ritorno è
-						// quindi se è un tipo : jgon oppure xml
-						// allora diamo una risposta predefinita mostrando
-						// il sorgente del formato richiesto
-						// tuttavia se è in html dobbiamo definire un metodo
-						// con il quale andiamo a rappresentare l'oggetto richiesto
-						// in html customizzando a modo nostro
-						
-						// 1 passo imposto lo status line 
-						
 						res.setStatusLine(ResponseCode.RESPONSE_CODE_OK, HTTPServer.HTTP_VERSION);
 						switch(typeRes){
 						case JON_TYPE :
@@ -137,7 +248,13 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 							try {
 								try {
 									try {
-										file = £.JON.marsh(found,getServer().getRootFolder()+File.separator+nameObject+".jon");
+										if (getServer().getRootFolder()!=null) {
+											file = £.JON.marsh(found,getServer().getRootFolder()+File.separator+nameObject+".jon");
+										}
+										else{
+											
+											file = £.JON.marsh(found,nameObject+".jon");
+										}
 									} catch (JONNotSupportedTypeException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
@@ -178,16 +295,29 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 								res.getBody().ready();
 								
 								// invio la risposta al client 
-								
+		
 								Transport.trasfer(res);
+								if (toSave==false) {
+									boolean deleted = file.getFile().delete();
+									System.out.println("Eliminazione file:"+deleted);
+									if (!deleted) {
+										file.getFile().deleteOnExit();
+										System.out.println("File eliminato @");
+									}
+								}
 							}
 							
 							break ;
 							
 						case XML_TYPE:
-							cloud.jgo.io.File fileXML = £.convertFromObjectToXML(found.getClass(),nameObject+".xml",found);
+							cloud.jgo.io.File fileXML=null;
+							if (getServer().getRootFolder()!=null) {
+								fileXML = £.convertFromObjectToXML(found.getClass(),getServer().getRootFolder()+File.separator+nameObject+".xml",found);	
+							}
+							else{
+								fileXML = £.convertFromObjectToXML(found.getClass(),nameObject+".xml",found);	
+							}
 							if (fileXML!=null) {
-								
 								int content = fileXML.getBytes().length;
 								Header header = Header.getDefaultInstance(Header.Type.CONTENT_LENGTH);
 								
@@ -200,7 +330,6 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-								
 								res.addHeaders(header,headerMime);
 								
 								// inserisco una stringa vuota
@@ -215,6 +344,14 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 								// invio la risposta al client 
 								
 								Transport.trasfer(res);
+								
+								// elimino il file 
+								if (toSave==false) {
+									boolean deleted = fileXML.delete();
+									if (!deleted) {
+										fileXML.deleteOnExit();
+									}
+								}
 							}
 					
 							break ;
@@ -228,17 +365,13 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							
 							res.addHeader(mimeHeader);
 							html_represents(found,res,nameObject);
 							break ;
 						}
-						
 					}
 					
 				}
-			}		
-			
 	}
 	// spiegare questo metodo : da implementare
 	/**
