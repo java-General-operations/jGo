@@ -196,7 +196,7 @@ public class HTTPResponse implements HTTPMessage{
 						java.io.File files[] = fileToBeProcessed.listFiles();
 						buffer.append("<html>\n");
 						buffer.append("<head><style>.size{text-align:center;}.format{text-align:center;}</style></head>");
-						buffer.append("<body><div><h1>JGO&nbsp<img src='http://www.jgo.cloud/wp-content/uploads/2018/08/logo.png' width='25'></h1></div><h2><font face='verdana'>Index of "+fileToBeProcessed.getPath()+"</font></h2>\n");
+						buffer.append("<body><div><h1><img src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo2.png'></h1></div><h2><font face='verdana'>Index of "+fileToBeProcessed.getPath()+"</font></h2>\n");
 						buffer.append("<table border='1px'>\n");
 						buffer.append("<tr><th>Nome</th><th>Size</th><th>URL</th><th>Type</th></tr>\n");
 						for (int i = 0; i < files.length; i++) {
