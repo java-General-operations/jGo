@@ -7,7 +7,10 @@ import cloud.jgo.io.jon.JONField;
 import cloud.jgo.net.tcp.http.jor.JOR;
 import cloud.jgo.net.tcp.http.jor.ResponseType;
 // /persone/nome-cognome-età
-@JOR(field_id = "nome+cognome+età", url_Pattern = "/persone", responseType=ResponseType.XML_TYPE, SaveFiles=true)
+@JOR(
+	 field_id = "nome+cognome+età", url_Pattern = "/persone",
+	 responseType=ResponseType.XML_TYPE, SaveFiles=true
+	 )
 @XmlRootElement
 @JONClass
 public class Persona {

@@ -37,7 +37,7 @@ Version 1.0.3 - 12/11/2018
 
 
 
-Version 1.0.4 - in development
+Version 1.0.4 - 14/11/2018
 
 - Test package deleted
 
@@ -45,5 +45,6 @@ Version 1.0.4 - in development
 
 - Added JOR functionality for chaining
 
+- JOR has been completed
 
 (Thanks to Marco Martire)

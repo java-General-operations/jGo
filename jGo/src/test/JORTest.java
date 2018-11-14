@@ -12,10 +12,7 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
 public class JORTest {
 public static void main(String[] args) {
 	
-	// risolto bug : bisogna dare un array tipizzato
-	
-	// okok prossima mossa : inserire nuova features in JOR:sappiamo quale
-	
+	// JOR completato
 	JORServer server = £.createJORServer();
 	Persona persona = new Persona("Marco", "Mariuss", 27);
 	Persona persona2 = new Persona("Giovanni", "Mariuus", 30);

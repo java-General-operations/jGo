@@ -7,8 +7,7 @@
   <name>jGo</name>
   <description>Java General Operations</description>
   <!-- this -->
-  <!--  <url>https://www.jgo.cloud/</url> -->
- <url>https://github.com/java-General-operations/</url>
+ <url>https://www.jgo.cloud/</url>
   <!-- this -->
   <licenses>
   <license>
@@ -32,7 +31,7 @@
     <developer>
       <name>Marco Martire</name>
       <email>staff@jgo.cloud</email>
-      <organization>cloud.jgo</organization>
+      <organization>java General operations</organization>
       <organizationUrl>https://github.com/java-General-operations</organizationUrl>
     </developer>
   </developers>
@@ -137,4 +136,8 @@
     <scope>test</scope>
 </dependency>
 </dependencies>
+	<organization>
+		<name>java General operations</name>
+		<url>https://github.com/java-General-operations</url>
+	</organization>
 </project>
