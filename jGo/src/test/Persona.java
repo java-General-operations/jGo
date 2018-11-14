@@ -52,7 +52,7 @@ public class Persona {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.nome+" "+this.cognome ;
+		return this.nome+" "+this.cognome+" "+this.età ;
 	}
 	
 }
