@@ -133,6 +133,8 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
 
+import com.google.gson.Gson;
+
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
 import cloud.jgo.encrypt.Encrypts;
@@ -360,7 +362,39 @@ public final class £{
 	public static Object[]array(List<Object>list){
 		return list.toArray();
 	}
-
+	
+	// JSON main methods :
+	
+	public static cloud.jgo.io.File json(String fileName,Object obj){
+		if (£.extractFormatFromFileName(fileName).equals("json")) {
+			cloud.jgo.io.File jsonFile = new cloud.jgo.io.File(fileName);
+			Gson gson = new Gson();
+			String json=gson.toJson(obj);
+			£.writeFile(jsonFile, false, new String[]{json});
+			return jsonFile;
+		}
+		else{
+			return null ;
+		}
+	}
+	
+	public static <T> T json(String fileName,Class<?>objClass){
+		T t = null ;
+		cloud.jgo.io.File jsonFile = new cloud.jgo.io.File(fileName);
+		if (jsonFile.exists()) {
+			BufferedReader reader=null;
+			try {
+				reader = new BufferedReader(new InputStreamReader(
+				new FileInputStream(jsonFile)));
+				final Gson gson = new Gson();
+				t = (T) gson.fromJson(reader,objClass);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return t ;
+	}
 	/**
 	 * 
 	  Equivalent to JOptionPane.showMessagedialog(null,text);

@@ -36,6 +36,8 @@ import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
 import javax.swing.JOptionPane;
 
+import com.google.gson.Gson;
+
 import cloud.jgo.£;
 import cloud.jgo.io.jon.JON.JONFile;
 import cloud.jgo.io.jon.JONMarshallingException;
@@ -243,7 +245,7 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 					if (found!=null) {
 						res.setStatusLine(ResponseCode.RESPONSE_CODE_OK, HTTPServer.HTTP_VERSION);
 						switch(typeRes){
-						case JON_TYPE :
+						case JON :
 							JONFile file = null ;
 							try {
 								try {
@@ -309,7 +311,42 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 							
 							break ;
 							
-						case XML_TYPE:
+						case JSON:
+							cloud.jgo.io.File jsonFile = null ;
+							if (getServer().getRootFolder()!=null) {
+								jsonFile = new cloud.jgo.io.File(getServer().getRootFolder()+File.separator+nameObject+".json");
+							}
+							else{
+								jsonFile = new cloud.jgo.io.File(nameObject+".json");
+							}
+							if (jsonFile!=null) {
+								Gson gson = new Gson();
+								String json = gson.toJson(found);
+								£.writeFile(jsonFile, false, new String[]{json});
+								int bytesLen = jsonFile.getBytes().length;
+								Header contentHeader = Header.getDefaultInstance(Header.Type.CONTENT_LENGTH);
+								MimeHeader mimeHead=null;
+								try {
+									mimeHead = new MimeHeader(MimeTypeFactory.getDefaultMimeType(MimeTypeFactory.FORMAT_JSON));
+									contentHeader.setValue(bytesLen);
+									res.addHeaders(contentHeader,mimeHead);
+									res.insertVoidRow();
+									res.getBody().addBytes(jsonFile);
+									res.getBody().ready();
+									Transport.trasfer(res);
+									if (toSave==false) {
+										boolean deleted = jsonFile.delete();
+										if (!deleted) {
+											jsonFile.deleteOnExit();
+										}
+									}
+								} catch (MimeTypeParseException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+							break ;
+						case XML:
 							cloud.jgo.io.File fileXML=null;
 							if (getServer().getRootFolder()!=null) {
 								fileXML = £.convertFromObjectToXML(found.getClass(),getServer().getRootFolder()+File.separator+nameObject+".xml",found);	
@@ -356,7 +393,7 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 					
 							break ;
 							
-						case HTML_TYPE :
+						case HTML :
 							// qui imposto solo il mimeHeader html
 							MimeHeader mimeHeader = null ;
 							try {

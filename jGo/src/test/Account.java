@@ -7,7 +7,7 @@ import cloud.jgo.io.jon.JONClass;
 import cloud.jgo.io.jon.JONField;
 import cloud.jgo.net.tcp.http.jor.JOR;
 import cloud.jgo.net.tcp.http.jor.ResponseType;
-@JOR(field_id = "username", url_Pattern = "/accounts", responseType = ResponseType.HTML_TYPE)
+@JOR(field_id = "username", url_Pattern = "/accounts", responseType = ResponseType.HTML)
 @JONClass
 @XmlRootElement
 public class Account {

@@ -8,8 +8,8 @@ import cloud.jgo.net.tcp.http.jor.JOR;
 import cloud.jgo.net.tcp.http.jor.ResponseType;
 // /persone/nome-cognome-età
 @JOR(
-	 field_id = "nome+cognome+età", url_Pattern = "/persone",
-	 responseType=ResponseType.XML_TYPE, SaveFiles=true
+	 field_id = "nome+cognome+eta", url_Pattern = "/persone",
+	 responseType=ResponseType.JSON
 	 )
 @XmlRootElement
 @JONClass
@@ -19,21 +19,21 @@ public class Persona {
 	@JONField
 	private String cognome ;
 	@JONField
-	private int età;
+	private int eta;
 	public Persona(String nome, String cognome,int età) {
 		this.nome = nome;
 		this.cognome = cognome;
-		this.età = età;
+		this.eta = età;
 	}
 	public Persona() {
 		// TODO Auto-generated constructor stub
 	}
 	@XmlElement
 	public int getEtà() {
-		return età;
+		return eta;
 	}
 	public void setEtà(int età) {
-		this.età = età;
+		this.eta = età;
 	}
 	@XmlElement
 	public String getNome() {
@@ -52,7 +52,7 @@ public class Persona {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.nome+" "+this.cognome+" "+this.età ;
+		return this.nome+" "+this.cognome+" "+this.eta ;
 	}
 	
 }

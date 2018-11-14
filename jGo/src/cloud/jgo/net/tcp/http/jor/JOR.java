@@ -21,7 +21,7 @@ public @interface JOR{
    * This method gets the response type
    * @return the response type
    */
-  public cloud.jgo.net.tcp.http.jor.ResponseType responseType()default ResponseType.HTML_TYPE;
+  public cloud.jgo.net.tcp.http.jor.ResponseType responseType()default ResponseType.HTML;
   /**
    * This method gets the field id
    * @return the field id

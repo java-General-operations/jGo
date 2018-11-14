@@ -5,5 +5,5 @@ package cloud.jgo.net.tcp.http.jor;
  *
  */
 public enum ResponseType{
-	  XML_TYPE,JON_TYPE,HTML_TYPE
+	  XML,JON,JSON,HTML 
 }

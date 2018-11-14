@@ -16,7 +16,8 @@ public static void main(String[] args) {
 	JORServer server = £.createJORServer();
 	Persona persona = new Persona("Marco", "Mariuss", 27);
 	Persona persona2 = new Persona("Giovanni", "Mariuus", 30);
-	
+	Persona persona3 = new Persona("Dario", "Zozzo", 27);
+	Persona persona4 = new Persona("Roberto", "Bene", 28);
 	
 	
 	// configuro il server 
@@ -26,7 +27,7 @@ public static void main(String[] args) {
 	server.getConfiguration().setServerName("Mio server");
 	server.getConfiguration().setModel(new JORHandlerTest());
 	server.getConfiguration().setRootFolder(System.getProperty("user.home")+"\\Desktop\\test");
-	server.addToMatrix(new Persona[]{persona,persona2});
+	server.addToMatrix(new Persona[]{persona,persona2,persona3,persona4});
 	
 	System.out.println("Modalità array #");
 	
