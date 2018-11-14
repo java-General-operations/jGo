@@ -2,7 +2,7 @@ package test;
 
 import cloud.jgo.net.tcp.http.jor.JOR;
 // /persone/nome-cognome-età
-@JOR(field_id = "nome", url_Pattern = "/persone")
+@JOR(field_id = "nome", url_Pattern = "/persone", separator="_")
 public class Persona {
 	private String nome ;
 	private String cognome ;

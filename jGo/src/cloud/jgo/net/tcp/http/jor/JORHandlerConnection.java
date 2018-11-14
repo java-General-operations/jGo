@@ -90,26 +90,49 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 								if (!currentIdField.isEmpty()) {
 									Field field = servObject.getClass().getComponentType().getDeclaredField(currentIdField);
 									field.setAccessible(true);	
-									Object objectId = field.get(objects[i]);
-									String objId = null ;
-									if (objectId!=null) {
-										if (String.class.isInstance(objectId)) {
-											objId = (String) objectId;
+									String objId=null;
+									if (field.getType().getSimpleName().equals("String")) {
+										// si tratta di una stringa 
+										objId = (String) field.get(objects[i]);
+									}
+									else if(field.getType().isPrimitive()){
+
+										if (field.getType().getSimpleName().equals("int")) {
+											objId = String.valueOf(field.getInt(objects[i]));
 										}
-										else if(objectId.getClass().isPrimitive()){
-											objId = String.valueOf(objectId);
+										else if(field.getType().getSimpleName().equals("double")){
+											objId = String.valueOf(field.getDouble(objects[i]));
 										}
-									// String,int,double,char,boolean,long,float
-										if (i < idFields.length-1) {
-											urlBuffer.append(objId+sep);
+										else if(field.getType().getSimpleName().equals("float")){
+											objId = String.valueOf(field.getFloat(objects[i]));
 										}
-										else{
-											// qui siamo alla fine 
-											urlBuffer.append(objId);
-										}	
+										else if(field.getType().getSimpleName().equals("long")){
+											objId = String.valueOf(field.getLong(objects[i]));	
+										}
+										else if(field.getType().getSimpleName().equals("char")){
+											objId = String.valueOf(field.getChar(objects[i]));
+										}
+										else if(field.getType().getSimpleName().equals("boolean")){
+											objId = String.valueOf(field.getBoolean(objects[i]));
+										}
+										else if(field.getType().getSimpleName().equals("short")){
+											objId = String.valueOf(field.getShort(objects[i]));
+										}
+									}
+									else{
+										// qui si tratta di un oggetto quindi va gestito...
+									}
+									if (j<idFields.length-1) {
+										urlBuffer.append(objId+sep);
+									}
+									else{
+										urlBuffer.append(objId);	
 									}
 								}
 							}
+							// organizzo la struttura :
+							String finalURL = url_pattern.concat(urlBuffer.toString());
+							structure.put(objects[i], finalURL);
 						}
 						else{
 							// quindi se non c'è un concatenament si opera come prima @
@@ -128,18 +151,73 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection{
 					
 					for (int i = 0; i < objects.length; i++) {
 						if (concat) {
+							StringBuffer urlBuffer = new StringBuffer();
+							String objId = null ;
+							urlBuffer.append("/");
 							// da sviluppare ...
+							for (int j = 0; j < idFields.length; j++) {
+								String currentIdField = idFields[j].trim();
+								Field field = servObject.getClass().getComponentType().getDeclaredField(currentIdField);
+								field.setAccessible(true);
+								if (field.getType().getSimpleName().equals("String")) {
+									// si tratta di una stringa 
+									objId = (String) field.get(objects[i]);
+								}
+								else if(field.getType().isPrimitive()){
+
+									if (field.getType().getSimpleName().equals("int")) {
+										objId = String.valueOf(field.getInt(objects[i]));
+									}
+									else if(field.getType().getSimpleName().equals("double")){
+										objId = String.valueOf(field.getDouble(objects[i]));
+									}
+									else if(field.getType().getSimpleName().equals("float")){
+										objId = String.valueOf(field.getFloat(objects[i]));
+									}
+									else if(field.getType().getSimpleName().equals("long")){
+										objId = String.valueOf(field.getLong(objects[i]));	
+									}
+									else if(field.getType().getSimpleName().equals("char")){
+										objId = String.valueOf(field.getChar(objects[i]));
+									}
+									else if(field.getType().getSimpleName().equals("boolean")){
+										objId = String.valueOf(field.getBoolean(objects[i]));
+									}
+									else if(field.getType().getSimpleName().equals("short")){
+										objId = String.valueOf(field.getShort(objects[i]));
+									}
+								}
+								else{
+									// qui si tratta di un oggetto quindi va gestito...
+								}
+								if (j<idFields.length-1) {
+									urlBuffer.append(objId+sep);
+								}
+								else{
+									urlBuffer.append(objId);	
+								}
+							}
+							String finalURL = url_pattern.concat(urlBuffer.toString());
+							
+							// confronto questo url con quello digitato dal client
+							
+							if (locationResource.equals(finalURL)) {
+								 
+								found = objects[i];
+								nameObject = null ; // provvisorio
+								break ;
+							}
+							else if(locationResource.equals(url_pattern)){
+								
+								organizesObjectsRootPage(structure,res,originalUrlPattern);
+							}
 						}
 						else{
 							Field field = servObject.getClass().getComponentType().getDeclaredField(idField);
 							field.setAccessible(true);
-							
 							// prendo l'id dell'oggetto in questione 
-							
 							String objectId = (String) field.get(objects[i]);
 							if (objectId!=null) {
-								
-								
 								// completo l'url giusto dell'oggetto 
 								String finalURL = url_pattern.concat("/"+objectId);
 								
