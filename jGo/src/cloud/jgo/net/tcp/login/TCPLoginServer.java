@@ -131,10 +131,10 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	}
 	
 	@Override
-	public void configure(Configuration configuration) throws SocketException {
+	public void configure(Configuration configuration){
 		// TODO Auto-generated method stub
-		this.configuration = (TCPLoginServerConfiguration) configuration;
 		super.configure(configuration);
+		this.configuration = (TCPLoginServerConfiguration) configuration;
 		if(this.configuration.getPassword()!=null){
 			this.setPassword(this.configuration.getPassword()); // e quindi criptiamo la password
 		}

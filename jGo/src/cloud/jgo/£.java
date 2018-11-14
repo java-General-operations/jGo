@@ -960,12 +960,7 @@ public final class £{
 	 */
 	public static cloud.jgo.net.tcp.http.jor.JORServer createJORServer(HTTPServerConfiguration conf){
 		JORServer serv = createJORServer();
-		try {
-			serv.configure(conf);
-		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		serv.configure(conf);
 		return serv ;
 	}
 	

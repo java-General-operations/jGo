@@ -152,18 +152,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 	 * Recharge the configuration
 	 */
 	public void reloadConfiguration(){
-		try {
-			this.configure(this.configuration);
-		} catch (SocketException e) {
-			/*
-			 
-			JGO Auto-generated catch block
-			Author : £ wasp91 £
-			Date 05 feb 2018
-			
-			*/
-			e.printStackTrace();
-		}
+		this.configure(this.configuration);
 	}
 	
 	@Override
@@ -191,7 +180,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 	
 
 	@Override
-	public void configure(Configuration configuration) throws SocketException {
+	public void configure(Configuration configuration){
 		// faccio le autoconfigurazioni per prima 
 		this.configuration = (TCPServerConfiguration) configuration ;
 		this.configuration.setLocalhost();

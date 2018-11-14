@@ -195,7 +195,7 @@ public class HTTPServer extends TCPServer{
 	}
 	
 	@Override
-	public void configure(Configuration configuration) throws SocketException {
+	public void configure(Configuration configuration){
 			super.configure(configuration);
 		    this.configuration = (HTTPServerConfiguration) configuration;
 			if(this.configuration.getRootFolder()!=null){
@@ -210,13 +210,7 @@ public class HTTPServer extends TCPServer{
 
 	@Override
 	public void reloadConfiguration() {
-		// TODO Auto-generated method stub
-		try {
-			configure(this.configuration);
-		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		configure(this.configuration);
 	}
 	
 	@Override
