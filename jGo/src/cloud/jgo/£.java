@@ -348,7 +348,7 @@ public class £{
 	 */
 	public final static WebUtils _W = new WebUtils();
 	// nuovi metodi - version 1.0.5
-	public static £ each(Object[]arr,£Func func){
+	public static <T> £ each(T[]arr,£Func func){
 		for (int i = 0; i < arr.length; i++) {
 			Boolean continue_ = (Boolean) func.function(arr[i]);
 			if (!continue_) {
@@ -357,6 +357,112 @@ public class £{
 		}
 		return instance ;
 	}
+	
+	public static <T> £ each(T[]arr,£Func func,int initialIndex){
+		for (int i = initialIndex; i < arr.length; i++) {
+			Boolean continue_ = (Boolean) func.function(arr[i]);
+			if (!continue_) {
+				break ;
+			}
+		}
+		return instance ;
+	}
+	public static final String EACH_INDEX = "index";
+	public static final String EACH_OBJECT = "object";
+	// valori concessi : index | object
+	public static <T> £ each(T[]arr,final String returnType,£Func func){
+		switch(returnType){
+		
+		case EACH_OBJECT:
+			
+			return each(arr, func);
+			
+		case EACH_INDEX:
+			for (int i = 0; i < arr.length; i++) {
+				Boolean continue_ = (Boolean) func.function(new Integer(i));
+				if (!continue_) {
+					break ;
+				}
+			}
+			break ;
+		case EACH_OBJECT+EACH_INDEX:
+			for (int i = 0; i < arr.length; i++) {
+				Boolean continue_ = (Boolean) func.function(new Object[]{arr[i],new Integer(i)});
+				if (!continue_) {
+					break ;
+				}
+			}
+			break ;
+		case EACH_INDEX+EACH_OBJECT:
+			for (int i = 0; i < arr.length; i++) {
+				Boolean continue_ = (Boolean) func.function(new Object[]{arr[i],new Integer(i)});
+				if (!continue_) {
+					break ;
+				}
+			}
+			break ;
+		}
+		return instance ;
+	}
+	
+	public static <T> £ each(List<T>list,£Func func){
+		Iterator<T>iterator = list.iterator();
+		while (iterator.hasNext()) {
+			Object object = (Object) iterator.next();
+			Boolean continue_=(Boolean) func.function(object);
+			if (!continue_) {
+				break ;
+			}
+		}
+		return instance ;
+	}
+	
+	public static <T> £ each(List<T>list,int initialIndex,£Func func){
+		for (int i = initialIndex; i < list.size(); i++) {
+			T t = list.get(i);
+			Boolean continue_=(Boolean) func.function(t);
+			if (!continue_) {
+				break ;
+			}
+		}
+		return instance ;
+	}
+	
+	public static <T> £ each(List<T>list,final String returnType,£Func func){
+		switch(returnType){
+		
+		case EACH_OBJECT:
+			
+			return each(list, func);
+			
+		case EACH_INDEX:
+			for (int i = 0; i < list.size(); i++) {
+				Boolean continue_ = (Boolean) func.function(new Integer(i));
+				if (!continue_) {
+					break ;
+				}
+			}
+			break ;
+		case EACH_OBJECT+EACH_INDEX:
+			for (int i = 0; i < list.size(); i++) {
+				Boolean continue_ = (Boolean) func.function(new Object[]{list.get(i),new Integer(i)});
+				if (!continue_) {
+					break ;
+				}
+			}
+			break ;
+		case EACH_INDEX+EACH_OBJECT:
+			for (int i = 0; i < list.size(); i++) {
+				Boolean continue_ = (Boolean) func.function(new Object[]{list.get(i),new Integer(i)});
+				if (!continue_) {
+					break ;
+				}
+			}
+			break ;
+		}
+		return instance ;
+	}
+	
 	// version 1.0.2
 	/**
 	 * This method transforms an array into a list
