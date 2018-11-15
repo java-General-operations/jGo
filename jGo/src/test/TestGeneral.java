@@ -1,15 +1,9 @@
 package test;
-
 import cloud.jgo.SMTPHosts.SMTPEntry;
-import cloud.jgo.jGo;
-import cloud.jgo.£;
-import cloud.jgo.£Func;
-
+import cloud.jgo.mvn.j£;
 public class TestGeneral {
 public static void main(String[] args) {
 	
-	
-	// email inviata @
 	
 	
 }

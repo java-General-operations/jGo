@@ -68,4 +68,7 @@ Version 1.0.5 - in development
 
 - Added a new class to find smtp hosts
 
+- A new package has been created: cloud.jgo.mvn.
+Inside there is the jGo access point, enhanced this time.
+However, the latter requires that the project should be Maven.
 (Thanks to Marco Martire)
