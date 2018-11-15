@@ -295,7 +295,6 @@ public class £{
 	 * Useful instance to find smtp hosts for sending emails
 	 */
 	public final static SMTPHosts SMTP_HOSTS = SMTPHosts.getInstance();
-	public final static MailUtils EMAIL = new MailUtils();// provvisoria
 	private static FileLock lockFile = null ;
 	private static int valueMemorized = 0; // questo qui entra in gioco solo quando viene invocato il metodo mark(),e prende memorizza il value attuale
 	/**
@@ -4774,15 +4773,10 @@ public class £{
 		}
 		return instance;
 	}
-
-	
 	private String name ;
 	public static £ instance= null ;
-	
-	
 	// esiste solo una instanza della classe
 	// che si inizializza in questo blocco statico
-	
 	static{
 		try {
 			instance = getInstance();

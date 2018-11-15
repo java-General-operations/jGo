@@ -1,6 +1,5 @@
-package cloud.jgo;
+package cloud.jgo.jgo2;
 import java.util.Properties;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -8,9 +7,10 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
 import cloud.jgo.SMTPHosts.SMTPEntry;
-public class MailUtils {
+public class £ extends cloud.jgo.£{
+
+	// Methods for email :version 1.0.5
 	/**
 	 * This method sends a simple email.
 	 * There is no authentication for this method,
@@ -72,7 +72,6 @@ public class MailUtils {
 			e.printStackTrace();
 		}
 	}
-	// version 1.0.5
 	/**
 	 * This method sends a simple email.
 	 * There is no authentication for this method,
@@ -195,5 +194,5 @@ public class MailUtils {
 				e.printStackTrace();
 			}	
 		}
-	}
+	}	
 }
