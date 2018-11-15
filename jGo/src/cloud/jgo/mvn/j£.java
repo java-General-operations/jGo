@@ -68,7 +68,6 @@ import cloud.jgo.SMTPHosts.SMTPEntry;
     <em class='type'>£</em>._<em style='color:#282828;'>S</em>.<em class='method'>moveJFrame</em>(frm, 0, 0,<span style='color: #006200;'>Effect</span>.SLOW).<em class='method'>moveJFrame</em>(frm, 300, 300, Effect.<span style='color: #006200;'>FAST</span>);
  */
 public class j£ extends cloud.jgo.£{
-
 	/*
 	 * Questa classe è una estensione di jGo
 	 * che però deve essere usata nei progetti maven
