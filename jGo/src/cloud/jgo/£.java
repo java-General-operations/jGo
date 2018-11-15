@@ -132,7 +132,9 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
+
 import com.google.gson.Gson;
+
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
@@ -345,7 +347,16 @@ public class £{
 	 *  <strong>Web</strong> <em>Methods</em> -  <em style='color:red'>Under development</em>
 	 */
 	public final static WebUtils _W = new WebUtils();
-
+	// nuovi metodi - version 1.0.5
+	public static £ each(Object[]arr,£Func func){
+		for (int i = 0; i < arr.length; i++) {
+			Boolean continue_ = (Boolean) func.function(arr[i]);
+			if (!continue_) {
+				break ;
+			}
+		}
+		return instance ;
+	}
 	// version 1.0.2
 	/**
 	 * This method transforms an array into a list

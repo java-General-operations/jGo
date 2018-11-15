@@ -1,15 +1,27 @@
 package test;
 import cloud.jgo.SMTPHosts;
 import cloud.jgo.j£;
+import cloud.jgo.£Func;
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.£;
 public class TestGeneral {
 public static void main(String[] args) {
 	
 	
-												//smfmartire@alice.it
-	j£.sendSimpleEmail("wasp91dayno@gmail.com","smfmartire@alice.it",
-	"test13","Hello Wasp91","alice","Email inviata :)");
+	
+	String[]arr = {"Marco","Giovanni","Salvatore"};
+	
+	
+	£.each(arr,new £Func() {
+		
+		@Override
+		public Object function(Object e) {
+			String obj = (String) e ;
+			System.out.println("Ecco:"+obj);
+			return false ;
+		}
+	});
+	
 	
 	
 	
