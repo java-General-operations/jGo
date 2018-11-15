@@ -96,10 +96,18 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.imageio.ImageIO;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -131,7 +139,9 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
+
 import com.google.gson.Gson;
+
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
 import cloud.jgo.encrypt.Encrypts;
@@ -288,6 +298,10 @@ public class £{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Useful instance to find smtp hosts for sending emails
+	 */
+	public final static SMTPHosts SMTP_HOSTS = SMTPHosts.getInstance();
 	private static FileLock lockFile = null ;
 	private static int valueMemorized = 0; // questo qui entra in gioco solo quando viene invocato il metodo mark(),e prende memorizza il value attuale
 	/**
@@ -359,9 +373,71 @@ public class £{
 	public static Object[]array(List<Object>list){
 		return list.toArray();
 	}
-	
-	// JSON main methods :
-	
+	//Email Methods - 1.0.5:
+	/**
+	 * This method sends a simple email.
+	 * There is no authentication for this method,
+	 * and you can not set a contentType nor attach a document.
+	 * @param recipient recipient email
+	 * @param sender sender email
+	 * @param subject email subject
+	 * @param text email text
+	 * @param smtpHost smtp host
+	 * @param smtpPort smtp port
+	 * @param successLog the log that is printed in case the email is sent correctly
+	 * @return the jGo access point
+	 */
+	public static £ sendSimpleEmail(String recipient,String sender,String subject,String text,String smtpHost,int smtpPort,String successLog){
+		£ inst = null ;
+		Properties props = new Properties();
+		props.put("mail.smtp.host","smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		Session session = Session.getDefaultInstance(props);
+		// creo il messaggio impostando la sessione al suo interno 
+		MimeMessage message = new MimeMessage(session);
+		try {
+			message.setFrom(new InternetAddress(sender));
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			message.addRecipient(Message.RecipientType.TO,new InternetAddress(recipient));
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// imposto l'oggetto
+		try {
+			message.setSubject(subject);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			message.setText(text);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// invio
+		try {
+			Transport.send(message);
+			System.out.println(successLog);
+			inst = instance;
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return inst ;
+	}
+	// JSON main methods - 1.0.5:
 	/**
 	 * This method writes an object to a json file
 	 * @param fileName the file name
@@ -3507,6 +3583,7 @@ public class £{
      return instance;
 		
 	}
+	// version : 1.0.5
 	/**
 	 * This method converts a java object to a string json
 	 * @param obj the object to be serialized
@@ -3518,6 +3595,7 @@ public class £{
 		jsonString = gson.toJson(obj);
 		return jsonString ;
 	}
+	// version : 1.0.5
 	/**
 	 * This method converts a json string to object
 	 * @param jsonString the json string

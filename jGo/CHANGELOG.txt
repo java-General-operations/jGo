@@ -64,4 +64,8 @@ Version 1.0.5 - in development
 
 - An extension of £Func has been created
 
+- Added methods to send emails
+
+- Added a new class to find smtp hosts
+
 (Thanks to Marco Martire)
