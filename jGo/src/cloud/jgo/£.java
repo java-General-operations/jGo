@@ -362,6 +362,12 @@ public class £{
 	
 	// JSON main methods :
 	
+	/**
+	 * This method writes an object to a json file
+	 * @param fileName the file name
+	 * @param obj the object to be serialized
+	 * @return the json file
+	 */
 	public static cloud.jgo.io.File json(String fileName,Object obj){
 		if (£.extractFormatFromFileName(fileName).equals("json")) {
 			cloud.jgo.io.File jsonFile = new cloud.jgo.io.File(fileName);
@@ -375,6 +381,12 @@ public class £{
 		}
 	}
 	
+	/**
+	 * This method retrieves the object from a json file
+	 * @param fileName the file name
+	 * @param objClass the object class
+	 * @return the deserialized object
+	 */
 	public static <T> T json(String fileName,Class<?>objClass){
 		T t = null ;
 		cloud.jgo.io.File jsonFile = new cloud.jgo.io.File(fileName);
@@ -3495,9 +3507,28 @@ public class £{
      return instance;
 		
 	}
-	
-	
-	
+	/**
+	 * This method converts a java object to a string json
+	 * @param obj the object to be serialized
+	 * @return the json string
+	 */
+	public static String convertFromObjectToJsonString(Object obj){
+		final Gson gson = new Gson();
+		String jsonString = null ;
+		jsonString = gson.toJson(obj);
+		return jsonString ;
+	}
+	/**
+	 * This method converts a json string to object
+	 * @param jsonString the json string
+	 * @param objClass the object class
+	 * @return the deserialized object
+	 */
+	public static <T> T convertFromJsonStringToObject(String jsonString,Class<?>objClass){
+		final Gson gson = new Gson();
+		T t = (T) gson.fromJson(jsonString,objClass);
+		return t;
+	}
 	/**
 	 * This method converts from text to decimals
 	 * @param text the text to convert
