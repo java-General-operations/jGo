@@ -96,7 +96,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -132,9 +131,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
-
 import com.google.gson.Gson;
-
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
 import cloud.jgo.encrypt.Encrypts;
@@ -194,7 +191,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
     <strong>4 Example</strong>  -  <em class='explanations'>Moves two times the frame :</em><br>
     <em class='type'>£</em>._<em style='color:#282828;'>S</em>.<em class='method'>moveJFrame</em>(frm, 0, 0,<span style='color: #006200;'>Effect</span>.SLOW).<em class='method'>moveJFrame</em>(frm, 300, 300, Effect.<span style='color: #006200;'>FAST</span>);
  */
-public final class £{
+public class £{
 	/**
 	 * 
 	 * @author Martire91<br>
@@ -443,7 +440,7 @@ public final class £{
      * @param function the instructions to be executed
      * @return the home instance
      */
-    public static £ executeLastInstructions(£.£Func function){
+    public static £ executeLastInstructions(£Func function){
     	function.function(null);
     	return forceClosingProgram();
     }
@@ -455,7 +452,7 @@ public final class £{
      * @param paramFunction the parameter to be passed to the function
      * @return the home instance
      */
-    public static £ executeLastInstructions(£.£Func function,Object paramFunction){
+    public static £ executeLastInstructions(£Func function,Object paramFunction){
     	function.function(paramFunction);
     	return forceClosingProgram();
     }
@@ -1362,22 +1359,6 @@ public final class £{
 				}
 			}
 		}
-		
-	
-	/**
-	 * 
-	 * @author USER_HP
-	 * An JGO abstract function
-	 *
-	 */
-	public static interface £Func {
-
-		public abstract Object function(Object e);
-	}
-	
-	
-	
-	
 	/**
 	 * 
 	 * @author Martire91<br>
@@ -4782,7 +4763,7 @@ public final class £{
 	/**
 	 * unico costruttore è privato
 	 */
-	private £(){
+	protected £(){
 		// nothing ...
 	}
 

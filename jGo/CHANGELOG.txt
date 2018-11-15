@@ -58,4 +58,10 @@ Version 1.0.5 - in development
 
 - Added new return type in JOR: JSON
 
+- Added new access point jGo
+
+- The jGo function has been placed outside the access point, in order to guarantee greater availability
+
+- An extension of £Func has been created
+
 (Thanks to Marco Martire)

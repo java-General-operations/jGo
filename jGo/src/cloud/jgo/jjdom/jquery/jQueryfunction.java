@@ -22,7 +22,6 @@
  */
 package cloud.jgo.jjdom.jquery;
 
-import cloud.jgo.£.£Func;
 /**
  * 
  * @author Martire91<br>

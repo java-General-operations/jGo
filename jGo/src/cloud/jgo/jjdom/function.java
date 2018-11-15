@@ -21,4 +21,4 @@
  * 
  */
 package cloud.jgo.jjdom;
-public interface function extends cloud.jgo.£.£Func{}
+public interface function extends cloud.jgo.£Func{}
