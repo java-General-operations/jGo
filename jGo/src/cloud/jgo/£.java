@@ -96,6 +96,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -131,13 +132,10 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
-
 import com.google.gson.Gson;
-
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
-import cloud.jgo.encrypt.Encrypts;
 import cloud.jgo.file_manager.JFileManager;
 import cloud.jgo.file_manager.JFileView;
 import cloud.jgo.io.jon.JON;
@@ -252,7 +250,7 @@ public class £{
 	 */
 	public static final String CONSOLE_MEX_ERROR = "ERROR";
 	private static final JFileManager fileManager = new JFileManager();
-	private static Encrypts encrypt = null ;
+	protected static Encrypts encrypt = null ;
 	private static Recorder recorder = null ;
 	private static MoveFrame move_frame = null ;
 	private static int counterScreenShot = 0 ;
@@ -392,6 +390,7 @@ public class £{
 	 * This method retrieves the object from a json file
 	 * @param fileName the file name
 	 * @param objClass the object class
+	 * @param <T> the object type
 	 * @return the deserialized object
 	 */
 	public static <T> T json(String fileName,Class<?>objClass){
@@ -3528,6 +3527,7 @@ public class £{
 	 * This method converts a json string to object
 	 * @param jsonString the json string
 	 * @param objClass the object class
+	 * @param <T> the object type
 	 * @return the deserialized object
 	 */
 	public static <T> T convertFromJsonStringToObject(String jsonString,Class<?>objClass){
@@ -4774,7 +4774,7 @@ public class £{
 		return instance;
 	}
 	private String name ;
-	public static £ instance= null ;
+	protected static £ instance= null ;
 	// esiste solo una instanza della classe
 	// che si inizializza in questo blocco statico
 	static{
@@ -4799,7 +4799,7 @@ public class £{
 		// nothing ...
 	}
 
-	private static £ getInstance() throws HeadlessException, AWTException, IOException{
+	public static £ getInstance() throws HeadlessException, AWTException, IOException{
 		if(instance == null){
 			instance = new £();
 			encrypt =new Encrypts(Encrypts.TEXT_KEY_DEFAULT,"jo_3434");

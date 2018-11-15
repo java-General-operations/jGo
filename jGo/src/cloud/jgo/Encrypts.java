@@ -20,9 +20,7 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.encrypt;
-
-
+package cloud.jgo;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -43,7 +41,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import javax.imageio.ImageIO;
-
+@Deprecated
 public class Encrypts {
 
 	public final static String TEXT_KEY_DEFAULT = "@§01@1@#f%r%a&x@";

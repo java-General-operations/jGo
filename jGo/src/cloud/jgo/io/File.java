@@ -22,6 +22,7 @@
  */
 package cloud.jgo.io;
 
+import java.awt.AWTException;
 import java.awt.HeadlessException;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -69,7 +70,15 @@ public class File extends java.io.File{
 	public static £ home = null ;
 	static{
 		try {
-			home = £.instance;
+			try {
+				home = £.getInstance();
+			} catch (AWTException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (HeadlessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

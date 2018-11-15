@@ -58,17 +58,24 @@ Version 1.0.5 - in development
 
 - Added new return type in JOR: JSON
 
-- Added new access point jGo
-
 - The jGo function has been placed outside the access point, in order to guarantee greater availability
 
 - An extension of £Func has been created
 
-- Added methods to send emails
-
 - Added a new class to find smtp hosts
 
-- A new package has been created: cloud.jgo.mvn.
-Inside there is the jGo access point, enhanced this time.
-However, the latter requires that the project should be Maven.
+- created class j £, obviously it is an extension of jGo.
+  In addition, it combines all the methods that require
+  third-party libraries, such as javamail. 
+  Therefore it is recommended to use this advanced
+  class in maven projects.
+
+- Added methods to send emails to : j£
+
+- Some methods have been declared as deprecated
+
+- Changes have been made to the jGo access point
+
+-
+
 (Thanks to Marco Martire)

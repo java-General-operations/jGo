@@ -27,8 +27,8 @@ import java.security.Key;
 
 import javax.crypto.spec.SecretKeySpec;
 
+import cloud.jgo.Encrypts;
 import cloud.jgo.£;
-import cloud.jgo.encrypt.Encrypts;
 import cloud.jgo.net.Configuration;
 import cloud.jgo.net.ServerType;
 import cloud.jgo.net.factorys.ServersFactory;

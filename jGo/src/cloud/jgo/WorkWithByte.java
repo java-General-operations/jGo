@@ -20,7 +20,7 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.encrypt;
+package cloud.jgo;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -29,10 +29,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+@Deprecated
 public class WorkWithByte {
 	/*
 	 * Domani testerò ogni singolo metodo 

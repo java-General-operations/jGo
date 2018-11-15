@@ -20,7 +20,8 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.mvn;
+package cloud.jgo;
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -30,6 +31,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 import cloud.jgo.SMTPHosts.SMTPEntry;
 /**
  * @author Martire91
@@ -39,7 +41,7 @@ import cloud.jgo.SMTPHosts.SMTPEntry;
  * @version 1.0.0
    <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'> -->
     <!--Author : *** Marco Martire *** -->  
-   <h1 style='color: #282828;'>jGo<span style='color: green;'>.cloud</span>/<strong>For Maven project</strong></h1>
+   <h1 style='color: #282828;'>jGo<span style='color: green;'>.cloud</span>/<strong><a href='https://www.jgo.cloud/boosted'>Boosted</a></strong></h1>
    <img id='logo'src='https://www.jgo.cloud/imgs/logo.png' alt='logo jgo' width='50px' height='50px'><br>
    <strong>Description :</strong><br> This class facilitates all the difficult tasks
    For example,In a code line, you take a screenshot.<br>
@@ -48,6 +50,13 @@ import cloud.jgo.SMTPHosts.SMTPEntry;
    <strong>J</strong> - <em>Java</em><br>
    <strong>G</strong> - <em>General</em><br>
    <strong>O</strong> - <em>Operations</em><br><br>
+   <em style="color: red;">Read :</em><br>
+   <strong>
+   This class is an extension of jGo, however it is advisable to use<br>
+   it only for Maven projects as it groups all the methods that require<br>
+   third-party libraries, such as javamail.
+   </strong>
+   <br><br>
    <strong>1 Example</strong>  -  <em class='explanations'>Prints "Welcome in JGO", executes a screenshot with a final function and finally emits an acoustic signal :</em> : <br>
     public static void main(<em class='type'>String</em>[]args){<br>
     <em class='type'>£</em>._O("Welcome in JGO").<em class='method'>screenshot</em>(new <em class='type'>£Func</em>() {<br>
@@ -67,13 +76,21 @@ import cloud.jgo.SMTPHosts.SMTPEntry;
     <strong>4 Example</strong>  -  <em class='explanations'>Moves two times the frame :</em><br>
     <em class='type'>£</em>._<em style='color:#282828;'>S</em>.<em class='method'>moveJFrame</em>(frm, 0, 0,<span style='color: #006200;'>Effect</span>.SLOW).<em class='method'>moveJFrame</em>(frm, 300, 300, Effect.<span style='color: #006200;'>FAST</span>);
  */
-public class j£ extends cloud.jgo.£{
-	/*
-	 * Questa classe è una estensione di jGo
-	 * che però deve essere usata nei progetti maven
-	 * in quanto richiede librerie di terzi come dipendenze
-	 * come javamail per esempio
-	 */
+public final class j£ extends cloud.jgo.£{
+	static{
+		instance = getInstance();
+	}
+	public static j£ getInstance(){
+		if (instance==null) {
+			instance = new j£();
+		}
+		else{
+			if (instance instanceof £) {
+				instance = new j£();
+			}
+		}
+		return (j£) instance ;
+	}
 	// Methods for email :version 1.0.5
 	/**
 	 * This method sends a simple email.
@@ -88,11 +105,11 @@ public class j£ extends cloud.jgo.£{
 	 * @param successLog the log that is printed in case the email is sent correctly
 	 * @return the jGo access point
 	 */
-	public static void sendSimpleEmail(String recipient,String sender,String subject,String text,String smtpHost,int smtpPort,String successLog){
+	public static j£ sendSimpleEmail(String recipient,String sender,String subject,String text,String smtpHost,int smtpPort,String successLog){
 		j£ inst = null ;
 		Properties props = new Properties();
-		props.put("mail.smtp.host","smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.host",smtpHost);
+		props.put("mail.smtp.port",smtpPort);
 		Session session = Session.getDefaultInstance(props);
 		// creo il messaggio impostando la sessione al suo interno 
 		MimeMessage message = new MimeMessage(session);
@@ -130,11 +147,15 @@ public class j£ extends cloud.jgo.£{
 		// invio
 		try {
 			Transport.send(message);
-			System.out.println(successLog);
+			if (successLog!=null) {
+				System.out.println(successLog);
+			}
+			inst = (j£) instance;
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return inst ;
 	}
 	/**
 	 * This method sends a simple email.
@@ -148,7 +169,7 @@ public class j£ extends cloud.jgo.£{
 	 * @param successLog the log that is printed in case the email is sent correctly
 	 * @return the jGo access point
 	 */
-	public static void sendSimpleEmail(String recipient,String sender,String subject,String text,SMTPEntry host,String successLog){
+	public static j£ sendSimpleEmail(String recipient,String sender,String subject,String text,SMTPEntry host,String successLog){
 		j£ inst = null ;
 		Properties props = new Properties();
 		props.put("mail.smtp.host",host.getHost());
@@ -190,11 +211,15 @@ public class j£ extends cloud.jgo.£{
 		// invio
 		try {
 			Transport.send(message);
-			System.out.println(successLog);
+			if (successLog!=null) {
+				System.out.println(successLog);
+			}
+			inst = (j£) instance;
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return (j£) instance ;
 	}
 	/**
 	 * This method sends a simple email.
@@ -208,7 +233,7 @@ public class j£ extends cloud.jgo.£{
 	 * @param successLog the log that is printed in case the email is sent correctly
 	 * @return the jGo access point
 	 */
-	public static void sendSimpleEmail(String recipient,String sender,String subject,String text,String hostType,String successLog){
+	public static j£ sendSimpleEmail(String recipient,String sender,String subject,String text,String hostType,String successLog){
 		j£ inst = null ;
 		Properties props = new Properties();
 		SMTPEntry entry = j£.SMTP_HOSTS.get(hostType);
@@ -252,11 +277,15 @@ public class j£ extends cloud.jgo.£{
 			// invio
 			try {
 				Transport.send(message);
-				System.out.println(successLog);
+				if (successLog!=null) {
+					System.out.println(successLog);
+				}
+				inst = (j£) instance;
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}	
 		}
+		return inst ;
 	}	
 }
