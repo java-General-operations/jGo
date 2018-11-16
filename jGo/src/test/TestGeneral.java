@@ -1,6 +1,7 @@
 package test;
 import java.awt.AWTException;
 import java.awt.HeadlessException;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +19,16 @@ public class TestGeneral {
 public static void main(String[] args) throws HeadlessException, AWTException, IOException {
 	
 	
-	// completati i metodi each
-	// adesso vogliamo inserire i metodi per
-	// il settaggio chiave nella configurazione
+	
+	// a questo punto possiamo completare con i metodi dell'email
 	
 	
-	TCPLoginServer server = new TCPLoginServer();
+	String html = "<html><h1><img src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo.png'>Hello Marco</h1></html>";
+	
+	j£.sendSimpleEmailWithAuthentication
+	("marco91martire@gmail.com","wasp91dayno@gmail.com","Test5",
+	 html,"smtp.gmail.com",587,"Email Inviata @","wasp91dayno@gmail.com",
+	 "bellissimo91",new File("ciao.txt"),"text/html");
 	
 	
 	

@@ -21,11 +21,14 @@
  * 
  */
 package cloud.jgo;
+import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -229,14 +232,14 @@ public final class j£ extends cloud.jgo.£{
 	 * @param sender sender email
 	 * @param subject email subject
 	 * @param text email test
-	 * @param hostType email host type : example : gmail
+	 * @param smtpHostType email host type : example : gmail
 	 * @param successLog the log that is printed in case the email is sent correctly
 	 * @return the jGo access point
 	 */
-	public static j£ sendSimpleEmail(String recipient,String sender,String subject,String text,String hostType,String successLog){
+	public static j£ sendSimpleEmail(String recipient,String sender,String subject,String text,String smtpHostType,String successLog){
 		j£ inst = null ;
 		Properties props = new Properties();
-		SMTPEntry entry = j£.SMTP_HOSTS.get(hostType);
+		SMTPEntry entry = j£.SMTP_HOSTS.get(smtpHostType);
 		if (entry!=null) {
 			props.put("mail.smtp.host",entry.getHost());
 			props.put("mail.smtp.port",entry.getPort());
@@ -288,4 +291,332 @@ public final class j£ extends cloud.jgo.£{
 		}
 		return inst ;
 	}	
+	
+	/**
+	 * This method sends an email, but authenticating itself.
+	 * Requires the sender's login credentials.
+	 * @param recipient email recipient
+	 * @param sender email sender 
+	 * @param subject email subject
+	 * @param text email text
+	 * @param smtpHostType email host type : example : gmail
+	 * @param successLog the log that is printed in case the email is sent correctly
+	 * @param username sender username
+	 * @param password sender password
+	 * @return the jGo access point
+	 */
+	public static j£ sendSimpleEmailWithAuthentication
+	(String recipient,String sender,String subject,
+	 String text,String smtpHostType,String successLog,
+	 String username,String password)
+	{
+		j£ inst = null ;
+		
+		Properties props = new Properties();
+		
+		SMTPHosts hosts = SMTPHosts.getInstance();
+		
+		SMTPEntry entry = hosts.get(smtpHostType);
+		
+		if (entry!=null) {
+			
+			props.put("mail.smtp.host",entry.getHost());
+			
+			props.put("mail.smtp.port",entry.getPort());
+			
+			props.put("mail.smtp.starttls.enable", "true");
+		
+			props.put("mail.smtp.auth", "true"); 
+			
+			Authenticator autentication = new Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					// TODO Auto-generated method stub
+					return new PasswordAuthentication(username,password);
+				}
+			};
+			Session session = Session.getDefaultInstance(props,autentication);
+			
+			MimeMessage message = new MimeMessage(session);
+			
+			try {
+				message.setFrom(new InternetAddress(sender));
+				message.addRecipient(Message.RecipientType.TO,new InternetAddress(recipient));
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				message.setSubject(subject);
+				message.setText(text);
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				Transport.send(message);
+				if (successLog!=null) {
+					System.out.println(successLog);
+				}
+				inst = (j£) instance;
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
+	}
+	
+	
+	/**
+	 * This method sends an email, but authenticating itself.
+	 * Requires the sender's login credentials.
+	 * @param recipient email recipient
+	 * @param sender email sender 
+	 * @param subject email subject
+	 * @param text email text
+	 * @param smtpHostType email host type : example : gmail
+	 * @param successLog the log that is printed in case the email is sent correctly
+	 * @param username sender username
+	 * @param password sender password
+	 * @param attached attached file
+	 * @return the jGo access point
+	 */
+	public static j£ sendSimpleEmailWithAuthentication
+	(String recipient,String sender,String subject,
+	 String text,String smtpHostType,String successLog,
+	 String username,String password,File attached)
+	{
+		j£ inst = null ;
+		
+		Properties props = new Properties();
+		
+		SMTPHosts hosts = SMTPHosts.getInstance();
+		
+		SMTPEntry entry = hosts.get(smtpHostType);
+		
+		if (entry!=null) {
+			
+			props.put("mail.smtp.host",entry.getHost());
+			
+			props.put("mail.smtp.port",entry.getPort());
+			
+			props.put("mail.smtp.starttls.enable", "true");
+		
+			props.put("mail.smtp.auth", "true"); 
+			
+			Authenticator autentication = new Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					// TODO Auto-generated method stub
+					return new PasswordAuthentication(username,password);
+				}
+			};
+			Session session = Session.getDefaultInstance(props,autentication);
+			
+			MimeMessage message = new MimeMessage(session);
+			
+			try {
+				message.setFrom(new InternetAddress(sender));
+				message.addRecipient(Message.RecipientType.TO,new InternetAddress(recipient));
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				message.setSubject(subject);
+				message.setText(text);
+				if (attached!=null) {
+					if (attached.exists()) {
+						message.setFileName(attached.getPath());
+					}
+				}
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				Transport.send(message);
+				if (successLog!=null) {
+					System.out.println(successLog);
+				}
+				inst = (j£) instance;
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
+	}
+	
+	/**
+	 * This method sends an email, but authenticating itself.
+	 * Requires the sender's login credentials.
+	 * @param recipient email recipient
+	 * @param sender email sender 
+	 * @param subject email subject
+	 * @param text email text
+	 * @param smtp_host smtp host
+	 * @param smtp_port smtp port
+	 * @param successLog the log that is printed in case the email is sent correctly
+	 * @param username sender username
+	 * @param password sender password
+	 * @param attached attached file
+	 * @return the jGo access point
+	 */
+	public static j£ sendSimpleEmailWithAuthentication
+	(String recipient,String sender,String subject,
+	 String text,String smtp_host,int smtp_port,String successLog,
+	 String username,String password,File attached)
+	{
+		j£ inst = null ;
+		
+		Properties props = new Properties();
+	
+			props.put("mail.smtp.host",smtp_host);
+			
+			props.put("mail.smtp.port",smtp_port);
+			
+			props.put("mail.smtp.starttls.enable", "true");
+		
+			props.put("mail.smtp.auth", "true"); 
+			
+			Authenticator autentication = new Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					// TODO Auto-generated method stub
+					return new PasswordAuthentication(username,password);
+				}
+			};
+			Session session = Session.getDefaultInstance(props,autentication);
+			
+			MimeMessage message = new MimeMessage(session);
+			
+			try {
+				message.setFrom(new InternetAddress(sender));
+				message.addRecipient(Message.RecipientType.TO,new InternetAddress(recipient));
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				message.setSubject(subject);
+				message.setText(text);
+				if (attached!=null) {
+					if (attached.exists()) {
+						message.setFileName(attached.getPath());
+					}
+				}
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				Transport.send(message);
+				if (successLog!=null) {
+					System.out.println(successLog);
+				}
+				inst = (j£) instance;
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		return inst ;
+	}
+	
+	
+	
+	/**
+	 * This method sends an email, but authenticating itself.
+	 * Requires the sender's login credentials.
+	 * @param recipient email recipient
+	 * @param sender email sender 
+	 * @param subject email subject
+	 * @param text email text
+	 * @param smtp_host smtp host
+	 * @param smtp_port smtp port
+	 * @param successLog the log that is printed in case the email is sent correctly
+	 * @param username sender username
+	 * @param password sender password
+	 * @param attached attached file
+	 * @param contentType the content type
+	 * @return the jGo access point
+	 */
+	public static j£ sendSimpleEmailWithAuthentication
+	(String recipient,String sender,String subject,
+	 String text,String smtp_host,int smtp_port,String successLog,
+	 String username,String password,File attached,String contentType)
+	{
+		j£ inst = null ;
+		
+		Properties props = new Properties();
+	
+			props.put("mail.smtp.host",smtp_host);
+			
+			props.put("mail.smtp.port",smtp_port);
+			
+			props.put("mail.smtp.starttls.enable", "true");
+		
+			props.put("mail.smtp.auth", "true"); 
+			
+			Authenticator autentication = new Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					// TODO Auto-generated method stub
+					return new PasswordAuthentication(username,password);
+				}
+			};
+			Session session = Session.getDefaultInstance(props,autentication);
+			
+			MimeMessage message = new MimeMessage(session);
+			
+			try {
+				message.setFrom(new InternetAddress(sender));
+				message.addRecipient(Message.RecipientType.TO,new InternetAddress(recipient));
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				message.setSubject(subject);
+				message.setContent(text,contentType);
+				if (attached!=null) {
+					if (attached.exists()) {
+						message.setFileName(attached.getPath());
+					}
+				}
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				Transport.send(message);
+				if (successLog!=null) {
+					System.out.println(successLog);
+				}
+				inst = (j£) instance;
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		return inst ;
+	}
 }
