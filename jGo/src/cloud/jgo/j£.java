@@ -96,12 +96,10 @@ public final class j£ extends cloud.jgo.£{
 	private static j£ getInstance(){
 		if (instance==null) {
 			instance = new j£();
-			_S = new jSwingUtils();
 		}
 		else{
 			if (instance instanceof £) {
 				instance = new j£();
-				_S = new jSwingUtils();
 			}
 		}
 		return (j£) instance ;
@@ -685,19 +683,4 @@ public final class j£ extends cloud.jgo.£{
 		}
 		return inst ;
 	}
-	/**
-	 * Spiegare per bene questo metodo
-	 * @return
-	 */
-	public static j£ reload(){
-		return (j£) instance ;
-	}
-	
-	
-	public final static class jSwingUtils extends SwingUtils{
-		
-		
-		
-	}
-
 }
