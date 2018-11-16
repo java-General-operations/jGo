@@ -77,5 +77,4 @@ Version 1.0.5 - in development
 - Changes have been made to the jGo access point
 
 - Added each method to the jGo access point
-
 (Thanks to Marco Martire)

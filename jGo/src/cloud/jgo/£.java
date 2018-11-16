@@ -2035,7 +2035,16 @@ public class £{
 		
 		/**
 		 * This method maximizes the frame.
-		 * The supported effects are all speed effects.
+		 * The supported effects are all speed effects.<br>
+		 * the effects allowed are the following:<br>
+		 * <ul>
+		 * <li>{@link Effect#SLOW}</li> 
+		 * <li>{@link Effect#REALLY_SLOW}</li> 
+		 * <li>{@link Effect#FAST}</li> 
+		 * <li>{@link Effect#REALLY_FAST}</li> 
+		 * <li>{@link Effect#SUPER_FAST}</li> 
+		 * <li>{@link Effect#IMPERCEPTIBLE}</li> 
+		 * </ul>
 		 * @param speedEffect a speed effect
 		 * @param frame the frame
 		 * @param maximum_width destination width
@@ -5615,14 +5624,21 @@ public class £{
       }
       
       /**
-       * This method prints a neater mex in the console
+       * This method prints a neater mex in the console.
+       * Types of granted messages:<br>
+       * <ul>
+       * <li>{@link £#CONSOLE_MEX_INFO} - For information messagges</li>
+       * <li>{@link £#CONSOLE_MEX_WARNING} - For warning messagges</li>
+       * <li>{@link £#CONSOLE_MEX_ERROR} - For error messagges</li>
+       * </ul>
+       * <br>
        * @param text The mex text
        * @param symbolFrame the frame symbol
        * @param length the frame length
        * @param type the mex type
        * @return the home instance
        */
-      public static £ consoleMex(String text,char symbolFrame,int length,String type){
+      public static £ consoleMex(String text,char symbolFrame,int length,final String type){
     	  System.out.println(new Date().toString().toUpperCase()+" - Mex Type :"+type);
     	  for (int i = 0; i < length; i++) {
 			System.out.print(symbolFrame);
