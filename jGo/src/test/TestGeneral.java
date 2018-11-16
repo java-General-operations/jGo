@@ -22,6 +22,7 @@ public static void main(String[] args) throws HeadlessException, AWTException, I
 	// 1) fare la stessa cosa che ho fatto per webutils per le altre due classi
 	// 2) capito errore home(), nel metodo home, dobbiamo controllare se l'istanza
 	// è uguale a j£, in tal caso portarla al punto di accesso non potenziato
+	// 3 ) aggiungere ultimo metodo webcamPanel eppoi correggere tutti gli eventuali bug derivati
 	
 	j£.testJ£()._W.createBasicHtml2("ciao.html","Hello").home().test£();
 	
