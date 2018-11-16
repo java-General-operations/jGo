@@ -21,7 +21,7 @@ public static void main(String[] args) throws HeadlessException, AWTException, I
 	
 	
 	
-	j£.openWebcam().capture("hello.jpg").closeWebcam();
+	j£.openWebcam().capture("hello.png").closeWebcam();
 	
 	
 	

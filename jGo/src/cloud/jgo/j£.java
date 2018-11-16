@@ -38,6 +38,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamResolution;
 
 import cloud.jgo.SMTPHosts.SMTPEntry;
 /**
@@ -88,6 +89,9 @@ public final class j£ extends cloud.jgo.£{
 	 * Webcam
 	 */
 	public static Webcam webcam = Webcam.getDefault();
+	static{
+		webcam.setViewSize(WebcamResolution.VGA.getSize());
+	}
 	static{
 		instance = getInstance();
 	}
