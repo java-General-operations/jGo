@@ -83,7 +83,7 @@ import cloud.jgo.SMTPHosts.SMTPEntry;
  */
 public final class j£ extends cloud.jgo.£{
 	
-	private static Webcam webcam = null ;
+	private static Webcam webcam = Webcam.getDefault();
 	
 	static{
 		instance = getInstance();
