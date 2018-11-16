@@ -25,12 +25,8 @@ package cloud.jgo;
 import java.awt.HeadlessException;
 
 public class Home {
-	
 	public static £ home = null ;
-
 	 static{
-		
-		
 		try {
 			home=  £.instance;
 		} catch (HeadlessException e) {
@@ -43,7 +39,5 @@ public class Home {
 			*/
 			e.printStackTrace();
 		}
-
 	}
-
 }

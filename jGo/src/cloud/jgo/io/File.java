@@ -65,30 +65,6 @@ public class File extends java.io.File{
 		in.close();
 		return baos.toByteArray();
 	}
-	
-	
-	public static £ home = null ;
-	static{
-		try {
-			try {
-				home = £.getInstance();
-			} catch (AWTException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (HeadlessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	
-	
-	
-	
 	public Icon getIcon(){
 		
 		if(exists()){
@@ -99,11 +75,6 @@ public class File extends java.io.File{
 		}
 		
 	}
-	
-	
-	
-	
-	
       public ImageIcon getImageIcon(){
 		
 		if(exists()){
@@ -118,8 +89,7 @@ public class File extends java.io.File{
 		}
 		
 	}
-	
-	
+
 	public File(java.io.File parent, String child) {
 		super(parent, child);
 		// TODO Auto-generated constructor stub

@@ -88,24 +88,25 @@ public final class j£ extends cloud.jgo.£{
 	/**
 	 * Webcam
 	 */
-	public static Webcam webcam = Webcam.getDefault();
-	static{
-		webcam.setViewSize(WebcamResolution.VGA.getSize());
-	}
+	public final static Webcam webcam = Webcam.getDefault();
 	static{
 		instance = getInstance();
+		webcam.setViewSize(WebcamResolution.VGA.getSize()); // è per metodi statici, quindi via le preoccupazioni
 	}
-	public static j£ getInstance(){
+	private static j£ getInstance(){
 		if (instance==null) {
 			instance = new j£();
+			_S = new jSwingUtils();
 		}
 		else{
 			if (instance instanceof £) {
 				instance = new j£();
+				_S = new jSwingUtils();
 			}
 		}
 		return (j£) instance ;
 	}
+	private j£() {}
 	// Methods for email :version 1.0.5
 	/**
 	 * This method sends a simple email.
@@ -684,4 +685,19 @@ public final class j£ extends cloud.jgo.£{
 		}
 		return inst ;
 	}
+	/**
+	 * Spiegare per bene questo metodo
+	 * @return
+	 */
+	public static j£ reload(){
+		return (j£) instance ;
+	}
+	
+	
+	public final static class jSwingUtils extends SwingUtils{
+		
+		
+		
+	}
+
 }

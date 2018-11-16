@@ -333,7 +333,7 @@ public class £{
 	/**
 	 * <strong>Swing</strong> <em>Methods</em>
 	 */
-	public final static SwingUtils _S =  new SwingUtils();
+	public static SwingUtils _S =  new SwingUtils();
 	
 	/**
 	 *  <strong>Android</strong> <em>Methods</em> -  <em style='color:red'>Under development</em>
@@ -5069,22 +5069,19 @@ public class £{
 			e.printStackTrace();
 		}
 	}
-	
 	/**
 	 * unico costruttore è privato
 	 */
 	protected £(){
 		// nothing ...
 	}
-
-	public static £ getInstance() throws HeadlessException, AWTException, IOException{
+	private static £ getInstance() throws HeadlessException, AWTException, IOException{
 		if(instance == null){
 			instance = new £();
 			encrypt =new Encrypts(Encrypts.TEXT_KEY_DEFAULT,"jo_3434");
 		}
 		return instance ;
 	}
-	
 	/**
 	 * This method executes a screenshot.
 	 * @param PNGFileName the file path
