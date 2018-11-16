@@ -96,7 +96,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -132,11 +131,9 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
-
 import org.junit.internal.runners.model.EachTestNotifier;
-
+import com.github.sarxos.webcam.Webcam;
 import com.google.gson.Gson;
-
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
@@ -260,7 +257,10 @@ public class £{
 	private static int counterScreenShot = 0 ;
 	private static RandomAccessFile access = null ;
 	private static FileChannel channel = null ;
-	
+	/**
+	 * Webcam
+	 */
+	public static Webcam webcam = Webcam.getDefault();
 	/**
 	 * java.util.Arrays
 	 */

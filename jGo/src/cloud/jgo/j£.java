@@ -24,7 +24,6 @@ package cloud.jgo;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
-
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -34,9 +33,6 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
-import com.github.sarxos.webcam.Webcam;
-
 import cloud.jgo.SMTPHosts.SMTPEntry;
 /**
  * @author Martire91
@@ -82,9 +78,6 @@ import cloud.jgo.SMTPHosts.SMTPEntry;
     <em class='type'>£</em>._<em style='color:#282828;'>S</em>.<em class='method'>moveJFrame</em>(frm, 0, 0,<span style='color: #006200;'>Effect</span>.SLOW).<em class='method'>moveJFrame</em>(frm, 300, 300, Effect.<span style='color: #006200;'>FAST</span>);
  */
 public final class j£ extends cloud.jgo.£{
-	
-	public static Webcam webcam = Webcam.getDefault();
-	
 	static{
 		instance = getInstance();
 	}
