@@ -77,4 +77,8 @@ Version 1.0.5 - in development
 - Changes have been made to the jGo access point
 
 - Added each method to the jGo access point
+
+- The configuration bug of the TCPLoginServer has been fixed.
+
+- Other changes have been made to the TCPLoginServer class
 (Thanks to Marco Martire)

@@ -22,6 +22,11 @@
  */
 package cloud.jgo.net.tcp.login;
 
+import java.security.Key;
+
+import javax.crypto.spec.SecretKeySpec;
+
+import cloud.jgo.Encrypts;
 import cloud.jgo.net.tcp.TCPServerConfiguration;
 import cloud.jgo.net.tcp.TCPServerTypes;
 /**
@@ -30,13 +35,13 @@ import cloud.jgo.net.tcp.TCPServerTypes;
  * Login tcp server configuration
  */
 public class TCPLoginServerConfiguration extends TCPServerConfiguration{
-
 	private String password,username = null ;
-	private int attempts = 0 ;
+	private int attempts = TCPLoginServer.DEFAULT_ATTEMPTS ;
 	public final static String KEY_PASSW = "jgo.net.server.passw";
 	public final static String KEY_USER = "jgo.net.server.user";
 	public final static String KEY_ATTEMPTS = "jgo.net.server.attempts";
-	
+	public final static String KEY_AES_KEY = "jgo.net.server.aes_key";
+	private Key key=null;
 	static{
 		SERVER_TYPE = TCPServerTypes.TYPE_LOGIN ;
 	}
@@ -68,6 +73,30 @@ public class TCPLoginServerConfiguration extends TCPServerConfiguration{
 			this.getProps().replace(KEY_USER,this.username);
 		}
 	}
+	
+	/**
+	 * This method sets the AES key
+	 * @param keyText the key text
+	 */
+	public void AES_key(String keyText){
+		this.key = new SecretKeySpec(keyText.getBytes(),Encrypts.ALGORITHM);
+		if (!this.getProps().contains(KEY_AES_KEY)) {
+			this.getProps().put(KEY_AES_KEY,keyText);
+			counterSettings++ ;
+		}
+		else{
+			this.getProps().replace(KEY_AES_KEY,keyText);
+		}
+	}
+	
+	/**
+	 * This method returns the AES key
+	 * @return AES key
+	 */
+	public Key AES_key(){
+		return this.key ;
+	}
+	
 
 	/**
 	 * This method returns the server password

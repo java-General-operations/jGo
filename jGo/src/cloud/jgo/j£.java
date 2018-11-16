@@ -54,7 +54,7 @@ import cloud.jgo.SMTPHosts.SMTPEntry;
    <strong>
    This class is an extension of jGo, however it is advisable to use<br>
    it only for Maven projects as it groups all the methods that require<br>
-   third-party libraries, such as javamail.
+   third-party libraries, such as <a href='https://javaee.github.io/javamail/'>javamail</a>.
    </strong>
    <br><br>
    <strong>1 Example</strong>  -  <em class='explanations'>Prints "Welcome in JGO", executes a screenshot with a final function and finally emits an acoustic signal :</em> : <br>

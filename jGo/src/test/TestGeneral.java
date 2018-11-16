@@ -11,6 +11,7 @@ import cloud.jgo.SMTPHosts;
 import cloud.jgo.j£;
 import cloud.jgo.£Func;
 import cloud.jgo.SMTPHosts.SMTPEntry;
+import cloud.jgo.net.tcp.login.TCPLoginServer;
 import cloud.jgo.£.Effect;
 import cloud.jgo.£;
 public class TestGeneral {
@@ -18,6 +19,14 @@ public static void main(String[] args) throws HeadlessException, AWTException, I
 	
 	
 	// completati i metodi each
+	// adesso vogliamo inserire i metodi per
+	// il settaggio chiave nella configurazione
+	
+	
+	TCPLoginServer server = new TCPLoginServer();
+	
+	
+	
 	
 	
 	

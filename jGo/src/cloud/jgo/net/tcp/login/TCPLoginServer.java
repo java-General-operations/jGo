@@ -52,16 +52,16 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	private int attempts = DEFAULT_ATTEMPTS ;
 	private int copiedValueAttempts = attempts ;
 	private TCPLoginServerConfiguration configuration = new TCPLoginServerConfiguration();
-	private Key key=null;
 	
+	// diamo per scontato che la chiave sia stata impostata
 	/**
 	 * This method sets the server password
 	 * @param password server password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
-		if(this.key!=null){
-			this.password = £.AES_e(this.password,AES_key());
+		if(getConfiguration().AES_key()!=null){
+			this.password = £.AES_e(this.password,getConfiguration().AES_key());
 			this.configuration.setPassword(this.password);
 		}
 		else{
@@ -75,6 +75,22 @@ public final class TCPLoginServer extends TCPServer implements Login{
 		}
 	}
 	
+	@Override
+	public boolean isConfigurated() {
+		// TODO Auto-generated method stub
+		boolean configurated = super.isConfigurated();
+		if (configurated) {
+			
+			if (this.configuration.getUsername()!=null && this.configuration.getPassword()!=null) {
+			    configurated = true ;
+			}
+			else{
+				configurated = false ;
+			}
+		}
+		return configurated ;
+	}
+
 	public int getCopiedValueAttempts() {
 		return this.copiedValueAttempts;
 	}
@@ -84,8 +100,8 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	 */
 	public void setUsername(String username) {
 		this.username = username;
-		if (this.key!=null) {
-			this.username = £.AES_e(this.username,AES_key());
+		if (getConfiguration().AES_key()!=null) {
+			this.username = £.AES_e(this.username,getConfiguration().AES_key());
 			this.configuration.setUsername(this.username);
 		}
 		else{
@@ -98,22 +114,6 @@ public final class TCPLoginServer extends TCPServer implements Login{
 			}
 		}
 	}
-	/**
-	 * This method sets the AES key
-	 * @param keyText the key text
-	 */
-	public void AES_key(String keyText){
-		this.key = new SecretKeySpec(keyText.getBytes(),Encrypts.ALGORITHM);
-	}
-	
-	/**
-	 * This method returns the AES key
-	 * @return AES key
-	 */
-	public Key AES_key(){
-		return this.key ;
-	}
-	
 	/**
 	 * This method sets the login attempts
 	 * @param attempts the login attempts
@@ -144,6 +144,12 @@ public final class TCPLoginServer extends TCPServer implements Login{
 		if (this.configuration.getAttempts()>0) {
 			this.setAttempts(this.configuration.getAttempts());
 		}
+	}
+	
+	@Override
+	public void reloadConfiguration() {
+		// TODO Auto-generated method stub
+		configure(this.configuration);
 	}
 	
 	/**
@@ -206,8 +212,8 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	@Override
 	public boolean login(String user,String passw){
 		boolean logged = false ;
-	    String passMem = £.AES_d(this.password, key);
-		String userMem = £.AES_d(this.username, key);
+	    String passMem = £.AES_d(this.password,getConfiguration().AES_key());
+		String userMem = £.AES_d(this.username,getConfiguration().AES_key());
 		if(user.equals(userMem)&&passw.equals(passMem)){
 			logged = true ;
 		}
