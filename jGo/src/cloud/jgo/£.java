@@ -333,7 +333,7 @@ public class £{
 	/**
 	 * <strong>Swing</strong> <em>Methods</em>
 	 */
-	public static SwingUtils _S =  new SwingUtils();
+	public final static SwingUtils _S =  new SwingUtils();
 	
 	/**
 	 *  <strong>Android</strong> <em>Methods</em> -  <em style='color:red'>Under development</em>
@@ -1382,6 +1382,8 @@ public class £{
 	 * <p style='color:red'>It can not be used yet as it is under development</p>
 	 */
 	public static class WebUtils extends Home{
+		// esiste solo una instanza di questa classe
+		private WebUtils() {}
 		/**
 		 * this method creates an html file with the base code
 		 * @param pathDestination the destinatio file path
@@ -1403,6 +1405,23 @@ public class £{
 				e.printStackTrace();
 			}
 			return new cloud.jgo.io.File(pathDestination);
+		}
+		
+		public static WebUtils createBasicHtml2(String pathDestination,String pageTitle){
+			final String htmlCode = "<!DOCTYPE html>"+Header.CRLF+
+			    "<html>"+Header.CRLF+
+			     "<head>"+Header.CRLF+
+				   "<title>"+pageTitle+"</title>"+Header.CRLF+
+					 "</head>"+Header.CRLF+
+						"<body>"+Header.CRLF+"<h1>"+pageTitle+"</h1>+"+Header.CRLF+"</body>"+Header.CRLF+
+						  "</html>";
+			try {
+				£.createFile(pathDestination).writeFile(new File(pathDestination),false,new String[]{htmlCode});
+			} catch (HeadlessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return _W;
 		}
 		
 		/**
@@ -2991,7 +3010,6 @@ public class £{
 		 * @return the home instance
 		 */
 		public static £ openTheRouterControlPanel(){
-			
 			String httpAddress=null;
 			httpAddress = HTTP_ROUTER_IP();
 			try {
@@ -3003,7 +3021,7 @@ public class £{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return home ;
+			return home();
 		}
 		
 		/**
@@ -5075,7 +5093,7 @@ public class £{
 	protected £(){
 		// nothing ...
 	}
-	private static £ getInstance() throws HeadlessException, AWTException, IOException{
+	protected static £ getInstance() throws HeadlessException, AWTException, IOException{
 		if(instance == null){
 			instance = new £();
 			encrypt =new Encrypts(Encrypts.TEXT_KEY_DEFAULT,"jo_3434");
@@ -7208,4 +7226,9 @@ End if
     			}
     		}
     	}
+      
+      public static £ test£(){
+    	  System.out.println("In questo metodo l'istanza e di "+instance.getClass().getSimpleName());
+    	  return instance ;
+      }
 }

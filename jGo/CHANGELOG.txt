@@ -81,4 +81,10 @@ Version 1.0.5 - in development
 - The configuration bug of the TCPLoginServer has been fixed.
 
 - Other changes have been made to the TCPLoginServer class
+
+- Changed jGo phases
+
+- Changed setting of the Home class
+
+- Added webcam management methods to the enhanced access point
 (Thanks to Marco Martire)

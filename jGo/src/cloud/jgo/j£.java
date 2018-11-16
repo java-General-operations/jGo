@@ -90,10 +90,10 @@ public final class j£ extends cloud.jgo.£{
 	 */
 	public final static Webcam webcam = Webcam.getDefault();
 	static{
-		instance = getInstance();
+		instance = getPowerfulInstance();
 		webcam.setViewSize(WebcamResolution.VGA.getSize()); // è per metodi statici, quindi via le preoccupazioni
 	}
-	private static j£ getInstance(){
+	private static j£ getPowerfulInstance(){
 		if (instance==null) {
 			instance = new j£();
 		}
@@ -682,5 +682,10 @@ public final class j£ extends cloud.jgo.£{
 			}
 		}
 		return inst ;
+	}
+	
+	public static j£ testJ£(){
+		System.out.println("In questo metodo l'istanza e di "+instance.getClass().getSimpleName());
+		return (j£) instance;
 	}
 }

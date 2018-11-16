@@ -22,22 +22,26 @@
  */
 package cloud.jgo;
 
+import java.awt.AWTException;
 import java.awt.HeadlessException;
+import java.io.IOException;
 
 public class Home {
-	public static £ home = null ;
-	 static{
-		try {
-			home=  £.instance;
+	 public static £ home(){
+		 try {
+			return £.getInstance();
 		} catch (HeadlessException e) {
-			/*
-			 
-			JGO Auto-generated catch block
-			Author : £ wasp91 £
-			Date 06 mar 2018
-			
-			*/
+			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
-	}
+	 }
 }
