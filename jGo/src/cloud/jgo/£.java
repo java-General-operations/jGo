@@ -133,6 +133,8 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
 
+import org.junit.internal.runners.model.EachTestNotifier;
+
 import com.google.gson.Gson;
 
 import cloud.jgo.SMTPHosts.SMTPEntry;
@@ -348,6 +350,12 @@ public class £{
 	 */
 	public final static WebUtils _W = new WebUtils();
 	// nuovi metodi - version 1.0.5
+	/**
+	 * This method iterates the array as if it were a loop
+	 * @param arr the array
+	 * @param func the function that you want to perform at each iteration
+	 * @return the jGo access point
+	 */
 	public static <T> £ each(T[]arr,£Func func){
 		for (int i = 0; i < arr.length; i++) {
 			Boolean continue_ = (Boolean) func.function(arr[i]);
@@ -357,7 +365,14 @@ public class £{
 		}
 		return instance ;
 	}
-	
+	/**
+	 * This method iterates the array as if it were a loop.<br>
+	 * It also allows you to specify an index to start from
+	 * @param arr the array
+	 * @param func the function that you want to perform at each iteration
+	 * @param initialIndex start index
+	 * @return the jGo access point
+	 */
 	public static <T> £ each(T[]arr,£Func func,int initialIndex){
 		for (int i = initialIndex; i < arr.length; i++) {
 			Boolean continue_ = (Boolean) func.function(arr[i]);
@@ -367,9 +382,34 @@ public class £{
 		}
 		return instance ;
 	}
+	/**
+	 * If you pass this constant to the {@link £#each(Object[], String, £Func)}<br>
+	 * - {@link £#each(List, String, £Func)} methods, <br>
+	 * you access the index that is iterating
+	 */
 	public static final String EACH_INDEX = "index";
+	/**
+	 * If you pass this constant to the {@link £#each(Object[], String, £Func)}<br>
+	 * - {@link £#each(List, String, £Func)} methods, <br>
+	 * you access the object that is iterating
+	 */
 	public static final String EACH_OBJECT = "object";
 	// valori concessi : index | object
+	/**
+	 * This method iterates the array as if it were a loop.<br>
+	 * It also allows you to specify a constant that indicates<br>
+	 * what type of element you want to access each iteration.<br>
+	 * Granted values :<br>
+	 * <ul>
+	 * <li>{@link £#EACH_OBJECT} - Has access to the object that is iterating</li>
+	 * <li>{@link £#EACH_INDEX} - Has access to the index that is iterating</li>
+	 * <ul>
+	 * <br>
+	 * @param arr the array
+	 * @param returnType the return type
+	 * @param func the function that you want to perform at each iteration
+	 * @return jGo access point
+	 */
 	public static <T> £ each(T[]arr,final String returnType,£Func func){
 		switch(returnType){
 		
@@ -404,7 +444,12 @@ public class £{
 		}
 		return instance ;
 	}
-	
+	/**
+	 * This method iterates the list as if it were an iterator.<br>
+	 * @param list the list
+	 * @param func the function that you want to perform at each iteration
+	 * @return jGo access point
+	 */
 	public static <T> £ each(List<T>list,£Func func){
 		Iterator<T>iterator = list.iterator();
 		while (iterator.hasNext()) {
@@ -416,7 +461,14 @@ public class £{
 		}
 		return instance ;
 	}
-	
+	/**
+	 * This method iterates the list as if it were an iterator.<br>
+	 * It also allows you to specify an index to start from
+	 * @param list the list
+	 * @param initialIndex start index
+	 * @param func the function that you want to perform at each iteration
+	 * @return jGo access point
+	 */
 	public static <T> £ each(List<T>list,int initialIndex,£Func func){
 		for (int i = initialIndex; i < list.size(); i++) {
 			T t = list.get(i);
@@ -427,7 +479,21 @@ public class £{
 		}
 		return instance ;
 	}
-	
+	/**
+	 * This method iterates the list as if it were an iterator.<br>
+	 *  It also allows you to specify a constant that indicates<br>
+	 * what type of element you want to access each iteration.<br>
+	 * Granted values :<br>
+	 * <ul>
+	 * <li>{@link £#EACH_OBJECT} - Has access to the object that is iterating</li>
+	 * <li>{@link £#EACH_INDEX} - Has access to the index that is iterating</li>
+	 * <ul>
+	 * <br>
+	 * @param list the list
+	 * @param returnType the return type
+	 * @param func the function that you want to perform at each iteration
+	 * @return jGo access point
+	 */
 	public static <T> £ each(List<T>list,final String returnType,£Func func){
 		switch(returnType){
 		
@@ -462,7 +528,6 @@ public class £{
 		}
 		return instance ;
 	}
-	
 	// version 1.0.2
 	/**
 	 * This method transforms an array into a list

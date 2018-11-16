@@ -27,8 +27,6 @@ import javax.swing.JFrame;
 import cloud.jgo.£.Effect;
 
 public class MoveFrame extends Thread {
-
-	
 	private JFrame frame ;
 	private Effect verify;
 	private int originalX,originalY = 0;
