@@ -148,6 +148,12 @@
     <version>1.4</version>
     <scope>runtime</scope>
 </dependency>
+<!-- https://mvnrepository.com/artifact/com.github.sarxos/webcam-capture -->
+<dependency>
+    <groupId>com.github.sarxos</groupId>
+    <artifactId>webcam-capture</artifactId>
+    <version>0.3.12</version>
+</dependency>
 </dependencies>
 	<organization>
 		<name>java General operations</name>

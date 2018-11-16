@@ -35,6 +35,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.github.sarxos.webcam.Webcam;
+
 import cloud.jgo.SMTPHosts.SMTPEntry;
 /**
  * @author Martire91
@@ -80,6 +82,9 @@ import cloud.jgo.SMTPHosts.SMTPEntry;
     <em class='type'>£</em>._<em style='color:#282828;'>S</em>.<em class='method'>moveJFrame</em>(frm, 0, 0,<span style='color: #006200;'>Effect</span>.SLOW).<em class='method'>moveJFrame</em>(frm, 300, 300, Effect.<span style='color: #006200;'>FAST</span>);
  */
 public final class j£ extends cloud.jgo.£{
+	
+	private Webcam webcam = null ;
+	
 	static{
 		instance = getInstance();
 	}
