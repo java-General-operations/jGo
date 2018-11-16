@@ -354,6 +354,7 @@ public class £{
 	 * This method iterates the array as if it were a loop
 	 * @param arr the array
 	 * @param func the function that you want to perform at each iteration
+	 * @param <T> the array type
 	 * @return the jGo access point
 	 */
 	public static <T> £ each(T[]arr,£Func func){
@@ -371,6 +372,7 @@ public class £{
 	 * @param arr the array
 	 * @param func the function that you want to perform at each iteration
 	 * @param initialIndex start index
+	 * @param <T> the array type
 	 * @return the jGo access point
 	 */
 	public static <T> £ each(T[]arr,£Func func,int initialIndex){
@@ -403,11 +405,12 @@ public class £{
 	 * <ul>
 	 * <li>{@link £#EACH_OBJECT} - Has access to the object that is iterating</li>
 	 * <li>{@link £#EACH_INDEX} - Has access to the index that is iterating</li>
-	 * <ul>
+	 * </ul>
 	 * <br>
 	 * @param arr the array
 	 * @param returnType the return type
 	 * @param func the function that you want to perform at each iteration
+	 * @param <T> the array type
 	 * @return jGo access point
 	 */
 	public static <T> £ each(T[]arr,final String returnType,£Func func){
@@ -448,6 +451,7 @@ public class £{
 	 * This method iterates the list as if it were an iterator.<br>
 	 * @param list the list
 	 * @param func the function that you want to perform at each iteration
+	 * @param <T> the list type
 	 * @return jGo access point
 	 */
 	public static <T> £ each(List<T>list,£Func func){
@@ -467,6 +471,7 @@ public class £{
 	 * @param list the list
 	 * @param initialIndex start index
 	 * @param func the function that you want to perform at each iteration
+	 * @param <T> the list type
 	 * @return jGo access point
 	 */
 	public static <T> £ each(List<T>list,int initialIndex,£Func func){
@@ -487,11 +492,12 @@ public class £{
 	 * <ul>
 	 * <li>{@link £#EACH_OBJECT} - Has access to the object that is iterating</li>
 	 * <li>{@link £#EACH_INDEX} - Has access to the index that is iterating</li>
-	 * <ul>
+	 * </ul>
 	 * <br>
 	 * @param list the list
 	 * @param returnType the return type
 	 * @param func the function that you want to perform at each iteration
+	 * @param <T> the list type
 	 * @return jGo access point
 	 */
 	public static <T> £ each(List<T>list,final String returnType,£Func func){
@@ -2036,7 +2042,7 @@ public class £{
 		/**
 		 * This method maximizes the frame.
 		 * The supported effects are all speed effects.<br>
-		 * the effects allowed are the following:<br>
+		 * The effects allowed are the following:<br>
 		 * <ul>
 		 * <li>{@link Effect#SLOW}</li> 
 		 * <li>{@link Effect#REALLY_SLOW}</li> 
@@ -2045,6 +2051,7 @@ public class £{
 		 * <li>{@link Effect#SUPER_FAST}</li> 
 		 * <li>{@link Effect#IMPERCEPTIBLE}</li> 
 		 * </ul>
+		 * <br>
 		 * @param speedEffect a speed effect
 		 * @param frame the frame
 		 * @param maximum_width destination width
@@ -2065,6 +2072,16 @@ public class £{
 		/**
 		 * This method minimizes the frame.
 		 * The supported effects are all speed effects.
+		 * The effects allowed are the following:<br>
+		 * <ul>
+		 * <li>{@link Effect#SLOW}</li> 
+		 * <li>{@link Effect#REALLY_SLOW}</li> 
+		 * <li>{@link Effect#FAST}</li> 
+		 * <li>{@link Effect#REALLY_FAST}</li> 
+		 * <li>{@link Effect#SUPER_FAST}</li> 
+		 * <li>{@link Effect#IMPERCEPTIBLE}</li> 
+		 * </ul>
+		 * <br>
 		 * @param speedEffect a speed effect
 		 * @param frame the frame
 		 * @param destination_width destination width
@@ -2087,6 +2104,16 @@ public class £{
 		 * This method moves the frame <br>
 		 * <p style='color:red'>The method is fine only if it is not used: setLocationRelativeTo(null);</p>
 		 * <p>The supported effects are all speed effects.</p>
+		 * The effects allowed are the following:<br>
+		 * <ul>
+		 * <li>{@link Effect#SLOW}</li> 
+		 * <li>{@link Effect#REALLY_SLOW}</li> 
+		 * <li>{@link Effect#FAST}</li> 
+		 * <li>{@link Effect#REALLY_FAST}</li> 
+		 * <li>{@link Effect#SUPER_FAST}</li> 
+		 * <li>{@link Effect#IMPERCEPTIBLE}</li> 
+		 * </ul>
+		 * <br>
 		 * @param frame the frame you want to move
 		 * @param x the destination coordinate x
 		 * @param y the destination coordinate y
@@ -2115,6 +2142,16 @@ public class £{
 		 * This method moves the frame <br>
 		 * <p style='color:red'>The method is fine only if it is not used: setLocationRelativeTo(null);</p>
 		 * <p>The supported effects are all speed effects.</p>
+		 * The effects allowed are the following:<br>
+		 * <ul>
+		 * <li>{@link Effect#SLOW}</li> 
+		 * <li>{@link Effect#REALLY_SLOW}</li> 
+		 * <li>{@link Effect#FAST}</li> 
+		 * <li>{@link Effect#REALLY_FAST}</li> 
+		 * <li>{@link Effect#SUPER_FAST}</li> 
+		 * <li>{@link Effect#IMPERCEPTIBLE}</li> 
+		 * </ul>
+		 * <br>
 		 * @param frame the frame you want to move
 		 * @param x the destination coordinate x
 		 * @param y the destination coordinate y
@@ -2148,6 +2185,14 @@ public class £{
 		 * It is the method that decides the speed of the effects<br>
 		 * <p style='color:red'>CAUTION - if you use the "crazy" effect, you enter in an infinite cicle</p>
 		 * <p>The supported effects are : (CRAZY,MAXIMIZED,MINIMIZED,TRANSPARENCY)</p>
+		 * The effects allowed are the following:<br>
+		 * <ul>
+		 * <li>{@link Effect#CRAZY}</li> 
+		 * <li>{@link Effect#MAXIMIZED}</li> 
+		 * <li>{@link Effect#MINIMIZED}</li> 
+		 * <li>{@link Effect#TRANSPARENCY}</li> 
+		 * </ul>
+		 * <br>
 		 * @param effect a speed effect
 		 * @param frames the frames
 		 * @return the SwingUtils home
@@ -2229,6 +2274,16 @@ public class £{
 		
 		/**
 		 * This method shows the frame
+		 * The effects allowed are the following:<br>
+		 * <ul>
+		 * <li>{@link Effect#SLOW}</li> 
+		 * <li>{@link Effect#REALLY_SLOW}</li> 
+		 * <li>{@link Effect#FAST}</li> 
+		 * <li>{@link Effect#REALLY_FAST}</li> 
+		 * <li>{@link Effect#SUPER_FAST}</li> 
+		 * <li>{@link Effect#IMPERCEPTIBLE}</li> 
+		 * </ul>
+		 * <br>
 		 * @param jFram the frame
 		 * @param effect a speed effect
 		 * @return the SwingUtils instance
@@ -2264,6 +2319,16 @@ public class £{
 		
 		/**
 		 * This method shows the frame
+		 * The effects allowed are the following:<br>
+		 * <ul>
+		 * <li>{@link Effect#SLOW}</li> 
+		 * <li>{@link Effect#REALLY_SLOW}</li> 
+		 * <li>{@link Effect#FAST}</li> 
+		 * <li>{@link Effect#REALLY_FAST}</li> 
+		 * <li>{@link Effect#SUPER_FAST}</li> 
+		 * <li>{@link Effect#IMPERCEPTIBLE}</li> 
+		 * </ul>
+		 * <br>
 		 * @param jFram the frame
 		 * @param effect a speed effect
 		 * @param func the final function
@@ -2301,6 +2366,16 @@ public class £{
 		/**
 		 * This is the opposite of show.
 		 * Hides the frame to the coordinates x = 0, x = 0.
+		 * The effects allowed are the following:<br>
+		 * <ul>
+		 * <li>{@link Effect#SLOW}</li> 
+		 * <li>{@link Effect#REALLY_SLOW}</li> 
+		 * <li>{@link Effect#FAST}</li> 
+		 * <li>{@link Effect#REALLY_FAST}</li> 
+		 * <li>{@link Effect#SUPER_FAST}</li> 
+		 * <li>{@link Effect#IMPERCEPTIBLE}</li> 
+		 * </ul>
+		 * <br>
 		 * @param jFram the frame
 		 * @param effect a speed effect
 		 * @param func the final function
@@ -2322,6 +2397,16 @@ public class £{
 		/**
 		 * This is the opposite of show.
 		 * Hides the frame to the coordinates x = 0, x = 0.
+		 * The effects allowed are the following:<br>
+		 * <ul>
+		 * <li>{@link Effect#SLOW}</li> 
+		 * <li>{@link Effect#REALLY_SLOW}</li> 
+		 * <li>{@link Effect#FAST}</li> 
+		 * <li>{@link Effect#REALLY_FAST}</li> 
+		 * <li>{@link Effect#SUPER_FAST}</li> 
+		 * <li>{@link Effect#IMPERCEPTIBLE}</li> 
+		 * </ul>
+		 * <br>
 		 * @param jFram the frame
 		 * @param effect a speed effect
 		 * @return the SwingUtils instance
@@ -2337,9 +2422,6 @@ public class £{
 			
 			return instance ;
 		}
-		
-		
-		
 		/**
 		 * This method makes the frame transparent
 		 * @param frame The frame that you want to make transparent
@@ -2388,7 +2470,17 @@ public class £{
 		
 		// questo metodo non return il thread
 		/**
-		 * This method performs the slide effect on a component
+		 * This method performs the slide effect on a component.
+		 * The effects allowed are the following:<br>
+		 * <ul>
+		 * <li>{@link Effect#SLOW}</li> 
+		 * <li>{@link Effect#REALLY_SLOW}</li> 
+		 * <li>{@link Effect#FAST}</li> 
+		 * <li>{@link Effect#REALLY_FAST}</li> 
+		 * <li>{@link Effect#SUPER_FAST}</li> 
+		 * <li>{@link Effect#IMPERCEPTIBLE}</li> 
+		 * </ul>
+		 * <br>
 		 * @param comp the component that acts as a slide
 		 * @param slideAlign alignment effect
 		 * @param effect a speed effect
@@ -2399,14 +2491,18 @@ public class £{
 			new java.lang.Thread(toggle).start();
 			return instance ;
 		}
-		
-		
 		// di default è la verticale
 		// interessantinissimo
 		// gli passi il componente che funge da slide
 		private static SlideToggle toggle = null ;
 		/**
-		 * This method is interesting, returns a toggle button
+		 * This method is interesting, returns a toggle button.
+		 * The effects allowed are the following:<br>
+		 * <ul>
+		 * <li>{@link Effect#HORIZONTAL}</li> 
+		 * <li>{@link Effect#VERTICAL}</li> 
+		 * </ul>
+		 * <br>
 		 * @param comp comp the component that acts as a slide
 		 * @param slideAlign alignment effect
 		 * @param effect a speed effect
@@ -2435,11 +2531,7 @@ public class £{
 				}
 			});
 			return button ;
-		}
-		
-		
-		
-		
+		}	
 	}
 	
 	

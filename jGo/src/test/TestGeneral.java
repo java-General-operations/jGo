@@ -21,16 +21,5 @@ public static void main(String[] args) throws HeadlessException, AWTException, I
 	
 	
 	
-	
-	JFrame jframe = £._S.createFrame("Test",250,250,null,true);
-	
-	
-	
-	
-	£._S.maximizes(Effect.IMPERCEPTIBLE,jframe,600,600).
-	minimizes(Effect.SUPER_FAST,jframe,250,250);
-	
-	
-	
 }
 }
