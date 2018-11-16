@@ -20,17 +20,8 @@ public static void main(String[] args) throws HeadlessException, AWTException, I
 	
 	
 	
-	// a questo punto possiamo completare con i metodi dell'email
 	
-	
-	String html = "<html><h1><img src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo.png'>Hello Marco</h1></html>";
-	
-	j£.sendSimpleEmailWithAuthentication
-	("marco91martire@gmail.com","wasp91dayno@gmail.com","Test5",
-	 html,"smtp.gmail.com",587,"Email Inviata @","wasp91dayno@gmail.com",
-	 "bellissimo91",new File("ciao.txt"),"text/html");
-	
-	
+	j£.openWebcam().capture("hello.jpg").closeWebcam();
 	
 	
 	

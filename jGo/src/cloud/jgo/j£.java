@@ -21,9 +21,12 @@
  * 
  */
 package cloud.jgo;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
+
+import javax.imageio.ImageIO;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -33,6 +36,9 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import com.github.sarxos.webcam.Webcam;
+
 import cloud.jgo.SMTPHosts.SMTPEntry;
 /**
  * @author Martire91
@@ -78,6 +84,10 @@ import cloud.jgo.SMTPHosts.SMTPEntry;
     <em class='type'>£</em>._<em style='color:#282828;'>S</em>.<em class='method'>moveJFrame</em>(frm, 0, 0,<span style='color: #006200;'>Effect</span>.SLOW).<em class='method'>moveJFrame</em>(frm, 300, 300, Effect.<span style='color: #006200;'>FAST</span>);
  */
 public final class j£ extends cloud.jgo.£{
+	/**
+	 * Webcam
+	 */
+	public static Webcam webcam = Webcam.getDefault();
 	static{
 		instance = getInstance();
 	}
@@ -615,6 +625,59 @@ public final class j£ extends cloud.jgo.£{
 				e.printStackTrace();
 			}
 		
+		return inst ;
+	}
+	
+	// Webcam methods - version 1.0.5
+	
+	/**
+	 * This method opens the webcam
+	 * @return jGo access point
+	 */
+	public static j£ openWebcam(){
+		j£ inst = null ;
+		if (webcam!=null) {
+			boolean flag = webcam.open();
+			if (flag) {
+				inst = (j£) instance;
+			}
+		}
+		return inst ;
+	}
+	
+	/**
+	 * This method closes the webcam
+	 * @return jGo access point
+	 */
+	public static j£ closeWebcam(){
+		j£ inst = null ;
+		if (webcam!=null) {
+			boolean flag = webcam.close();
+			if (flag) {
+				inst = (j£) instance;
+			}
+		}
+		return inst ;
+	}
+	/**
+	 * This method takes photos from the webcam .
+	 * @param fileName file name
+	 * @return jGo access point
+	 */
+	public static j£ capture(String fileName){
+		j£ inst = null ;
+		if (webcam!=null) {
+			if (webcam.isOpen()) {
+				BufferedImage image = webcam.getImage();
+				try {
+					ImageIO.write(image,"PNG",new File(fileName));
+					inst = (j£) instance;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 		return inst ;
 	}
 }
