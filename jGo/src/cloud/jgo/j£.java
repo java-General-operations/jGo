@@ -25,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
+
 import javax.imageio.ImageIO;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -35,15 +36,24 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JFrame;
+
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamResolution;
+
 import cloud.jgo.SMTPHosts.SMTPEntry;
+import cloud.jgo.jjdom.JjDom;
+import cloud.jgo.net.Server;
+import cloud.jgo.net.tcp.TCPServer;
+import cloud.jgo.net.tcp.http.HTTPServer;
+import cloud.jgo.net.tcp.http.jor.JOR;
+import cloud.jgo.net.tcp.http.jor.JORServer;
 /**
  * @author Martire91
  * @see £#_A
  * @see £#_S
  * @see £#_W
- * @version 1.0.5
+ * @version 1.0.0
    <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'> --><br>
     <!--Author : *** Marco Martire *** -->  
      <img id='logo'src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo2.png' alt='logo jgo' style='float: left;margin-right:15px;'><br>
@@ -52,7 +62,7 @@ import cloud.jgo.SMTPHosts.SMTPEntry;
    <strong>Description :</strong><br> This class facilitates all the difficult tasks
    For example,In a code line, you take a screenshot, and do other general operations. 
    the calls to the methods can be concatenated, so that different operations can be performed in the same programmatic instruction.
-   jGo was born to facilitate the life of the java programmer, besides it provides different technologies like {@link JjDom} and {@link JON} for example.
+   jGo was born to facilitate the life of the java programmer, besides it provides different technologies like {@link JjDom} and {@link cloud.jgo.io.jon.JON} for example.
    jGo also allows you to go to specific phases for specific programming +, for example if our application is a JFrame, we can find the general methods in the _S phase, object of the SwingUtils class
    Moreover jGo contains 3 phases for specific programming, for example if our application is a {@link JFrame}, we will find the general Swing methods in the {@link £#_S} phase, static constant of type {@link SwingUtils}.
    However the WebUtils and AndroidUtils phases are still empty. The goal is to create a jar package comprising a wide range of general methods available to the user, so as to facilitate the life of the programmer, increase the performance of the program, and not less important, save a lot of time in terms of writing of the code.
@@ -140,13 +150,13 @@ at the end it queries on google, decreases the value of the counter, and takes i
 <br>
 <strong>In jGo there are 3 phases :</strong><br><br>
 <ul>
-<li>{@link #_A} - {@link AndroidUtils} - (<code>cloud.jgo.£.AndroidUtils</code>) - <em style="color: #303030;">&nbsp;for <a href='https://it.wikipedia.org/wiki/Sviluppo_di_software_Android'>android</a> programming</em></li>
-<li>{@link #_S} - {@link SwingUtils} - (<code>cloud.jgo.£.SwingUtils</code>) - <em style="color: #303030;">&nbsp;for <a href='https://it.wikipedia.org/wiki/Swing_(Java)'>swing</a> programming</em></li>
-<li>{@link #_W} - {@link WebUtils} - (<code>cloud.jgo.£.WebUtils</code>) - <em style="color: #303030;">&nbsp;for <a href='https://it.wikipedia.org/wiki/World_Wide_Web'>web</a> programming</em></li>
+<li>{@link #_A} - {@link £.AndroidUtils} - (<code>cloud.jgo.£.AndroidUtils</code>) - <em style="color: #303030;">&nbsp;for <a href='https://it.wikipedia.org/wiki/Sviluppo_di_software_Android'>android</a> programming</em></li>
+<li>{@link #_S} - {@link £.SwingUtils} - (<code>cloud.jgo.£.SwingUtils</code>) - <em style="color: #303030;">&nbsp;for <a href='https://it.wikipedia.org/wiki/Swing_(Java)'>swing</a> programming</em></li>
+<li>{@link #_W} - {@link £.WebUtils} - (<code>cloud.jgo.£.WebUtils</code>) - <em style="color: #303030;">&nbsp;for <a href='https://it.wikipedia.org/wiki/World_Wide_Web'>web</a> programming</em></li>
 </ul><br>
 For example, let's see how to apply some swing methods :<br><br>
 <div class="cm_source">
-1 | <code class="cm_n_n_n_0">&pound;.<strong><code style='color: blue;'>_S</code></strong>.hide(jframe,Effect.<strong><code style='color: blue;'>SLOW</code></strong>).show(jframe,&nbsp;Effect.<strong style='color: blue;'>SLOW</strong>);</code>
+1 | <code class="cm_n_n_n_0">&pound;.<strong style='color: blue;'>_S</strong>.hide(jframe,Effect.<strong style='color: blue;'>SLOW</strong>).show(jframe,&nbsp;Effect.<strong style='color: blue;'>SLOW</strong>);</code>
 </div>
 <br>
 We can associate a click event to the button :<br><br>
@@ -172,7 +182,7 @@ We can associate a click event to the button :<br><br>
 <ul>
 <li>{@link JON} - <code style='color: green;'>Java Object Notation</code> - (<code>cloud.jgo.io.jon</code>)</li>
 <li>{@link JOR} - <code style='color: green;'>Java Object Representation</code> - (<code>cloud.jgo.io.jon</code>)</li>
-<li>{@link JjDom} - <code style='color: green;'>Java <a href='#'>jQuery</a> Dom</code>> - (<code>cloud.jgo.io.jon</code>)</li>
+<li>{@link JjDom} - <code style='color: green;'>Java <a href='#'>jQuery</a> Dom</code> - (<code>cloud.jgo.io.jon</code>)</li>
 </ul>
 <br>
 <em>Visit the jGo website</em> : <a href='https://www.jgo.cloud/'>https://www.jgo.cloud/</a>
