@@ -50,7 +50,7 @@ import cloud.jgo.SMTPHosts.SMTPEntry;
    <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'> -->
     <!--Author : *** Marco Martire *** -->  
    <h1 style='color: #282828;'>jGo<span style='color: green;'>.cloud</span>/<strong><a href='https://www.jgo.cloud/boosted'>Boosted</a></strong></h1>
-   <img id='logo'src='https://www.jgo.cloud/imgs/logo.png' alt='logo jgo' width='50px' height='50px'><br>
+   <img id='logo'src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo2.png' alt='logo jgo' width='50px' height='50px'><br>
    <strong>Description :</strong><br> This class facilitates all the difficult tasks
    For example,In a code line, you take a screenshot.<br>
    JGO is very powerful and it follows the jquery policy :<br>

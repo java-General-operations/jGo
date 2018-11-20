@@ -80,7 +80,7 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'>-->
     <!--Author : *** Marco Martire *** -->  
    <h1 style='color: #282828;'>jGo<span style='color: green;'>.cloud</span>/<a id='link'href='https://www.jgo.cloud/jjdom'>JjDom</a></h1>
-   <img id='logo'src='https://www.jgo.cloud/imgs/logo.png' alt='logo jgo' width='50px' height='50px'><br>
+   <img id='logo'src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo2.png' alt='logo jgo' width='50px' height='50px'><br>
    <strong>Description :</strong><br> This technology basically allows you to create or work on a single html document.<br>
 	 Moreover you have the possibility to work with jquery and css,<br> 
 	 to migrate the site and update it. You can see your site dynamically<br>, at any moment,

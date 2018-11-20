@@ -35,7 +35,7 @@ import cloud.jgo.net.tcp.http.HTTPServer;
  * @version 1.0.3
     <!--Author : *** Marco Martire *** -->  
    <h1 style='color: #282828;'>jGo<span style='color: green;'>.cloud</span>/<a id='link'href='https://www.jgo.cloud/jor'>JOR</a></h1>
-   <img id='logo'src='https://www.jgo.cloud/imgs/logo.png' alt='logo jgo' width='50px' height='50px'><br>
+   <img id='logo'src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo2.png' alt='logo jgo' width='50px' height='50px'><br>
    <strong>Description :</strong><br> This technology allows you to represent java objects on the web.<br>
 	 								  Objects are stored in a list, and the list will be passed to the jor matrix.<br> 
 	 								  Each object therefore has an associated url, obviously customizable.<br>
