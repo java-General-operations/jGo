@@ -1677,7 +1677,10 @@ public class £{
 	 *
 	 */
 	public static class SwingUtils extends Home{
-		
+		public static SwingUtils test(){
+			System.out.println("Test superato @");
+			return _S ;
+		}
 		public static class SimpleTreeIconRenderer extends DefaultTreeCellRenderer{
 
 			private JTree tree ;
@@ -2036,7 +2039,6 @@ public class £{
 	    		
 	    	 }
 	    	 return frame ;
-	    	
 	      }
 		
 	      
@@ -5191,6 +5193,14 @@ public class £{
 		if(instance == null){
 			instance = new £();
 			encrypt =new Encrypts(Encrypts.TEXT_KEY_DEFAULT,"jo_3434");
+		}
+		else{
+			// se invece l'istanza è diversa da null
+			// ed è una istanza della classe j£, tu me
+			// la riporti allo stato originale, quindi 
+			// al punto di accesso originale
+			// in caso contrario, vuol dire che l'istanza è del tipo giusto
+			// quindi di £
 		}
 		return instance ;
 	}

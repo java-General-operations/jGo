@@ -21,6 +21,7 @@
  * 
  */
 package cloud.jgo;
+import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -36,9 +37,11 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 
 import cloud.jgo.SMTPHosts.SMTPEntry;
@@ -191,10 +194,19 @@ public final class j£ extends cloud.jgo.£{
 	/**
 	 * Webcam
 	 */
+	/*
+	 * this.pannelloWebcam = new WebcamPanel(this.webcam);
+		this.pannelloWebcam.setDisplayDebugInfo(true);
+		this.pannelloWebcam.setMirrored(true);
+	 */
 	public final static Webcam webcam = Webcam.getDefault();
+	private static WebcamPanel webcamPanel = null ; 
 	static{
 		instance = getPowerfulInstance();
 		webcam.setViewSize(WebcamResolution.VGA.getSize()); // è per metodi statici, quindi via le preoccupazioni
+		webcamPanel = new WebcamPanel(webcam);
+		webcamPanel.setDisplayDebugInfo(true);
+		webcamPanel.setMirrored(true);
 	}
 	private static j£ getPowerfulInstance(){
 		if (instance==null) {
@@ -765,6 +777,43 @@ public final class j£ extends cloud.jgo.£{
 		}
 		return inst ;
 	}
+	// version 1.0.5
+	/**
+	 * This method returns a desktop application for webcam monitoring
+	 * @param title jframe title
+	 * @param icon jframe icon
+	 * @param visibility jframe visibility
+	 * @return the jframe
+	 */
+	public static JFrame getJFrameWebcam(String title,ImageIcon icon, boolean visibility){
+		JFrame frame = j£._S.createFrame(title,icon, false);
+		frame.setLocationRelativeTo(null);
+		frame.add(webcamPanel);
+		if (visibility) {
+			frame.setVisible(true);
+		}
+		 frame.pack() ;
+		 return frame ;
+	}
+	
+	/**
+	 * This method returns a desktop application for webcam monitoring
+	 * @param title jframe title
+	 * @param icon jframe icon
+	 * @param width jframe width
+	 * @param height jframe height
+	 * @param visibility jframe visibility
+	 * @return the jframe
+	 */
+	public static JFrame getJFrameWebcam(String title,ImageIcon icon,int width,int height,boolean visibility){
+		JFrame frame = j£._S.createFrame(title, width, height, icon, visibility);
+		frame.setLocationRelativeTo(null);
+		frame.add(webcamPanel);
+		if (visibility) {
+			frame.setVisible(true);
+		}
+		return frame ;
+	}
 	/**
 	 * This method takes photos from the webcam .
 	 * @param fileName file name
@@ -787,8 +836,9 @@ public final class j£ extends cloud.jgo.£{
 		return inst ;
 	}
 	
-	public static j£ testJ£(){
-		System.out.println("In questo metodo l'istanza e di "+instance.getClass().getSimpleName());
-		return (j£) instance;
+	public static j£ testj£(){
+		 System.out.println("In questo metodo l'istanza e di "+instance.getClass().getSimpleName());
+		 return (j£) instance;
 	}
+	
 }
