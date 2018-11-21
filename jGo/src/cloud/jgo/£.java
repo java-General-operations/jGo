@@ -132,11 +132,8 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
-
 import org.junit.internal.runners.model.EachTestNotifier;
-
 import com.google.gson.Gson;
-
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
@@ -235,7 +232,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 Increment the counter twice, create a file, iterate the array using the "each" method,
 at the end it queries on google, decreases the value of the counter, and takes its value:<br><br>
 <div class="cm_source">
-<code class="cm_b_n_n_7F0055">1 &nbsp;| int</code><code class="cm_n_n_n_0">&nbsp;counterValue&nbsp;=&nbsp;<br>
+<code class='cm_n_n_n_0'>1 &nbsp;|</code><code class="cm_b_n_n_7F0055"> int</code><code class="cm_n_n_n_0">&nbsp;counterValue&nbsp;=&nbsp;<br>
   2 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
   3 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&pound;.increment().increment().createFile(</code><code class="cm_n_n_n_2A00FF">&quot;test.json&quot;</code><code class="cm_n_n_n_0">)<br>
   4 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.each(arr,</code><code class="cm_b_n_n_7F0055">new</code><code class="cm_n_n_n_0">&nbsp;&pound;Func()&nbsp;{<br>
