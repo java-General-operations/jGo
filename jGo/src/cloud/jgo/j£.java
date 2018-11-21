@@ -57,32 +57,6 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  * @see £#_S
  * @see £#_W
  * @version 1.0.0
- * <!-- code to delete (for Maven project) until @-->
-   <style>
-   div.cm_source {
-  overflow: auto;
-  padding: 1em;
-  background-color: #eee;
-  font-family: courier new;
-  font-size: 10pt;
-}
-code.cm_n_n_n_0 {
-  color: #000000;
-}
-code.cm_n_n_n_2A00FF {
-  color: #2A00FF;
-}
-code.cm_b_n_n_7F0055 {
-  font-weight: bold;
-  color: #7F0055;
-}
-code.cm_n_n_n_0 {
-  color: #000000;
-}
-.costants{color:blue;}
-.overrides{color:darkgray;}
-   </style>
-   <!-- @ -->
    <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'> --><br>
     <!--Author : *** Marco Martire *** -->  
      <img id='logo'src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo2.png' alt='logo jgo' style='float: left;margin-right:15px;'><br>
