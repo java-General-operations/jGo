@@ -279,7 +279,7 @@ public final class j£ extends cloud.jgo.£{
 			if (successLog!=null) {
 				System.out.println(successLog);
 			}
-			inst = (j£) instance;
+			inst = getPowerfulInstance();
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -343,7 +343,7 @@ public final class j£ extends cloud.jgo.£{
 			if (successLog!=null) {
 				System.out.println(successLog);
 			}
-			inst = (j£) instance;
+			inst = getPowerfulInstance();
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -409,7 +409,7 @@ public final class j£ extends cloud.jgo.£{
 				if (successLog!=null) {
 					System.out.println(successLog);
 				}
-				inst = (j£) instance;
+				inst = getPowerfulInstance();
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -488,7 +488,7 @@ public final class j£ extends cloud.jgo.£{
 				if (successLog!=null) {
 					System.out.println(successLog);
 				}
-				inst = (j£) instance;
+				inst = getPowerfulInstance();
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -574,7 +574,7 @@ public final class j£ extends cloud.jgo.£{
 				if (successLog!=null) {
 					System.out.println(successLog);
 				}
-				inst = (j£) instance;
+				inst = getPowerfulInstance();
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -654,7 +654,7 @@ public final class j£ extends cloud.jgo.£{
 				if (successLog!=null) {
 					System.out.println(successLog);
 				}
-				inst = (j£) instance;
+				inst = getPowerfulInstance();
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -737,7 +737,7 @@ public final class j£ extends cloud.jgo.£{
 				if (successLog!=null) {
 					System.out.println(successLog);
 				}
-				inst = (j£) instance;
+				inst = getPowerfulInstance();
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -757,7 +757,7 @@ public final class j£ extends cloud.jgo.£{
 		if (webcam!=null) {
 			boolean flag = webcam.open();
 			if (flag) {
-				inst = (j£) instance;
+				inst = getPowerfulInstance();
 			}
 		}
 		return inst ;
@@ -772,7 +772,7 @@ public final class j£ extends cloud.jgo.£{
 		if (webcam!=null) {
 			boolean flag = webcam.close();
 			if (flag) {
-				inst = (j£) instance;
+				inst = getPowerfulInstance();
 			}
 		}
 		return inst ;
@@ -826,7 +826,7 @@ public final class j£ extends cloud.jgo.£{
 				BufferedImage image = webcam.getImage();
 				try {
 					ImageIO.write(image,"PNG",new File(fileName));
-					inst = (j£) instance;
+					inst = getPowerfulInstance();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -835,10 +835,4 @@ public final class j£ extends cloud.jgo.£{
 		}
 		return inst ;
 	}
-	
-	public static j£ testj£(){
-		 System.out.println("In questo metodo l'istanza e di "+instance.getClass().getSimpleName());
-		 return (j£) instance;
-	}
-	
 }

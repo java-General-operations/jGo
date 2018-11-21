@@ -344,7 +344,7 @@ public class £{
 	 */
 	public static final String CONSOLE_MEX_ERROR = "ERROR";
 	private static final JFileManager fileManager = new JFileManager();
-	protected static Encrypts encrypt = null ;
+	public static Encrypts encrypt = null ;
 	private static Recorder recorder = null ;
 	private static MoveFrame move_frame = null ;
 	private static int counterScreenShot = 0 ;
@@ -5195,12 +5195,9 @@ public class £{
 			encrypt =new Encrypts(Encrypts.TEXT_KEY_DEFAULT,"jo_3434");
 		}
 		else{
-			// se invece l'istanza è diversa da null
-			// ed è una istanza della classe j£, tu me
-			// la riporti allo stato originale, quindi 
-			// al punto di accesso originale
-			// in caso contrario, vuol dire che l'istanza è del tipo giusto
-			// quindi di £
+			if (instance instanceof j£) {
+				instance = new £();
+			}
 		}
 		return instance ;
 	}
@@ -7331,8 +7328,8 @@ End if
     		}
     	}
       
-      public static £ test£(){
-    	  System.out.println("In questo metodo l'istanza e di "+instance.getClass().getSimpleName());
+      public static £ test(){
+    	  System.out.println(instance.getClass().getSimpleName());
     	  return instance ;
       }
 }
