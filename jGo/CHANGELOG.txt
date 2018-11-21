@@ -52,7 +52,7 @@ Version 1.0.4 - 14/11/2018
 
 
 
-Version 1.0.5 - in development
+Version 1.0.5
 
 - Added methods to write and read json files
 
