@@ -480,6 +480,46 @@ public class £{
 		}
 		return instance ;
 	}
+	
+	
+	// version 1.0.6
+	/**
+	 * This method iterates the hashtable as if it were a loop
+	 * @param hashtable the hashtable
+	 * @param func the function that you want to perform at each iteration
+	 * @return the jGo access point
+	 */
+	public static <T> £ each2(Hashtable<Object,Object>hashtable,£Func func){
+		Iterator<Entry<Object,Object>>iterator = hashtable.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<Object, Object> entry = iterator.next();
+			boolean continue_ = (boolean) func.function(entry);
+			if (!continue_) {
+				break ;
+			}
+		}
+		return instance ;
+	}
+	
+	
+	// version 1.0.6
+		/**
+		 * This method iterates the hashtable as if it were a loop
+		 * @param hashtable the hashtable
+		 * @param func the function that you want to perform at each iteration
+		 * @return the jGo access point
+		 */
+		public static <T> £ each3(Hashtable<String,Object>hashtable,£Func func){
+			Iterator<Entry<String,Object>>iterator = hashtable.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, Object> entry = iterator.next();
+				boolean continue_ = (boolean) func.function(entry);
+				if (!continue_) {
+					break ;
+				}
+			}
+			return instance ;
+		}
 	/**
 	 * This method iterates the array as if it were a loop.<br>
 	 * It also allows you to specify an index to start from

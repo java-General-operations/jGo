@@ -23,8 +23,9 @@
 package cloud.jgo.net.config;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.logging.Logger;
-public interface Configuration2{
+public abstract class Configuration2 extends Hashtable<String,Object> {
 	public final static ConfigurationKey TIMER = new ConfigurationKey("jgo.net.timer",Integer.class);
 		/**
 		 * 
@@ -53,22 +54,12 @@ public interface Configuration2{
 		 */
 		public abstract void fromXML(cloud.jgo.io.File xmlFile);
 		
-		/**
-		 * Maps the specified key to the specified value in this hashtable.
-		 * @param key the key
-		 * @param value the value 
-		 * @return the previous value of the specified key in this hashtable, or null if it did not have one
-		 */
-		public abstract <T> Object put(ConfigurationKey key,T value);
+		public abstract Object put(ConfigurationKey key,Object value);
 		
-		/**
-		 * Maps the specified key to the specified value in this hashtable.
-		 * This method puts the element only if it is absent in the configuration.
-		 * @param key the key
-		 * @param value the value
-		 * @return the previous value of the specified key in this hashtable, or null if it did not have one
-		 */
-		public abstract <T> Object putIfAbsent(ConfigurationKey key,T value);
+		public abstract Object putIfAbsent(ConfigurationKey key,Object value);
+		
+		public abstract Object getConfig(ConfigurationKey key);
+		
 		
 		// mi creo un altra interfaccia
 		public static class ConfigurationKey{
