@@ -1,10 +1,18 @@
 package cloud.jgo.test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.security.AllPermission;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 
+import cloud.jgo.£;
+import cloud.jgo.£Func;
 import cloud.jgo.net.config.Configuration2;
 import cloud.jgo.net.config.ServerConfiguration2;
 import cloud.jgo.net.config.TCPServerConfiguration2;
@@ -14,16 +22,17 @@ public static void main(String[] args) {
 	
 	// possiamo inoltre specificare nell'eccezzione
 	// quale tipo di valore non è adatto alla chiave
+	// poi devo fare quel test in jjdom, quindi lavorare su più documenti
+	// un altra cosa devo verificare bene il discorso delle istanze
+	// di £ e j£,perchè ci può essere il rischio che i metodi di £
+	// restituiscono l'istanza di j£, beh devo eliminare questo rischio
+	// segnalare che la configurazione in un file.xml deve essere una
+	// poichè, in tal modo è convertibile in proprietà e quindi in file.properties
 	
 	ServerConfiguration2 config2 = new TCPServerConfiguration2();
+	config2.fromXML(new cloud.jgo.io.File("settings.xml"));
 	
-	config2.put(ServerConfiguration2.SERVER_NAME,"Mio server");
-	config2.put(ServerConfiguration2.PORT,3333);
-	config2.put(TCPServerConfiguration2.MULTI_CONNECTIONS,true);
-	config2.put(TCPServerConfiguration2.SERVER_HANDLER_MODEL,new MyTCPHandler());
 	
-	// a questo punto non ci rimane che implementare questo tipo di configurazione
-	// anche nel server
 	
 }
 }

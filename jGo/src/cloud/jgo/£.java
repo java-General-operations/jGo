@@ -85,8 +85,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
@@ -96,6 +99,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -131,7 +135,9 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
+
 import com.google.gson.Gson;
+
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
@@ -139,6 +145,7 @@ import cloud.jgo.file_manager.JFileManager;
 import cloud.jgo.file_manager.JFileView;
 import cloud.jgo.io.jon.JON;
 import cloud.jgo.jjdom.JjDom;
+import cloud.jgo.jjdom.function;
 import cloud.jgo.net.Configuration;
 import cloud.jgo.net.Server;
 import cloud.jgo.net.ServerTypes;
@@ -448,6 +455,25 @@ public class £{
 	public static <T> £ each(T[]arr,£Func func){
 		for (int i = 0; i < arr.length; i++) {
 			Boolean continue_ = (Boolean) func.function(arr[i]);
+			if (!continue_) {
+				break ;
+			}
+		}
+		return instance ;
+	}
+	
+	// version 1.0.6
+	/**
+	 * This method iterates the hashtable as if it were a loop
+	 * @param hashtable the hashtable
+	 * @param func the function that you want to perform at each iteration
+	 * @return the jGo access point
+	 */
+	public static <T> £ each(Hashtable<T,T>hashtable,£Func func){
+		Iterator<Entry<T,T>>iterator = hashtable.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<T, T> entry = (Map.Entry<T, T>) iterator.next();
+			boolean continue_ = (boolean) func.function(entry);
 			if (!continue_) {
 				break ;
 			}

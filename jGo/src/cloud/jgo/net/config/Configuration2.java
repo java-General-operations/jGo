@@ -29,7 +29,8 @@ import java.util.logging.Logger;
 
 public interface Configuration2{
 	public final static String PORT = "jgo.net.port";
-	public final static String TIMER = "jgo.net.timeout";
+	public final static String HOST = "jgo.net.host";
+	public final static String TIMER = "jgo.net.timer";
 		/**
 		 * 
 		 * @return all configurations in the form of a string
@@ -45,4 +46,15 @@ public interface Configuration2{
 		 * @return the settings number
 		 */
 		public abstract int getSettingsCounter();
+		/**
+		 * Writes the configuration to an XML file
+		 * @param fileName the file name
+		 *@return the XML file
+		 */
+		public abstract cloud.jgo.io.File toXML(String fileName);
+		/**
+		 * Recovers the configuration from the xml file
+		 * @param xmlFile the xml file
+		 */
+		public abstract void fromXML(cloud.jgo.io.File xmlFile);
 }
