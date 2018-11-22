@@ -23,8 +23,44 @@ public abstract class ServerConfiguration2 extends Hashtable<String, Object> imp
 	}
 	@Override
 	public synchronized Object put(String key, Object value) {
-		
-		
-		return null ;
+		Object obj = null ;
+		boolean validKey,validValue ;
+		validKey = false;validValue = true ;
+		for (String config : availableConfigurations) {
+			if (config.equals(key)) {
+				validKey = true ;
+				break ;
+			}
+		}
+		if (validKey) {
+			switch(key){
+			case SERVER_NAME:
+				if (!String.class.isInstance(value)) {
+					validValue = false ;
+				}
+				break ;
+			case SERVER_TYPE:
+				try {
+					throw new ConfigurationNotAccessibleException();
+				} catch (ConfigurationNotAccessibleException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			}
+			if (validValue) {
+				obj = super.putIfAbsent(key, value);
+			}
+			else{
+				// qui ci entra solo se il server name non è una stringa
+				try {
+					throw new InvalidConfigurationException(key);
+				} catch (InvalidConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return obj ;
 	}
 }

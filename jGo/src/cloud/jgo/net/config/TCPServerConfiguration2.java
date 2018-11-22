@@ -37,7 +37,55 @@ public class TCPServerConfiguration2 extends ServerConfiguration2{
 		// TODO Auto-generated method stub
 		return size();
 	}
-	
 	// ridefinisco il metodo put
-	
+	@Override
+	public synchronized Object put(String key, Object value) {
+		// TODO Auto-generated method stub
+		super.put(key, value);
+		Object obj = null ;
+		boolean validType,validValue ;
+		validType = false ;validValue = true ;
+		for (int i = 0; i < availableConfigurations.size(); i++) {
+			if (key.equals(availableConfigurations.get(i))) {
+				validType = true ;
+				break ;
+			}
+		}
+		if (validType) {
+			switch(key){
+			case MULTI_CONNECTIONS:
+				if (!Boolean.class.isInstance(value)) {
+					validValue = false ;
+				}
+				break;
+			case ACCEPTED_SOCKET:
+				if (!String.class.isInstance(value)) {
+					validValue = false ;
+				}
+				break;
+			case MAXIMUM_SOCKETS:
+				if (!Integer.class.isInstance(value)) {
+					validValue = false ;
+				}
+				break;
+			case SERVER_HANDLER_MODEL:
+				if (!Handler.class.isInstance(value)) {
+					validValue = false ;
+				}
+				break;
+			}
+			if (validValue) {
+			 	obj = super.putIfAbsent(key, value);
+			}
+			else{
+				try {
+					throw new InvalidConfigurationException(key);
+				} catch (InvalidConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return obj ;
+	}
 }
