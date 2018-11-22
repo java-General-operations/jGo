@@ -88,3 +88,9 @@ Version 1.0.5 - 21/11/2018
 
 - Added webcam management methods to the enhanced access point
 (Thanks to Marco Martire)
+
+
+
+Version 1.0.6 - in Dev
+
+- Aggiunto un pacchetto per configurazioni più funzionali, questa volta sia per client che per server.
