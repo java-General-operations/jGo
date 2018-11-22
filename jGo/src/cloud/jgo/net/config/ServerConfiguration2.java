@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
+
 import javax.naming.ldap.HasControls;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,14 +18,17 @@ public abstract class ServerConfiguration2 extends Properties implements Configu
 	protected static DocumentBuilder builder = null;
 	protected Document document=null;
 	public final static String XML_ROOT_NAME = "server.configuration";
-	public final static String SERVER_NAME = "jgo.net.server_name";
-	public final static String SERVER_TYPE = "jgo.net.server_type";
+	//KEYS :
+	public final static ConfigurationKey SERVER_NAME = new ServerConfigurationKey("jgo.net.server_name",String.class);
+	public final static ConfigurationKey SERVER_TYPE = new ServerConfigurationKey("jgo.net.server_type",String.class);
+	public final static ConfigurationKey LPORT = new ServerConfigurationKey("jgo.net.server.lport",String.class);
+	public final static ConfigurationKey LHOST = new ServerConfigurationKey("jgo.net.server.lhost",String.class);
 	// available
-	protected static List<String>availableConfigurations = new ArrayList<String>();
+	protected static List<ConfigurationKey>availableConfigurations = new ArrayList<ConfigurationKey>();
 	static{
-		availableConfigurations.add(Configuration2.PORT);
-		availableConfigurations.add(Configuration2.TIMER);
-		availableConfigurations.add(Configuration2.HOST);
+		availableConfigurations.add(LPORT);
+		availableConfigurations.add(TIMER);
+		availableConfigurations.add(LHOST);
 		availableConfigurations.add(SERVER_NAME);
 		availableConfigurations.add(SERVER_TYPE);
 		// init xml builder 
@@ -46,138 +50,26 @@ public abstract class ServerConfiguration2 extends Properties implements Configu
 		}
 		return new StringBuffer(buffer.toString().trim());
 	}
-	public static List<String> getAvailableConfigurations() {
+	public static List<ConfigurationKey> getAvailableConfigurations() {
 		return availableConfigurations;
 	}
-	// si da per scontato che la key è una stringa
+	// ridefinisco i metodi per l'inserimento degli elementi 
 	@Override
-	public Object put(Object key, Object value) {
-		Object obj = null ;
-		Boolean exceptionFlag = false ;
-		boolean validKey,validValue ;
-		validKey = false;validValue = true ;
-		for (String config : availableConfigurations) {
-			if (config.equals(key)) {
-				validKey = true ;
-				break ;
-			}
-		}
-		if (validKey) {
-			switch((String)key){
-			case SERVER_NAME:
-				if (!String.class.isInstance(value)) {
-					validValue = false ;
-				}
-				break ;
-			case SERVER_TYPE:
-				try {
-					throw new ConfigurationNotAccessibleException();
-				} catch (ConfigurationNotAccessibleException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					exceptionFlag = true ;
-				}
-				break;
-			case PORT:
-				if (!Integer.class.isInstance(value)) {
-					validValue = false ;
-				}
-				break;
-			case TIMER:
-				if (!Integer.class.isInstance(value)) {
-					validValue = false ;
-				}
-				break;
-			case HOST:
-				if (!String.class.isInstance(value)) {
-					validValue = false ;
-				}
-				break;
-			}
-			if (validValue) {
-				obj = super.put(key, value);
-			}
-			else{
-				// qui ci entra solo se il server name non è una stringa
-				try {
-					throw new InvalidConfigurationException((String)key);
-				} catch (InvalidConfigurationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					exceptionFlag = true ;
-				}
-			}
-		}
-		if (exceptionFlag==true) {
-			return exceptionFlag ;
-		}
-		else{
-			return obj ;
-		}
+	public <T> Object put(ConfigurationKey key, T value) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	@Override
-	public Object putIfAbsent(Object key, Object value) {
-		Object obj = null ;
-		Boolean exceptionFlag = false ;
-		boolean validKey,validValue ;
-		validKey = false;validValue = true ;
-		for (String config : availableConfigurations) {
-			if (config.equals(key)) {
-				validKey = true ;
-				break ;
-			}
-		}
-		if (validKey) {
-			switch((String)key){
-			case SERVER_NAME:
-				if (!String.class.isInstance(value)) {
-					validValue = false ;
-				}
-				break ;
-			case SERVER_TYPE:
-				try {
-					throw new ConfigurationNotAccessibleException();
-				} catch (ConfigurationNotAccessibleException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					exceptionFlag = true ;
-				}
-				break;
-			case PORT:
-				if (!Integer.class.isInstance(value)) {
-					validValue = false ;
-				}
-				break;
-			case TIMER:
-				if (!Integer.class.isInstance(value)) {
-					validValue = false ;
-				}
-				break;
-			case HOST:
-				if (!String.class.isInstance(value)) {
-					validValue = false ;
-				}
-				break;
-			}
-			if (validValue) {
-				obj = super.putIfAbsent(key, value);
-			}
-			else{
-				// qui ci entra solo se il server name non è una stringa
-				try {
-					throw new InvalidConfigurationException((String)key);
-				} catch (InvalidConfigurationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					exceptionFlag = true ;
-				}
-			}
-		}
-		if (exceptionFlag==true) {
-			return exceptionFlag ;
-		}
-		else{
-			return obj ;
+	public <T> Object putIfAbsent(ConfigurationKey key, T value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	// mi creo la classe figlia della configurazioneChiave 
+	public static class ServerConfigurationKey extends Configuration2.ConfigurationKey{
+		private ServerConfigurationKey(String key, Class<?> type) {
+			super(key, type);
+			// TODO Auto-generated constructor stub
 		}
 	}
+	
 }

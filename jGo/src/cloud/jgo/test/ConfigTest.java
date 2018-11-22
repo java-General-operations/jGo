@@ -10,13 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-
 import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.net.config.Configuration2;
 import cloud.jgo.net.config.ServerConfiguration2;
-import cloud.jgo.net.config.TCPServerConfiguration2;
-
 public class ConfigTest {
 public static void main(String[] args) {
 	
@@ -27,10 +24,8 @@ public static void main(String[] args) {
 	// di £ e j£,perchè ci può essere il rischio che i metodi di £
 	// restituiscono l'istanza di j£, beh devo eliminare questo rischio
 	// segnalare che la configurazione in un file.xml deve essere una
-	// poichè, in tal modo è convertibile in proprietà e quindi in file.properties
+	// poichè cosi è convertivile in proprietà
 	
-	ServerConfiguration2 config2 = new TCPServerConfiguration2();
-	config2.fromXML(new cloud.jgo.io.File("settings.xml"));
 	
 	
 	
