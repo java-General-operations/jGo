@@ -296,6 +296,11 @@ public final class JjDom implements jQuerySupport, Serializable{
 			return this.type ;
 		}
 	}
+	public static JjDom swicth(HTMLDocument document){
+		JjDom.document = document;
+		clearSelection();
+		return instance;
+	}
 
 	/**
 	 * This method connects to the ftp server and
