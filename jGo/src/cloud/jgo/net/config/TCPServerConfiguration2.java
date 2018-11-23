@@ -1,10 +1,7 @@
 package cloud.jgo.net.config;
-
 import java.util.logging.Logger;
-
 import cloud.jgo.io.File;
 import cloud.jgo.net.handlers.Handler;
-
 public class TCPServerConfiguration2 extends ServerConfiguration2{
 	private Logger logger = null ;
 	// creo le costanti di questa classe :
@@ -15,6 +12,14 @@ public class TCPServerConfiguration2 extends ServerConfiguration2{
 	static{
 		availableConfigurations.add(MULTI_CONNECTIONS);availableConfigurations.add(ACCEPTED_SOCKET);
 		availableConfigurations.add(MAXIMUM_SOCKETS);availableConfigurations.add(HANDLER_MODEL);
+	}
+	// mi creo due costruttori
+	public TCPServerConfiguration2() {
+		// TODO Auto-generated constructor stub
+		this.logger = Logger.getLogger("cloud.jgo.net");
+	}
+	public TCPServerConfiguration2(String xmlFileName){
+		fromXML(xmlFileName);
 	}
 	@Override
 	public Logger getLogger() {

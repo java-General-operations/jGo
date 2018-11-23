@@ -52,7 +52,12 @@ public abstract class Configuration2 extends Hashtable<String,Object> {
 		 * Recovers the configuration from the xml file
 		 * @param xmlFile the xml file
 		 */
-		public abstract void fromXML(cloud.jgo.io.File xmlFile);
+		public abstract boolean fromXML(cloud.jgo.io.File xmlFile);
+		/**
+		 *	Recovers the configuration from the xml file 
+		 * @param fileName the xml file
+		 */
+		public abstract boolean fromXML(String fileName);
 		
 		public abstract <V> V put(ConfigurationKey key,Object value);
 		

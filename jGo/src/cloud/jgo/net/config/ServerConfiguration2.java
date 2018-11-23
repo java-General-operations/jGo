@@ -22,11 +22,15 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.io.File;
 import cloud.jgo.net.config.Configuration2.ConfigurationKey;
+import cloud.jgo.net.handlers.Handler;
 public abstract class ServerConfiguration2 extends Configuration2{
 	protected final static DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
 	protected static DocumentBuilder builder = null;
@@ -99,7 +103,7 @@ public abstract class ServerConfiguration2 extends Configuration2{
 	public Object putIfAbsent(String key, Object value) {
 		ConfigurationKey configKey = null ;
 		for (ConfigurationKey configurationKey : availableConfigurations) {
-			String ky = configKey.key;
+			String ky = configurationKey.key;
 			if (key.equals(ky)) {
 				configKey = configurationKey ;
 				break ;
@@ -363,7 +367,12 @@ public abstract class ServerConfiguration2 extends Configuration2{
 			public Object function(Object e) {
 				Map.Entry<String,Object>entry = (java.util.Map.Entry<String, Object>) e ;
 				Element el = document.createElement(getXMLTag((String)entry.getKey()));
-				el.setTextContent(entry.getValue().toString());
+				if (Handler.class.isInstance(entry.getValue())) {
+					el.setTextContent(entry.getValue().getClass().getName());
+				}
+				else{
+					el.setTextContent(entry.getValue().toString());	
+				}
 				root.appendChild(el);
 				return true ;
 			}
@@ -389,11 +398,107 @@ public abstract class ServerConfiguration2 extends Configuration2{
 		return file ;
 	}
 	
+	private String getProp(String tagName){
+		String prop = null ;
+		if (tagName.contains(".")) {
+			tagName = tagName.replaceAll("\\.","_");
+		}
+		List<ConfigurationKey>props = availableConfigurations;
+		for (int i = 0; i < props.size(); i++) {
+			if (props.get(i).key.endsWith(tagName)) {
+				prop = props.get(i).key;
+				break ;
+			}
+		}
+		return prop ;
+	}
 	
 	@Override
-	public void fromXML(File xmlFile) {
+	public boolean fromXML(File xmlFile) {clear();
+	ConfigurationKey key = null ;	
+	boolean flag = false ;
+		if (xmlFile.exists()) {
+			try {
+				document = builder.parse(xmlFile);
+				// prendo il nodo root
+				Element root = (Element) document.getElementsByTagName(XML_ROOT_NAME).item(0);
+				NodeList listNodes = root.getChildNodes();
+				// sappiamo che sono tutti elementi
+				for (int i = 0; i < listNodes.getLength(); i++) {
+					if (listNodes.item(i).getNodeType()== Node.ELEMENT_NODE) {
+						Element el = (Element) listNodes.item(i);
+						String ky = el.getNodeName();
+						String value = el.getTextContent();
+						ky = getProp(ky);
+						// adesso controllo che tipo di chiave
+						// è per inserire il valore giusto 
+						for (ConfigurationKey configurationKey : availableConfigurations) {
+							String currentKey = configurationKey.key;
+							if (ky.equals(currentKey)) {
+								key = configurationKey;
+								break ;
+							}
+						}
+						if (key!=null) {
+							if (key.type.getSimpleName().equalsIgnoreCase("String")) {
+								putIfAbsent(key,value);
+							}
+							else if(key.type.getSimpleName().equalsIgnoreCase("Integer")){
+								putIfAbsent(key,Integer.parseInt(value));
+							}
+							else if(key.type.getSimpleName().equalsIgnoreCase("Double")){
+								putIfAbsent(key,Double.parseDouble(value));
+							}
+							else if(key.type.getSimpleName().equalsIgnoreCase("Boolean")){
+								putIfAbsent(key,Boolean.parseBoolean(value));
+							}
+							else if(key.type.getSimpleName().equalsIgnoreCase("Long")){
+								putIfAbsent(key,Long.parseLong(value));
+							}
+							else{
+								// qui vuol dire che è un tipo di oggetto diverso
+								// per cui ne creo una instanza
+								try {
+									Class<?>clazz = Class.forName(value);
+									try {
+										Object obj = clazz.newInstance();
+										putIfAbsent(key,obj);
+									} catch (InstantiationException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IllegalAccessException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								} catch (ClassNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}
+						else{
+							// qui devo vedere se il caso di dare l'eccezzione
+							System.out.println("E entrato nell'else");
+							return false ;
+						}
+					}
+				}
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return flag ;
+	}
+	
+	
+	@Override
+	public boolean fromXML(String fileName) {
 		// TODO Auto-generated method stub
-		
+		return fromXML(new File(fileName));
 	}
 	
 	// mi creo la classe figlia della configurazioneChiave 

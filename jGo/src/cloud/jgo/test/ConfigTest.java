@@ -31,22 +31,21 @@ public static void main(String[] args) {
 	// segnalare che la configurazione in un file.xml deve essere una
 	// poichè cosi è convertivile in proprietà
 	
-	ServerConfiguration2 c = new TCPServerConfiguration2();
-	c.put(ServerConfiguration2.LHOST,"localhost");
-	c.put(ServerConfiguration2.LPORT,3333);
-	c.put(ServerConfiguration2.TIMER,100);
-	c.put(ServerConfiguration2.SERVER_NAME,"£http");
-	c.put(TCPServerConfiguration2.MULTI_CONNECTIONS,true);
-	c.put(TCPServerConfiguration2.ACCEPTED_SOCKET,"connessione ricevuta @");
-	c.put(TCPServerConfiguration2.MAXIMUM_SOCKETS,10);
-	c.put("jgo.net.server.handler_model",new MyTCPHandler());
 	
 	
-	// scrivo su file 
 	
-	File file = c.toXML("hello.xml");
+	ServerConfiguration2 c = new TCPServerConfiguration2("hello.xml");
 	
-	£.executeProgram(file);
+	Object oldValue = c.remove("jgo.net.server.lport");
 	
+	// inserisco di nuovo la porta
+	
+	c.put(ServerConfiguration2.LPORT,3335);
+	
+	
+	// riscrivo il file XML
+	c.toXML("hello.xml");
+	
+	System.out.println("Ok");
 }
 }
