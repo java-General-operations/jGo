@@ -64,71 +64,53 @@ public abstract class ServerConfiguration2 extends Configuration2{
 	public static List<ConfigurationKey> getAvailableConfigurations() {
 		return availableConfigurations;
 	}
-	// ridefinisco i metodi per l'inserimento degli elementi 
+	
+	
 	@Override
-	public Object put(ConfigurationKey key, Object value) {
-		boolean validKey,exceptionFlag ;
-		validKey = false ;exceptionFlag = false ;
-		Object obj = null ;
-		// controllo la chiave 
+	public Object put(String key, Object value) {
+		ConfigurationKey configKey = null ;
 		for (ConfigurationKey configurationKey : availableConfigurations) {
-			if (configurationKey.equals(key)) {
-				validKey = true ;
+			String ky = configurationKey.key;
+			if (key.equals(ky)) {
+				configKey = configurationKey ;
 				break ;
 			}
 		}
-		if (validKey) {
-			// controllo del valore 
-			if (key.equals(SERVER_TYPE)) {
-				try {
-					throw new ConfigurationNotAccessibleException();
-				} catch (ConfigurationNotAccessibleException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					exceptionFlag = true ;
-				}
-			}
-			else{
-				// diamo per scontato che la chiave sia corretta dunque
-				if (!key.type.isInstance(value)) {
-					// vuol dire che il valore associato non è quello richiesto
-					try {
-						throw new InvalidConfigurationException(key.key);
-					} catch (InvalidConfigurationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						exceptionFlag = true ;
-					}
-				}
-				else{
-					// qui invece significa che è tutto apposto 
-					// per cui chiamo il put della super classe
-					obj = super.put(key.key,value);
-				}
-			}
+		if (configKey!=null) {
+			return put(configKey, value);
 		}
 		else{
-			try {
-				throw new InvalidConfigurationException(value.toString());
-			} catch (InvalidConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				exceptionFlag = true ;
-			}
-		}
-		if (exceptionFlag==true) {
-			return (obj = exceptionFlag) ;
-		}
-		else{
-			return  obj;
+			return null ;
 		}
 	}
 	
+	
 	@Override
-	public Object putIfAbsent(ConfigurationKey key, Object value) {
-		boolean validKey,exceptionFlag ;
-		validKey = false ;exceptionFlag = false ;
-		Object obj = null ;
+	public Object putIfAbsent(String key, Object value) {
+		ConfigurationKey configKey = null ;
+		for (ConfigurationKey configurationKey : availableConfigurations) {
+			String ky = configKey.key;
+			if (key.equals(ky)) {
+				configKey = configurationKey ;
+				break ;
+			}
+		}
+		if (configKey!=null) {
+			return putIfAbsent(configKey, value);
+		}
+		else{
+			return null ;
+		}
+	}
+	
+	
+	
+	// ridefinisco i metodi per l'inserimento degli elementi 
+	@Override
+	public <V> V put(ConfigurationKey key, Object value) {
+		boolean validKey;
+		validKey = false ;
+		V obj = null ;
 		// controllo la chiave 
 		for (ConfigurationKey configurationKey : availableConfigurations) {
 			if (configurationKey.equals(key)) {
@@ -144,7 +126,6 @@ public abstract class ServerConfiguration2 extends Configuration2{
 				} catch (ConfigurationNotAccessibleException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					exceptionFlag = true ;
 				}
 			}
 			else{
@@ -156,13 +137,12 @@ public abstract class ServerConfiguration2 extends Configuration2{
 					} catch (InvalidConfigurationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						exceptionFlag = true ;
 					}
 				}
 				else{
 					// qui invece significa che è tutto apposto 
 					// per cui chiamo il put della super classe
-					obj = super.putIfAbsent(key.key,value);
+					obj = (V) super.put(key.key,value);
 				}
 			}
 		}
@@ -172,20 +152,133 @@ public abstract class ServerConfiguration2 extends Configuration2{
 			} catch (InvalidConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				exceptionFlag = true ;
 			}
 		}
-		if (exceptionFlag==true) {
-			return (obj = exceptionFlag) ;
+		return obj;
+	}
+	
+	@Override
+	public <V> V putIfAbsent(ConfigurationKey key, Object value) {
+		boolean validKey;
+		validKey = false ;
+		V obj = null ;
+		// controllo la chiave 
+		for (ConfigurationKey configurationKey : availableConfigurations) {
+			if (configurationKey.equals(key)) {
+				validKey = true ;
+				break ;
+			}
+		}
+		if (validKey) {
+			// controllo del valore 
+			if (key.equals(SERVER_TYPE)) {
+				try {
+					throw new ConfigurationNotAccessibleException();
+				} catch (ConfigurationNotAccessibleException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else{
+				// diamo per scontato che la chiave sia corretta dunque
+				if (!key.type.isInstance(value)) {
+					// vuol dire che il valore associato non è quello richiesto
+					try {
+						throw new InvalidConfigurationException(key.key);
+					} catch (InvalidConfigurationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else{
+					// qui invece significa che è tutto apposto 
+					// per cui chiamo il put della super classe
+					obj = (V) super.putIfAbsent(key.key,value);
+				}
+			}
 		}
 		else{
-			return  obj;
+			try {
+				throw new InvalidConfigurationException(value.toString());
+			} catch (InvalidConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		return  obj;
 	}
 	@Override
-	public Object getConfig(ConfigurationKey key) {
+	public <V> V getConfig(ConfigurationKey key) {
 		// TODO Auto-generated method stub
-		return null;
+		return (V) get(key.key);
+	}
+	
+	@Override
+	public <V> V replace(ConfigurationKey key,Object value) {
+		boolean validKey;
+		validKey = false ;
+		V obj = null ;
+		// controllo la chiave 
+		for (ConfigurationKey configurationKey : availableConfigurations) {
+			if (configurationKey.equals(key)) {
+				validKey = true ;
+				break ;
+			}
+		}
+		if (validKey) {
+			// controllo del valore 
+			if (key.equals(SERVER_TYPE)) {
+				try {
+					throw new ConfigurationNotAccessibleException();
+				} catch (ConfigurationNotAccessibleException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else{
+				// diamo per scontato che la chiave sia corretta dunque
+				if (!key.type.isInstance(value)) {
+					// vuol dire che il valore associato non è quello richiesto
+					try {
+						throw new InvalidConfigurationException(key.key);
+					} catch (InvalidConfigurationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else{
+					// qui invece significa che è tutto apposto 
+					// per cui chiamo il put della super classe
+					obj = (V) super.replace(key.key, value);
+				}
+			}
+		}
+		else{
+			try {
+				throw new InvalidConfigurationException(value.toString());
+			} catch (InvalidConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return obj;
+	}
+	@Override
+	public Object replace(String key, Object value) {
+		// ottengo la chiave
+		ConfigurationKey ky = null ;
+		for (ConfigurationKey configurationKey : availableConfigurations) {
+			if (configurationKey.key.equals(key)) {
+				ky = configurationKey;
+				break ;
+			}
+		}
+		if (ky!=null) {
+			return replace(ky, value);
+		}
+		else{
+			return null ;
+		}
 	}
 	
 	// mi creo la classe figlia della configurazioneChiave 

@@ -14,8 +14,11 @@ import java.util.Properties;
 import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.net.config.Configuration2;
+import cloud.jgo.net.config.Configuration2.ConfigurationKey;
 import cloud.jgo.net.config.ServerConfiguration2;
+import cloud.jgo.net.config.ServerConfiguration2.ServerConfigurationKey;
 import cloud.jgo.net.config.TCPServerConfiguration2;
+import cloud.jgo.net.handlers.Handler;
 public class ConfigTest {
 public static void main(String[] args) {
 	
@@ -31,17 +34,20 @@ public static void main(String[] args) {
 	ServerConfiguration2 c = new TCPServerConfiguration2();
 	c.put(ServerConfiguration2.LHOST,"localhost");
 	c.put(ServerConfiguration2.LPORT,3333);
-	c.put(ServerConfiguration2.TIMER,30);
+	c.put(ServerConfiguration2.TIMER,100);
 	c.put(ServerConfiguration2.SERVER_NAME,"£http");
 	c.put(TCPServerConfiguration2.MULTI_CONNECTIONS,true);
 	c.put(TCPServerConfiguration2.ACCEPTED_SOCKET,"connessione ricevuta @");
 	c.put(TCPServerConfiguration2.MAXIMUM_SOCKETS,10);
-	c.put(TCPServerConfiguration2.HANDLER_MODEL,new MyTCPHandler());
+	c.put("jgo.net.server.handler_model",new MyTCPHandler());
+	
+	// quindi ora gestiamo la sostituzione dei valori
+	
+	c.replace("jgo.net.server.lhost",true);
 	
 	
 	
-	// continuare scrivendo i metodi per la scrittura in xml
-	// e la lettura della stessa
+	
 	
 }
 }

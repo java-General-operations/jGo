@@ -54,12 +54,13 @@ public abstract class Configuration2 extends Hashtable<String,Object> {
 		 */
 		public abstract void fromXML(cloud.jgo.io.File xmlFile);
 		
-		public abstract Object put(ConfigurationKey key,Object value);
+		public abstract <V> V put(ConfigurationKey key,Object value);
 		
-		public abstract Object putIfAbsent(ConfigurationKey key,Object value);
+		public abstract <V> V putIfAbsent(ConfigurationKey key,Object value);
 		
-		public abstract Object getConfig(ConfigurationKey key);
+		public abstract <V> V getConfig(ConfigurationKey key);
 		
+		public abstract <V> V replace(ConfigurationKey key,Object value);
 		
 		// mi creo un altra interfaccia
 		public static class ConfigurationKey{
