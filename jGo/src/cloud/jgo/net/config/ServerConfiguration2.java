@@ -1,4 +1,5 @@
 package cloud.jgo.net.config;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -11,12 +12,21 @@ import javax.naming.ldap.HasControls;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.io.File;
+import cloud.jgo.net.config.Configuration2.ConfigurationKey;
 public abstract class ServerConfiguration2 extends Configuration2{
 	protected final static DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
 	protected static DocumentBuilder builder = null;
@@ -279,6 +289,111 @@ public abstract class ServerConfiguration2 extends Configuration2{
 		else{
 			return null ;
 		}
+	}
+	// quindi il valore oldValue deve essere uguale a quello reale della chiave di configurazione
+	@Override
+	public boolean replace(ConfigurationKey key, Object oldValue, Object newValue) {
+		boolean obj = false ;
+		ConfigurationKey ky = null ;
+		Object oldValue_ = null ;
+		for (ConfigurationKey configurationKey : availableConfigurations) {
+			if (configurationKey.equals(key)) {
+				ky = configurationKey;
+				break ;
+			}
+		}
+		if (ky!=null) {
+			oldValue_ = get(ky.key);
+			// quindi se i valori vecchi sono uguali
+			// sia quello da input che quello attuale
+			// della configurazione
+			if (oldValue.equals(oldValue_)) {
+				// okok impostiamo il nuovo valore
+				if(!key.type.isInstance(newValue)){
+					try {
+						throw new InvalidConfigurationException(key.key);
+					} catch (InvalidConfigurationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				else{
+					obj = super.replace(ky.key, oldValue_, newValue);
+				}
+			}
+		}
+		return obj ;
+	}
+	@Override
+	public boolean replace(String key,Object oldValue,Object newValue) {
+		ConfigurationKey ky = null ;
+		for (ConfigurationKey configurationKey : availableConfigurations) {
+			if (configurationKey.key.equals(key)) {
+				ky = configurationKey;
+				break ;
+			}
+		}
+		if (ky!=null) {
+			return replace(ky,oldValue,newValue);
+		}
+		else{
+			return false ;
+		}
+	}
+		// metodo provato che ottiene il nome del tag xml
+		// da per scontato che la prop sia giusta
+		// metodo analoghi :
+		private String getXMLTag(String property){
+			String[]split = property.split("\\.");
+			String tagName = split[split.length-1].replaceAll("_",".");
+			return tagName ;
+		}
+	@Override
+	public File toXML(String fileName) {
+		// creo il documento 
+		document = builder.newDocument();
+		// creo il file di destinazione 
+		File file = new File(fileName);
+		// in questo metodo uso il document XML
+		// 1 passo : stabilisco il nodo root 
+		Element root = document.createElement(ServerConfiguration2.XML_ROOT_NAME);
+		// 2 passo faccio iterare gli elementi
+		£.each3(this,new £Func() {
+			@Override
+			public Object function(Object e) {
+				Map.Entry<String,Object>entry = (java.util.Map.Entry<String, Object>) e ;
+				Element el = document.createElement(getXMLTag((String)entry.getKey()));
+				el.setTextContent(entry.getValue().toString());
+				root.appendChild(el);
+				return true ;
+			}
+		});
+		document.appendChild(root);
+		TransformerFactory factory_ = TransformerFactory.newInstance();
+		try {
+			Transformer transformer = factory_.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+			DOMSource source = new DOMSource(document);
+			StreamResult result = new StreamResult(file);
+			try {
+				transformer.transform(source, result);
+			} catch (TransformerException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} catch (TransformerConfigurationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
+		return file ;
+	}
+	
+	
+	@Override
+	public void fromXML(File xmlFile) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	// mi creo la classe figlia della configurazioneChiave 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<server.configuration>
+  <handler.model>cloud.jgo.test.MyTCPHandler@69663380</handler.model>
+  <multi.connections>true</multi.connections>
+  <accepted.socket>connessione ricevuta @</accepted.socket>
+  <server.name>£http</server.name>
+  <lport>3333</lport>
+  <maximum.sockets>10</maximum.sockets>
+  <timer>100</timer>
+  <lhost>localhost</lhost>
+</server.configuration>

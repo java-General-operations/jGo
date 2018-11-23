@@ -23,8 +23,12 @@
 package cloud.jgo;
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
@@ -43,6 +47,7 @@ import javax.swing.JFrame;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
+import com.google.gson.Gson;
 
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.jjdom.JjDom;
@@ -220,6 +225,76 @@ public final class j£ extends cloud.jgo.£{
 		return (j£) instance ;
 	}
 	private j£() {}
+	/**
+	 * This method retrieves the object from a json file
+	 * @param fileName the file name
+	 * @param objClass the object class
+	 * @param <T> the object type
+	 * @return the deserialized object
+	 */
+	public static <T> T json(String fileName,Class<?>objClass){
+		T t = null ;
+		cloud.jgo.io.File jsonFile = new cloud.jgo.io.File(fileName);
+		if (jsonFile.exists()) {
+			BufferedReader reader=null;
+			try {
+				reader = new BufferedReader(new InputStreamReader(
+				new FileInputStream(jsonFile)));
+				final Gson gson = new Gson();
+				t = (T) gson.fromJson(reader,objClass);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return t ;
+	}
+	//Version - 1.0.5:
+	// Mail methods
+	// JSON main methods - 1.0.5:
+	/**
+	 * This method writes an object to a json file
+	 * @param fileName the file name
+	 * @param obj the object to be serialized
+	 * @return the json file
+	 */
+	public static cloud.jgo.io.File json(String fileName,Object obj){
+		if (£.extractFormatFromFileName(fileName).equals("json")) {
+			cloud.jgo.io.File jsonFile = new cloud.jgo.io.File(fileName);
+			Gson gson = new Gson();
+			String json=gson.toJson(obj);
+			£.writeFile(jsonFile, false, new String[]{json});
+			return jsonFile;
+		}
+		else{
+			return null ;
+		}
+	}
+	// version : 1.0.5
+		/**
+		 * This method converts a java object to a string json
+		 * @param obj the object to be serialized
+		 * @return the json string
+		 */
+		public static String convertFromObjectToJsonString(Object obj){
+			final Gson gson = new Gson();
+			String jsonString = null ;
+			jsonString = gson.toJson(obj);
+			return jsonString ;
+		}
+		// version : 1.0.5
+		/**
+		 * This method converts a json string to object
+		 * @param jsonString the json string
+		 * @param objClass the object class
+		 * @param <T> the object type
+		 * @return the deserialized object
+		 */
+		public static <T> T convertFromJsonStringToObject(String jsonString,Class<?>objClass){
+			final Gson gson = new Gson();
+			T t = (T) gson.fromJson(jsonString,objClass);
+			return t;
+		}
 	// Methods for email :version 1.0.5
 	/**
 	 * This method sends a simple email.

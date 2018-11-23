@@ -41,13 +41,12 @@ public static void main(String[] args) {
 	c.put(TCPServerConfiguration2.MAXIMUM_SOCKETS,10);
 	c.put("jgo.net.server.handler_model",new MyTCPHandler());
 	
-	// quindi ora gestiamo la sostituzione dei valori
 	
-	c.replace("jgo.net.server.lhost",true);
+	// scrivo su file 
 	
+	File file = c.toXML("hello.xml");
 	
-	
-	
+	£.executeProgram(file);
 	
 }
 }

@@ -62,6 +62,8 @@ public abstract class Configuration2 extends Hashtable<String,Object> {
 		
 		public abstract <V> V replace(ConfigurationKey key,Object value);
 		
+		public abstract boolean replace(ConfigurationKey key,Object oldValue,Object newValue);
+		
 		// mi creo un altra interfaccia
 		public static class ConfigurationKey{
 			protected String key;protected Class<?>type;
