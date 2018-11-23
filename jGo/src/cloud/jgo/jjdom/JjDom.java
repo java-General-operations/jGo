@@ -299,7 +299,9 @@ public final class JjDom implements jQuerySupport, Serializable{
 	public static JjDom swicth(HTMLDocument document){
 		JjDom.document = document;
 		clearSelection();
-		return instance;
+		called = false ;
+		setSelector(DEFAULT_SELECTOR);
+		return instance ;
 	}
 
 	/**
