@@ -21,19 +21,16 @@
  * 
  */
 package cloud.jgo.net.factorys;
-
 import java.net.SocketException;
-
-import cloud.jgo.net.Configuration;
 import cloud.jgo.net.Server;
 import cloud.jgo.net.ServerTypes;
+import cloud.jgo.net.config.Configuration2;
+import cloud.jgo.net.config.TCPServerConfiguration2;
 import cloud.jgo.net.tcp.DefaultTCPServer;
-import cloud.jgo.net.tcp.TCPServerConfiguration;
 import cloud.jgo.net.tcp.TCPServerTypes;
 import cloud.jgo.net.tcp.http.HTTPServer;
 import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
 import cloud.jgo.net.tcp.login.TCPLoginServer;
-import cloud.jgo.net.tcp.login.TCPLoginServerConfiguration;
 /**
  * 
  * @author Martire91<br>
@@ -60,49 +57,27 @@ public class ServersFactory extends ServerFactory{
 			// qui si deve creare un server TCP
 			server = new DefaultTCPServer();
 			server.setLocalPort(localPort);
-			// qui visto che il tipo si imposta subito nell classe TCPserver
-			// faccio solo la configurazione
-			
-			// qui aggiungo le configurazioni automatiche ciop le informazioni del computer del server creato 
-			((TCPServerConfiguration)server.getConfiguration()).setOsName();
-			((TCPServerConfiguration)server.getConfiguration()).setOsVersion();
-			((TCPServerConfiguration)server.getConfiguration()).setOsArch();
-			((TCPServerConfiguration)server.getConfiguration()).setOsUsername();
-			((TCPServerConfiguration)server.getConfiguration()).setJavaVersion();
-			((TCPServerConfiguration)server.getConfiguration()).setServerPath(System.getProperty("user.dir"));
-			
 		}
 		else if(type == TCPServerTypes.TYPE_HTTP.VALUE){
 			server = new HTTPServer(); // restituisco un server da configurare
 			server.setLocalPort(localPort);
-			// qui aggiungo le configurazioni automatiche ciop le informazioni del computer del server creato 
-		    ((HTTPServerConfiguration)server.getConfiguration()).setOsName();
-			((HTTPServerConfiguration)server.getConfiguration()).setOsVersion();
-			((HTTPServerConfiguration)server.getConfiguration()).setOsArch();
-			((HTTPServerConfiguration)server.getConfiguration()).setOsUsername();
-			((HTTPServerConfiguration)server.getConfiguration()).setJavaVersion();
-			((HTTPServerConfiguration)server.getConfiguration()).setServerPath(System.getProperty("user.dir"));
 		}
 		else if(type == TCPServerTypes.TYPE_LOGIN.VALUE){
 			server = new TCPLoginServer();
 			server.setLocalPort(localPort);
-			
-			// poi qui continuare con le configurazioni ....
-			
 		}
-		
 		return server ;
 	}
 
 	@Override
-	public Server createServer(Configuration configuration) throws SocketException {
+	public Server createServer(Configuration2 configuration) throws SocketException {
 		Server server = null ; 
 		if(HTTPServerConfiguration.class.isInstance(configuration)){
 			server = new HTTPServer();
 		}
 		// qui poi se creero altri server mettere qui i rispettivi else if
 		
-		else if(TCPServerConfiguration.class.isInstance(configuration)&&!TCPLoginServerConfiguration.class.isInstance(configuration)){
+		else if(TCPServerConfiguration2.class.isInstance(configuration)&&!TCPLoginServerConfiguration.class.isInstance(configuration)){
 			server = new DefaultTCPServer();
 		}
 		else if(TCPLoginServerConfiguration.class.isInstance(configuration)){

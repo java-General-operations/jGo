@@ -109,18 +109,7 @@ public interface Server extends Runnable{
 	 * @param configuration the server configuration
 	 * @throws SocketException 1 exception
 	 */
-	public abstract void configure(Configuration configuration) throws SocketException;
-	/**
-	 * This method configures the server
-	 * @param configuration the server configuration
-	 * @throws SocketException 1 exception
-	 */
 	public abstract void configure(Configuration2 configuration);
-	/**
-	 * This method returns the server configuration
-	 * @return the server configuration
-	 */
-	public abstract Configuration getConfiguration();
 	/**
 	 * This method returns the server configuration
 	 * @return the server configuration

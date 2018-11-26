@@ -24,8 +24,8 @@ package cloud.jgo.net.factorys;
 
 import java.net.SocketException;
 
-import cloud.jgo.net.Configuration;
 import cloud.jgo.net.Server;
+import cloud.jgo.net.config.Configuration2;
 /**
  * 
  * @author Martire91<br>
@@ -48,6 +48,6 @@ public abstract class ServerFactory {
 	 * @return the server
 	 * @throws SocketException 1 exception
 	 */
-	public abstract Server createServer(Configuration configuration) throws SocketException;
+	public abstract Server createServer(Configuration2 configuration) throws SocketException;
 	
 }
