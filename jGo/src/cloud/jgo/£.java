@@ -99,6 +99,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -134,6 +135,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
+
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
@@ -142,9 +144,10 @@ import cloud.jgo.file_manager.JFileView;
 import cloud.jgo.io.jon.JON;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.function;
-import cloud.jgo.net.Configuration;
 import cloud.jgo.net.Server;
 import cloud.jgo.net.ServerTypes;
+import cloud.jgo.net.config.Configuration2;
+import cloud.jgo.net.config.HTTPServerConfiguration2;
 import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.tcp.TCPServer;
 import cloud.jgo.net.tcp.TCPServerTypes;
@@ -1251,7 +1254,7 @@ public class £{
 	 * @param config the server configuration
 	 * @return the server
 	 */
-	public static cloud.jgo.net.Server serv(Configuration config){
+	public static cloud.jgo.net.Server serv(Configuration2 config){
 		ServersFactory factory = ServersFactory.getInstance();
 		Server server=null;
 		try {
@@ -1299,7 +1302,7 @@ public class £{
 	 * @param conf the server configuration
 	 * @return the jor server
 	 */
-	public static cloud.jgo.net.tcp.http.jor.JORServer createJORServer(HTTPServerConfiguration conf){
+	public static cloud.jgo.net.tcp.http.jor.JORServer createJORServer(HTTPServerConfiguration2 conf){
 		JORServer serv = createJORServer();
 		serv.configure(conf);
 		return serv ;

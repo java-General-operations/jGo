@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
+
 import javax.naming.ldap.HasControls;
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,11 +20,13 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
 import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.io.File;
@@ -436,56 +440,59 @@ public abstract class ServerConfiguration2 extends Configuration2{
 							String ky = el.getNodeName();
 							String value = el.getTextContent();
 							ky = getProp(ky);
-							// adesso controllo che tipo di chiave
-							// è per inserire il valore giusto 
-							for (ConfigurationKey configurationKey : availableConfigurations) {
-								String currentKey = configurationKey.key;
-								if (ky.equals(currentKey)) {
-									key = configurationKey;
-									break ;
+							if (ky!=null) {
+								System.out.println("Ecco:"+ky);
+								// adesso controllo che tipo di chiave
+								// è per inserire il valore giusto 
+								for (ConfigurationKey configurationKey : availableConfigurations) {
+									String currentKey = configurationKey.key;
+									if (ky.equals(currentKey)) {
+										key = configurationKey;
+										break ;
+									}
 								}
-							}
-							if (key!=null) {
-								if (key.type.getSimpleName().equalsIgnoreCase("String")) {
-									putIfAbsent(key,value);
-								}
-								else if(key.type.getSimpleName().equalsIgnoreCase("Integer")){
-									putIfAbsent(key,Integer.parseInt(value));
-								}
-								else if(key.type.getSimpleName().equalsIgnoreCase("Double")){
-									putIfAbsent(key,Double.parseDouble(value));
-								}
-								else if(key.type.getSimpleName().equalsIgnoreCase("Boolean")){
-									putIfAbsent(key,Boolean.parseBoolean(value));
-								}
-								else if(key.type.getSimpleName().equalsIgnoreCase("Long")){
-									putIfAbsent(key,Long.parseLong(value));
-								}
-								else{
-									// qui vuol dire che è un tipo di oggetto diverso
-									// per cui ne creo una instanza
-									try {
-										Class<?>clazz = Class.forName(value);
+								if (key!=null) {
+									if (key.type.getSimpleName().equalsIgnoreCase("String")) {
+										putIfAbsent(key,value);
+									}
+									else if(key.type.getSimpleName().equalsIgnoreCase("Integer")){
+										putIfAbsent(key,Integer.parseInt(value));
+									}
+									else if(key.type.getSimpleName().equalsIgnoreCase("Double")){
+										putIfAbsent(key,Double.parseDouble(value));
+									}
+									else if(key.type.getSimpleName().equalsIgnoreCase("Boolean")){
+										putIfAbsent(key,Boolean.parseBoolean(value));
+									}
+									else if(key.type.getSimpleName().equalsIgnoreCase("Long")){
+										putIfAbsent(key,Long.parseLong(value));
+									}
+									else{
+										// qui vuol dire che è un tipo di oggetto diverso
+										// per cui ne creo una instanza
 										try {
-											Object obj = clazz.newInstance();
-											putIfAbsent(key,obj);
-										} catch (InstantiationException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										} catch (IllegalAccessException e) {
+											Class<?>clazz = Class.forName(value);
+											try {
+												Object obj = clazz.newInstance();
+												putIfAbsent(key,obj);
+											} catch (InstantiationException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IllegalAccessException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										} catch (ClassNotFoundException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
 										}
-									} catch (ClassNotFoundException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
 									}
 								}
-							}
-							else{
-								// qui devo vedere se il caso di dare l'eccezzione
-								System.out.println("E entrato nell'else");
-								return false ;
+								else{
+									// qui devo vedere se il caso di dare l'eccezzione
+									System.out.println("E entrato nell'else");
+									return false ;
+								}	
 							}
 						}
 					}
