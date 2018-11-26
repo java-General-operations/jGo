@@ -70,6 +70,11 @@ public class HTMLDefaultElement implements HTMLElement{
 		this.attributes = new HashMap<>();
 		this.document = document ;
 	}
+	// version 1.0.6
+	protected HTMLDefaultElement() {
+		// TODO Auto-generated constructor stub
+		
+	}
 	/**
 	 * This method returns the start tag
 	 * @return the start tag

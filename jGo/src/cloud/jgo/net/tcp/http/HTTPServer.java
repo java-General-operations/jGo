@@ -23,13 +23,14 @@
 package cloud.jgo.net.tcp.http;
 import java.io.IOException;
 import java.net.SocketException;
-
 import javax.activation.MimeTypeParseException;
-
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.net.Configuration;
 import cloud.jgo.net.ServerType;
+import cloud.jgo.net.config.Configuration2;
+import cloud.jgo.net.config.HTTPServerConfiguration2;
+import cloud.jgo.net.config.TCPServerConfiguration2;
 import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.handlers.Handler;
 import cloud.jgo.net.tcp.NoReadingSourceException;
@@ -47,6 +48,7 @@ public class HTTPServer extends TCPServer{
 	public final static String HTTP_VERSION = "HTTP/1.0";
 	private static String decoder_type = "UTF-8"; // default value
 	private HTTPServerConfiguration configuration = new HTTPServerConfiguration();
+	private HTTPServerConfiguration2 configuration2 = new HTTPServerConfiguration2();
 	public static String getDecoder_type() {
 		return decoder_type;
 	}
@@ -61,7 +63,6 @@ public class HTTPServer extends TCPServer{
 		// TODO Auto-generated method stub
 		return new TCPServerTypes().TYPE_HTTP ;
 	}
-	
 	@Override
 	public HTTPServerConfiguration getConfiguration() {
 		/*
@@ -74,7 +75,11 @@ public class HTTPServer extends TCPServer{
 		*/
 		return this.configuration ;
 	}
-	
+	@Override
+	public HTTPServerConfiguration2 getConfiguration2() {
+		// TODO Auto-generated method stub
+		return (HTTPServerConfiguration2) super.getConfiguration2();
+	}
 	@Override
 	protected void acceptRequestsFromClientsWithModel() throws IOException, CloneNotSupportedException,
 			NoReadingSourceException, InstantiationException, IllegalAccessException {
@@ -136,7 +141,6 @@ public class HTTPServer extends TCPServer{
 	}
 	public HTTPServer() {
 	}
-
 	@Override
 	protected void acceptRequestWithModel() throws InstantiationException, IllegalAccessException{
 		this.acceptedConnection  = null ;
@@ -190,10 +194,7 @@ public class HTTPServer extends TCPServer{
 				
 				return ;
 		}
-		
-		
 	}
-	
 	@Override
 	public void configure(Configuration configuration){
 			super.configure(configuration);
@@ -206,8 +207,17 @@ public class HTTPServer extends TCPServer{
 			}
 	}
 	
-	
-
+	@Override
+	public void configure(Configuration2 configuration) {
+		super.configure(configuration);
+		this.configuration2 = configuration2 ;
+		if (this.configuration2.containsKey(HTTPServerConfiguration2.ROOT_FOLDER)) {
+			setRootFolder(this.configuration2.getConfig(HTTPServerConfiguration2.ROOT_FOLDER));
+		}
+		if (this.configuration2.containsKey(HTTPServerConfiguration2.HANDLER_MODEL)) {
+			setModel(this.configuration2.getConfig(HTTPServerConfiguration2.HANDLER_MODEL));
+		}
+	}
 	@Override
 	public void reloadConfiguration() {
 		configure(this.configuration);
@@ -218,6 +228,7 @@ public class HTTPServer extends TCPServer{
 		// TODO Auto-generated method stub
 		super.setServerName(nameServer);
 		this.configuration.setServerName(nameServer);
+		this.configuration2.put(HTTPServerConfiguration2.SERVER_NAME,getServerName());
 	}
 	
 	
@@ -226,6 +237,7 @@ public class HTTPServer extends TCPServer{
 		// TODO Auto-generated method stub
 		super.setLocalPort(localPort);
 		this.configuration.setLport(localPort);
+		this.configuration2.put(HTTPServerConfiguration2.LPORT,getLocalPort());
 	}
 	
 	@Override
@@ -233,6 +245,7 @@ public class HTTPServer extends TCPServer{
 		// TODO Auto-generated method stub
 		super.setTextOfAcceptedSocket(output);
 		this.configuration.setAcceptedSocket(output);
+		this.configuration2.put(HTTPServerConfiguration2.ACCEPTED_SOCKET,getTextOfAcceptedSocket());
 	}
 
 	@Override
@@ -240,6 +253,7 @@ public class HTTPServer extends TCPServer{
 		// TODO Auto-generated method stub
 		super.setMultiConnections(multiConnections);
 		this.configuration.setMultiConnections(true);
+		this.configuration2.put(HTTPServerConfiguration2.MULTI_CONNECTIONS,isMultiConnections());
 	}
 
 	@Override
@@ -247,7 +261,8 @@ public class HTTPServer extends TCPServer{
 		HTTPServerConfiguration config = (HTTPServerConfiguration) this.configuration;
 		if(handler instanceof HTTPHandlerConnection){
 			this.model =  handler ;
-			config.setModel(this.model);	
+			config.setModel(this.model);
+			this.configuration2.put(HTTPServerConfiguration2.HANDLER_MODEL,this.model);
 		}
 		else{
 			this.model = null ;
@@ -268,7 +283,6 @@ public class HTTPServer extends TCPServer{
 	public static void setDecoder_type(String decoder_type) {
 		HTTPServer.decoder_type = decoder_type;
 	}
-
 	public HTTPServer(String rootFolder) {
 		// TODO Auto-generated constructor stub
 		this.rootFolder = rootFolder ;
@@ -277,13 +291,11 @@ public class HTTPServer extends TCPServer{
 			this.nameRootFolder = new File(rootFolder).getName();
 			// casomai cancellare da qui
 			((HTTPServerConfiguration)getConfiguration()).setRootFolder(this.rootFolder);
+			getConfiguration2().put(HTTPServerConfiguration2.ROOT_FOLDER,this.rootFolder);
 		}
 	}
-	
-	
 	// qui ridefiniamo l'override del metodi isConfigurated 
 	// in base alle esigenze di questo server
-	
 	@Override
 	public boolean isConfigurated() {
 		boolean tcpConfigurated = super.isConfigurated();
@@ -308,7 +320,6 @@ public class HTTPServer extends TCPServer{
 			}
 		}
 	}
-	
 	/**
 	 * Method factory
 	 * @param configuration the server configuration
@@ -333,6 +344,7 @@ public class HTTPServer extends TCPServer{
 				
 				// casomai cancellare da qui
 				((HTTPServerConfiguration)getConfiguration()).setRootFolder(this.rootFolder);
+				this.configuration2.put(HTTPServerConfiguration2.ROOT_FOLDER,this.rootFolder);
 			}
 		else{
 			
@@ -360,8 +372,4 @@ public class HTTPServer extends TCPServer{
 		System.out.println("Connection from "+((HTTPHandlerConnection)handler).getSocket().getRemoteSocketAddress().toString());
         handler.startSession();
 	}
-
-
-	
-
 }

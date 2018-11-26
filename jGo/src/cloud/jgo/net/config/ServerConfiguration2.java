@@ -32,7 +32,6 @@ import cloud.jgo.net.handlers.Handler;
 public abstract class ServerConfiguration2 extends Configuration2{
 	protected final static DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
 	protected static DocumentBuilder builder = null;
-	protected boolean typeSet = false ;
 	protected Document document=null;
 	public final static String XML_ROOT_NAME = "server.configuration";
 	//KEYS :
@@ -55,6 +54,10 @@ public abstract class ServerConfiguration2 extends Configuration2{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public ServerConfiguration2() {
+		// TODO Auto-generated constructor stub
+		super.put(TCPServerConfiguration2.SERVER_TYPE.key,getServerType().TYPE);
 	}
 	@Override
 	public StringBuffer AllConfigurations() {
@@ -80,8 +83,6 @@ public abstract class ServerConfiguration2 extends Configuration2{
 	public static List<ConfigurationKey> getAvailableConfigurations() {
 		return availableConfigurations;
 	}
-	
-	
 	@Override
 	public Object put(String key, Object value) {
 		ConfigurationKey configKey = null ;
@@ -135,19 +136,12 @@ public abstract class ServerConfiguration2 extends Configuration2{
 		if (validKey) {
 			// controllo del valore 
 			if (key.equals(SERVER_TYPE)) {
-				if (!typeSet) {
-					// imposto il tipo
-					super.put(ServerConfiguration2.SERVER_TYPE.key,getServerType().TYPE);
-					typeSet = true ;
-				}
-				else{
 					try {
 						throw new ConfigurationNotAccessibleException();
 					} catch (ConfigurationNotAccessibleException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
 			}
 			else{
 				// diamo per scontato che la chiave sia corretta dunque

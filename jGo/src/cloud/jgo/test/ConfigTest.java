@@ -17,6 +17,7 @@ import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.net.config.Configuration2;
 import cloud.jgo.net.config.Configuration2.ConfigurationKey;
+import cloud.jgo.net.config.HTTPServerConfiguration2;
 import cloud.jgo.net.config.ServerConfiguration2;
 import cloud.jgo.net.config.ServerConfiguration2.ServerConfigurationKey;
 import cloud.jgo.net.config.TCPServerConfiguration2;
@@ -34,20 +35,21 @@ public static void main(String[] args) {
 	
 	
 	
-	ServerConfiguration2 c = new TCPServerConfiguration2("ciao.xml");
+	ServerConfiguration2 c = new HTTPServerConfiguration2();
 	
-	System.out.println(c.AllConfigurations());
+
 	
-//	c.put(ServerConfiguration2.SERVER_NAME,"My server");
-//	c.put(ServerConfiguration2.LPORT,3333);
-//	c.put(ServerConfiguration2.TIMER,10);
-//	c.put(ServerConfiguration2.LHOST,"localhost");
-//	c.put(TCPServerConfiguration2.MULTI_CONNECTIONS,true);
-//	c.put(TCPServerConfiguration2.MAXIMUM_SOCKETS,10);
-//	c.put(TCPServerConfiguration2.ACCEPTED_SOCKET,"Nuova connessione @");
-//	c.put(TCPServerConfiguration2.HANDLER_MODEL,new MyTCPHandler());
-//	
-//	c.toXML("ciao.xml");
-//	System.out.println("Bene");
+	c.put(ServerConfiguration2.SERVER_NAME,"My server");
+	c.put(ServerConfiguration2.LPORT,3333);
+	c.put(ServerConfiguration2.TIMER,10);
+	c.put(ServerConfiguration2.LHOST,"localhost");
+	c.put(TCPServerConfiguration2.MULTI_CONNECTIONS,true);
+	c.put(TCPServerConfiguration2.MAXIMUM_SOCKETS,10);
+	c.put(TCPServerConfiguration2.ACCEPTED_SOCKET,"Nuova connessione @");
+	c.put(TCPServerConfiguration2.HANDLER_MODEL,new MyTCPHandler());
+	c.put(HTTPServerConfiguration2.ROOT_FOLDER,"C:\\test");
+	
+	c.toXML("serv.xml");
+	System.out.println("Bene");
 }
 }

@@ -19,8 +19,8 @@ public class TCPServerConfiguration2 extends ServerConfiguration2{
 	// mi creo due costruttori
 	public TCPServerConfiguration2() {
 		// TODO Auto-generated constructor stub
+		super();
 		this.logger = Logger.getLogger("cloud.jgo.net");
-		super.put(ServerConfiguration2.SERVER_TYPE,"TCP");
 	}
 	public TCPServerConfiguration2(String xmlFileName){
 		fromXML(xmlFileName);
