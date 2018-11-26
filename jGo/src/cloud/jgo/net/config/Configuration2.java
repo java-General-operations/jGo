@@ -27,7 +27,7 @@ import java.util.Hashtable;
 import java.util.logging.Logger;
 public abstract class Configuration2 extends Hashtable<String,Object> {
 	public final static ConfigurationKey TIMER = new ConfigurationKey("jgo.net.timer",Integer.class);
-		/**
+	/**
 		 * 
 		 * @return all configurations in the form of a string
 		 */

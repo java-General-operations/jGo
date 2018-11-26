@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
-
 import javax.naming.ldap.HasControls;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -19,21 +18,21 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.io.File;
+import cloud.jgo.net.ServerType;
 import cloud.jgo.net.config.Configuration2.ConfigurationKey;
 import cloud.jgo.net.handlers.Handler;
 public abstract class ServerConfiguration2 extends Configuration2{
 	protected final static DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
 	protected static DocumentBuilder builder = null;
+	protected boolean typeSet = false ;
 	protected Document document=null;
 	public final static String XML_ROOT_NAME = "server.configuration";
 	//KEYS :
@@ -66,15 +65,18 @@ public abstract class ServerConfiguration2 extends Configuration2{
 				
 				Map.Entry<String,Object>entry = (java.util.Map.Entry<String, Object>) e ;
 				
-				buffer.append(entry+"\n");
-				
+				if (entry.getKey().equals("jgo.net.server.handler_model")) {
+					buffer.append(entry.getKey()+"="+entry.getValue().getClass().getName()+"\n");
+				}
+				else{
+					buffer.append(entry+"\n");
+				}
 				return true ;
 			}
 		});
 		return new StringBuffer(buffer.toString().trim());
 	}
-	
-	
+	public abstract ServerType getServerType();
 	public static List<ConfigurationKey> getAvailableConfigurations() {
 		return availableConfigurations;
 	}
@@ -117,8 +119,6 @@ public abstract class ServerConfiguration2 extends Configuration2{
 		}
 	}
 	
-	
-	
 	// ridefinisco i metodi per l'inserimento degli elementi 
 	@Override
 	public <V> V put(ConfigurationKey key, Object value) {
@@ -135,11 +135,18 @@ public abstract class ServerConfiguration2 extends Configuration2{
 		if (validKey) {
 			// controllo del valore 
 			if (key.equals(SERVER_TYPE)) {
-				try {
-					throw new ConfigurationNotAccessibleException();
-				} catch (ConfigurationNotAccessibleException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if (!typeSet) {
+					// imposto il tipo
+					super.put(ServerConfiguration2.SERVER_TYPE.key,getServerType().TYPE);
+					typeSet = true ;
+				}
+				else{
+					try {
+						throw new ConfigurationNotAccessibleException();
+					} catch (ConfigurationNotAccessibleException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			else{
@@ -366,14 +373,18 @@ public abstract class ServerConfiguration2 extends Configuration2{
 			@Override
 			public Object function(Object e) {
 				Map.Entry<String,Object>entry = (java.util.Map.Entry<String, Object>) e ;
-				Element el = document.createElement(getXMLTag((String)entry.getKey()));
-				if (Handler.class.isInstance(entry.getValue())) {
-					el.setTextContent(entry.getValue().getClass().getName());
-				}
-				else{
-					el.setTextContent(entry.getValue().toString());	
-				}
-				root.appendChild(el);
+					Element el = document.createElement(getXMLTag((String)entry.getKey()));
+					if (Handler.class.isInstance(entry.getValue())) {
+						el.setTextContent(entry.getValue().getClass().getName());
+					}
+					else if(entry.getKey().equals("jgo.net.server_type")){
+						el.setTextContent(entry.getValue()+"");
+						el.setAttribute("excludes","true");
+					}
+					else{
+						el.setTextContent(entry.getValue().toString());	
+					}
+					root.appendChild(el);
 				return true ;
 			}
 		});
@@ -427,59 +438,61 @@ public abstract class ServerConfiguration2 extends Configuration2{
 				for (int i = 0; i < listNodes.getLength(); i++) {
 					if (listNodes.item(i).getNodeType()== Node.ELEMENT_NODE) {
 						Element el = (Element) listNodes.item(i);
-						String ky = el.getNodeName();
-						String value = el.getTextContent();
-						ky = getProp(ky);
-						// adesso controllo che tipo di chiave
-						// è per inserire il valore giusto 
-						for (ConfigurationKey configurationKey : availableConfigurations) {
-							String currentKey = configurationKey.key;
-							if (ky.equals(currentKey)) {
-								key = configurationKey;
-								break ;
+						if(!el.hasAttribute("excludes")){
+							String ky = el.getNodeName();
+							String value = el.getTextContent();
+							ky = getProp(ky);
+							// adesso controllo che tipo di chiave
+							// è per inserire il valore giusto 
+							for (ConfigurationKey configurationKey : availableConfigurations) {
+								String currentKey = configurationKey.key;
+								if (ky.equals(currentKey)) {
+									key = configurationKey;
+									break ;
+								}
 							}
-						}
-						if (key!=null) {
-							if (key.type.getSimpleName().equalsIgnoreCase("String")) {
-								putIfAbsent(key,value);
-							}
-							else if(key.type.getSimpleName().equalsIgnoreCase("Integer")){
-								putIfAbsent(key,Integer.parseInt(value));
-							}
-							else if(key.type.getSimpleName().equalsIgnoreCase("Double")){
-								putIfAbsent(key,Double.parseDouble(value));
-							}
-							else if(key.type.getSimpleName().equalsIgnoreCase("Boolean")){
-								putIfAbsent(key,Boolean.parseBoolean(value));
-							}
-							else if(key.type.getSimpleName().equalsIgnoreCase("Long")){
-								putIfAbsent(key,Long.parseLong(value));
-							}
-							else{
-								// qui vuol dire che è un tipo di oggetto diverso
-								// per cui ne creo una instanza
-								try {
-									Class<?>clazz = Class.forName(value);
+							if (key!=null) {
+								if (key.type.getSimpleName().equalsIgnoreCase("String")) {
+									putIfAbsent(key,value);
+								}
+								else if(key.type.getSimpleName().equalsIgnoreCase("Integer")){
+									putIfAbsent(key,Integer.parseInt(value));
+								}
+								else if(key.type.getSimpleName().equalsIgnoreCase("Double")){
+									putIfAbsent(key,Double.parseDouble(value));
+								}
+								else if(key.type.getSimpleName().equalsIgnoreCase("Boolean")){
+									putIfAbsent(key,Boolean.parseBoolean(value));
+								}
+								else if(key.type.getSimpleName().equalsIgnoreCase("Long")){
+									putIfAbsent(key,Long.parseLong(value));
+								}
+								else{
+									// qui vuol dire che è un tipo di oggetto diverso
+									// per cui ne creo una instanza
 									try {
-										Object obj = clazz.newInstance();
-										putIfAbsent(key,obj);
-									} catch (InstantiationException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (IllegalAccessException e) {
+										Class<?>clazz = Class.forName(value);
+										try {
+											Object obj = clazz.newInstance();
+											putIfAbsent(key,obj);
+										} catch (InstantiationException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (IllegalAccessException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									} catch (ClassNotFoundException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
-								} catch (ClassNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
 								}
 							}
-						}
-						else{
-							// qui devo vedere se il caso di dare l'eccezzione
-							System.out.println("E entrato nell'else");
-							return false ;
+							else{
+								// qui devo vedere se il caso di dare l'eccezzione
+								System.out.println("E entrato nell'else");
+								return false ;
+							}
 						}
 					}
 				}

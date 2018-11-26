@@ -5,6 +5,7 @@ import java.awt.HeadlessException;
 import java.io.IOException;
 
 import cloud.jgo.net.tcp.TCPHandlerConnection;
+import cloud.jgo.net.tcp.TCPServer;
 
 public class MyTCPHandler extends TCPHandlerConnection{
 	
@@ -13,6 +14,12 @@ public class MyTCPHandler extends TCPHandlerConnection{
 			InterruptedException, HeadlessException, AWTException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public TCPServer getServer() {
+		// TODO Auto-generated method stub
+		return super.getServer();
 	}
 
 }

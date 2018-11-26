@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.net.config.Configuration2;
@@ -19,12 +21,10 @@ import cloud.jgo.net.config.ServerConfiguration2;
 import cloud.jgo.net.config.ServerConfiguration2.ServerConfigurationKey;
 import cloud.jgo.net.config.TCPServerConfiguration2;
 import cloud.jgo.net.handlers.Handler;
+
 public class ConfigTest {
 public static void main(String[] args) {
 	
-	// possiamo inoltre specificare nell'eccezzione
-	// quale tipo di valore non è adatto alla chiave
-	// poi devo fare quel test in jjdom, quindi lavorare su più documenti
 	// un altra cosa devo verificare bene il discorso delle istanze
 	// di £ e j£,perchè ci può essere il rischio che i metodi di £
 	// restituiscono l'istanza di j£, beh devo eliminare questo rischio
@@ -34,18 +34,20 @@ public static void main(String[] args) {
 	
 	
 	
-	ServerConfiguration2 c = new TCPServerConfiguration2("hello.xml");
+	ServerConfiguration2 c = new TCPServerConfiguration2("ciao.xml");
 	
-	Object oldValue = c.remove("jgo.net.server.lport");
+	System.out.println(c.AllConfigurations());
 	
-	// inserisco di nuovo la porta
-	
-	c.put(ServerConfiguration2.LPORT,3335);
-	
-	
-	// riscrivo il file XML
-	c.toXML("hello.xml");
-	
-	System.out.println("Ok");
+//	c.put(ServerConfiguration2.SERVER_NAME,"My server");
+//	c.put(ServerConfiguration2.LPORT,3333);
+//	c.put(ServerConfiguration2.TIMER,10);
+//	c.put(ServerConfiguration2.LHOST,"localhost");
+//	c.put(TCPServerConfiguration2.MULTI_CONNECTIONS,true);
+//	c.put(TCPServerConfiguration2.MAXIMUM_SOCKETS,10);
+//	c.put(TCPServerConfiguration2.ACCEPTED_SOCKET,"Nuova connessione @");
+//	c.put(TCPServerConfiguration2.HANDLER_MODEL,new MyTCPHandler());
+//	
+//	c.toXML("ciao.xml");
+//	System.out.println("Bene");
 }
 }

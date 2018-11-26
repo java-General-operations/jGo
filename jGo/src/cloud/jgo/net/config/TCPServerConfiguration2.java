@@ -1,6 +1,9 @@
 package cloud.jgo.net.config;
 import java.util.logging.Logger;
+
 import cloud.jgo.io.File;
+import cloud.jgo.net.ServerType;
+import cloud.jgo.net.ServerTypes;
 import cloud.jgo.net.handlers.Handler;
 public class TCPServerConfiguration2 extends ServerConfiguration2{
 	private Logger logger = null ;
@@ -17,6 +20,7 @@ public class TCPServerConfiguration2 extends ServerConfiguration2{
 	public TCPServerConfiguration2() {
 		// TODO Auto-generated constructor stub
 		this.logger = Logger.getLogger("cloud.jgo.net");
+		super.put(ServerConfiguration2.SERVER_TYPE,"TCP");
 	}
 	public TCPServerConfiguration2(String xmlFileName){
 		fromXML(xmlFileName);
@@ -33,5 +37,10 @@ public class TCPServerConfiguration2 extends ServerConfiguration2{
 	public int getSettingsCounter() {
 		// TODO Auto-generated method stub
 		return size();
+	}
+	@Override
+	public ServerType getServerType() {
+		// TODO Auto-generated method stub
+		return ServerTypes.TYPE_TCP;
 	}
 }

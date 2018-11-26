@@ -97,3 +97,4 @@ Version 1.0.6 - in Dev
 - Spostati i metodi json nella classe potenziata di jGo
 - creazione di un nuovo pacchetto destinato alle configurazioni dei server,quindi si sta ridefindendo 
 l'oggetto configuration del server, in quanto quello attuale non era flessibile.
+- Risolto bug jjdom : spiegare il bug poi.

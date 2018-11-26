@@ -70,7 +70,6 @@ public class HTMLDefaultElement implements HTMLElement{
 		this.attributes = new HashMap<>();
 		this.document = document ;
 	}
-	
 	/**
 	 * This method returns the start tag
 	 * @return the start tag
