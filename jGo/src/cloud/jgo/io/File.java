@@ -29,11 +29,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileSystemView;
-
 import cloud.jgo.£;
 
 /**
@@ -89,7 +87,6 @@ public class File extends java.io.File{
 		}
 		
 	}
-
 	public File(java.io.File parent, String child) {
 		super(parent, child);
 		// TODO Auto-generated constructor stub
@@ -109,5 +106,4 @@ public class File extends java.io.File{
 		super(uri);
 		// TODO Auto-generated constructor stub
 	}
-
 }

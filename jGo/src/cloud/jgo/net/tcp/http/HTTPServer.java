@@ -23,9 +23,7 @@
 package cloud.jgo.net.tcp.http;
 import java.io.IOException;
 import java.net.SocketException;
-
 import javax.activation.MimeTypeParseException;
-
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.net.ServerType;
@@ -269,8 +267,8 @@ public class HTTPServer extends TCPServer{
 		}
 		else{
 			if (this.configuration2.containsKey(HTTPServerConfiguration.ROOT_FOLDER.getKey())&&
-				new File(this.configuration2.getConfig(HTTPServerConfiguration.ROOT_FOLDER)).exists()&&
-				new File(this.configuration2.getConfig(HTTPServerConfiguration.ROOT_FOLDER)).isDirectory()) {
+				new File((String)this.configuration2.getConfig(HTTPServerConfiguration.ROOT_FOLDER)).exists()&&
+				new File((String)this.configuration2.getConfig(HTTPServerConfiguration.ROOT_FOLDER)).isDirectory()) {
 				return true ;
 			}
 			else{
