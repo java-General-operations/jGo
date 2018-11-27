@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<server.configuration>
-<multi.connections>true</multi.connections>
-<server.name>WaspServer</server.name>
-<lport>3432</lport>
-<lhost>localhost</lhost>
-<server.type excludes='true'>TCP</server.type>
-</server.configuration>

@@ -66,6 +66,11 @@ public interface Server extends Runnable{
 	 */
 	public abstract int getLocalPort();
 	/**
+	 * This method returns the server type
+	 * @return the server type
+	 */
+	public abstract ServerType getType();
+	/**
 	 * This method sets the local port
 	 * @param localPort the port you want to use
 	 */

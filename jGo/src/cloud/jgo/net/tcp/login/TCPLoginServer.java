@@ -43,9 +43,6 @@ import cloud.jgo.net.tcp.TCPServerTypes;
  * This class is the login tcp server
  */
 public final class TCPLoginServer extends TCPServer implements Login{
-	static {
-		TYPE_SERVER = TCPServerTypes.TYPE_LOGIN ;
-	}
 	// queste var vengono prima criptate eppoi serializzate
 	private String password = null ;
 	private String username = null ;
@@ -225,7 +222,7 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	}
 
 	@Override
-	protected ServerType getType() {
+	public ServerType getType() {
 		// TODO Auto-generated method stub
 		return TCPServerTypes.TYPE_LOGIN ;
 	}

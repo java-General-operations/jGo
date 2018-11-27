@@ -29,6 +29,7 @@ import cloud.jgo.net.config.Configuration;
 import cloud.jgo.net.tcp.DefaultTCPServer;
 import cloud.jgo.net.tcp.TCPServerConfiguration;
 import cloud.jgo.net.tcp.TCPServerTypes;
+import cloud.jgo.net.tcp.http.DefaultHTTPServer;
 import cloud.jgo.net.tcp.http.HTTPServer;
 import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
 import cloud.jgo.net.tcp.login.TCPLoginServer;
@@ -61,7 +62,7 @@ public class ServersFactory extends ServerFactory{
 			server.setLocalPort(localPort);
 		}
 		else if(type == TCPServerTypes.TYPE_HTTP.VALUE){
-			server = new HTTPServer(); // restituisco un server da configurare
+			server = new DefaultHTTPServer(); // restituisco un server da configurare
 			server.setLocalPort(localPort);
 		}
 		else if(type == TCPServerTypes.TYPE_LOGIN.VALUE){
@@ -75,10 +76,9 @@ public class ServersFactory extends ServerFactory{
 	public Server createServer(Configuration configuration) throws SocketException {
 		Server server = null ; 
 		if(HTTPServerConfiguration.class.isInstance(configuration)){
-			server = new HTTPServer();
+			server = new DefaultHTTPServer();
 		}
 		// qui poi se creero altri server mettere qui i rispettivi else if
-		
 		else if(TCPServerConfiguration.class.isInstance(configuration)&&!TCPLoginServerConfiguration.class.isInstance(configuration)){
 			server = new DefaultTCPServer();
 		}

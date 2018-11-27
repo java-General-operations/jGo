@@ -38,12 +38,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.text.JTextComponent;
-
 import cloud.jgo.£;
 import cloud.jgo.net.Manageable;
 import cloud.jgo.net.Server;
@@ -307,7 +305,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 			
 			try {
 				return "* Server Name :"+this.nameServer+"\n"+
-					   "* Server Type :"+TYPE_SERVER.TYPE+"\n"+
+					   "* Server Type :"+getType().TYPE+"\n"+
 					   "* LHOST       :"+InetAddress.getLocalHost().toString()+"\n"+
 					   "* LPORT		  :"+getServer().getLocalPort();
 			} catch (UnknownHostException e) {
@@ -326,7 +324,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 		else{
 			try {
 				return 
-					   "* Server Type :"+TYPE_SERVER.TYPE+"\n"+
+					   "* Server Type :"+getType().TYPE+"\n"+
 					   "* LHOST       :"+InetAddress.getLocalHost().toString()+"\n"+
 					   "* LPORT		  :"+getServer().getLocalPort();
 			} catch (UnknownHostException e) {
@@ -529,17 +527,10 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 		this.nameServer = nameServer;
 		this.configuration2.put(ServerConfiguration.SERVER_NAME,this.nameServer);
 	}
-
-	// qui dochiaro il tipo del server
-	public static ServerType TYPE_SERVER = ServerTypes.TYPE_TCP ;
-    /**
-     * 
-     * @return the server type
-     */
-	protected ServerType getType() {
-		return TYPE_SERVER ;
+	@Override
+	public ServerType getType() {
+		return ServerTypes.TYPE_TCP;
 	}
-	
     /**
      * This method sets the server for the multi connections
      * @param multiConnections the flag

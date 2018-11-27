@@ -51,14 +51,11 @@ public class HTTPServer extends TCPServer{
 	public static String getDecoder_type() {
 		return decoder_type;
 	}
-
 	static{
 		DEFAULT_PORT = 80 ;
-		TYPE_SERVER = TCPServerTypes.TYPE_HTTP ;
 	}
-	
 	@Override
-	protected ServerType getType() {
+	public ServerType getType() {
 		// TODO Auto-generated method stub
 		return new TCPServerTypes().TYPE_HTTP ;
 	}
@@ -126,7 +123,7 @@ public class HTTPServer extends TCPServer{
 		}
 		
 	}
-	public HTTPServer() {
+	protected HTTPServer() {
 	}
 	@Override
 	protected void acceptRequestWithModel() throws InstantiationException, IllegalAccessException{
@@ -185,7 +182,7 @@ public class HTTPServer extends TCPServer{
 	@Override
 	public void configure(Configuration configuration) {
 		super.configure(configuration);
-		this.configuration2 = configuration2 ;
+		this.configuration2 = (HTTPServerConfiguration) configuration ;
 		if (this.configuration2.containsKey(HTTPServerConfiguration.ROOT_FOLDER.getKey())) {
 			setRootFolder(this.configuration2.getConfig(HTTPServerConfiguration.ROOT_FOLDER));
 		}
@@ -252,7 +249,7 @@ public class HTTPServer extends TCPServer{
 	public static void setDecoder_type(String decoder_type) {
 		HTTPServer.decoder_type = decoder_type;
 	}
-	public HTTPServer(String rootFolder) {
+	protected HTTPServer(String rootFolder) {
 		// TODO Auto-generated constructor stub
 		this.rootFolder = rootFolder ;
 		if(new File(rootFolder).exists() && new File(rootFolder).isDirectory()){
