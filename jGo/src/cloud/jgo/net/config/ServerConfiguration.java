@@ -151,14 +151,16 @@ public abstract class ServerConfiguration extends Configuration{
 					}
 				}
 				else{
-					// ultimo controllo : verifico se la config key è compatibile con la classe di configurazione attuale
-					// qui dobbiamo impostare un bel controllo :)
 					if (key.configurationType.isAssignableFrom(getClass())) {
-						System.out.println("E compatibile :"+key.key);
 						obj = (V) super.put(key.key,value);
 					}
 					else{
-						System.err.println("Non è compatibile :"+key.key);
+						try {
+							throw new InvalidConfigurationException(key.key);
+						} catch (InvalidConfigurationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 			}
@@ -208,9 +210,17 @@ public abstract class ServerConfiguration extends Configuration{
 					}
 				}
 				else{
-					// qui invece significa che è tutto apposto 
-					// per cui chiamo il put della super classe
-					obj = (V) super.putIfAbsent(key.key,value);
+					if (key.configurationType.isAssignableFrom(getClass())) {
+						obj = (V) super.putIfAbsent(key.key,value);
+					}
+					else{
+						try {
+							throw new InvalidConfigurationException(key.key);
+						} catch (InvalidConfigurationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 		}
@@ -264,9 +274,17 @@ public abstract class ServerConfiguration extends Configuration{
 					}
 				}
 				else{
-					// qui invece significa che è tutto apposto 
-					// per cui chiamo il put della super classe
-					obj = (V) super.replace(key.key, value);
+					if (key.configurationType.isAssignableFrom(getClass())) {
+						obj = (V) super.replace(key.key,value);
+					}
+					else{
+						try {
+							throw new InvalidConfigurationException(key.key);
+						} catch (InvalidConfigurationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 		}
@@ -325,7 +343,17 @@ public abstract class ServerConfiguration extends Configuration{
 					}
 				}
 				else{
-					obj = super.replace(ky.key, oldValue_, newValue);
+					if (key.configurationType.isAssignableFrom(getClass())) {
+						obj = super.replace(ky.key, oldValue_, newValue);
+					}
+					else{
+						try {
+							throw new InvalidConfigurationException(key.key);
+						} catch (InvalidConfigurationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 		}
@@ -507,9 +535,6 @@ public abstract class ServerConfiguration extends Configuration{
 						super.put(ServerConfiguration.SERVER_TYPE.key,serverType);
 					}
 					else{
-						// dare un eccezzione che fa riferimento
-						// al tipo di server non comatibile con la
-						// configurazione oggetto ...
 						try {
 							throw new InvalidConfigurationException(ServerConfiguration.SERVER_TYPE.key);
 						} catch (InvalidConfigurationException e) {
