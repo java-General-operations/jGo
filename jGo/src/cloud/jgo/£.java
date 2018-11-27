@@ -1264,19 +1264,25 @@ public class £{
 		}
 		return server ;
 	}
-	
 	/**
-	 * This method is more specific, create a tcpserver
-	 * @return the tcpserver
+	 * This method is more specific, create a tcpServer
+	 * @return the tcp server
 	 */
 	public static cloud.jgo.net.tcp.TCPServer createTCPServer(){
 		ServersFactory factory = ServersFactory.getInstance();
 		TCPServer server = (TCPServer)factory.createServer(ServerTypes.TYPE_TCP.VALUE,TCPServer.DEFAULT_PORT);
 		return server ;
 	}
-	
-	
-	
+	// version 1.0.6
+	/**
+	 * This method is more specific, create a tcpLoginServer
+	 * @return login server
+	 */
+	public static cloud.jgo.net.tcp.login.TCPLoginServer createLoginServer(){
+		ServersFactory factory = ServersFactory.getInstance();
+		TCPLoginServer server = (TCPLoginServer) factory.createServer(TCPServerTypes.TYPE_LOGIN.VALUE,TCPServer.DEFAULT_PORT);
+		return server ;
+	}
 	/**
 	 * This method is more specific, create a httpserver
 	 * @return the http server

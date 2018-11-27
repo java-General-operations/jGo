@@ -1,5 +1,7 @@
 package cloud.jgo.test;
 
+import java.awt.AWTException;
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,24 +23,20 @@ import cloud.jgo.net.config.Configuration.ConfigurationKey;
 import cloud.jgo.net.config.ServerConfiguration;
 import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.handlers.Handler;
+import cloud.jgo.net.tcp.TCPHandlerConnection;
 import cloud.jgo.net.tcp.TCPServer;
 import cloud.jgo.net.tcp.TCPServerConfiguration;
 import cloud.jgo.net.tcp.TCPServerTypes;
+import cloud.jgo.net.tcp.http.HTTPHandlerConnection;
+import cloud.jgo.net.tcp.http.HTTPRequest;
+import cloud.jgo.net.tcp.http.HTTPResponse;
 import cloud.jgo.net.tcp.http.HTTPServer;
 import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
+import cloud.jgo.net.tcp.http.jor.JORServer;
+import cloud.jgo.net.tcp.login.TCPLoginServer;
 import cloud.jgo.net.tcp.login.TCPLoginServerConfiguration;
 public class ConfigTest {
 public static void main(String[] args) throws SocketException {
-	
-	
-	// mettiamo qualche altro metodo
-	// nella classe di utilità
-	
-	
-	
-	
-	
-	
 	
 	
 }

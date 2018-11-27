@@ -27,7 +27,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
+
 import cloud.jgo.net.tcp.http.HTTPServer;
+import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
 /**
  * @author Martire91
  * @see JOR
@@ -104,5 +106,10 @@ public class JORServer extends HTTPServer{
 	 */
 	public void removeAllFromMatrix(){
 		matrix.clear();
+	}
+	public static JORServer creates(HTTPServerConfiguration config){
+		JORServer server = new JORServer();
+		server.configure(config);
+		return server ;
 	}
 }
