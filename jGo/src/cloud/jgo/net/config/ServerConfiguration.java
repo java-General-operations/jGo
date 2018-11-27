@@ -1,3 +1,25 @@
+/**
+ * JGO - A pure Java library,
+ * its purpose is to make life easier for the programmer.
+ *
+ * J - Java
+ * G - General
+ * O - Operations
+ *
+ * URL Software : https://www.jgo.cloud/
+ * URL Documentation : https://www.jgo.cloud/docs/
+ *
+ * Copyright © 2018 - Marco Martire (www.jgo.cloud)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the MIT License.
+ *
+ * You may obtain a copy of License at :
+ * https://www.jgo.cloud/LICENSE.txt
+ *
+ * To collaborate on this project, you need to do it from the software site.
+ * 
+ */
 package cloud.jgo.net.config;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +47,11 @@ import cloud.jgo.net.ServerType;
 import cloud.jgo.net.ServersUtils;
 import cloud.jgo.net.handlers.Handler;
 import cloud.jgo.net.tcp.TCPServerConfiguration;
+/**
+ * 
+ * @author Martire91
+ * This class represents a server configuration
+ */
 public abstract class ServerConfiguration extends Configuration{
 	protected final static DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
 	protected static DocumentBuilder builder = null;
@@ -75,7 +102,15 @@ public abstract class ServerConfiguration extends Configuration{
 		});
 		return new StringBuffer(buffer.toString().trim());
 	}
+	/**
+	 * This method gets the server type
+	 * @return the server type
+	 */
 	public abstract ServerType getServerType();
+	/**
+	 * This method gets the available configurations
+	 * @return the available configurations
+	 */
 	public static List<ConfigurationKey> getAvailableConfigurations() {
 		return availableConfigurations;
 	}
@@ -562,6 +597,11 @@ public abstract class ServerConfiguration extends Configuration{
 		// TODO Auto-generated method stub
 		return fromXML(new File(fileName));
 	}
+	/**
+	 * 
+	 * @author Martire91
+	 *	This class represents the server configuration key
+	 */
 	// sub class config :
 	public static class ServerConfigurationKey extends ConfigurationKey{
 		public ServerConfigurationKey(String key, Class<?> type,

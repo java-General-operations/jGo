@@ -25,6 +25,12 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.logging.Logger;
+/**
+ * 
+ * @author Martire91
+ * This class represents a general configuration
+ *
+ */
 public abstract class Configuration extends Hashtable<String,Object> {
 	public final static ConfigurationKey TIMER = new ConfigurationKey("jgo.net.timer",Integer.class,Configuration.class);
 	/**
@@ -58,7 +64,7 @@ public abstract class Configuration extends Hashtable<String,Object> {
 		 * @param fileName the xml file
 		 */
 		public abstract boolean fromXML(String fileName);
-		
+	
 		public abstract <V> V put(ConfigurationKey key,Object value);
 		
 		public abstract <V> V putIfAbsent(ConfigurationKey key,Object value);
@@ -70,6 +76,11 @@ public abstract class Configuration extends Hashtable<String,Object> {
 		public abstract boolean replace(ConfigurationKey key,Object oldValue,Object newValue);
 		
 		// mi creo un altra interfaccia
+		/**
+		 * 
+		 * @author Martire91
+		 *	This class represents a configuration key
+		 */
 		public static class ConfigurationKey{
 			protected String key;protected Class<?>type;
 			protected Class<?extends Configuration>configurationType ;
@@ -78,24 +89,26 @@ public abstract class Configuration extends Hashtable<String,Object> {
 			this.type = type;
 			this.configurationType = configurationType;
 			}
+			/**
+			 * This method gets the key
+			 * @return the key
+			 */
 			public String getKey() {
 				return key;
 			}
-			public void setKey(String key) {
-				this.key = key;
-			}
-			public void setConfigurationType(
-					Class<? extends Configuration> configurationType) {
-				this.configurationType = configurationType;
-			}
+			/**
+			 * This method gets the configuration type
+			 * @return the configuration type
+			 */
 			public Class<? extends Configuration> getConfigurationType() {
 				return configurationType;
 			}
+			/**
+			 * This method gets the type
+			 * @return the type
+			 */
 			public Class<?> getType() {
 				return type;
-			}
-			public void setType(Class<?> type) {
-				this.type = type;
 			}
 			@Override
 			public String toString() {

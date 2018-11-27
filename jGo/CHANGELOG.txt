@@ -93,12 +93,16 @@ Version 1.0.5 - 21/11/2018
 
 Version 1.0.6 - in Dev
 
-- Aggiunto un pacchetto per configurazioni più funzionali, questa volta sia per client che per server.
-- Spostati i metodi json nella classe potenziata di jGo
-- creazione di un nuovo pacchetto destinato alle configurazioni dei server,quindi si sta ridefindendo 
-l'oggetto configuration del server, in quanto quello attuale non era flessibile.
-- Risolto bug jjdom : spiegare il bug poi.
-- risolti tutti i bug riguardanti le configurazioni dei servers
-- aggiunta una classe di utilità per i server nel package cloud.jgo.net
-- sono stati risolti diversi bug nel pacchetto net, quindi nelle classi server
-- aggiunto metodo per la creazione dei server login tcp a, punto di accesso jGo
+- Added the config package in the cloud.jgo.net package
+
+- Moved the json methods to the enhanced jGo class
+
+- Added a method in JjDom, which allows us to work on multiple documents:swicth()
+
+- Resolved all bugs related to servers configurations
+
+- A small utility class added: ServersUtils
+
+- Resolved other server-related bugs
+
+- Added new method to jGo, for the creation of a simple login server:createLoginServer()

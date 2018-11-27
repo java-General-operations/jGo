@@ -296,6 +296,11 @@ public final class JjDom implements jQuerySupport, Serializable{
 			return this.type ;
 		}
 	}
+	/**
+	 * This method allows us to move from one document to another
+	 * @param document the new document
+	 * @return the JjDom instance
+	 */
 	public static JjDom swicth(HTMLDocument document){
 		JjDom.document = document;
 		clearSelection();
