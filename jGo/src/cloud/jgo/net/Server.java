@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import cloud.jgo.net.config.Configuration2;
+import cloud.jgo.net.config.Configuration;
 import cloud.jgo.net.tcp.NegativeListeningException;
 import cloud.jgo.net.tcp.NoReadingSourceException;
 /**
@@ -109,12 +109,12 @@ public interface Server extends Runnable{
 	 * @param configuration the server configuration
 	 * @throws SocketException 1 exception
 	 */
-	public abstract void configure(Configuration2 configuration);
+	public abstract void configure(Configuration configuration);
 	/**
 	 * This method returns the server configuration
 	 * @return the server configuration
 	 */
-	public abstract Configuration2 getConfiguration2();
+	public abstract Configuration getConfiguration2();
 	/**
 	 * This method sets the reading source
 	 * @param source the reading source
@@ -139,7 +139,6 @@ public interface Server extends Runnable{
 	 * @return the server name
 	 */
 	public abstract String getServerName();
-	
 	/**
 	 * 
 	 * @author Martire91

@@ -25,13 +25,13 @@ import java.net.SocketException;
 
 import cloud.jgo.net.Server;
 import cloud.jgo.net.ServerTypes;
-import cloud.jgo.net.config.Configuration2;
+import cloud.jgo.net.config.Configuration;
+import cloud.jgo.net.config.HTTPServerConfiguration;
 import cloud.jgo.net.config.TCPLoginServerConfiguration;
-import cloud.jgo.net.config.TCPServerConfiguration2;
+import cloud.jgo.net.config.TCPServerConfiguration;
 import cloud.jgo.net.tcp.DefaultTCPServer;
 import cloud.jgo.net.tcp.TCPServerTypes;
 import cloud.jgo.net.tcp.http.HTTPServer;
-import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
 import cloud.jgo.net.tcp.login.TCPLoginServer;
 /**
  * 
@@ -72,14 +72,14 @@ public class ServersFactory extends ServerFactory{
 	}
 
 	@Override
-	public Server createServer(Configuration2 configuration) throws SocketException {
+	public Server createServer(Configuration configuration) throws SocketException {
 		Server server = null ; 
 		if(HTTPServerConfiguration.class.isInstance(configuration)){
 			server = new HTTPServer();
 		}
 		// qui poi se creero altri server mettere qui i rispettivi else if
 		
-		else if(TCPServerConfiguration2.class.isInstance(configuration)&&!TCPLoginServerConfiguration.class.isInstance(configuration)){
+		else if(TCPServerConfiguration.class.isInstance(configuration)&&!TCPLoginServerConfiguration.class.isInstance(configuration)){
 			server = new DefaultTCPServer();
 		}
 		else if(TCPLoginServerConfiguration.class.isInstance(configuration)){

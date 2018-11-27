@@ -25,8 +25,8 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.logging.Logger;
-public abstract class Configuration2 extends Hashtable<String,Object> {
-	public final static ConfigurationKey TIMER = new ConfigurationKey("jgo.net.timer",Integer.class);
+public abstract class Configuration extends Hashtable<String,Object> {
+	public final static ConfigurationKey TIMER = new ConfigurationKey("jgo.net.timer",Integer.class,Configuration.class);
 	/**
 		 * 
 		 * @return all configurations in the form of a string
@@ -72,15 +72,24 @@ public abstract class Configuration2 extends Hashtable<String,Object> {
 		// mi creo un altra interfaccia
 		public static class ConfigurationKey{
 			protected String key;protected Class<?>type;
-			protected ConfigurationKey(String key,Class<?>type) {
+			protected Class<?extends Configuration>configurationType ;
+			protected ConfigurationKey(String key,Class<?>type,Class<?extends Configuration>configurationType) {
 			this.key = key;
 			this.type = type;
+			this.configurationType = configurationType;
 			}
 			public String getKey() {
 				return key;
 			}
 			public void setKey(String key) {
 				this.key = key;
+			}
+			public void setConfigurationType(
+					Class<? extends Configuration> configurationType) {
+				this.configurationType = configurationType;
+			}
+			public Class<? extends Configuration> getConfigurationType() {
+				return configurationType;
 			}
 			public Class<?> getType() {
 				return type;
@@ -96,7 +105,7 @@ public abstract class Configuration2 extends Hashtable<String,Object> {
 			@Override
 			public boolean equals(Object obj) {
 				ConfigurationKey cast = (ConfigurationKey) obj;
-				if (cast.getKey().equals(this.key)&&cast.getType().equals(this.getType())) {
+				if (cast.getKey().equals(this.key)&&cast.getType().equals(this.getType())&&cast.configurationType.equals(this.configurationType)) {
 					return true ;
 				}
 				else{

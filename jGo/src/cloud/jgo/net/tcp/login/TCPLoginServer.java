@@ -30,9 +30,9 @@ import javax.crypto.spec.SecretKeySpec;
 import cloud.jgo.Encrypts;
 import cloud.jgo.£;
 import cloud.jgo.net.ServerType;
-import cloud.jgo.net.config.Configuration2;
+import cloud.jgo.net.config.Configuration;
 import cloud.jgo.net.config.TCPLoginServerConfiguration;
-import cloud.jgo.net.config.TCPServerConfiguration2;
+import cloud.jgo.net.config.TCPServerConfiguration;
 import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.handlers.Handler;
 import cloud.jgo.net.tcp.NotSupportedModelException;
@@ -131,7 +131,7 @@ public final class TCPLoginServer extends TCPServer implements Login{
 		this.configuration2.put(TCPLoginServerConfiguration.ATTEMPTS,this.attempts);
 	}
 	@Override
-	public void configure(Configuration2 configuration) {
+	public void configure(Configuration configuration) {
 		// TODO Auto-generated method stub
 		super.configure(configuration);
 		this.configuration2 = (cloud.jgo.net.config.TCPLoginServerConfiguration) configuration;

@@ -52,5 +52,5 @@ public class TCPServerTypes extends ServerTypes{
 	 * <p style='color:red'>Still not valid</p>
 	 */
 	public final static ServerType TYPE_SSH = new ServerType("SSH",6);
-	public final static ServerType TYPE_LOGIN = new ServerType("LOGIN",8);	
+	public final static ServerType TYPE_LOGIN = new ServerType("TCP-LOGIN",8);	
 }

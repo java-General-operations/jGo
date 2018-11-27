@@ -146,13 +146,12 @@ import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.function;
 import cloud.jgo.net.Server;
 import cloud.jgo.net.ServerTypes;
-import cloud.jgo.net.config.Configuration2;
-import cloud.jgo.net.config.HTTPServerConfiguration2;
+import cloud.jgo.net.config.Configuration;
+import cloud.jgo.net.config.HTTPServerConfiguration;
 import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.tcp.TCPServer;
 import cloud.jgo.net.tcp.TCPServerTypes;
 import cloud.jgo.net.tcp.http.HTTPServer;
-import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
 import cloud.jgo.net.tcp.http.headers.Header;
 import cloud.jgo.net.tcp.http.jor.JOR;
 import cloud.jgo.net.tcp.http.jor.JORServer;
@@ -1254,7 +1253,7 @@ public class £{
 	 * @param config the server configuration
 	 * @return the server
 	 */
-	public static cloud.jgo.net.Server serv(Configuration2 config){
+	public static cloud.jgo.net.Server serv(Configuration config){
 		ServersFactory factory = ServersFactory.getInstance();
 		Server server=null;
 		try {
@@ -1302,7 +1301,7 @@ public class £{
 	 * @param conf the server configuration
 	 * @return the jor server
 	 */
-	public static cloud.jgo.net.tcp.http.jor.JORServer createJORServer(HTTPServerConfiguration2 conf){
+	public static cloud.jgo.net.tcp.http.jor.JORServer createJORServer(HTTPServerConfiguration conf){
 		JORServer serv = createJORServer();
 		serv.configure(conf);
 		return serv ;

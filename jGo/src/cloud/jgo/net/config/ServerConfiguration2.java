@@ -1,15 +1,9 @@
 package cloud.jgo.net.config;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.logging.Logger;
 
-import javax.naming.ldap.HasControls;
-import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,18 +25,18 @@ import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.io.File;
 import cloud.jgo.net.ServerType;
-import cloud.jgo.net.config.Configuration2.ConfigurationKey;
+import cloud.jgo.net.ServersUtils;
 import cloud.jgo.net.handlers.Handler;
-public abstract class ServerConfiguration2 extends Configuration2{
+public abstract class ServerConfiguration2 extends Configuration{
 	protected final static DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
 	protected static DocumentBuilder builder = null;
 	protected Document document=null;
 	public final static String XML_ROOT_NAME = "server.configuration";
 	//KEYS :
-	public final static ConfigurationKey SERVER_NAME = new ServerConfigurationKey("jgo.net.server_name",String.class);
-	public final static ConfigurationKey SERVER_TYPE = new ServerConfigurationKey("jgo.net.server_type",String.class);
-	public final static ConfigurationKey LPORT = new ServerConfigurationKey("jgo.net.server.lport",Integer.class);
-	public final static ConfigurationKey LHOST = new ServerConfigurationKey("jgo.net.server.lhost",String.class);
+	public final static ConfigurationKey SERVER_NAME = new ConfigurationKey("jgo.net.server_name",String.class,ServerConfiguration2.class);
+	public final static ConfigurationKey SERVER_TYPE = new ConfigurationKey("jgo.net.server_type",String.class,ServerConfiguration2.class);
+	public final static ConfigurationKey LPORT = new ConfigurationKey("jgo.net.server.lport",Integer.class,ServerConfiguration2.class);
+	public final static ConfigurationKey LHOST = new ConfigurationKey("jgo.net.server.lhost",String.class,ServerConfiguration2.class);
 	// available
 	protected static List<ConfigurationKey>availableConfigurations = new ArrayList<ConfigurationKey>();
 	static{
@@ -61,7 +55,7 @@ public abstract class ServerConfiguration2 extends Configuration2{
 	}
 	public ServerConfiguration2() {
 		// TODO Auto-generated constructor stub
-		super.put(TCPServerConfiguration2.SERVER_TYPE.key,getServerType().TYPE);
+		super.put(TCPServerConfiguration.SERVER_TYPE.key,getServerType().TYPE);
 	}
 	@Override
 	public StringBuffer AllConfigurations() {
@@ -159,9 +153,14 @@ public abstract class ServerConfiguration2 extends Configuration2{
 					}
 				}
 				else{
-					// qui invece significa che è tutto apposto 
-					// per cui chiamo il put della super classe
-					obj = (V) super.put(key.key,value);
+					// ultimo controllo : verifico se la config key è compatibile con la classe di configurazione attuale
+					// qui dobbiamo impostare un bel controllo :)
+					if (key.configurationType.isAssignableFrom(getClass())) {
+						System.out.println("E compatibile :"+key.key);
+					}
+					else{
+						System.err.println("Non è compatibile :"+key.key);
+					}
 				}
 			}
 		}
@@ -441,7 +440,6 @@ public abstract class ServerConfiguration2 extends Configuration2{
 							String value = el.getTextContent();
 							ky = getProp(ky);
 							if (ky!=null) {
-								System.out.println("Ecco:"+ky);
 								// adesso controllo che tipo di chiave
 								// è per inserire il valore giusto 
 								for (ConfigurationKey configurationKey : availableConfigurations) {
@@ -497,6 +495,34 @@ public abstract class ServerConfiguration2 extends Configuration2{
 						}
 					}
 				}
+				// all fine del ciclo
+				// cerco il tipo del server
+				// e verifico se è compatibile con la classe della configurazione 
+				Element serverTypeElement = (Element) document.getElementsByTagName("server.type").item(0);
+				if (serverTypeElement!=null) {
+					String serverType = serverTypeElement.getTextContent();
+					String orServerType = this.getServerType().TYPE;
+					if (serverType.equals(orServerType)) {
+						// va bene
+						// quindi inseriamo il tipo di nuovo
+						super.put(ServerConfiguration2.SERVER_TYPE.key,serverType);
+					}
+					else{
+						// dare un eccezzione che fa riferimento
+						// al tipo di server non comatibile con la
+						// configurazione oggetto ...
+						try {
+							throw new InvalidConfigurationException(ServerConfiguration2.SERVER_TYPE.key);
+						} catch (InvalidConfigurationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				else{
+					// qui non c'è il tipo di server nella configurazione
+					// quindi vedere che fare ...
+				}
 			} catch (SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -507,19 +533,9 @@ public abstract class ServerConfiguration2 extends Configuration2{
 		}
 		return flag ;
 	}
-	
-	
 	@Override
 	public boolean fromXML(String fileName) {
 		// TODO Auto-generated method stub
 		return fromXML(new File(fileName));
-	}
-	
-	// mi creo la classe figlia della configurazioneChiave 
-	public static class ServerConfigurationKey extends Configuration2.ConfigurationKey{
-		private ServerConfigurationKey(String key, Class<?> type) {
-			super(key, type);
-			// TODO Auto-generated constructor stub
-		}
 	}
 }

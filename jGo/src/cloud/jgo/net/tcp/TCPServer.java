@@ -38,19 +38,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.text.JTextComponent;
+
 import cloud.jgo.£;
 import cloud.jgo.net.Manageable;
 import cloud.jgo.net.Server;
 import cloud.jgo.net.ServerTimer;
 import cloud.jgo.net.ServerType;
 import cloud.jgo.net.ServerTypes;
-import cloud.jgo.net.config.Configuration2;
+import cloud.jgo.net.config.Configuration;
 import cloud.jgo.net.config.ServerConfiguration2;
-import cloud.jgo.net.config.TCPServerConfiguration2;
+import cloud.jgo.net.config.TCPServerConfiguration;
 import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.handlers.Handler;
 import cloud.jgo.utils.command.RemoteCommand;
@@ -69,7 +71,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 	private Closable closable = null ;
 	private int countSockets = 0 ;
 	private ServerTimer serverTimer = null ;
-	private TCPServerConfiguration2 configuration2 = new TCPServerConfiguration2();
+	private TCPServerConfiguration configuration2 = new TCPServerConfiguration();
 	private Object readFrom = null;
 	private Object writeFrom = null ;
 	protected DefaultSocket acceptedConnection = null ;
@@ -178,26 +180,26 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 		return this.oneConnectionAtATime;
 	}
 	@Override
-	public void configure(Configuration2 configuration) {
+	public void configure(Configuration configuration) {
 		// TODO Auto-generated method stub
-		this.configuration2 = (TCPServerConfiguration2) configuration ;
-		if(this.configuration2.containsKey(TCPServerConfiguration2.MULTI_CONNECTIONS)){
-			setMultiConnections(this.configuration2.getConfig(TCPServerConfiguration2.MULTI_CONNECTIONS));
+		this.configuration2 = (TCPServerConfiguration) configuration ;
+		if(this.configuration2.containsKey(TCPServerConfiguration.MULTI_CONNECTIONS)){
+			setMultiConnections(this.configuration2.getConfig(TCPServerConfiguration.MULTI_CONNECTIONS));
 		}
-		if (this.configuration2.containsKey(TCPServerConfiguration2.LPORT)) {
+		if (this.configuration2.containsKey(TCPServerConfiguration.LPORT)) {
 			setLocalPort(this.configuration2.getConfig(ServerConfiguration2.LPORT));
 		}
-		if (this.configuration2.containsKey(TCPServerConfiguration2.SERVER_NAME)) {
-			setServerName(this.configuration2.getConfig(TCPServerConfiguration2.SERVER_NAME));
+		if (this.configuration2.containsKey(TCPServerConfiguration.SERVER_NAME)) {
+			setServerName(this.configuration2.getConfig(TCPServerConfiguration.SERVER_NAME));
 		}
-		if (this.configuration2.containsKey(TCPServerConfiguration2.ACCEPTED_SOCKET)) {
-			setLocalPort(this.configuration2.getConfig(TCPServerConfiguration2.ACCEPTED_SOCKET));
+		if (this.configuration2.containsKey(TCPServerConfiguration.ACCEPTED_SOCKET)) {
+			setLocalPort(this.configuration2.getConfig(TCPServerConfiguration.ACCEPTED_SOCKET));
 		}
-		if (this.configuration2.containsKey(TCPServerConfiguration2.MAXIMUM_SOCKETS)) {
-			this.maximumSockets = (this.configuration2.getConfig(TCPServerConfiguration2.MAXIMUM_SOCKETS));
+		if (this.configuration2.containsKey(TCPServerConfiguration.MAXIMUM_SOCKETS)) {
+			this.maximumSockets = (this.configuration2.getConfig(TCPServerConfiguration.MAXIMUM_SOCKETS));
 		}
-		if (this.configuration2.containsKey(TCPServerConfiguration2.HANDLER_MODEL)) {
-			setModel(this.configuration2.getConfig(TCPServerConfiguration2.HANDLER_MODEL));
+		if (this.configuration2.containsKey(TCPServerConfiguration.HANDLER_MODEL)) {
+			setModel(this.configuration2.getConfig(TCPServerConfiguration.HANDLER_MODEL));
 		}
 	}
 	
@@ -213,7 +215,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 		if(handler instanceof TCPHandlerConnection){
 			// TODO Auto-generated method stub
 			this.model = handler ;
-			this.configuration2.put(TCPServerConfiguration2.HANDLER_MODEL,this.model);
+			this.configuration2.put(TCPServerConfiguration.HANDLER_MODEL,this.model);
 		}
 		else{
 			try {
@@ -285,7 +287,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 	 * @return the tcp server
 	 * @throws SocketException 1 exception
 	 */
-	public static TCPServer creates(TCPServerConfiguration2 configuration) throws SocketException{
+	public static TCPServer creates(TCPServerConfiguration configuration) throws SocketException{
 		ServersFactory factory = ServersFactory.getInstance();
 		return (TCPServer) factory.createServer(configuration);
 	}
@@ -356,10 +358,10 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 	 */
 	public void setTextOfAcceptedSocket(String output) {
 		this.textOfAcceptedSocket = output ;
-		this.configuration2.put(TCPServerConfiguration2.ACCEPTED_SOCKET,textOfAcceptedSocket);
+		this.configuration2.put(TCPServerConfiguration.ACCEPTED_SOCKET,textOfAcceptedSocket);
 	}
 	@Override
-	public TCPServerConfiguration2 getConfiguration2() {
+	public TCPServerConfiguration getConfiguration2() {
 		// TODO Auto-generated method stub
 		return this.configuration2;
 	}
@@ -545,7 +547,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
      */
 	public void setMultiConnections(boolean multiConnections) {
 		this.multiConnections = multiConnections;
-		this.configuration2.put(TCPServerConfiguration2.MULTI_CONNECTIONS, this.multiConnections);
+		this.configuration2.put(TCPServerConfiguration.MULTI_CONNECTIONS, this.multiConnections);
 	}
 	private DefaultServerSocket server = null;
 	private int localPort;
@@ -585,9 +587,9 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 	  */
 	 public DefaultSocket acceptRequest() throws IOException, NoReadingSourceException{
 		// per prima cosa controllo se non  accetta connessioni
-		if(this.getConfiguration2().containsKey(TCPServerConfiguration2.MAXIMUM_SOCKETS)){
+		if(this.getConfiguration2().containsKey(TCPServerConfiguration.MAXIMUM_SOCKETS)){
 			// è stato impostato un numero massimo di sockets
-			if(this.countSockets<((Integer)this.configuration2.getConfig(TCPServerConfiguration2.MAXIMUM_SOCKETS))){
+			if(this.countSockets<((Integer)this.configuration2.getConfig(TCPServerConfiguration.MAXIMUM_SOCKETS))){
 				
 				inTheAcceptancePhase = true ;
 				this.acceptedConnection = this.getServer().accept();
@@ -605,7 +607,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 				if(this.textOfAcceptedSocket!=null){
 					read(this.textOfAcceptedSocket);
 				}
-				if(((Boolean)getConfiguration2().getConfig(TCPServerConfiguration2.DEFAULT_PRINT_FOR_ACCEPTANCE_SOCKET))){
+				if(((Boolean)getConfiguration2().getConfig(TCPServerConfiguration.DEFAULT_PRINT_FOR_ACCEPTANCE_SOCKET))){
 					read(this.countSockets+") New Connection from "+this.acceptedConnection.getInetAddress().toString());
 				}
 				return this.acceptedConnection ;	
@@ -645,7 +647,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 			if(this.textOfAcceptedSocket!=null){
 				read(this.textOfAcceptedSocket);
 			}
-			if((Boolean)getConfiguration2().getConfig(TCPServerConfiguration2.DEFAULT_PRINT_FOR_ACCEPTANCE_SOCKET)){
+			if((Boolean)getConfiguration2().getConfig(TCPServerConfiguration.DEFAULT_PRINT_FOR_ACCEPTANCE_SOCKET)){
 				read(this.countSockets+") New Connection from "+this.acceptedConnection.getInetAddress().toString());	
 			}
 			return this.acceptedConnection ;	
@@ -924,9 +926,9 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 				this.server.setClosable(this.closable);
 				read(positiveListen);
 				this.inListen = true ;
-				if((Integer)this.getConfiguration2().getConfig(TCPServerConfiguration2.TIMER)>0){
+				if((Integer)this.getConfiguration2().getConfig(TCPServerConfiguration.TIMER)>0){
 					// qui parte il timer
-					serverTimer = new ServerTimer(this,getConfiguration2().getConfig(TCPServerConfiguration2.TIMER));
+					serverTimer = new ServerTimer(this,getConfiguration2().getConfig(TCPServerConfiguration.TIMER));
 					serverTimer.startTimer();
 				}
 				
@@ -967,9 +969,9 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 			this.server.setClosable(this.closable);
 			this.inListen = true ;
 			// qui si controlla se è stato settato il timer
-			if((Integer)getConfiguration2().getConfig(TCPServerConfiguration2.TIMER)>0){
+			if((Integer)getConfiguration2().getConfig(TCPServerConfiguration.TIMER)>0){
 				// qui parte il timer
-				serverTimer = new ServerTimer(this,getConfiguration2().getConfig(TCPServerConfiguration2.TIMER));
+				serverTimer = new ServerTimer(this,getConfiguration2().getConfig(TCPServerConfiguration.TIMER));
 				serverTimer.startTimer();
 			}
 		}	
@@ -999,9 +1001,9 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 			}
 			this.inListen = true ;
 			// qui si controlla se è stato settato il timer
-			if((Integer)getConfiguration2().getConfig(TCPServerConfiguration2.TIMER)>0){
+			if((Integer)getConfiguration2().getConfig(TCPServerConfiguration.TIMER)>0){
 				// qui parte il timer
-				serverTimer = new ServerTimer(this,getConfiguration2().getConfig(TCPServerConfiguration2.TIMER));
+				serverTimer = new ServerTimer(this,getConfiguration2().getConfig(TCPServerConfiguration.TIMER));
 				serverTimer.startTimer();
 			}
 		}

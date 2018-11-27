@@ -23,14 +23,15 @@
 package cloud.jgo.net.tcp.http;
 import java.io.IOException;
 import java.net.SocketException;
+
 import javax.activation.MimeTypeParseException;
+
 import cloud.jgo.£;
 import cloud.jgo.io.File;
-import cloud.jgo.net.Configuration;
 import cloud.jgo.net.ServerType;
-import cloud.jgo.net.config.Configuration2;
-import cloud.jgo.net.config.HTTPServerConfiguration2;
-import cloud.jgo.net.config.TCPServerConfiguration2;
+import cloud.jgo.net.config.Configuration;
+import cloud.jgo.net.config.HTTPServerConfiguration;
+import cloud.jgo.net.config.TCPServerConfiguration;
 import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.handlers.Handler;
 import cloud.jgo.net.tcp.NoReadingSourceException;
@@ -47,8 +48,7 @@ public class HTTPServer extends TCPServer{
 	private String nameRootFolder = null ;
 	public final static String HTTP_VERSION = "HTTP/1.0";
 	private static String decoder_type = "UTF-8"; // default value
-	private HTTPServerConfiguration configuration = new HTTPServerConfiguration();
-	private HTTPServerConfiguration2 configuration2 = new HTTPServerConfiguration2();
+	private HTTPServerConfiguration configuration2 = new HTTPServerConfiguration();
 	public static String getDecoder_type() {
 		return decoder_type;
 	}
@@ -64,21 +64,9 @@ public class HTTPServer extends TCPServer{
 		return new TCPServerTypes().TYPE_HTTP ;
 	}
 	@Override
-	public HTTPServerConfiguration getConfiguration() {
-		/*
-		 
-		JGO Auto-generated method stub
-	
-		Author : £ wasp91 £
-		Date 22 nov 2017
-		
-		*/
-		return this.configuration ;
-	}
-	@Override
-	public HTTPServerConfiguration2 getConfiguration2() {
+	public HTTPServerConfiguration getConfiguration2() {
 		// TODO Auto-generated method stub
-		return (HTTPServerConfiguration2) super.getConfiguration2();
+		return (HTTPServerConfiguration) super.getConfiguration2();
 	}
 	@Override
 	protected void acceptRequestsFromClientsWithModel() throws IOException, CloneNotSupportedException,
@@ -196,39 +184,26 @@ public class HTTPServer extends TCPServer{
 		}
 	}
 	@Override
-	public void configure(Configuration configuration){
-			super.configure(configuration);
-		    this.configuration = (HTTPServerConfiguration) configuration;
-			if(this.configuration.getRootFolder()!=null){
-				(this).setRootFolder(((HTTPServerConfiguration)this.configuration).getRootFolder());
-			}
-			if(this.configuration.getModel()!=null){
-				setModel(((HTTPServerConfiguration)this.configuration).getModel());
-			}
-	}
-	
-	@Override
-	public void configure(Configuration2 configuration) {
+	public void configure(Configuration configuration) {
 		super.configure(configuration);
 		this.configuration2 = configuration2 ;
-		if (this.configuration2.containsKey(HTTPServerConfiguration2.ROOT_FOLDER)) {
-			setRootFolder(this.configuration2.getConfig(HTTPServerConfiguration2.ROOT_FOLDER));
+		if (this.configuration2.containsKey(HTTPServerConfiguration.ROOT_FOLDER)) {
+			setRootFolder(this.configuration2.getConfig(HTTPServerConfiguration.ROOT_FOLDER));
 		}
-		if (this.configuration2.containsKey(HTTPServerConfiguration2.HANDLER_MODEL)) {
-			setModel(this.configuration2.getConfig(HTTPServerConfiguration2.HANDLER_MODEL));
+		if (this.configuration2.containsKey(HTTPServerConfiguration.HANDLER_MODEL)) {
+			setModel(this.configuration2.getConfig(HTTPServerConfiguration.HANDLER_MODEL));
 		}
 	}
 	@Override
 	public void reloadConfiguration() {
-		configure(this.configuration);
+		configure(this.configuration2);
 	}
 	
 	@Override
 	public void setServerName(String nameServer) {
 		// TODO Auto-generated method stub
 		super.setServerName(nameServer);
-		this.configuration.setServerName(nameServer);
-		this.configuration2.put(HTTPServerConfiguration2.SERVER_NAME,getServerName());
+		this.configuration2.put(HTTPServerConfiguration.SERVER_NAME,getServerName());
 	}
 	
 	
@@ -236,33 +211,28 @@ public class HTTPServer extends TCPServer{
 	public void setLocalPort(int localPort) {
 		// TODO Auto-generated method stub
 		super.setLocalPort(localPort);
-		this.configuration.setLport(localPort);
-		this.configuration2.put(HTTPServerConfiguration2.LPORT,getLocalPort());
+		this.configuration2.put(HTTPServerConfiguration.LPORT,getLocalPort());
 	}
 	
 	@Override
 	public void setTextOfAcceptedSocket(String output) {
 		// TODO Auto-generated method stub
 		super.setTextOfAcceptedSocket(output);
-		this.configuration.setAcceptedSocket(output);
-		this.configuration2.put(HTTPServerConfiguration2.ACCEPTED_SOCKET,getTextOfAcceptedSocket());
+		this.configuration2.put(HTTPServerConfiguration.ACCEPTED_SOCKET,getTextOfAcceptedSocket());
 	}
 
 	@Override
 	public void setMultiConnections(boolean multiConnections) {
 		// TODO Auto-generated method stub
 		super.setMultiConnections(multiConnections);
-		this.configuration.setMultiConnections(true);
-		this.configuration2.put(HTTPServerConfiguration2.MULTI_CONNECTIONS,isMultiConnections());
+		this.configuration2.put(HTTPServerConfiguration.MULTI_CONNECTIONS,isMultiConnections());
 	}
 
 	@Override
 	public void setModel(Handler handler) {
-		HTTPServerConfiguration config = (HTTPServerConfiguration) this.configuration;
 		if(handler instanceof HTTPHandlerConnection){
 			this.model =  handler ;
-			config.setModel(this.model);
-			this.configuration2.put(HTTPServerConfiguration2.HANDLER_MODEL,this.model);
+			this.configuration2.put(HTTPServerConfiguration.HANDLER_MODEL,this.model);
 		}
 		else{
 			this.model = null ;
@@ -290,8 +260,7 @@ public class HTTPServer extends TCPServer{
 		// va bene
 			this.nameRootFolder = new File(rootFolder).getName();
 			// casomai cancellare da qui
-			((HTTPServerConfiguration)getConfiguration()).setRootFolder(this.rootFolder);
-			getConfiguration2().put(HTTPServerConfiguration2.ROOT_FOLDER,this.rootFolder);
+			getConfiguration2().put(HTTPServerConfiguration.ROOT_FOLDER,this.rootFolder);
 		}
 	}
 	// qui ridefiniamo l'override del metodi isConfigurated 
@@ -303,17 +272,10 @@ public class HTTPServer extends TCPServer{
 			return false ;
 		}
 		else{
-			// si verifica oltre alla configurazione standart TCP
-			// anche che il server abbia una configurazione nella quale 
-			// è settata la cartella che il server deve rappresentare
-			// e si verifica appunto se la cartella esiste e se appunto una cartella
-			if(this.getConfiguration().getRootFolder()!=null && new File(this.getConfiguration().getRootFolder()).exists()){
-				if(new File(this.getConfiguration().getRootFolder()).isDirectory()){
-					return true ;
-				}
-				else{
-					return false ;
-				}
+			if (this.configuration2.contains(HTTPServerConfiguration.ROOT_FOLDER)&&
+				new File(this.configuration2.getConfig(HTTPServerConfiguration.ROOT_FOLDER)).exists()&&
+				new File(this.configuration2.getConfig(HTTPServerConfiguration.ROOT_FOLDER)).isDirectory()) {
+				return true ;
 			}
 			else{
 				return false ;
@@ -338,16 +300,11 @@ public class HTTPServer extends TCPServer{
 	public void setRootFolder(String rootFolder) {
 		 this.rootFolder = rootFolder ;
 		if(new File(rootFolder).exists() && new File(rootFolder).isDirectory()){
-			// va bene
-			   
 				this.nameRootFolder = new File(rootFolder).getName();
-				
-				// casomai cancellare da qui
-				((HTTPServerConfiguration)getConfiguration()).setRootFolder(this.rootFolder);
-				this.configuration2.put(HTTPServerConfiguration2.ROOT_FOLDER,this.rootFolder);
+				this.configuration2.put(HTTPServerConfiguration.ROOT_FOLDER,this.rootFolder);
 			}
 		else{
-			
+			System.err.println("Root folder is not exist #");
 		}
 	}
 	/**
