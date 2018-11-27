@@ -63,9 +63,9 @@ public class HTTPServer extends TCPServer{
 		return new TCPServerTypes().TYPE_HTTP ;
 	}
 	@Override
-	public HTTPServerConfiguration getConfiguration2() {
+	public HTTPServerConfiguration getConfiguration() {
 		// TODO Auto-generated method stub
-		return (HTTPServerConfiguration) super.getConfiguration2();
+		return this.configuration2;
 	}
 	@Override
 	protected void acceptRequestsFromClientsWithModel() throws IOException, CloneNotSupportedException,
@@ -186,10 +186,10 @@ public class HTTPServer extends TCPServer{
 	public void configure(Configuration configuration) {
 		super.configure(configuration);
 		this.configuration2 = configuration2 ;
-		if (this.configuration2.containsKey(HTTPServerConfiguration.ROOT_FOLDER)) {
+		if (this.configuration2.containsKey(HTTPServerConfiguration.ROOT_FOLDER.getKey())) {
 			setRootFolder(this.configuration2.getConfig(HTTPServerConfiguration.ROOT_FOLDER));
 		}
-		if (this.configuration2.containsKey(HTTPServerConfiguration.HANDLER_MODEL)) {
+		if (this.configuration2.containsKey(HTTPServerConfiguration.HANDLER_MODEL.getKey())) {
 			setModel(this.configuration2.getConfig(HTTPServerConfiguration.HANDLER_MODEL));
 		}
 	}
@@ -259,7 +259,7 @@ public class HTTPServer extends TCPServer{
 		// va bene
 			this.nameRootFolder = new File(rootFolder).getName();
 			// casomai cancellare da qui
-			getConfiguration2().put(HTTPServerConfiguration.ROOT_FOLDER,this.rootFolder);
+			getConfiguration().put(HTTPServerConfiguration.ROOT_FOLDER,this.rootFolder);
 		}
 	}
 	// qui ridefiniamo l'override del metodi isConfigurated 
@@ -271,7 +271,7 @@ public class HTTPServer extends TCPServer{
 			return false ;
 		}
 		else{
-			if (this.configuration2.contains(HTTPServerConfiguration.ROOT_FOLDER)&&
+			if (this.configuration2.containsKey(HTTPServerConfiguration.ROOT_FOLDER.getKey())&&
 				new File(this.configuration2.getConfig(HTTPServerConfiguration.ROOT_FOLDER)).exists()&&
 				new File(this.configuration2.getConfig(HTTPServerConfiguration.ROOT_FOLDER)).isDirectory()) {
 				return true ;

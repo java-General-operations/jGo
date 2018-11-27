@@ -155,6 +155,7 @@ public abstract class ServerConfiguration extends Configuration{
 					// qui dobbiamo impostare un bel controllo :)
 					if (key.configurationType.isAssignableFrom(getClass())) {
 						System.out.println("E compatibile :"+key.key);
+						obj = (V) super.put(key.key,value);
 					}
 					else{
 						System.err.println("Non è compatibile :"+key.key);

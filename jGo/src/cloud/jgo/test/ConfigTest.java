@@ -18,8 +18,11 @@ import cloud.jgo.£Func;
 import cloud.jgo.net.config.Configuration;
 import cloud.jgo.net.config.Configuration.ConfigurationKey;
 import cloud.jgo.net.config.ServerConfiguration;
+import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.handlers.Handler;
+import cloud.jgo.net.tcp.TCPServer;
 import cloud.jgo.net.tcp.TCPServerConfiguration;
+import cloud.jgo.net.tcp.TCPServerTypes;
 import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
 import cloud.jgo.net.tcp.login.TCPLoginServerConfiguration;
 
@@ -37,21 +40,13 @@ public static void main(String[] args) {
 	// segnalare che la configurazione in un file.xml deve essere una
 	// poichè cosi è convertivile in proprietà
 
-	ServerConfiguration c = new HTTPServerConfiguration();
-
-	c.put(ServerConfiguration.LHOST,"localhost");
-	c.put(ServerConfiguration.LPORT, 3332);
-	c.put(ServerConfiguration.SERVER_NAME,"Mio server");
-	c.put(ServerConfiguration.TIMER,100);
-	c.put(TCPServerConfiguration.MULTI_CONNECTIONS,true);
-	c.put(TCPServerConfiguration.MAXIMUM_SOCKETS,10);
-	c.put(TCPServerConfiguration.DEFAULT_PRINT_FOR_ACCEPTANCE_SOCKET,true);
-	c.put(TCPServerConfiguration.ACCEPTED_SOCKET,"Connessione in entrata @");
-	c.put(TCPServerConfiguration.HANDLER_MODEL,new MyTCPHandler());
-	c.put(TCPLoginServerConfiguration.ATTEMPTS, 3);
+	TCPServer server = (TCPServer) ServersFactory.getInstance().createServer(TCPServerTypes.TYPE_TCP.VALUE,3332);
 	
-
-	System.out.println("Configurazione avvenuta @");
+	server.getConfiguration().put(TCPServerConfiguration.MULTI_CONNECTIONS,true);
+	server.getConfiguration().put(TCPServerConfiguration.SERVER_NAME,"Mio server");
+	server.getConfiguration().put(TCPServerConfiguration.TIMER,100);
+	
+	server.reloadConfiguration();
 	
 	
 	

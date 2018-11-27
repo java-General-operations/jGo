@@ -114,7 +114,7 @@ public interface Server extends Runnable{
 	 * This method returns the server configuration
 	 * @return the server configuration
 	 */
-	public abstract Configuration getConfiguration2();
+	public abstract Configuration getConfiguration();
 	/**
 	 * This method sets the reading source
 	 * @param source the reading source
