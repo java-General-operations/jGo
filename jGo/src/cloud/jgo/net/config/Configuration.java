@@ -57,11 +57,13 @@ public abstract class Configuration extends Hashtable<String,Object> {
 		/**
 		 * Recovers the configuration from the xml file
 		 * @param xmlFile the xml file
+		 * @return true if the acquisition was successful
 		 */
 		public abstract boolean fromXML(cloud.jgo.io.File xmlFile);
 		/**
 		 *	Recovers the configuration from the xml file 
 		 * @param fileName the xml file
+		 * @return true if the acquisition was successful
 		 */
 		public abstract boolean fromXML(String fileName);
 	

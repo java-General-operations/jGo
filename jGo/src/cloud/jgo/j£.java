@@ -30,7 +30,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
-
 import javax.imageio.ImageIO;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -43,12 +42,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import com.google.gson.Gson;
-
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.net.Server;
@@ -61,7 +58,7 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  * @see £#_A
  * @see £#_S
  * @see £#_W
- * @version 1.0.0
+ * @version 1.0.1
    <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'> --><br>
     <!--Author : *** Marco Martire *** -->  
      <img id='logo'src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo2.png' alt='logo jgo' style='float: left;margin-right:15px;'><br>

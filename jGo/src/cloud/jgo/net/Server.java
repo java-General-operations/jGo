@@ -112,7 +112,6 @@ public interface Server extends Runnable{
 	/**
 	 * This method configures the server
 	 * @param configuration the server configuration
-	 * @throws SocketException 1 exception
 	 */
 	public abstract void configure(Configuration configuration);
 	/**

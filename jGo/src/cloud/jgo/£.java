@@ -99,7 +99,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -135,7 +134,6 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
-
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
@@ -166,7 +164,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
  * @see £#_A
  * @see £#_S
  * @see £#_W
- * @version 1.0.5
+ * @version 1.0.6
    <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'> --><br>
     <!--Author : *** Marco Martire *** -->  
      <img id='logo'src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo2.png' alt='logo jgo' style='float: left;margin-right:15px;'><br>
@@ -465,6 +463,7 @@ public class £{
 	 * This method iterates the hashtable as if it were a loop
 	 * @param hashtable the hashtable
 	 * @param func the function that you want to perform at each iteration
+	 * @param <T> the type
 	 * @return the jGo access point
 	 */
 	public static <T> £ each(Hashtable<T,T>hashtable,£Func func){
@@ -485,6 +484,7 @@ public class £{
 	 * This method iterates the hashtable as if it were a loop
 	 * @param hashtable the hashtable
 	 * @param func the function that you want to perform at each iteration
+	 * @param <T> the type
 	 * @return the jGo access point
 	 */
 	public static <T> £ each2(Hashtable<Object,Object>hashtable,£Func func){
@@ -505,6 +505,7 @@ public class £{
 		 * This method iterates the hashtable as if it were a loop
 		 * @param hashtable the hashtable
 		 * @param func the function that you want to perform at each iteration
+		 * @param <T> the type
 		 * @return the jGo access point
 		 */
 		public static <T> £ each3(Hashtable<String,Object>hashtable,£Func func){

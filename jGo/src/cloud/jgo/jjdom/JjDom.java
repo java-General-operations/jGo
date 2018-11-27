@@ -73,7 +73,7 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  * @see jQuerySupport
  * @see JjDom#$(String)
  * @see JjDom#jquery(String)
- * @version 1.0.2
+ * @version 1.0.3
  <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'>-->
     <!--Author : *** Marco Martire *** -->  
    <h1 style='color: #282828;'>jGo<strong style='color: green;'>.cloud</strong>/<a id='link'href='https://www.jgo.cloud/jjdom'>JjDom</a></h1>
