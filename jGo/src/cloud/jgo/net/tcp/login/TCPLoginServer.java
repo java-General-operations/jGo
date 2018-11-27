@@ -31,12 +31,11 @@ import cloud.jgo.Encrypts;
 import cloud.jgo.£;
 import cloud.jgo.net.ServerType;
 import cloud.jgo.net.config.Configuration;
-import cloud.jgo.net.config.TCPLoginServerConfiguration;
-import cloud.jgo.net.config.TCPServerConfiguration;
 import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.handlers.Handler;
 import cloud.jgo.net.tcp.NotSupportedModelException;
 import cloud.jgo.net.tcp.TCPServer;
+import cloud.jgo.net.tcp.TCPServerConfiguration;
 import cloud.jgo.net.tcp.TCPServerTypes;
 /**
  * 
@@ -53,7 +52,7 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	public final static int DEFAULT_ATTEMPTS = 5 ;
 	private int attempts = DEFAULT_ATTEMPTS ;
 	private int copiedValueAttempts = attempts ;
-	private cloud.jgo.net.config.TCPLoginServerConfiguration configuration2 = new cloud.jgo.net.config.TCPLoginServerConfiguration();
+	private cloud.jgo.net.tcp.login.TCPLoginServerConfiguration configuration2 = new cloud.jgo.net.tcp.login.TCPLoginServerConfiguration();
 	
 	// diamo per scontato che la chiave sia stata impostata
 	/**
@@ -62,9 +61,9 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	 */
 	public void setPassword(String password) {
 		this.password = password;
-		if(getConfiguration2().containsKey(cloud.jgo.net.config.TCPLoginServerConfiguration.AES_KEY)){
-			this.password = £.AES_e(this.password,getConfiguration2().getConfig(cloud.jgo.net.config.TCPLoginServerConfiguration.AES_KEY));
-			this.configuration2.put(cloud.jgo.net.config.TCPLoginServerConfiguration.PASSW,getPassword());
+		if(getConfiguration2().containsKey(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY)){
+			this.password = £.AES_e(this.password,getConfiguration2().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
+			this.configuration2.put(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.PASSW,getPassword());
 		}
 		else{
 			// do l'eccezzione dedicata
@@ -97,7 +96,7 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	}
 	
 	@Override
-	public cloud.jgo.net.config.TCPLoginServerConfiguration getConfiguration2() {
+	public cloud.jgo.net.tcp.login.TCPLoginServerConfiguration getConfiguration2() {
 		// TODO Auto-generated method stub
 		return this.configuration2;
 	}
@@ -107,8 +106,8 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	 */
 	public void setUsername(String username) {
 		this.username = username;
-		if (getConfiguration2().containsKey(cloud.jgo.net.config.TCPLoginServerConfiguration.AES_KEY)) {
-			this.username = £.AES_e(this.username,getConfiguration2().getConfig(cloud.jgo.net.config.TCPLoginServerConfiguration.AES_KEY));
+		if (getConfiguration2().containsKey(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY)) {
+			this.username = £.AES_e(this.username,getConfiguration2().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
 			this.configuration2.put(TCPLoginServerConfiguration.USER,this.username);
 		}
 		else{
@@ -134,15 +133,15 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	public void configure(Configuration configuration) {
 		// TODO Auto-generated method stub
 		super.configure(configuration);
-		this.configuration2 = (cloud.jgo.net.config.TCPLoginServerConfiguration) configuration;
-		if (this.configuration2.contains(cloud.jgo.net.config.TCPLoginServerConfiguration.PASSW)) {
-			setPassword(this.configuration2.getConfig(cloud.jgo.net.config.TCPLoginServerConfiguration.PASSW));
+		this.configuration2 = (cloud.jgo.net.tcp.login.TCPLoginServerConfiguration) configuration;
+		if (this.configuration2.contains(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.PASSW)) {
+			setPassword(this.configuration2.getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.PASSW));
 		}
-		if (this.configuration2.contains(cloud.jgo.net.config.TCPLoginServerConfiguration.USER)) {
-			setUsername(this.configuration2.getConfig(cloud.jgo.net.config.TCPLoginServerConfiguration.USER));
+		if (this.configuration2.contains(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.USER)) {
+			setUsername(this.configuration2.getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.USER));
 		}
-		if (this.configuration2.contains(cloud.jgo.net.config.TCPLoginServerConfiguration.ATTEMPTS)) {
-			setAttempts(this.configuration2.getConfig(cloud.jgo.net.config.TCPLoginServerConfiguration.ATTEMPTS));
+		if (this.configuration2.contains(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.ATTEMPTS)) {
+			setAttempts(this.configuration2.getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.ATTEMPTS));
 		}
 	}
 	@Override
@@ -157,7 +156,7 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	 * @return the login server
 	 * @throws SocketException 1 exception
 	 */
-	public static TCPLoginServer creates(cloud.jgo.net.config.TCPLoginServerConfiguration configuration) throws SocketException{
+	public static TCPLoginServer creates(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration configuration) throws SocketException{
 		
 		return (TCPLoginServer) ServersFactory.getInstance().createServer(configuration);
 	}
@@ -168,7 +167,7 @@ public final class TCPLoginServer extends TCPServer implements Login{
 		if (handler!=null) {
 			if(handler instanceof TCPLoginHandlerConnection){
 				this.model = handler ;
-				getConfiguration2().put(cloud.jgo.net.config.TCPLoginServerConfiguration.HANDLER_MODEL,this.model);
+				getConfiguration2().put(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.HANDLER_MODEL,this.model);
 			}
 			else{
 				this.model = null ;
@@ -211,8 +210,8 @@ public final class TCPLoginServer extends TCPServer implements Login{
 	@Override
 	public boolean login(String user,String passw){
 		boolean logged = false ;
-	    String passMem = £.AES_d(this.password,getConfiguration2().getConfig(cloud.jgo.net.config.TCPLoginServerConfiguration.AES_KEY));
-		String userMem = £.AES_d(this.username,getConfiguration2().getConfig(cloud.jgo.net.config.TCPLoginServerConfiguration.AES_KEY));
+	    String passMem = £.AES_d(this.password,getConfiguration2().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
+		String userMem = £.AES_d(this.username,getConfiguration2().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
 		if(user.equals(userMem)&&passw.equals(passMem)){
 			logged = true ;
 		}

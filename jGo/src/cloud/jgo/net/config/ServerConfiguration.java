@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -14,29 +13,28 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.io.File;
 import cloud.jgo.net.ServerType;
 import cloud.jgo.net.ServersUtils;
 import cloud.jgo.net.handlers.Handler;
-public abstract class ServerConfiguration2 extends Configuration{
+import cloud.jgo.net.tcp.TCPServerConfiguration;
+public abstract class ServerConfiguration extends Configuration{
 	protected final static DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
 	protected static DocumentBuilder builder = null;
 	protected Document document=null;
 	public final static String XML_ROOT_NAME = "server.configuration";
 	//KEYS :
-	public final static ConfigurationKey SERVER_NAME = new ConfigurationKey("jgo.net.server_name",String.class,ServerConfiguration2.class);
-	public final static ConfigurationKey SERVER_TYPE = new ConfigurationKey("jgo.net.server_type",String.class,ServerConfiguration2.class);
-	public final static ConfigurationKey LPORT = new ConfigurationKey("jgo.net.server.lport",Integer.class,ServerConfiguration2.class);
-	public final static ConfigurationKey LHOST = new ConfigurationKey("jgo.net.server.lhost",String.class,ServerConfiguration2.class);
+	public final static ConfigurationKey SERVER_NAME = new ConfigurationKey("jgo.net.server_name",String.class,ServerConfiguration.class);
+	public final static ConfigurationKey SERVER_TYPE = new ConfigurationKey("jgo.net.server_type",String.class,ServerConfiguration.class);
+	public final static ConfigurationKey LPORT = new ConfigurationKey("jgo.net.server.lport",Integer.class,ServerConfiguration.class);
+	public final static ConfigurationKey LHOST = new ConfigurationKey("jgo.net.server.lhost",String.class,ServerConfiguration.class);
 	// available
 	protected static List<ConfigurationKey>availableConfigurations = new ArrayList<ConfigurationKey>();
 	static{
@@ -53,7 +51,7 @@ public abstract class ServerConfiguration2 extends Configuration{
 			e.printStackTrace();
 		}
 	}
-	public ServerConfiguration2() {
+	public ServerConfiguration() {
 		// TODO Auto-generated constructor stub
 		super.put(TCPServerConfiguration.SERVER_TYPE.key,getServerType().TYPE);
 	}
@@ -364,7 +362,7 @@ public abstract class ServerConfiguration2 extends Configuration{
 		File file = new File(fileName);
 		// in questo metodo uso il document XML
 		// 1 passo : stabilisco il nodo root 
-		Element root = document.createElement(ServerConfiguration2.XML_ROOT_NAME);
+		Element root = document.createElement(ServerConfiguration.XML_ROOT_NAME);
 		// 2 passo faccio iterare gli elementi
 		£.each3(this,new £Func() {
 			@Override
@@ -505,14 +503,14 @@ public abstract class ServerConfiguration2 extends Configuration{
 					if (serverType.equals(orServerType)) {
 						// va bene
 						// quindi inseriamo il tipo di nuovo
-						super.put(ServerConfiguration2.SERVER_TYPE.key,serverType);
+						super.put(ServerConfiguration.SERVER_TYPE.key,serverType);
 					}
 					else{
 						// dare un eccezzione che fa riferimento
 						// al tipo di server non comatibile con la
 						// configurazione oggetto ...
 						try {
-							throw new InvalidConfigurationException(ServerConfiguration2.SERVER_TYPE.key);
+							throw new InvalidConfigurationException(ServerConfiguration.SERVER_TYPE.key);
 						} catch (InvalidConfigurationException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -537,5 +535,13 @@ public abstract class ServerConfiguration2 extends Configuration{
 	public boolean fromXML(String fileName) {
 		// TODO Auto-generated method stub
 		return fromXML(new File(fileName));
+	}
+	// sub class config :
+	public static class ServerConfigurationKey extends ConfigurationKey{
+		public ServerConfigurationKey(String key, Class<?> type,
+				Class<? extends Configuration> configurationType) {
+			super(key, type, configurationType);
+			// TODO Auto-generated constructor stub
+		}
 	}
 }

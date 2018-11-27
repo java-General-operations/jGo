@@ -26,13 +26,13 @@ import java.net.SocketException;
 import cloud.jgo.net.Server;
 import cloud.jgo.net.ServerTypes;
 import cloud.jgo.net.config.Configuration;
-import cloud.jgo.net.config.HTTPServerConfiguration;
-import cloud.jgo.net.config.TCPLoginServerConfiguration;
-import cloud.jgo.net.config.TCPServerConfiguration;
 import cloud.jgo.net.tcp.DefaultTCPServer;
+import cloud.jgo.net.tcp.TCPServerConfiguration;
 import cloud.jgo.net.tcp.TCPServerTypes;
 import cloud.jgo.net.tcp.http.HTTPServer;
+import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
 import cloud.jgo.net.tcp.login.TCPLoginServer;
+import cloud.jgo.net.tcp.login.TCPLoginServerConfiguration;
 /**
  * 
  * @author Martire91<br>

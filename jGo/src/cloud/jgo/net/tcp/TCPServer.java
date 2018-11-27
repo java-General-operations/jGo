@@ -51,8 +51,7 @@ import cloud.jgo.net.ServerTimer;
 import cloud.jgo.net.ServerType;
 import cloud.jgo.net.ServerTypes;
 import cloud.jgo.net.config.Configuration;
-import cloud.jgo.net.config.ServerConfiguration2;
-import cloud.jgo.net.config.TCPServerConfiguration;
+import cloud.jgo.net.config.ServerConfiguration;
 import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.handlers.Handler;
 import cloud.jgo.utils.command.RemoteCommand;
@@ -187,7 +186,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 			setMultiConnections(this.configuration2.getConfig(TCPServerConfiguration.MULTI_CONNECTIONS));
 		}
 		if (this.configuration2.containsKey(TCPServerConfiguration.LPORT)) {
-			setLocalPort(this.configuration2.getConfig(ServerConfiguration2.LPORT));
+			setLocalPort(this.configuration2.getConfig(ServerConfiguration.LPORT));
 		}
 		if (this.configuration2.containsKey(TCPServerConfiguration.SERVER_NAME)) {
 			setServerName(this.configuration2.getConfig(TCPServerConfiguration.SERVER_NAME));
@@ -260,7 +259,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 				// ultimo controllo
 				// controllo se la porta è stata settata
 				
-				if(this.getConfiguration2().getConfig(ServerConfiguration2.LPORT)!=null){
+				if(this.getConfiguration2().getConfig(ServerConfiguration.LPORT)!=null){
 					// qui potrei essere ancora più pignolo
 					// perchè dovrei verificare se la porta rientra
 					// nel range di porte accessibili ,ma no problem 
@@ -528,7 +527,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
      */
 	public void setServerName(String nameServer) {
 		this.nameServer = nameServer;
-		this.configuration2.put(ServerConfiguration2.SERVER_NAME,this.nameServer);
+		this.configuration2.put(ServerConfiguration.SERVER_NAME,this.nameServer);
 	}
 
 	// qui dochiaro il tipo del server
@@ -558,7 +557,7 @@ public abstract class TCPServer implements Server,Manageable,Iterable<Handler>{
 	@Override
 	public void setLocalPort(int localPort) {
 		this.localPort = localPort ;
-	    this.configuration2.put(ServerConfiguration2.LPORT,this.localPort);
+	    this.configuration2.put(ServerConfiguration.LPORT,this.localPort);
 	}
 	/**
 	 * forces the server program to close

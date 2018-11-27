@@ -30,13 +30,12 @@ import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.net.ServerType;
 import cloud.jgo.net.config.Configuration;
-import cloud.jgo.net.config.HTTPServerConfiguration;
-import cloud.jgo.net.config.TCPServerConfiguration;
 import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.handlers.Handler;
 import cloud.jgo.net.tcp.NoReadingSourceException;
 import cloud.jgo.net.tcp.NotSupportedModelException;
 import cloud.jgo.net.tcp.TCPServer;
+import cloud.jgo.net.tcp.TCPServerConfiguration;
 import cloud.jgo.net.tcp.TCPServerTypes;
 /**
  * @author Martire91<br>
