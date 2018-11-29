@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cloud.jgo</groupId>
   <artifactId>jGo</artifactId>
-  <version>1.0.6</version>
+  <version>1.0.7</version>
   <inceptionYear>2018</inceptionYear>
   <name>jGo</name>
   <description>Java General Operations</description>
