@@ -26,7 +26,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import cloud.jgo.£;
+import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.dom.HTMLComment;
@@ -1080,5 +1082,28 @@ public class HTMLDefaultElement implements HTMLElement{
 		}
 		completePath = completePath +"/"+getPath();
 		return completePath ;
+	}
+	// version 1.0.7
+	@Override
+	public HTMLNode getNodeByPath(String nodePath) {
+		HTMLNode currentNode = this ; // dico che inizialmente si parte dal nodo corrente
+		String[]split = nodePath.split("/");
+		for (int i = 0; i < split.length; i++) {
+			String nodeName = split[i];
+			// prendo i figli del nodo corrente 
+			HTMLNodeList listNodes = currentNode.getChildNodes();
+			for (int j = 0; j < listNodes.getLength(); j++) {
+				HTMLNode node = listNodes.item(j);
+				if (node.getNodeName().equals(nodeName)) {
+					// abbiamo trovato il nodo
+					currentNode = node ;
+					break ; 
+				}
+				else{
+					currentNode = null ;
+				}
+			}
+		}
+		return currentNode ;
 	}
 }

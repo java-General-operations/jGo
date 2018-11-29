@@ -36,7 +36,9 @@ import java.util.LinkedList;
  */
 import java.util.Map;
 import java.util.Map.Entry;
+
 import cloud.jgo.£;
+import cloud.jgo.io.File;
 /**
  * 
  * @author Martire91<br>
@@ -319,8 +321,6 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 		}
 		return found ;
 	}
-
-
 	@Override
 	public HTMLElements getElementsThatContainTheAttributeValue(String attr, String val) {
 		HTMLElements found = new HTMLElements();
@@ -337,5 +337,5 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 			}
 		}
 		return found ;
-	}
+	}	
 }

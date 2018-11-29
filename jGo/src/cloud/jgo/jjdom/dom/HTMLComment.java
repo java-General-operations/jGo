@@ -538,4 +538,27 @@ public class HTMLComment implements HTMLNode{
 		}
 		return flag ;
 	}
+
+	@Override
+	public HTMLNode getNodeByPath(String nodePath) {
+		HTMLNode currentNode = this ; // dico che inizialmente si parte dal nodo corrente
+		String[]split = nodePath.split("/");
+		for (int i = 0; i < split.length; i++) {
+			String nodeName = split[i];
+			// prendo i figli del nodo corrente 
+			HTMLNodeList listNodes = currentNode.getChildNodes();
+			for (int j = 0; j < listNodes.getLength(); j++) {
+				HTMLNode node = listNodes.item(j);
+				if (node.getNodeName().equals(nodeName)) {
+					// abbiamo trovato il nodo
+					currentNode = node ;
+					break ; 
+				}
+				else{
+					currentNode = null ;
+				}
+			}
+		}
+		return currentNode ;
+	}
 }
