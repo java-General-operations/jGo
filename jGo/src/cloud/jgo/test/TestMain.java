@@ -5,11 +5,11 @@ import javax.xml.ws.spi.http.HttpHandler;
 import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.jjdom.JjDom;
-import cloud.jgo.jjdom.dom.HTMLElement;
-import cloud.jgo.jjdom.dom.HTMLElements;
-import cloud.jgo.jjdom.dom.HTMLNode;
-import cloud.jgo.jjdom.dom.HTMLNodeList;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.nodes.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.Node;
 
 public class TestMain {
 
@@ -63,7 +63,7 @@ public class TestMain {
 		JjDom.document.getBody().appendChilds(h1,divParags,divLinks,pExternal);
 		
 		// si lavora :
-		HTMLNode node = JjDom.document.getBody().getNodeByPath("#links-container/.primi");
+		Node node = JjDom.document.getBody().getNodeByPath("#links-container/.primi");
 		
 	
 		

@@ -24,7 +24,7 @@ package cloud.jgo.jjdom.css.concrete;
 
 import cloud.jgo.jjdom.css.CSSRule;
 import cloud.jgo.jjdom.css.CSSStyle;
-import cloud.jgo.jjdom.dom.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.HTMLDocument;
 // tramite tag style
 public class CSSDefaultStyle extends CSSStyle{
 	/**

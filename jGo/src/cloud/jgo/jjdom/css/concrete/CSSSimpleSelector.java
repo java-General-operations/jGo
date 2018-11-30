@@ -24,6 +24,7 @@ package cloud.jgo.jjdom.css.concrete;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.text.html.HTML;
 
@@ -33,18 +34,18 @@ import cloud.jgo.jjdom.css.CSSSelection;
 import cloud.jgo.jjdom.css.CSSSelectionFailedException;
 import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.css.ContextNotFoundException;
-import cloud.jgo.jjdom.dom.HTMLElement;
-import cloud.jgo.jjdom.dom.HTMLElements;
 import cloud.jgo.jjdom.dom.HTMLManipulable;
-import cloud.jgo.jjdom.dom.HTMLNode;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.nodes.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.Node;
 /**
  * @author Martire91<br>
  * This class represents the default css selector
  */
 public class CSSSimpleSelector implements CSSSelector{
 	private static final long serialVersionUID = 1L;
-	private HTMLNode rootContext = null ;
+	private Node rootContext = null ;
 	private String[]subSelections = null ;
 	// prima ultimare questo metodo
 	@Override
@@ -548,13 +549,13 @@ public class CSSSimpleSelector implements CSSSelector{
 
 
 	@Override
-	public HTMLNode getRootContext() {
+	public Node getRootContext() {
 		// TODO Auto-generated method stub
 		return this.rootContext ;
 	}
 	
 	@Override
-	public void setRootContext(HTMLNode rootContext) {
+	public void setRootContext(Node rootContext) {
 		this.rootContext = rootContext;
 	}
 	

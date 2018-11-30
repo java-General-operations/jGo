@@ -24,7 +24,7 @@ package cloud.jgo.jjdom.css;
 
 import java.io.Serializable;
 
-import cloud.jgo.jjdom.dom.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.HTMLElements;
 /**
  * This class represents a css selection
  * @author Martire91<br>

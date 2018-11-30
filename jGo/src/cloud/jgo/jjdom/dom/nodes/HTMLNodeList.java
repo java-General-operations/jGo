@@ -20,13 +20,13 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom;
+package cloud.jgo.jjdom.dom.nodes;
 import java.io.Serializable;
 import java.util.LinkedList;
 /**
  * 
  * @author Martire91<br>
- * This class represents a list of html nodes ({@link HTMLNode})
+ * This class represents a list of html nodes ({@link Node})
  *
  */
 public class HTMLNodeList implements Serializable{
@@ -34,7 +34,7 @@ public class HTMLNodeList implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private LinkedList<HTMLNode>nodeList = null ;
+	private LinkedList<Node>nodeList = null ;
 	
 	public HTMLNodeList() {
 		// TODO Auto-generated constructor stub
@@ -45,7 +45,7 @@ public class HTMLNodeList implements Serializable{
 	 * @param node the node
 	 * @return true if the node is added
 	 */
-	public boolean addNode(HTMLNode node){
+	public boolean addNode(Node node){
 		return this.nodeList.add(node);
 	}
 	// return -1 come valore non valido 
@@ -54,7 +54,7 @@ public class HTMLNodeList implements Serializable{
 	 * @param node the node
 	 * @return the node index
 	 */
-	public int getIndexOf(HTMLNode node){
+	public int getIndexOf(Node node){
 		int index = -1 ;
 		for (int i = 0; i < this.nodeList.size(); i++) {
 			if (this.nodeList.get(i).equals(node)) {
@@ -69,7 +69,7 @@ public class HTMLNodeList implements Serializable{
 	 * This method adds the last node
 	 * @param node the node
 	 */
-	public void addLastNode(HTMLNode node){
+	public void addLastNode(Node node){
 		this.nodeList.addLast(node);
 	}
 	
@@ -77,7 +77,7 @@ public class HTMLNodeList implements Serializable{
 	 * This method adds the first node
 	 * @param node the node
 	 */
-	public void addFirstNode(HTMLNode node){
+	public void addFirstNode(Node node){
 		this.nodeList.addFirst(node);
 	}
 	
@@ -87,7 +87,7 @@ public class HTMLNodeList implements Serializable{
 	 * @param node the node
 	 * @return true if is contained
 	 */
-	public boolean contains(HTMLNode node){
+	public boolean contains(Node node){
 		return this.nodeList.contains(node);
 	}
 	
@@ -96,7 +96,7 @@ public class HTMLNodeList implements Serializable{
 	 * @param node the node
 	 * @return true if the node has been deleted
 	 */
-	public boolean remove(HTMLNode node){
+	public boolean remove(Node node){
 		return this.nodeList.remove(node);
 	}
 	/**
@@ -104,7 +104,7 @@ public class HTMLNodeList implements Serializable{
 	 * @param index the item index
 	 * @return the item
 	 */
-	public HTMLNode item(int index){
+	public Node item(int index){
 			return this.nodeList.get(index);
 	}
 	/**
@@ -119,14 +119,14 @@ public class HTMLNodeList implements Serializable{
 	 * This method returns the first item
 	 * @return the first item
 	 */
-	public HTMLNode getFirstItem(){
+	public Node getFirstItem(){
 		return this.nodeList.getFirst();
 	}
 	/**
 	 * This method returns the last item
 	 * @return the last item
 	 */
-	public HTMLNode getLastItem(){
+	public Node getLastItem(){
 		return this.nodeList.getLast();
 	}
 	/**
@@ -135,7 +135,7 @@ public class HTMLNodeList implements Serializable{
 	 * @param node the node
 	 * @return {@link LinkedList#set(int, Object)}
 	 */
-	public HTMLNode setNode(int index, HTMLNode node){
+	public Node setNode(int index, Node node){
 		return this.nodeList.set(index, node);
 	}
 

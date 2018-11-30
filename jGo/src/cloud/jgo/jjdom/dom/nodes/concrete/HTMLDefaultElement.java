@@ -20,7 +20,7 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom.concrete;
+package cloud.jgo.jjdom.dom.nodes.concrete;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -31,13 +31,13 @@ import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.css.CSSSelector;
-import cloud.jgo.jjdom.dom.HTMLComment;
-import cloud.jgo.jjdom.dom.HTMLDocument;
-import cloud.jgo.jjdom.dom.HTMLElement;
-import cloud.jgo.jjdom.dom.HTMLElements;
-import cloud.jgo.jjdom.dom.HTMLNode;
-import cloud.jgo.jjdom.dom.HTMLNodeList;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.nodes.HTMLComment;
+import cloud.jgo.jjdom.dom.nodes.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.Node;
 /**
  * 
  * @author Martire91<br>
@@ -55,7 +55,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	private String originalStartTag,originalEndTag = null ;
 	private String textContent = null;
 	private Map<String, String> attributes=null;
-	private HTMLNode parentNode=null;
+	private Node parentNode=null;
 	private StringBuffer htmlCode = new StringBuffer();
 	private JjDom home = null ;
 	// unico costruttore
@@ -120,7 +120,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	 * This method sets the parent node
 	 * @param parentNode the parent node
 	 */
-	public void setParentNode(HTMLNode parentNode){
+	public void setParentNode(Node parentNode){
 		this.parentNode =  parentNode ;
 	}
 	
@@ -131,7 +131,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 	
 	@Override
-	public HTMLNode appendChild(HTMLNode node) {
+	public Node appendChild(Node node) {
 		if (this.childNodes.contains(node)) {
 			this.childNodes.remove(node);
 		}
@@ -184,7 +184,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 	
 	@Override
-	public void addFirstChild(HTMLNode node) {
+	public void addFirstChild(Node node) {
 		if (this.childNodes.contains(node)) {
 			this.childNodes.remove(node);
 		}
@@ -236,19 +236,19 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 	
 	@Override
-	public HTMLNode child(int index) {
+	public Node child(int index) {
 		// TODO Auto-generated method stub
 		return this.childNodes.item(index);
 	}
 
 	@Override
-	public HTMLNode getFirstChild() {
+	public Node getFirstChild() {
 		// TODO Auto-generated method stub
 		return this.childNodes.getFirstItem();
 	}
 
 	@Override
-	public HTMLNode getLastChild() {
+	public Node getLastChild() {
 		// TODO Auto-generated method stub
 		return this.childNodes.getLastItem();
 	}
@@ -260,8 +260,8 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLNode getNextSibling() {
-		HTMLNode parent = getParentNode();
+	public Node getNextSibling() {
+		Node parent = getParentNode();
 		if (parent!=null) {
 			// qui se ha un padre ci rende la vita più facile 
 			HTMLNodeList listNodes = parent.getChildNodes();
@@ -311,15 +311,15 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLNode getParentNode() {
+	public Node getParentNode() {
 		// TODO Auto-generated method stub
 		return this.parentNode ;
 	}
 
 	@Override
-	public HTMLNode getPreviousSibling() {
+	public Node getPreviousSibling() {
 		// mi viene in mente di prendere il padre dell'elemento 
-		HTMLNode parent = getParentNode();
+		Node parent = getParentNode();
 		if (parent!=null) {
 			// qui se ha un padre ci rende la vita più facile 
 			HTMLNodeList listNodes = parent.getChildNodes();
@@ -382,7 +382,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	// poichè si tratti di un metodo ricorsivo, poi magari ultimare
 	// anche questo aspetto
 	@Override
-	public HTMLNode insertBefore(HTMLNode newNode, HTMLNode refChild) {
+	public Node insertBefore(Node newNode, Node refChild) {
 		// questo metodo deve inserire l'elemento newNOde
 		// prima di refChild, quindi vediamo i passi da fare :
 		// 1 trovare la posizione di refChild 
@@ -413,7 +413,7 @@ public class HTMLDefaultElement implements HTMLElement{
 				
 				int index = pos-1 ;
 				
-				HTMLNode previousNode = this.childNodes.item(index);
+				Node previousNode = this.childNodes.item(index);
 				
 				// quindi qui dobbiamo sostituire questo elemento prima
 				if (newNode instanceof HTMLElement) {
@@ -435,7 +435,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 	
 	@Override
-	public HTMLNode insertAfter(HTMLNode newNode, HTMLNode refChild) {
+	public Node insertAfter(Node newNode, Node refChild) {
 		// questo metodo deve inserire l'elemento newNOde
 				// prima di refChild, quindi vediamo i passi da fare :
 				// 1 trovare la posizione di refChild 
@@ -466,7 +466,7 @@ public class HTMLDefaultElement implements HTMLElement{
 							this.childNodes.addNode(newNode);
 						}
 						else{
-							HTMLNode followingNode = this.childNodes.item(index);
+							Node followingNode = this.childNodes.item(index);
 							
 							// sostituisco 
 							if (newNode instanceof HTMLElement) {
@@ -492,7 +492,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	// ovviamente se si passa come parametro un commento, darà false
 	// poichè l'oggetto su cui si sta chiamando è un elemento 
 	@Override
-	public boolean isEqualNode(HTMLNode node) {
+	public boolean isEqualNode(Node node) {
 		// 1 passo : verifico se il nodo ricevuto come parametro è anche un elemento
 		// in caso non lo sia, restituisco subito false
 		boolean flag = false ;
@@ -512,7 +512,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	// questo metodo se elimina il nodo lo restituisce
 	// altrimenti returns null
 	@Override
-	public HTMLNode removeNode(HTMLNode node) {
+	public Node removeNode(Node node) {
 		boolean result = this.childNodes.remove(node);
 		if(result == true){
 			return node ;
@@ -523,7 +523,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLNode replaceChild(HTMLNode newNode, HTMLNode oldNode) {
+	public Node replaceChild(Node newNode, Node oldNode) {
 		// primo passo prendo la posizione del nodo vecchio 
 		boolean found = false ;
 		int pos = 0 ;
@@ -568,7 +568,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	public HTMLNodeList getBrothers() {
 		HTMLNodeList list = null ;
 		// individuo il padre del nodo in questione 
-		HTMLNode parent = getParentNode();
+		Node parent = getParentNode();
 		
 		if (parent!=null) {
 			// ottengo i figli del padre 
@@ -608,7 +608,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLNode appendChilds(HTMLNode... childs) {
+	public Node appendChilds(Node... childs) {
 		for (int i = 0; i < childs.length; i++) {
 			appendChild(childs[i]);
 		}
@@ -660,7 +660,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLNode printMarkup() {
+	public Node printMarkup() {
 		£._O(getMarkup());
 		return this ;
 	}
@@ -679,7 +679,7 @@ public class HTMLDefaultElement implements HTMLElement{
 		return present ;
 	}
 	@Override
-	public boolean contains(HTMLNode node) {
+	public boolean contains(Node node) {
 		boolean contains = false ;
 		HTMLNodeList listNodes = this.childNodes;
 		for (int i = 0; i < listNodes.getLength(); i++) {
@@ -854,10 +854,10 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLNode next() {
+	public Node next() {
 		// Ottengo il padre
-		HTMLNode next = null ;
-		HTMLNode parent = this.parentNode;
+		Node next = null ;
+		Node parent = this.parentNode;
 		// ottengo i figli del parent 
 		HTMLNodeList list = parent.getChildNodes();
 		// faccio iterare i figli del parent in modo tale che
@@ -866,7 +866,7 @@ public class HTMLDefaultElement implements HTMLElement{
 		boolean flag = false ;
 		int pos = 0 ;
 		for (int i = 0; i < list.getLength(); i++) {
-			HTMLNode node = list.item(i);
+			Node node = list.item(i);
 			if (node.equals(this)) {
 				flag = true ;
 				pos = i ;
@@ -893,7 +893,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	// restituisce - 1 se non trova l'indice
 	@Override
 	public int getIndex() {
-		HTMLNode parent = this.parentNode;
+		Node parent = this.parentNode;
 		int index = -1 ;
 		for (int i = 0; i < parent.getChildNodes().getLength(); i++) {
 			if (parent.getChildNodes().item(i).equals(this)) {
@@ -934,12 +934,12 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLNode previous() {
-		HTMLNode previous = null ;
+	public Node previous() {
+		Node previous = null ;
 		boolean flag = false ;
 		int pos = 0 ;
 		// primo passo, prendo il padre
-		HTMLNode parent = getParentNode();
+		Node parent = getParentNode();
 		
 		// prendo i figli del padre 
 		
@@ -971,7 +971,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public boolean hasThisChild(HTMLNode node) {
+	public boolean hasThisChild(Node node) {
 		boolean flag = false ;
 		HTMLNodeList listNodes = getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
@@ -1085,16 +1085,16 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 	// version 1.0.7
 	@Override
-	public HTMLNode getNodeByPath(String nodePath) {
+	public Node getNodeByPath(String nodePath) {
 		String[]split = nodePath.split("/");
-		HTMLNode currentNode = this ;
+		Node currentNode = this ;
 		boolean found ;
 		for (int i = 0; i < split.length; i++) {
 			String nodeName = split[i].trim();
 			found = false ;
 			HTMLNodeList listNodes = currentNode.getChildNodes();
 			for (int j = 0; j < listNodes.getLength(); j++) {
-				HTMLNode node = listNodes.item(j);
+				Node node = listNodes.item(j);
 				if (node.getNodeName().equals(nodeName)) {
 					currentNode = node ;
 					found = true ;

@@ -32,9 +32,15 @@ import java.util.regex.Pattern;
 
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
-import cloud.jgo.jjdom.dom.HTMLElement.HTMLElementType;
-import cloud.jgo.jjdom.dom.HTMLNode.HTMLNodeType;
-import cloud.jgo.jjdom.dom.concrete.HTMLDefaultElement;
+import cloud.jgo.jjdom.dom.nodes.HTMLComment;
+import cloud.jgo.jjdom.dom.nodes.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.Node;
+import cloud.jgo.jjdom.dom.nodes.HTMLElement.HTMLElementType;
+import cloud.jgo.jjdom.dom.nodes.Node.HTMLNodeType;
+import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultElement;
 /**
  * N:B:
  * Devo risolvere una questione
@@ -46,7 +52,7 @@ import cloud.jgo.jjdom.dom.concrete.HTMLDefaultElement;
  */
 // questa qui poi diventerà una classe interna
 public abstract class HTMLRecursion {
-	public static void examines(HTMLNode node,StringBuffer htmlCode){
+	public static void examines(Node node,StringBuffer htmlCode){
 		// for doctype from here to @
 		 String key = null ;
 		if (node instanceof HTMLElement) {
@@ -147,7 +153,7 @@ public abstract class HTMLRecursion {
 		buffer = new StringBuffer();
 		return newBuffer.toString();
 	}
-	private static String collects(String what,HTMLNode node){
+	private static String collects(String what,Node node){
 		switch(what){
 		case "text":
 			if (node.getTextContent()!=null) {
@@ -183,10 +189,10 @@ public abstract class HTMLRecursion {
 	// continuare da qui, facendo un metodo ricorsivo che mi fa ottenere 
 	// un elemento tramite id
 	
-	public static void helpForId(String idElement,HTMLNode node){
+	public static void helpForId(String idElement,Node node){
 		HTMLNodeList listNodes = node.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
-			HTMLNode currentNode = listNodes.item(i);
+			Node currentNode = listNodes.item(i);
 			if (currentNode instanceof HTMLElement) {
 				if(((HTMLElement)currentNode).hasAttributes()){
 					// okok l'elemento ha attributi
@@ -209,7 +215,7 @@ public abstract class HTMLRecursion {
 	}
 	
 	
-	public static HTMLElement examinesForId(String idElement,HTMLNode node){
+	public static HTMLElement examinesForId(String idElement,Node node){
 		helpForId(idElement, node);
 		HTMLElement element = found ;
 		found = null ;
@@ -222,7 +228,7 @@ public abstract class HTMLRecursion {
 	
 	private static HTMLElements classListNodes = new HTMLElements();
 	
-	public static HTMLElements examinesForClass(String className,HTMLNode node){
+	public static HTMLElements examinesForClass(String className,Node node){
 		
 		// chiamo il metodo di supporto
 		
@@ -243,10 +249,10 @@ public abstract class HTMLRecursion {
 	}
 	
 	
-	private static void helpForClass(String className,HTMLNode node){
+	private static void helpForClass(String className,Node node){
 		HTMLNodeList listNodes = node.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
-			HTMLNode currentNode = listNodes.item(i);
+			Node currentNode = listNodes.item(i);
 			if (currentNode instanceof HTMLElement) {
 				if(((HTMLElement)currentNode).hasAttributes()){
 					// okok l'elemento ha attributi
@@ -276,7 +282,7 @@ public abstract class HTMLRecursion {
 	
 	private static HTMLElements tagListNodes = new HTMLElements();
 	
-	public static HTMLElements examinesForTag(String tagName,HTMLNode node){
+	public static HTMLElements examinesForTag(String tagName,Node node){
 		
 		// chiamo il metodo di supporto
 		
@@ -298,10 +304,10 @@ public abstract class HTMLRecursion {
 	}
 	
 	
-	private static void helpForTag(String tagName,HTMLNode node){
+	private static void helpForTag(String tagName,Node node){
 		HTMLNodeList listNodes = node.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
-			HTMLNode currentNode = listNodes.item(i);
+			Node currentNode = listNodes.item(i);
 			if (currentNode.getNodeName().equals(tagName)) {
 				tagListNodes.add((HTMLElement) currentNode);
 			}
@@ -324,7 +330,7 @@ public abstract class HTMLRecursion {
 	
 	private static HTMLElements typeListNodes = new HTMLElements();
 	
-	public static HTMLElements examinesForType(HTMLElementType type,HTMLNode node){
+	public static HTMLElements examinesForType(HTMLElementType type,Node node){
 		
 		// chiamo il metodo di supporto
 		
@@ -346,10 +352,10 @@ public abstract class HTMLRecursion {
 	}
 	
 	
-	private static void helpForType(HTMLElementType type,HTMLNode node){
+	private static void helpForType(HTMLElementType type,Node node){
 		HTMLNodeList listNodes = node.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
-			HTMLNode currentNode = listNodes.item(i);
+			Node currentNode = listNodes.item(i);
 			if (currentNode instanceof HTMLElement) {
 				if ((((HTMLElement)currentNode).getType().toString()).equals(type.toString())) {
 					typeListNodes.add((HTMLElement) currentNode);
@@ -370,7 +376,7 @@ public abstract class HTMLRecursion {
 	 */
 	
 	private static StringBuffer path = new StringBuffer();
-	public static String examinesForTPath(HTMLNode node){
+	public static String examinesForTPath(Node node){
 		
 		helpForPath(node);
 		
@@ -409,9 +415,9 @@ public abstract class HTMLRecursion {
 
 	}
 	
-	private static void helpForPath(HTMLNode node){
+	private static void helpForPath(Node node){
 		path.append(node.getNodeName()+File.separator);
-		HTMLNode parent = node.getParentNode();
+		Node parent = node.getParentNode();
 		if (!node.getNodeName().equalsIgnoreCase("html")) { // verifico che il nodo ricevuto non sia il nodo root html
 			if (parent!=null) {
 				// aggiungo al path 
@@ -439,21 +445,21 @@ public abstract class HTMLRecursion {
 	 *  metodi recorsivo per eliminamento nodo dal documento 
 	 */
 	
-	private static HTMLNode deleted = null ;
+	private static Node deleted = null ;
 
-	public static HTMLNode removeNode(HTMLNode node,HTMLNode rootNode){
+	public static Node removeNode(Node node,Node rootNode){
 		deleted = null ;
 		HTMLNodeList listNodes = rootNode.getChildNodes();
 		
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			
-			HTMLNode currentNode = listNodes.item(i);
+			Node currentNode = listNodes.item(i);
 			
 			if (node.equals(currentNode)) {
 				
 				// prendo il genitore
 				
-				HTMLNode parent = currentNode.getParentNode();
+				Node parent = currentNode.getParentNode();
 				
 				deleted = parent.removeNode(node);
 				
@@ -471,21 +477,21 @@ public abstract class HTMLRecursion {
 	/**
 	 * Metodo ricorsivo per sostituzione child dal documento
 	 */
-	private static HTMLNode replaced = null ;
+	private static Node replaced = null ;
 	
-	public static HTMLNode replaceChild(HTMLNode newNode,HTMLNode oldNode,HTMLNode rootNode){
+	public static Node replaceChild(Node newNode,Node oldNode,Node rootNode){
 		replaced = null ;
 		HTMLNodeList listNodes = rootNode.getChildNodes();
 		
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			
-			HTMLNode currentNode = listNodes.item(i);
+			Node currentNode = listNodes.item(i);
 			
 			if (oldNode.equals(currentNode)) {
 				
 				// prendo il genitore
 				
-				HTMLNode parent = currentNode.getParentNode();
+				Node parent = currentNode.getParentNode();
 				
 				replaced = parent.replaceChild(newNode, oldNode);
 				
@@ -512,10 +518,10 @@ public abstract class HTMLRecursion {
 	public static void resetCommentsSet(){
 		comments = new HashSet<>();
 	}
-	public static Set<HTMLComment> getAllComments(HTMLNode rootNode){
+	public static Set<HTMLComment> getAllComments(Node rootNode){
 		HTMLNodeList listNodes = rootNode.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
-			HTMLNode node = listNodes.item(i);
+			Node node = listNodes.item(i);
 			if (node instanceof HTMLComment) {
 				comments.add((HTMLComment) node);
 			}
@@ -533,10 +539,10 @@ public abstract class HTMLRecursion {
 	public static void resetCommentsList(){
 		commentsList = new ArrayList<>();
 	}
-	public static List<HTMLComment> getListComments(HTMLNode rootNode){
+	public static List<HTMLComment> getListComments(Node rootNode){
 		HTMLNodeList listNodes = rootNode.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
-			HTMLNode node = listNodes.item(i);
+			Node node = listNodes.item(i);
 			if (node instanceof HTMLComment) {
 				commentsList.add((HTMLComment) node);
 			}
@@ -556,7 +562,7 @@ public abstract class HTMLRecursion {
 	
 	private static HTMLElements attributeNodes = new HTMLElements();
 	
-	public static HTMLElements examinesForAttribute(String attribute,HTMLNode node){
+	public static HTMLElements examinesForAttribute(String attribute,Node node){
 		
 		// chiamo il metodo di supporto
 		
@@ -577,7 +583,7 @@ public abstract class HTMLRecursion {
 	}
 	
 	
-	private static void helpForAttribute(String attribute,HTMLNode node){
+	private static void helpForAttribute(String attribute,Node node){
 		if (node instanceof HTMLElement) {
 			if (((HTMLElement)node).hasAttributes()) {
 				if (((HTMLElement)node).isPresent(attribute)) {
@@ -589,7 +595,7 @@ public abstract class HTMLRecursion {
 		}
 		HTMLNodeList listNodes = node.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
-			HTMLNode currentNode = listNodes.item(i);
+			Node currentNode = listNodes.item(i);
 			if (currentNode instanceof HTMLElement) {
 				if(((HTMLElement)currentNode).hasAttributes()){
 					if (((HTMLElement)currentNode).isPresent(attribute)) {
@@ -613,7 +619,7 @@ public abstract class HTMLRecursion {
 	
 	private static HTMLElements attributeValueNodes = new HTMLElements();
 	
-	public static HTMLElements examinesForAttributeValue(String value,HTMLNode node){
+	public static HTMLElements examinesForAttributeValue(String value,Node node){
 		
 		// chiamo il metodo di supporto
 		
@@ -634,7 +640,7 @@ public abstract class HTMLRecursion {
 	}
 	
 	
-	private static void helpForAttributeValue(String value,HTMLNode node){
+	private static void helpForAttributeValue(String value,Node node){
 		if (node instanceof HTMLElement) {
 			if (((HTMLElement)node).hasAttributes()) {
 				Map<String, String> attributes = ((HTMLElement)node).getAttributes();
@@ -652,7 +658,7 @@ public abstract class HTMLRecursion {
 		}
 		HTMLNodeList listNodes = node.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
-			HTMLNode currentNode = listNodes.item(i);
+			Node currentNode = listNodes.item(i);
 			if (currentNode instanceof HTMLElement) {
 				if(((HTMLElement)currentNode).hasAttributes()){
 				Map<String, String> attributes = ((HTMLElement)currentNode).getAttributes();
@@ -687,7 +693,7 @@ public abstract class HTMLRecursion {
 
 	private static HTMLElements attributeValueNodes_ = new HTMLElements();
 	
-	public static HTMLElements examinesForAttributeValue_(String attribute,String value,HTMLNode node,String operator){
+	public static HTMLElements examinesForAttributeValue_(String attribute,String value,Node node,String operator){
 		// chiamo il metodo di supporto
 		helpForAttributeValue_(attribute,value,node,operator);
 		
@@ -704,7 +710,7 @@ public abstract class HTMLRecursion {
 		return elements ;
 	}
 	
-	private static void check(HTMLNode node, String attribute, String value, String operator){
+	private static void check(Node node, String attribute, String value, String operator){
 		if (node instanceof HTMLElement) {
 			if (((HTMLElement)node).hasAttributes()) {
 				if (((HTMLElement)node).isPresent(attribute)) {
@@ -759,13 +765,13 @@ public abstract class HTMLRecursion {
 	// devo assicurarmi che questo metodo, con questo controllo iniziale
 	// va bene o meno, secondo me c'è l rischio che si possono inserire + vlt
 	// gli elementi, quindi testare in maniera concentrata
-	private static void helpForAttributeValue_(String attribute,String value,HTMLNode node,String operator){
+	private static void helpForAttributeValue_(String attribute,String value,Node node,String operator){
 		// controllo la questione attributo sul nodo ricevuto 
 		check(node, attribute, value, operator);
 		// e qui controllo i children
 		HTMLNodeList listNodes = node.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
-			HTMLNode currentNode = listNodes.item(i);
+			Node currentNode = listNodes.item(i);
 			check(currentNode, attribute, value, operator);
 			// ricorsività
 			helpForAttributeValue_(attribute,value,currentNode,operator);
@@ -783,14 +789,14 @@ public abstract class HTMLRecursion {
 	 */
 	private static HTMLElements allElements = new HTMLElements();
 	
-	public static HTMLElements getAllElements(HTMLNode root){
+	public static HTMLElements getAllElements(Node root){
 		allElements = support(root);
 		HTMLElements elements = allElements ;
 		allElements = new HTMLElements() ;
 		return elements ;
 	}
 	
-	private static HTMLElements support(HTMLNode root){
+	private static HTMLElements support(Node root){
 		// okok inserisco l'elemento nella lista 
 		if(root instanceof HTMLElement){
 			allElements.add((HTMLElement) root);

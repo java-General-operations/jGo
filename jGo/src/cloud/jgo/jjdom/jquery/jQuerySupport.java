@@ -23,9 +23,9 @@
 package cloud.jgo.jjdom.jquery;
 import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
-import cloud.jgo.jjdom.dom.HTMLElement;
-import cloud.jgo.jjdom.dom.HTMLElements;
-import cloud.jgo.jjdom.dom.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
 import cloud.jgo.jjdom.jquery.Event.EventType;
 
 /**

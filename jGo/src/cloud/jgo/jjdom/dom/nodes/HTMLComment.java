@@ -20,24 +20,26 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom;
+package cloud.jgo.jjdom.dom.nodes;
 import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
-import cloud.jgo.jjdom.dom.concrete.HTMLDefaultDocument;
-import cloud.jgo.jjdom.dom.concrete.HTMLDefaultElement;
+import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.nodes.Node.HTMLNodeType;
+import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultDocument;
+import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultElement;
 /**
  * 
  * @author Martire91<br>
  * This class represente the html comment
  */
-public class HTMLComment implements HTMLNode{
+public class HTMLComment implements Node{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 12L;
 	private String startTag,endTag = null ;
 	private String textContent = null ;
-	private HTMLNode parent = null ;
+	private Node parent = null ;
 	private HTMLNodeList childNodes = null ;
 	private StringBuffer htmlCode = new StringBuffer();
 	private HTMLDocument document = null ;
@@ -60,7 +62,7 @@ public class HTMLComment implements HTMLNode{
 	// restituisce - 1 se non trova l'indice
 		@Override
 		public int getIndex() {
-			HTMLNode parent = getParentNode();
+			Node parent = getParentNode();
 			int index = -1 ;
 			for (int i = 0; i < parent.getChildNodes().getLength(); i++) {
 				if (parent.getChildNodes().item(i).equals(this)) {
@@ -72,7 +74,7 @@ public class HTMLComment implements HTMLNode{
 		}
 
 	@Override
-	public HTMLNode appendChild(HTMLNode node) {
+	public Node appendChild(Node node) {
 		if (this.childNodes.contains(node)) {
 			this.childNodes.remove(node);
 		}
@@ -98,7 +100,7 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public HTMLNode appendChilds(HTMLNode... childs) {
+	public Node appendChilds(Node... childs) {
 		for (int i = 0; i < childs.length; i++) {
 			appendChild(childs[i]);
 		}
@@ -121,19 +123,19 @@ public class HTMLComment implements HTMLNode{
 	}
 	
 	@Override
-	public HTMLNode child(int index) {
+	public Node child(int index) {
 		// TODO Auto-generated method stub
 		return this.childNodes.item(index);
 	}
 
 	@Override
-	public HTMLNode getFirstChild() {
+	public Node getFirstChild() {
 		// TODO Auto-generated method stub
 		return this.childNodes.getFirstItem();
 	}
 
 	@Override
-	public HTMLNode getLastChild() {
+	public Node getLastChild() {
 		// TODO Auto-generated method stub
 		return this.childNodes.getLastItem();
 	}
@@ -146,8 +148,8 @@ public class HTMLComment implements HTMLNode{
 
 	
 	@Override
-	public HTMLNode getNextSibling() {
-		HTMLNode parent = getParentNode();
+	public Node getNextSibling() {
+		Node parent = getParentNode();
 		if (parent!=null) {
 			// qui se ha un padre ci rende la vita più facile 
 			HTMLNodeList listNodes = parent.getChildNodes();
@@ -190,7 +192,7 @@ public class HTMLComment implements HTMLNode{
 		return JjDom.documentURL;
 	}
 	@Override
-	public HTMLNode getParentNode() {
+	public Node getParentNode() {
 		// TODO Auto-generated method stub
 		return this.parent ;
 	}
@@ -199,7 +201,7 @@ public class HTMLComment implements HTMLNode{
 	 * This method sets the parent node
 	 * @param parentNode the parent node
 	 */
-	public void setParentNode(HTMLNode parentNode){
+	public void setParentNode(Node parentNode){
 		this.parent =  parentNode ;
 	}
 
@@ -238,7 +240,7 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public HTMLNode insertBefore(HTMLNode newNode, HTMLNode refChild) {
+	public Node insertBefore(Node newNode, Node refChild) {
 		boolean found = false ;
 		int pos = 0 ;
 		for (int i = 0; i < this.childNodes.getLength(); i++) {
@@ -266,7 +268,7 @@ public class HTMLComment implements HTMLNode{
 				
 				int index = pos-1 ;
 				
-				HTMLNode previousNode = this.childNodes.item(index);
+				Node previousNode = this.childNodes.item(index);
 				
 				// quindi qui dobbiamo sostituire questo elemento prima
 				if (newNode instanceof HTMLElement) {
@@ -288,7 +290,7 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public HTMLNode insertAfter(HTMLNode newNode, HTMLNode refChild) {
+	public Node insertAfter(Node newNode, Node refChild) {
 		// questo metodo deve inserire l'elemento newNOde
 		// prima di refChild, quindi vediamo i passi da fare :
 		// 1 trovare la posizione di refChild 
@@ -319,7 +321,7 @@ public class HTMLComment implements HTMLNode{
 					this.childNodes.addNode(newNode);
 				}
 				else{
-					HTMLNode followingNode = this.childNodes.item(index);
+					Node followingNode = this.childNodes.item(index);
 					
 					// sostituisco 
 					if (newNode instanceof HTMLElement) {
@@ -340,7 +342,7 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public boolean isEqualNode(HTMLNode node) {
+	public boolean isEqualNode(Node node) {
 		if (node.getNodeType().equals(HTMLNodeType.HTML_COMMENT)) {
 			return true ;
 		}
@@ -350,7 +352,7 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public HTMLNode removeNode(HTMLNode node) {
+	public Node removeNode(Node node) {
 		boolean result = this.childNodes.remove(node);
 		if(result == true){
 			return node ;
@@ -361,7 +363,7 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public HTMLNode replaceChild(HTMLNode newNode, HTMLNode oldNode) {
+	public Node replaceChild(Node newNode, Node oldNode) {
 		boolean found = false ;
 		int pos = 0 ;
 		for (int i = 0; i < this.childNodes.getLength(); i++) {
@@ -393,21 +395,21 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public HTMLNode setNodeValue(String nodeValue) {
+	public Node setNodeValue(String nodeValue) {
 		// TODO Auto-generated method stub
 		this.textContent = nodeValue ;
 		return this ;
 	}
 
 	@Override
-	public HTMLNode setTextContent(String textContent) {
+	public Node setTextContent(String textContent) {
 		// TODO Auto-generated method stub
 		this.textContent = textContent ;
 		return this;
 	}
 
 	@Override
-	public HTMLNode printMarkup() {
+	public Node printMarkup() {
 		£._O(getMarkup().trim());
 		return this ;
 	}
@@ -416,7 +418,7 @@ public class HTMLComment implements HTMLNode{
 	public HTMLNodeList getBrothers() {
 		HTMLNodeList list = null ;
 		// individuo il padre del nodo in questione 
-		HTMLNode parent = getParentNode();
+		Node parent = getParentNode();
 		
 		if (parent!=null) {
 			// ottengo i figli del padre 
@@ -432,7 +434,7 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public boolean contains(HTMLNode node) {
+	public boolean contains(Node node) {
 		boolean contains = false ;
 		HTMLNodeList listNodes = this.childNodes;
 		for (int i = 0; i < listNodes.getLength(); i++) {
@@ -445,7 +447,7 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public void addFirstChild(HTMLNode node) {
+	public void addFirstChild(Node node) {
 		if (this.childNodes.contains(node)) {
 			this.childNodes.remove(node);
 		}
@@ -460,10 +462,10 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public HTMLNode next() {
+	public Node next() {
 		// Ottengo il padre
-		HTMLNode next = null ;
-		HTMLNode parent = getParentNode();
+		Node next = null ;
+		Node parent = getParentNode();
 		// ottengo i figli del parent 
 		HTMLNodeList list = parent.getChildNodes();
 		// faccio iterare i figli del parent in modo tale che
@@ -472,7 +474,7 @@ public class HTMLComment implements HTMLNode{
 		boolean flag = false ;
 		int pos = 0 ;
 		for (int i = 0; i < list.getLength(); i++) {
-			HTMLNode node = list.item(i);
+			Node node = list.item(i);
 			if (node.equals(this)) {
 				flag = true ;
 				pos = i ;
@@ -490,12 +492,12 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public HTMLNode previous() {
-		HTMLNode previous = null ;
+	public Node previous() {
+		Node previous = null ;
 		boolean flag = false ;
 		int pos = 0 ;
 		// primo passo, prendo il padre
-		HTMLNode parent = getParentNode();
+		Node parent = getParentNode();
 		
 		// prendo i figli del padre 
 		
@@ -527,7 +529,7 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public boolean hasThisChild(HTMLNode node) {
+	public boolean hasThisChild(Node node) {
 		boolean flag = false ;
 		HTMLNodeList listNodes = getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
@@ -540,16 +542,16 @@ public class HTMLComment implements HTMLNode{
 	}
 
 	@Override
-	public HTMLNode getNodeByPath(String nodePath) {
+	public Node getNodeByPath(String nodePath) {
 		String[]split = nodePath.split("/");
-		HTMLNode currentNode = this ;
+		Node currentNode = this ;
 		boolean found ;
 		for (int i = 0; i < split.length; i++) {
 			String nodeName = split[i].trim();
 			found = false ;
 			HTMLNodeList listNodes = currentNode.getChildNodes();
 			for (int j = 0; j < listNodes.getLength(); j++) {
-				HTMLNode node = listNodes.item(j);
+				Node node = listNodes.item(j);
 				if (node.getNodeName().equals(nodeName)) {
 					currentNode = node ;
 					found = true ;

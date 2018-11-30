@@ -20,7 +20,7 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom;
+package cloud.jgo.jjdom.dom.nodes;
 import java.util.Iterator;
 import java.util.LinkedList;
 /**
@@ -39,6 +39,8 @@ import java.util.Map.Entry;
 
 import cloud.jgo.£;
 import cloud.jgo.io.File;
+import cloud.jgo.jjdom.dom.HTMLManipulable;
+import cloud.jgo.jjdom.dom.HTMLRecursion;
 /**
  * 
  * @author Martire91<br>

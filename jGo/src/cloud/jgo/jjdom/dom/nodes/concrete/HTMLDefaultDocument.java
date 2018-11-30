@@ -20,7 +20,7 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom.concrete;
+package cloud.jgo.jjdom.dom.nodes.concrete;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,13 +34,13 @@ import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.css.CSSStyle;
 import cloud.jgo.jjdom.css.concrete.CSSDefaultRule;
 import cloud.jgo.jjdom.css.concrete.CSSDefaultStyle;
-import cloud.jgo.jjdom.dom.HTMLComment;
-import cloud.jgo.jjdom.dom.HTMLDocument;
-import cloud.jgo.jjdom.dom.HTMLElement;
-import cloud.jgo.jjdom.dom.HTMLElement.HTMLElementType;
-import cloud.jgo.jjdom.dom.HTMLElements;
-import cloud.jgo.jjdom.dom.HTMLNode;
-import cloud.jgo.jjdom.dom.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.HTMLComment;
+import cloud.jgo.jjdom.dom.nodes.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.Node;
+import cloud.jgo.jjdom.dom.nodes.HTMLElement.HTMLElementType;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
 // N.B.
 // ci sono alcuni metodi di questa classe che restituiscono null
@@ -90,7 +90,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		appendChild(rootElement);
 	}
 	
-	private HTMLDefaultDocument(String charsetName,JjDom home){
+	protected HTMLDefaultDocument(String charsetName,JjDom home){
 		this.home = home ;
 		this.charsetName = charsetName ;
 		// inizializzo la lista di nodi 
@@ -136,7 +136,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		}
 
 	@Override
-	public HTMLNode appendChild(HTMLNode node) {
+	public Node appendChild(Node node) {
 		// controllo se c'è già questo nodo
 		if (this.childNodes.contains(node)) {
 			this.childNodes.remove(node);
@@ -163,7 +163,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		}
 	}
 	@Override
-	public void addFirstChild(HTMLNode node){
+	public void addFirstChild(Node node){
 		if(this.childNodes.contains(node)){
 			this.childNodes.remove(node);
 		}
@@ -188,18 +188,18 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 	
 	@Override
-	public HTMLNode child(int index) {
+	public Node child(int index) {
 		return this.childNodes.item(index);
 	}
 
 	@Override
-	public HTMLNode getFirstChild() {
+	public Node getFirstChild() {
 		// TODO Auto-generated method stub
 		return this.childNodes.getFirstItem();
 	}
 	
 	@Override
-	public HTMLNode getLastChild() {
+	public Node getLastChild() {
 		// TODO Auto-generated method stub
 		return this.childNodes.getLastItem();
 	}
@@ -273,18 +273,18 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	// metodo doppio ricorsivo 
 	
 	@Override
-	public HTMLNode insertBefore(HTMLNode newNode, HTMLNode refChild) {
+	public Node insertBefore(Node newNode, Node refChild) {
 		return recursive(newNode, refChild, this,"before");
 	}
 	
 	@Override
-	public HTMLNode insertAfter(HTMLNode newNode, HTMLNode refChild) {
+	public Node insertAfter(Node newNode, Node refChild) {
 		// da completare
 		return recursive(newNode, refChild, this, "after");
 	}
 	// metodo di supporto per il metodo insertBefore 
-	private HTMLNode recursive(HTMLNode newNode, HTMLNode refChild,HTMLNode node,String mode){
-		HTMLNode parent = null ;
+	private Node recursive(Node newNode, Node refChild,Node node,String mode){
+		Node parent = null ;
 		// qui in tanto vado alla ricerca del nodo padre che contiene 
 		// il riferimento 
 		for (int i = 0; i < node.getChildNodes().getLength(); i++) {
@@ -315,7 +315,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 
 	@Override
-	public boolean isEqualNode(HTMLNode node) {
+	public boolean isEqualNode(Node node) {
 		if (node instanceof HTMLDocument) {
 			return true ;
 		}
@@ -330,7 +330,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	
 	
 	@Override
-	public HTMLNode removeNode(HTMLNode node) {
+	public Node removeNode(Node node) {
 		
 		// qui come nodo ci passo il documento
 	
@@ -339,7 +339,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 	
 	@Override
-	public HTMLDocument removeNodes(HTMLNode... nodes) {
+	public HTMLDocument removeNodes(Node... nodes) {
 		for (int i = 0; i < nodes.length; i++) {
 			removeNode(nodes[i]);
 		}
@@ -347,7 +347,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 		
 	@Override
-	public HTMLNode replaceChild(HTMLNode newNode, HTMLNode oldNode) {
+	public Node replaceChild(Node newNode, Node oldNode) {
 		return HTMLRecursion.replaceChild(newNode, oldNode, this);
 	}
 
@@ -495,7 +495,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 	
 	@Override
-	public HTMLNode appendChilds(HTMLNode... childs) {
+	public Node appendChilds(Node... childs) {
 		for (int i = 0; i < childs.length; i++) {
 			appendChild(childs[i]);
 		}
@@ -609,7 +609,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 
 	@Override
-	public HTMLNode setNodeValue(String nodeValue) {
+	public Node setNodeValue(String nodeValue) {
 		// TODO Auto-generated method stub
 		this.textContent = nodeValue ;
 		return this ;
@@ -617,7 +617,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 
 	// questo metodo imposta il testo del nodo root 
 	@Override
-	public HTMLNode setTextContent(String textContent) {
+	public Node setTextContent(String textContent) {
 		// TODO Auto-generated method stub
 		this.textContent = textContent ;
 		return this ;
@@ -638,7 +638,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 
 	@Override
-	public HTMLNode printMarkup() {
+	public Node printMarkup() {
 		£._O(getMarkup());
 		return this ;
 	}
@@ -767,7 +767,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 
 	@Override
-	public boolean contains(HTMLNode node) {
+	public boolean contains(Node node) {
 		boolean contains = false ;
 		HTMLNodeList listNodes = this.childNodes;
 		for (int i = 0; i < listNodes.getLength(); i++) {
@@ -799,13 +799,13 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 
 	@Override
-	public HTMLNode next() {
+	public Node next() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HTMLNode previous() {
+	public Node previous() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -855,7 +855,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 
 	@Override
-	public boolean hasThisChild(HTMLNode node) {
+	public boolean hasThisChild(Node node) {
 		boolean flag = false ;
 		HTMLNodeList listNodes = getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
@@ -970,16 +970,16 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	// version 1.0.7
 	// segnalare che non si possono usare i seguenti caratteri come nome dei tags : []
 	@Override
-	public HTMLNode getNodeByPath(String nodePath) {
+	public Node getNodeByPath(String nodePath) {
 		String[]split = nodePath.split("/");
-		HTMLNode currentNode = this ;
+		Node currentNode = this ;
 		boolean found ;
 		for (int i = 0; i < split.length; i++) {
 			String nodeName = split[i].trim();
 			found = false ;
 			HTMLNodeList listNodes = currentNode.getChildNodes();
 			for (int j = 0; j < listNodes.getLength(); j++) {
-				HTMLNode node = listNodes.item(j);
+				Node node = listNodes.item(j);
 				if (node.getNodeName().equals(nodeName)) {
 					currentNode = node ;
 					found = true ;

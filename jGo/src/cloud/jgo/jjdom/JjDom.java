@@ -23,6 +23,7 @@
 package cloud.jgo.jjdom;
 import static cloud.jgo.jjdom.JjDom.$;
 import static cloud.jgo.jjdom.JjDom.jquery;
+
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -41,22 +42,24 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Logger;
+
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JOptionPane;
+
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.css.CSSSelection;
 import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.css.NoSelectorSetException;
 import cloud.jgo.jjdom.css.concrete.CSSSimpleSelector;
-import cloud.jgo.jjdom.dom.HTMLDocument;
-import cloud.jgo.jjdom.dom.HTMLElement;
-import cloud.jgo.jjdom.dom.HTMLElement.HTMLElementType;
-import cloud.jgo.jjdom.dom.HTMLElements;
-import cloud.jgo.jjdom.dom.HTMLNode;
-import cloud.jgo.jjdom.dom.HTMLNodeList;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
-import cloud.jgo.jjdom.dom.concrete.HTMLDefaultDocument;
+import cloud.jgo.jjdom.dom.nodes.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.Node;
+import cloud.jgo.jjdom.dom.nodes.HTMLElement.HTMLElementType;
+import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultDocument;
 import cloud.jgo.jjdom.jquery.Event;
 import cloud.jgo.jjdom.jquery.jQueryNotInitializedException;
 import cloud.jgo.jjdom.jquery.jQuerySupport;
@@ -1810,7 +1813,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 				executeMethod(jsCode);
 				HTMLElements listNodes = new HTMLElements();
 				for (HTMLElement htmlElement : elements) {
-					HTMLNode next = htmlElement.next();
+					Node next = htmlElement.next();
 					listNodes.add((HTMLElement) next);
 				}
 				elements = listNodes ;
@@ -1837,7 +1840,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 				executeMethod(jsCode);
 				HTMLElements listNodes = new HTMLElements();
 				for (HTMLElement htmlElement : elements) {
-					HTMLNode prev = htmlElement.previous();
+					Node prev = htmlElement.previous();
 					listNodes.add((HTMLElement)prev);
 				}
 				elements = listNodes ;

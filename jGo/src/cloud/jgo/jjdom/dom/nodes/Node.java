@@ -20,8 +20,9 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom;
+package cloud.jgo.jjdom.dom.nodes;
 import java.io.Serializable;
+
 import cloud.jgo.jjdom.Home;
 import cloud.jgo.jjdom.JjDom;
 /**
@@ -30,19 +31,19 @@ import cloud.jgo.jjdom.JjDom;
  *	This interface represents the html node
  *
  */
-public interface HTMLNode extends Serializable,Home{
+public interface Node extends Serializable,Home{
 	/**
 	 * This method appends a child node
 	 * @param node the child node
 	 * @return the node on which the method was invoked
 	 */
-	public abstract HTMLNode appendChild(HTMLNode node);
+	public abstract Node appendChild(Node node);
 	/**
 	 * This method appends a child nodes
 	 * @param childs the child nodes
 	 * @return the node on which the method was invoked
 	 */
-	public abstract HTMLNode appendChilds(HTMLNode...childs);
+	public abstract Node appendChilds(Node...childs);
 	/**
 	 * This method returns dynamically the document markup
 	 * @return the document markup
@@ -52,7 +53,7 @@ public interface HTMLNode extends Serializable,Home{
 	 * This method prints the document markup
 	 * @return the node on which the method was invoked
 	 */
-	public abstract HTMLNode printMarkup();
+	public abstract Node printMarkup();
 	/**
 	 * This method returns the child nodes
 	 * @return the child nodes
@@ -65,25 +66,25 @@ public interface HTMLNode extends Serializable,Home{
 	 * @param node the node
 	 * @return true if the node is part of the children
 	 */
-	public abstract boolean hasThisChild(HTMLNode node);
+	public abstract boolean hasThisChild(Node node);
 	/**
 	 * This method returns the node to the index position
 	 * @param index the index position
 	 * @return the node on which the method was invoked
 	 */
-	public abstract HTMLNode child(int index);
+	public abstract Node child(int index);
 	/**
 	 * This method returns the next node to
 	 * the one on which the method was invoked
 	 * @return the next node
 	 */
-	public abstract HTMLNode next();
+	public abstract Node next();
 	/**
 	 * This method returns the previous node to
 	 * the one on which the method was invoked
 	 * @return the previous node
 	 */
-	public abstract HTMLNode previous();
+	public abstract Node previous();
 	/**
 	 * This method returns the index node
 	 * @return the index node
@@ -93,12 +94,12 @@ public interface HTMLNode extends Serializable,Home{
 	 * This method returns the first node of child nodes
 	 * @return the first node
 	 */
-	public abstract HTMLNode getFirstChild();
+	public abstract Node getFirstChild();
 	/**
 	 * This method returns the last node of child nodes
 	 * @return the last node
 	 */
-	public abstract HTMLNode getLastChild();
+	public abstract Node getLastChild();
 	/**
 	 * This method returns the local name
 	 * @return the local name
@@ -113,12 +114,12 @@ public interface HTMLNode extends Serializable,Home{
 	 * This method returns the next sibling
 	 * @return the next sibling
 	 */
-	public abstract HTMLNode getNextSibling();
+	public abstract Node getNextSibling();
 	/**
 	 * This method adds the first child
 	 * @param node the node
 	 */
-	public abstract void addFirstChild(HTMLNode node);
+	public abstract void addFirstChild(Node node);
 	/**
 	 * This method returns the node name
 	 * @return the node name
@@ -131,7 +132,7 @@ public interface HTMLNode extends Serializable,Home{
 	 * @param node the node
 	 * @return true if the node is contained
 	 */
-	public abstract boolean contains(HTMLNode node); // non è ricorsivo, controlla se è contenuto il nodo
+	public abstract boolean contains(Node node); // non è ricorsivo, controlla se è contenuto il nodo
 	/**
 	 * This method returns the node value
 	 * @return the node value
@@ -147,13 +148,13 @@ public interface HTMLNode extends Serializable,Home{
 	 * @param nodeValue the node value
 	 * @return the node on which the method was invoked
 	 */
-	public abstract HTMLNode setNodeValue(String nodeValue);
+	public abstract Node setNodeValue(String nodeValue);
 	/**
 	 * This method sets the node text
 	 * @param textContent the node text
 	 * @return the node on which the method was invoked
 	 */
-	public abstract HTMLNode setTextContent(String textContent);
+	public abstract Node setTextContent(String textContent);
 	/**
 	 * This method returns the document URL
 	 * @return the document URL
@@ -168,7 +169,7 @@ public interface HTMLNode extends Serializable,Home{
 	 * This method returns the parent node
 	 * @return the parent node
 	 */
-	public abstract HTMLNode getParentNode();
+	public abstract Node getParentNode();
 	/**
 	 * This method returns the node type
 	 * @return the node type
@@ -185,35 +186,35 @@ public interface HTMLNode extends Serializable,Home{
 	 * @param refChild the ref child
 	 * @return the node on which the method was invoked
 	 */
-	public abstract HTMLNode insertBefore(HTMLNode newNode,HTMLNode refChild);
+	public abstract Node insertBefore(Node newNode,Node refChild);
 	/**
 	 * This method inserts "newNode" immediately after "refChild"
 	 * @param newNode the new node
 	 * @param refChild the ref child
 	 * @return the node on which the method was invoked
 	 */
-	public abstract HTMLNode insertAfter(HTMLNode newNode,HTMLNode refChild);
+	public abstract Node insertAfter(Node newNode,Node refChild);
 	/**
 	 * This method returns true if the two nodes are of the same type
 	 * @param node the node
 	 * @return true if the two nodes are of the same type
 	 */
-	public abstract boolean isEqualNode(HTMLNode node);
+	public abstract boolean isEqualNode(Node node);
 	/**
 	 * This method removes the node
 	 * @param node the node to be removed
 	 * @return the deleted node
 	 */
-	public abstract HTMLNode removeNode(HTMLNode node);
+	public abstract Node removeNode(Node node);
 	/**
 	 * This method replaces "oldNode" with "newNode"
 	 * @param newNode the new node
 	 * @param oldNode the old node
 	 * @return the old node
 	 */
-	public abstract HTMLNode replaceChild(HTMLNode newNode,HTMLNode oldNode);
+	public abstract Node replaceChild(Node newNode,Node oldNode);
 	// from to comment - 1.0.7
-	public abstract HTMLNode getNodeByPath(String nodePath);
+	public abstract Node getNodeByPath(String nodePath);
 	// version 1.0.7
 	public abstract boolean contains(String nodeName);
 		/**

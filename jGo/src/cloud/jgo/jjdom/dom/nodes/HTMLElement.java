@@ -20,18 +20,20 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom;
+package cloud.jgo.jjdom.dom.nodes;
 import java.io.Serializable;
 import java.util.Map;
+
+import cloud.jgo.jjdom.dom.HTMLManipulable;
 /**
  * 
  * @author Martire91<br>
- * @see HTMLNode
+ * @see Node
  * @see HTMLManipulable
  * This interface represents the concept of html element
  *
  */
-public interface HTMLElement extends HTMLNode,HTMLManipulable{
+public interface HTMLElement extends Node,HTMLManipulable{
 	/**
 	 * This method returns the element type
 	 * @return the element type
@@ -83,7 +85,7 @@ public interface HTMLElement extends HTMLNode,HTMLManipulable{
 	 * This method gets the previous sibling
 	 * @return the previous sibling
 	 */
-	public abstract HTMLNode getPreviousSibling();
+	public abstract Node getPreviousSibling();
 	/**
 	 * This method checks if the attribute passed as a parameter is present
 	 * @param attribute the attribute

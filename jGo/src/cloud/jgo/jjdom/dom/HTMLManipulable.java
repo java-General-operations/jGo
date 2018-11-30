@@ -21,6 +21,10 @@
  * 
  */
 package cloud.jgo.jjdom.dom;
+
+import cloud.jgo.jjdom.dom.nodes.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+
 /**
  * 
  * @author Martire91<br>

@@ -24,7 +24,7 @@ package cloud.jgo.jjdom.css;
 
 import java.io.Serializable;
 
-import cloud.jgo.jjdom.dom.HTMLNode;
+import cloud.jgo.jjdom.dom.nodes.Node;
 /**
  * 
  * @author Martire91<br>
@@ -56,12 +56,12 @@ public interface CSSSelector extends Serializable{
 	 * This method returns the context node
 	 * @return the context node
 	 */
-	public abstract HTMLNode getRootContext(); // il suo valore di default sarà il documento
+	public abstract Node getRootContext(); // il suo valore di default sarà il documento
 	/**
 	 * This method sets the context node
 	 * @param rootContext the new context node
 	 */
-	public abstract void setRootContext(HTMLNode rootContext);
+	public abstract void setRootContext(Node rootContext);
 	/**
 	 * This recursive method is redefined if you want
 	 * to customize a css selector

@@ -20,19 +20,20 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom;
+package cloud.jgo.jjdom.dom.nodes;
 
 import java.util.List;
 import java.util.Set;
 
 import cloud.jgo.jjdom.css.CSSRule;
 import cloud.jgo.jjdom.css.CSSStyle;
+import cloud.jgo.jjdom.dom.HTMLManipulable;
 /**
  * 
  * @author Martire91<br>
  * This interface represents an html document
  */
-public interface HTMLDocument extends HTMLNode,HTMLManipulable{
+public interface HTMLDocument extends Node,HTMLManipulable{
 	/**
 	 * This method creates a new element
 	 * @param elementName the element name
@@ -262,7 +263,7 @@ public interface HTMLDocument extends HTMLNode,HTMLManipulable{
 	 * @param nodes the nodes to be removed
 	 * @return the document on which the method was invoked
 	 */
-	public abstract HTMLDocument removeNodes(HTMLNode...nodes);
+	public abstract HTMLDocument removeNodes(Node...nodes);
 	
 	public abstract Set<HTMLComment>getComments();
 	/**
