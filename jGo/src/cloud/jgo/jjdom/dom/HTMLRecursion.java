@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import cloud.jgo.io.File;
+import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.HTMLElement.HTMLElementType;
 import cloud.jgo.jjdom.dom.HTMLNode.HTMLNodeType;
 import cloud.jgo.jjdom.dom.concrete.HTMLDefaultElement;
@@ -804,4 +805,31 @@ public abstract class HTMLRecursion {
 	/*
 	 * @
 	 */
+	private static HTMLNode recursivePath(String nodeName,HTMLNode rootNode){
+	
+		// ora dobbia
+		System.out.println("Cerchiamo il tag :"+nodeName+" nei figli di "+rootNode.getNodeName());
+		
+		// si continua da qui ....
+		
+		
+		
+		
+		return null ;
+	}
+	
+	public static HTMLNode getPathNode(String nodePath){
+		String[]pathElements = nodePath.split("/");
+		HTMLNode found = null ;
+		for (int i = 0; i < pathElements.length; i++) {
+			String nodeName = pathElements[i].trim();
+			found = recursivePath(nodeName,JjDom.document);
+			if(found==null){
+				// nel momento in cui un elemento non viene trovato
+				// si spezza la catena
+				break ;
+			}
+		}
+		return found ;
+	}
 }

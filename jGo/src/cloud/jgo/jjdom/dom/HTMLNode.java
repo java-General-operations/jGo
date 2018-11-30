@@ -212,8 +212,10 @@ public interface HTMLNode extends Serializable,Home{
 	 * @return the old node
 	 */
 	public abstract HTMLNode replaceChild(HTMLNode newNode,HTMLNode oldNode);
-	// from to comment
+	// from to comment - 1.0.7
 	public abstract HTMLNode getNodeByPath(String nodePath);
+	// version 1.0.7
+	public abstract boolean contains(String nodeName);
 		/**
 		 * 
 		 * @author Martire91<br>

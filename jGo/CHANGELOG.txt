@@ -119,3 +119,7 @@ a gli elementi html, quindi aggiornare jjdom alla prossima versione
 oppure poter dare l'input anche ai comandi
 
 - Poter eseguire i metodi jGo all'interno dei threads
+
+- sto aggiungendo il metodo il metodo getNodeByPath
+
+- il metodo contains

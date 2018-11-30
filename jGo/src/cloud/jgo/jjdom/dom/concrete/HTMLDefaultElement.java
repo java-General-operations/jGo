@@ -1106,4 +1106,16 @@ public class HTMLDefaultElement implements HTMLElement{
 		}
 		return currentNode ;
 	}
+	@Override
+	public boolean contains(String nodeName) {
+		HTMLNodeList childNodes = getChildNodes();
+		boolean flag = false ;
+		for (int i = 0; i < childNodes.getLength(); i++) {
+			if (nodeName.equals(childNodes.item(i).getNodeName())) {
+				flag = true ;
+				break;
+			}
+		}
+		return flag ;
+	}
 }
