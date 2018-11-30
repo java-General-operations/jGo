@@ -968,10 +968,58 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		return element ;
 	}
 	// version 1.0.7
+	// segnalare che non si possono usare i seguenti caratteri come nome dei tags : []
 	@Override
 	public HTMLNode getNodeByPath(String nodePath) {
-		return null ;
+		String[]split = nodePath.split("/");
+		HTMLNode currentNode = this ;
+		boolean found ;
+		for (int i = 0; i < split.length; i++) {
+			String nodeName = split[i].trim();
+			found = false ;
+			HTMLNodeList listNodes = currentNode.getChildNodes();
+			for (int j = 0; j < listNodes.getLength(); j++) {
+				HTMLNode node = listNodes.item(j);
+				if (node.getNodeName().equals(nodeName)) {
+					currentNode = node ;
+					found = true ;
+					break ;
+				}
+				if (node instanceof HTMLElement) {
+					if(nodeName.startsWith("#")){
+						if (((HTMLElement)node).isPresent("id")) {
+							if (((HTMLElement)node).getId().equals(nodeName.replace("#",""))) {
+								currentNode = node ;
+								found = true ;
+								break;
+							}
+						}
+					}
+					else if(nodeName.startsWith(".")){
+						if (((HTMLElement)node).isPresent("class")) {
+							String classAttributeValue = ((HTMLElement)node).getAttributeValue("class");
+							String[]classes = classAttributeValue.split(" ");
+							for (int k = 0; k < classes.length; k++) {
+							if (classes[k].trim().equals(nodeName.replace(".",""))) {
+								currentNode = node ;
+								found = true ;
+								break;
+							}
+							}
+						}
+					}	
+				}
+			}
+			if (!found) {
+				// spezziamo la catena
+				currentNode = null ;
+				break ; // esco dal controllo del path,poichè non è più ricostruibile
+				// in quanto un elemento non è stato trovato
+			}
+		}
+		return currentNode ;
 	}
+	
 
 	@Override
 	public boolean contains(String nodeName) {

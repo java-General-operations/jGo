@@ -541,22 +541,50 @@ public class HTMLComment implements HTMLNode{
 
 	@Override
 	public HTMLNode getNodeByPath(String nodePath) {
-		HTMLNode currentNode = this ; // dico che inizialmente si parte dal nodo corrente
 		String[]split = nodePath.split("/");
+		HTMLNode currentNode = this ;
+		boolean found ;
 		for (int i = 0; i < split.length; i++) {
-			String nodeName = split[i];
-			// prendo i figli del nodo corrente 
+			String nodeName = split[i].trim();
+			found = false ;
 			HTMLNodeList listNodes = currentNode.getChildNodes();
 			for (int j = 0; j < listNodes.getLength(); j++) {
 				HTMLNode node = listNodes.item(j);
 				if (node.getNodeName().equals(nodeName)) {
-					// abbiamo trovato il nodo
 					currentNode = node ;
-					break ; 
+					found = true ;
+					break ;
 				}
-				else{
-					currentNode = null ;
+				if (node instanceof HTMLElement) {
+					if(nodeName.startsWith("#")){
+						if (((HTMLElement)node).isPresent("id")) {
+							if (((HTMLElement)node).getId().equals(nodeName.replace("#",""))) {
+								currentNode = node ;
+								found = true ;
+								break;
+							}
+						}
+					}
+					else if(nodeName.startsWith(".")){
+						if (((HTMLElement)node).isPresent("class")) {
+							String classAttributeValue = ((HTMLElement)node).getAttributeValue("class");
+							String[]classes = classAttributeValue.split(" ");
+							for (int k = 0; k < classes.length; k++) {
+							if (classes[k].trim().equals(nodeName.replace(".",""))) {
+								currentNode = node ;
+								found = true ;
+								break;
+							}
+							}
+						}
+					}	
 				}
+			}
+			if (!found) {
+				// spezziamo la catena
+				currentNode = null ;
+				break ; // esco dal controllo del path,poichè non è più ricostruibile
+				// in quanto un elemento non è stato trovato
 			}
 		}
 		return currentNode ;
