@@ -969,23 +969,70 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	// version 1.0.7
 	@Override
 	public HTMLNode getNodeByPath(String nodePath) {
-		HTMLNode currentNode = this ; // dico che inizialmente si parte dal nodo corrente
+		
+		HTMLNode currentNode = this ; // poichè si parte da questo elemento 
+		
+		// 1 passo :split del nodePath
+		
 		String[]split = nodePath.split("/");
+		
+		// faccio iterare i nomi dei nodi del path
+		boolean found ;
 		for (int i = 0; i < split.length; i++) {
-			String nodeName = split[i];
-			// prendo i figli del nodo corrente 
-			HTMLNodeList listNodes = currentNode.getChildNodes();
-			for (int j = 0; j < listNodes.getLength(); j++) {
-				HTMLNode node = listNodes.item(j);
+			// ottengo il nome del nodeName
+			
+			String nodeName = split[i].trim();
+			
+			found = false ;
+			
+			// 2 passo faccio iterare i figli di questo nodo
+			
+			for (int j = 0; j < currentNode.getChildNodes().getLength(); j++) {
+				
+				HTMLNode node = currentNode.getChildNodes().item(j);
+				
+				// 3 passo : controllo per prima cosa il nome del nodo
+				
 				if (node.getNodeName().equals(nodeName)) {
-					// abbiamo trovato il nodo
+					
+					// bene abbiamo trovato il nodo
+					// quindi la catena continua
+					// passando al secondo nodeName del pathNode
 					currentNode = node ;
-					break ; 
+					found = true ;
+					break ;
 				}
-				else{
-					currentNode = null ;
-				}
+				else if(nodeName.contains("#")){
+					// abbiamo un nodeName con id
+					// controllo se l'elemento è di fatto un elemento 
+					if (node instanceof HTMLElement) {
+						
+						// bene a questo punto prendo l'id in tanto
+						String id = nodeName.substring(nodeName.indexOf("#")).replace("#","").trim();
+						
+						// sostituisco l'id nel nodeName 
+						
+						String replacedNodeName = nodeName.replace("#"+id,"");
+						if (((HTMLElement)node).isPresent("id")) {
+							if (((HTMLElement)node).getId().equals(id)&&node.getNodeName().equals(replacedNodeName)) {
+								
+								// anche qui si prende l'elemento e si continua con la catena
+								found = true ;
+								currentNode = node ;
+								break ;
+							}
+						}
+					}
+				}	
 			}
+			// quindi quando si sta per passare alla prossima iterazione, quindi al prossimo nome del path
+			// si controlla se l'elemento è stato trovato, in caso contrario
+			// devo chiudere il metodo poichè la catena è stata spezzata.
+			// quindi se cosi fosse, setto anche il currentNode a null
+			// poichè faccio affidamento sulla variabile booleana, quindi
+			// se la var è false, vuol dire che il currentNode è quello precedente
+			// e quindi lo risetto a null
+			if (!found){currentNode = null;break;}
 		}
 		return currentNode ;
 	}
