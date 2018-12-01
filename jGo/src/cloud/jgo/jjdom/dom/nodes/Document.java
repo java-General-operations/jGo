@@ -17,29 +17,16 @@ public interface Document extends Node{
 	 */
 	public abstract Element createNewElement(String elementName,boolean hasClosingTag,boolean thereCanBeMore);
 	/**
-	 * This method creates a default element
-	 * @param type the element type
-	 * @return the element
-	 */
-	public abstract Element createElement(HTMLElement.HTMLElementType type);
-	/**
-	 * This method creates a default element
-	 * @param type the element type
-	 * @param textElement the element text
-	 * @return the element
-	 */
-	public abstract HTMLElement createElement(HTMLElement.HTMLElementType type, String textElement);
-	/**
 	 * This method creates a comment
 	 * @param comment the comment text
 	 * @return the comment
 	 */
-	public abstract HTMLComment createComment(String comment);
+	public abstract Comment createComment(String comment);
 	/**
 	 * This method returns the root element
 	 * @return the root element
 	 */
-	public abstract HTMLElement getRootElement();
+	public abstract Element getRootElement();
 	/**
 	 * This method returns the document charset
 	 * @return the document charset
@@ -50,7 +37,7 @@ public interface Document extends Node{
 	 * @param nodes the nodes to be removed
 	 * @return the document on which the method was invoked
 	 */
-	public abstract HTMLDocument removeNodes(Node...nodes);
+	public abstract Document removeNodes(Node...nodes);
 	
 	public abstract Set<?extends Comment>getComments();
 	/**

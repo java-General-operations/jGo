@@ -125,3 +125,4 @@ oppure poter dare l'input anche ai comandi
 - il metodo contains
 
 - sto ridefinendo i packages del dom (JjDom) - praticamente sto ridefinendo i nodi
+- ho creato il package definitivo : cloud.jgo.jjdom.dom.nodes.xml per i nodi XML.

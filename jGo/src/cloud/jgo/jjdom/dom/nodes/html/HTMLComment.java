@@ -27,8 +27,8 @@ import cloud.jgo.jjdom.dom.HTMLRecursion;
 import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.Node.HTMLNodeType;
-import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultDocument;
-import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultElement;
+import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultDocument;
+import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultElement;
 /**
  * 
  * @author Martire91<br>

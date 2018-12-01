@@ -23,10 +23,12 @@
 package cloud.jgo.jjdom.dom.nodes.html;
 import java.util.List;
 import java.util.Set;
+
 import cloud.jgo.jjdom.css.CSSRule;
 import cloud.jgo.jjdom.css.CSSStyle;
 import cloud.jgo.jjdom.dom.Manipulable;
 import cloud.jgo.jjdom.dom.nodes.Document;
+import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
 /**
@@ -49,6 +51,19 @@ public interface HTMLDocument extends Document,Manipulable{
 	 * @return the link element
 	 */
 	public abstract HTMLElement createLink(String href,String text);
+	/**
+	 * This method creates a default element
+	 * @param type the element type
+	 * @return the element
+	 */
+	public abstract Element createElement(HTMLElement.HTMLElementType type);
+	/**
+	 * This method creates a default element
+	 * @param type the element type
+	 * @param textElement the element text
+	 * @return the element
+	 */
+	public abstract HTMLElement createElement(HTMLElement.HTMLElementType type, String textElement);
 	/**
 	 * This method creates an image link
 	 * @param srcImage the image url

@@ -20,7 +20,7 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom.nodes.concrete;
+package cloud.jgo.jjdom.dom.nodes.html.concrete;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
