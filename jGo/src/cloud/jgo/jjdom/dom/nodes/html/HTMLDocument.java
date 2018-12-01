@@ -20,47 +20,22 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom.nodes;
-
+package cloud.jgo.jjdom.dom.nodes.html;
 import java.util.List;
 import java.util.Set;
 
 import cloud.jgo.jjdom.css.CSSRule;
 import cloud.jgo.jjdom.css.CSSStyle;
-import cloud.jgo.jjdom.dom.HTMLManipulable;
+import cloud.jgo.jjdom.dom.Manipulable;
+import cloud.jgo.jjdom.dom.nodes.Document;
+import cloud.jgo.jjdom.dom.nodes.Elements;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
 /**
  * 
  * @author Martire91<br>
  * This interface represents an html document
  */
-public interface HTMLDocument extends Node,HTMLManipulable{
-	/**
-	 * This method creates a new element
-	 * @param elementName the element name
-	 * @param hasClosingTag if is true, it means that the node has a closing tag
-	 * @param thereCanBeMore if is true, it means that there can be + tags of this type
-	 * @return the element
-	 */
-	public abstract HTMLElement createNewElement(String elementName,boolean hasClosingTag,boolean thereCanBeMore);
-	/**
-	 * This method creates a default element
-	 * @param type the element type
-	 * @return the element
-	 */
-	public abstract HTMLElement createElement(HTMLElement.HTMLElementType type);
-	/**
-	 * This method creates a default element
-	 * @param type the element type
-	 * @param textElement the element text
-	 * @return the element
-	 */
-	public abstract HTMLElement createElement(HTMLElement.HTMLElementType type, String textElement);
-	/**
-	 * This method creates a comment
-	 * @param comment the comment text
-	 * @return the comment
-	 */
-	public abstract HTMLComment createComment(String comment);
+public interface HTMLDocument extends Document,Manipulable{
 	/**
 	 * This method creates a button
 	 * @param btnText the button text
@@ -172,12 +147,7 @@ public interface HTMLDocument extends Node,HTMLManipulable{
 	 * @param type the elements type
 	 * @return the found elements
 	 */
-	public abstract HTMLElements getElementsByType(HTMLElement.HTMLElementType type); // restituisce il primo elemento che si trova di quel tipo
-	/**
-	 * This method returns the root element
-	 * @return the root element
-	 */
-	public abstract HTMLElement getRootElement();
+	public abstract Elements getElementsByType(HTMLElement.HTMLElementType type); // restituisce il primo elemento che si trova di quel tipo
 	/**
 	 * This method returns the meta tag
 	 * @return the meta tag element
@@ -249,41 +219,9 @@ public interface HTMLDocument extends Node,HTMLManipulable{
 	 */
 	public abstract HTMLDocument printJsSource();
 	/**
-	 * This method returns the document charset
-	 * @return the document charset
-	 */
-	public abstract String getCharset();
-	/**
 	 * This method returns true if the doctype element is present
 	 * @return true if the doctype element is present
 	 */
 	public abstract boolean doctypeIsPresent();
-	/**
-	 * This method removes the nodes
-	 * @param nodes the nodes to be removed
-	 * @return the document on which the method was invoked
-	 */
-	public abstract HTMLDocument removeNodes(Node...nodes);
-	
-	public abstract Set<HTMLComment>getComments();
-	/**
-	 * This method returns the comments list
-	 * @return the comments list
-	 */
-	public abstract List<HTMLComment>getListComments();
-	/**
-	 * This method adds a class to the elements taken as parameters
-	 * @param className the class name
-	 * @param elements the elements
-	 * @return the document on which the method was invoked
-	 */
 	public abstract HTMLDocument addClass(String className,HTMLElement...elements);
-	/**
-	 * 1 DEFAULT CHARSET : UTF_8
-	 */
-	public static final String CHARSET_UTF_8 = "UTF-8";
-	/**
-	 * 2 DEFAULT CHARSET : ISO-8859-1
-	 */
-	public static final String CHARSET_ISO_8859_1 = "ISO-8859-1";
 }

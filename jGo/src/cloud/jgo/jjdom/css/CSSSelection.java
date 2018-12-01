@@ -21,10 +21,9 @@
  * 
  */
 package cloud.jgo.jjdom.css;
-
 import java.io.Serializable;
 
-import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.Elements;
 /**
  * This class represents a css selection
  * @author Martire91<br>
@@ -36,6 +35,6 @@ public interface CSSSelection extends Serializable{
 		 */
 		public abstract int getCountSelectedItems();
 		public abstract String getSelectionCriterion();
-		public abstract HTMLElements getSelectedItems();
+		public abstract Elements getSelectedItems();
 		public enum Type{ID,CLASS,TAG_NAME}
 }

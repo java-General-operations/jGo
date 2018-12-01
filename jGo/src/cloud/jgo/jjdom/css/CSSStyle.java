@@ -24,7 +24,7 @@ package cloud.jgo.jjdom.css;
 
 import java.util.ArrayList;
 
-import cloud.jgo.jjdom.dom.nodes.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 /**
  * @author Martire91<br>
  * This class represents the css style

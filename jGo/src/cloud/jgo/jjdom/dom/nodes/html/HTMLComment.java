@@ -20,10 +20,13 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom.nodes;
+package cloud.jgo.jjdom.dom.nodes.html;
 import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.nodes.Comment;
+import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.Node.HTMLNodeType;
 import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultDocument;
 import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultElement;
@@ -32,7 +35,7 @@ import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultElement;
  * @author Martire91<br>
  * This class represente the html comment
  */
-public class HTMLComment implements Node{
+public class HTMLComment implements Comment{
 	/**
 	 * 
 	 */
@@ -109,7 +112,7 @@ public class HTMLComment implements Node{
 
 	@Override
 	public String getMarkup() {
-		HTMLRecursion.examines(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
+		HTMLRecursion.examines_html(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
 		String result = htmlCode.toString();
 		// pulisco il buffer code html
 		htmlCode = new StringBuffer();
@@ -603,5 +606,11 @@ public class HTMLComment implements Node{
 			}
 		}
 		return flag ;
+	}
+
+	@Override
+	public String getPath() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

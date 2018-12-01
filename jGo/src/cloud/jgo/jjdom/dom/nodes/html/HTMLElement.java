@@ -20,11 +20,12 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom.nodes;
+package cloud.jgo.jjdom.dom.nodes.html;
 import java.io.Serializable;
 import java.util.Map;
 
-import cloud.jgo.jjdom.dom.HTMLManipulable;
+import cloud.jgo.jjdom.dom.nodes.Element;
+import cloud.jgo.jjdom.dom.nodes.Node;
 /**
  * 
  * @author Martire91<br>
@@ -33,83 +34,12 @@ import cloud.jgo.jjdom.dom.HTMLManipulable;
  * This interface represents the concept of html element
  *
  */
-public interface HTMLElement extends Node,HTMLManipulable{
+public interface HTMLElement extends Element{
 	/**
 	 * This method returns the element type
 	 * @return the element type
 	 */
 	public abstract HTMLElementType getType();
-	/**
-	 * this method checks if this element has brothers
-	 * @return true if has brothers
-	 */
-	public abstract boolean hasBrothers();
-	/**
-	 * This method returns the element attributes
-	 * @return the element attributes
-	 */
-	public abstract Map<String, String> getAttributes();
-	/**
-	 * This method sets an attribute
-	 * @param attr the attribute
-	 * @param val the attribute value
-	 * @return the element on which the method was invoked
-	 */
-	public abstract HTMLElement setAttribute(String attr,String val);
-	/**
-	 * This method replaces an attribute value
-	 * @param attr the attribute
-	 * @param newValue new attribute value
-	 * @return the element on which the method was invoked
-	 */
-	public abstract HTMLElement replaceAttributeValue(String attr,String newValue);
-	/**
-	 * This method removes an attribute
-	 * @param attr the attribute
-	 * @return the element on which the method was invoked
-	 */
-	public abstract HTMLElement removeAttribute(String attr);
-	/**
-	 * This method returns the attribute
-	 * @param attr the attribute text
-	 * @return the attribute
-	 */
-	public abstract String getAttribute(String attr);
-	/**
-	 * This method returns the attribute value
-	 * @param attr the attribute text
-	 * @return the attribute value
-	 */
-	public abstract String getAttributeValue(String attr);
-	/**
-	 * This method gets the previous sibling
-	 * @return the previous sibling
-	 */
-	public abstract Node getPreviousSibling();
-	/**
-	 * This method checks if the attribute passed as a parameter is present
-	 * @param attribute the attribute
-	 * @return true if is present
-	 */
-	public abstract boolean isPresent(String attribute);
-	/**
-	 * This method checks if the element has attributes
-	 * @return true if has attributes
-	 */
-	public abstract boolean hasAttributes();
-	/**
-	 * This method returns the element path
-	 * @return the element path
-	 */
-	public abstract String getPath();
-	// version : 1.0.1
-	/**
-	 * This method returns the complete path:
-	 * {@link HTMLElement#getBaseURI()} + {@link HTMLElement#getPath()}
-	 * 
-	 * @return the complete path
-	 */
-	public abstract String getCompletePath();
 	/**
 	 * This method returns the element id
 	 * @return the element id

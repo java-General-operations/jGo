@@ -34,13 +34,14 @@ import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.css.CSSStyle;
 import cloud.jgo.jjdom.css.concrete.CSSDefaultRule;
 import cloud.jgo.jjdom.css.concrete.CSSDefaultStyle;
-import cloud.jgo.jjdom.dom.nodes.HTMLComment;
-import cloud.jgo.jjdom.dom.nodes.HTMLDocument;
-import cloud.jgo.jjdom.dom.nodes.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.Element;
+import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
 import cloud.jgo.jjdom.dom.nodes.Node;
-import cloud.jgo.jjdom.dom.nodes.HTMLElement.HTMLElementType;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
 // N.B.
 // ci sono alcuni metodi di questa classe che restituiscono null
@@ -52,6 +53,13 @@ import cloud.jgo.jjdom.dom.HTMLRecursion;
  * This class represents the default html document
  */
 public class HTMLDefaultDocument implements HTMLDocument{
+	@Override
+	public String getPath() {
+		// TODO Auto-generated method stub
+		return "document";
+	}
+
+
 	private static final long serialVersionUID = 12L;
 	private HTMLElement jquerySourceTag = null ;
 	private String jqueryPath = JjDom.JQUERY_URL_SNIPPET;
@@ -213,7 +221,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	// metodo che si occupa di ottenere proprio il codice 
 	@Override
 	public String getMarkup(){
-		HTMLRecursion.examines(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
+		HTMLRecursion.examines_html(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
 		String result = htmlCode.toString();
 		// pulisco il buffer code html
 		htmlCode = new StringBuffer();
@@ -409,25 +417,25 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	// per ora funziona, poi vediamo se mi viene in mente qualcosa
 	@Override
 	public HTMLElement getElementById(String elementId) {
-		HTMLElement idEl = HTMLRecursion.examinesForId(elementId,this);
+		HTMLElement idEl = (HTMLElement) HTMLRecursion.examinesForId(elementId,this);
 		return idEl;
 	}
 	
 	@Override
-	public HTMLElements getElementsByClassName(String className) {
+	public Elements getElementsByClassName(String className) {
 		return HTMLRecursion.examinesForClass(className,this);
 	}
 
 
 	@Override
-	public HTMLElements getElementsByTag(String tagName) {
+	public Elements getElementsByTag(String tagName) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForTag(tagName,this);
 	}
 	
 	@Override
-	public HTMLElements getDirectChildrenByTag(String tagName) {
-		HTMLElements elements = new HTMLElements();
+	public Elements getDirectChildrenByTag(String tagName) {
+		Elements elements = new Elements();
 		HTMLNodeList listNodes = this.childNodes;
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i)instanceof HTMLElement) {
@@ -441,49 +449,49 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	
 
 	@Override
-	public HTMLElements getElementsByType(HTMLElementType type) {
+	public Elements getElementsByType(HTMLElementType type) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForType(type,this);
 	}
 	
 	@Override
-	public HTMLElements getElementsByAttribute(String attribute) {
+	public Elements getElementsByAttribute(String attribute) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForAttribute(attribute,this);
 	}
 	
 	@Override
-	public HTMLElements getElementsByAttributeValue(String value) {
+	public Elements getElementsByAttributeValue(String value) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForAttributeValue(value,this);
 	}
 	
 	@Override
-	public HTMLElements getElementsByAttributeValue(String attr, String val) {
+	public Elements getElementsByAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForAttributeValue_(attr, val, this,"=");
 	}
 	
 	@Override
-	public HTMLElements getElementsByDifferentAttributeValue(String attr, String val) {
+	public Elements getElementsByDifferentAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForAttributeValue_(attr, val, this, CSSSelector.DIFFERENT_OPERATOR);
 	}
 	
 	@Override
-	public HTMLElements getElementsThatStartWithAttributevalue(String attr, String val) {
+	public Elements getElementsThatStartWithAttributevalue(String attr, String val) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForAttributeValue_(attr, val, this, CSSSelector.STARTS_WITH_OPERATOR);
 	}
 	
 	@Override
-	public HTMLElements getElementsThatEndWithAttributeValue(String attr, String val) {
+	public Elements getElementsThatEndWithAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForAttributeValue_(attr, val, this, CSSSelector.ENDS_WITH_OPERATOR);
 	}
 	
 	@Override
-	public HTMLElements getElementsThatContainTheAttributeValue(String attr, String val) {
+	public Elements getElementsThatContainTheAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForAttributeValue_(attr, val, this, CSSSelector.CONTAINS_OPERATOR);
 	}
@@ -535,13 +543,13 @@ public class HTMLDefaultDocument implements HTMLDocument{
 			}
 			// controllo se esiste il root element
 			if (this.rootElement==null) {
-				this.rootElement = JjDom.document.createElement(HTMLElementType.HTML);
+				this.rootElement = (HTMLElement) JjDom.document.createElement(HTMLElementType.HTML);
 				appendChild(this.rootElement);
 			}
 			
 			// controllo del body 
 			if (getBody()==null) {
-				body = JjDom.document.createElement(HTMLElementType.BODY);
+				body = (HTMLElement) JjDom.document.createElement(HTMLElementType.BODY);
 				// lo aggiungo al root
 				this.rootElement.appendChild(body);
 			}
@@ -559,7 +567,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 			// inserisco i nodi 
 			head.appendChilds(this.metaTag,this.title);
 			if (this.rootElement==null) {
-				this.rootElement = JjDom.document.createElement(HTMLElementType.HTML);
+				this.rootElement = (HTMLElement) JjDom.document.createElement(HTMLElementType.HTML);
 				// qui sappiamo che non esiste questo nodo root
 				// quindi oltre ad averlo creato lo aggiungo al document
 				appendChild(this.rootElement);
@@ -743,7 +751,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		if (style instanceof CSSDefaultStyle) {
 			// qui sappiamo che si tratta di uno stile interno
 			if (this.style==null) {
-				this.style = JjDom.document.createElement(HTMLElementType.STYLE);
+				this.style = (HTMLElement) JjDom.document.createElement(HTMLElementType.STYLE);
 				this.style.setAttribute("type","text/css");
 			}
 			this.style.setTextContent(this.styleSheet.toString());
@@ -782,12 +790,12 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	// questo metodo ha lo stesso codice di quello dell'elemento
 	// ma si sconsiglia il suo uso, poichè il documento non ha fratelli
 	@Override
-	public HTMLElements getAdiacentSiblingsByTag(String tagName) {
+	public Elements getAdiacentSiblingsByTag(String tagName) {
 		return null ;
 	}
 	
 	@Override
-	public HTMLElements getGeneralSiblingsByTag(String tagName) {
+	public Elements getGeneralSiblingsByTag(String tagName) {
 		return null ;
 	}
 
@@ -821,9 +829,9 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	@Override
 	public HTMLElement createImageLink(String srcImage, String href) {
 		HTMLElement img,link = null ;
-		img = JjDom.document.createElement(HTMLElementType.IMG);
+		img = (HTMLElement) JjDom.document.createElement(HTMLElementType.IMG);
 		img.setAttribute("src", srcImage);
-		link = JjDom.document.createElement(HTMLElementType.A);
+		link = (HTMLElement) JjDom.document.createElement(HTMLElementType.A);
 		link.setAttribute("href",href);
 		link.appendChild(img);
 		return link ;
@@ -831,13 +839,13 @@ public class HTMLDefaultDocument implements HTMLDocument{
 
 	@Override
 	public HTMLElement createMenu(String idMenu, String... items) {
-		HTMLElement ul = JjDom.document.createElement(HTMLElementType.UL);
+		HTMLElement ul = (HTMLElement) JjDom.document.createElement(HTMLElementType.UL);
 		ul.setId(idMenu);
 		ArrayList<HTMLElement>list = new ArrayList<>();
 		for (int i = 0; i < items.length; i++) {
-			HTMLElement link = JjDom.document.createElement(HTMLElementType.A);
+			HTMLElement link = (HTMLElement) JjDom.document.createElement(HTMLElementType.A);
 			link.setAttribute("href","#").setTextContent(items[i]);
-			HTMLElement li = JjDom.document.createElement(HTMLElementType.LI);
+			HTMLElement li = (HTMLElement) JjDom.document.createElement(HTMLElementType.LI);
 			li.appendChild(link);
 			ul.appendChild(li);
 		}
@@ -848,7 +856,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 
 	@Override
 	public HTMLElement createForm(String action, String method) {
-		HTMLElement form = JjDom.document.createElement(HTMLElementType.FORM);
+		HTMLElement form = (HTMLElement) JjDom.document.createElement(HTMLElementType.FORM);
 		form.setAttribute("method",method);
 		form.setAttribute("action",action);
 		return form ;
@@ -877,7 +885,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 
 	@Override
 	public HTMLElement createInput(String inputType, String name, String value) {
-		HTMLElement input = JjDom.document.createElement(HTMLElementType.INPUT);
+		HTMLElement input = (HTMLElement) JjDom.document.createElement(HTMLElementType.INPUT);
 		if (inputType!=null) {
 			input.setAttribute("type",inputType);
 		}
@@ -892,14 +900,15 @@ public class HTMLDefaultDocument implements HTMLDocument{
 
 	@Override
 	public HTMLElement createButton(String btnText, String btnId) {
-		HTMLElement button = JjDom.document.createElement(HTMLElementType.BUTTON);
+		HTMLElement button = (HTMLElement) JjDom.document.createElement(HTMLElementType.BUTTON);
 		button.setId(btnId).setTextContent(btnText);
 		return button ;
 	}
 
 	@Override
 	public HTMLElement createDiv(String divId) {
-		return JjDom.document.createElement(HTMLElementType.DIV).setId(divId);
+		Element el = JjDom.document.createElement(HTMLElementType.DIV);
+		return ((HTMLElement)el).setId(divId);
 	}
 	
 	@Override

@@ -123,3 +123,5 @@ oppure poter dare l'input anche ai comandi
 - sto aggiungendo il metodo il metodo getNodeByPath
 
 - il metodo contains
+
+- sto ridefinendo i packages del dom (JjDom) - praticamente sto ridefinendo i nodi

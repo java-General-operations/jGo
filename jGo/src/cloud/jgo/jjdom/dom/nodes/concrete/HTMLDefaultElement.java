@@ -32,12 +32,12 @@ import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
-import cloud.jgo.jjdom.dom.nodes.HTMLComment;
-import cloud.jgo.jjdom.dom.nodes.HTMLDocument;
-import cloud.jgo.jjdom.dom.nodes.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
 import cloud.jgo.jjdom.dom.nodes.Node;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 /**
  * 
  * @author Martire91<br>
@@ -617,7 +617,7 @@ public class HTMLDefaultElement implements HTMLElement{
 
 	@Override
 	public String getMarkup() {
-		HTMLRecursion.examines(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
+		HTMLRecursion.examines_html(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
 		String result = htmlCode.toString();
 		// pulisco il buffer code html
 		htmlCode = new StringBuffer();
@@ -695,19 +695,19 @@ public class HTMLDefaultElement implements HTMLElement{
 	
 	@Override
 	public HTMLElement getElementById(String elementId) {
-		return HTMLRecursion.examinesForId(elementId, this);
+		return (HTMLElement) HTMLRecursion.examinesForId(elementId, this);
 	}
 	
 
 	@Override
-	public HTMLElements getElementsByTag(String tagName) {
+	public Elements getElementsByTag(String tagName) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForTag(tagName,this);
 	}
 	
 	@Override
-	public HTMLElements getDirectChildrenByTag(String tagName) {
-		HTMLElements elements = new HTMLElements();
+	public Elements getDirectChildrenByTag(String tagName) {
+		Elements elements = new Elements();
 		HTMLNodeList listNodes = this.childNodes;
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i)instanceof HTMLElement) {
@@ -720,14 +720,14 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLElements getElementsByClassName(String className) {
+	public Elements getElementsByClassName(String className) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForClass(className, this);
 	}
 
 	@Override
-	public HTMLElements getElementsByAttribute(String attribute) {
-		HTMLElements elements = new HTMLElements();
+	public Elements getElementsByAttribute(String attribute) {
+		Elements elements = new Elements();
 		if (this.hasAttributes()) {
 			if (this.isPresent(attribute)) {
 				elements.add(this);
@@ -737,8 +737,8 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLElements getElementsByAttributeValue(String value) {
-		HTMLElements elements = new HTMLElements();
+	public Elements getElementsByAttributeValue(String value) {
+		Elements elements = new Elements();
 		if (this.hasAttributes()) {
 			// prendo tutti gli attributi 
 			Iterator<Entry<String, String>> iterator = this.attributes.entrySet().iterator();
@@ -759,9 +759,9 @@ public class HTMLDefaultElement implements HTMLElement{
 	// in modo tale che se in futuro vogliamo prenderne nota
 	// possiamo farlo
 	@Override
-	public HTMLElements getElementsByAttributeValue(String attr, String val) {
+	public Elements getElementsByAttributeValue(String attr, String val) {
 //		return HTMLRecursion.examinesForAttributeValue_(attr, val, this, "=");
-		HTMLElements elements = new HTMLElements();
+		Elements elements = new Elements();
 		if (this.hasAttributes()) {
 			if (this.isPresent(attr)) {
 				String value = this.getAttributeValue(attr);
@@ -774,8 +774,8 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLElements getElementsByDifferentAttributeValue(String attr, String val) {
-		HTMLElements elements = new HTMLElements();
+	public Elements getElementsByDifferentAttributeValue(String attr, String val) {
+		Elements elements = new Elements();
 		if (this.hasAttributes()) {
 			if (this.isPresent(attr)) {
 				String value = this.getAttributeValue(attr);
@@ -788,19 +788,19 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLElements getElementsThatStartWithAttributevalue(String attr, String val) {
+	public Elements getElementsThatStartWithAttributevalue(String attr, String val) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForAttributeValue_(attr, val, this,CSSSelector.STARTS_WITH_OPERATOR);
 	}
 	
 	@Override
-	public HTMLElements getElementsThatEndWithAttributeValue(String attr, String val) {
+	public Elements getElementsThatEndWithAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForAttributeValue_(attr, val, this,CSSSelector.ENDS_WITH_OPERATOR);
 	}
 	
 	@Override
-	public HTMLElements getElementsThatContainTheAttributeValue(String attr, String val) {
+	public Elements getElementsThatContainTheAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
 		return HTMLRecursion.examinesForAttributeValue_(attr, val, this,CSSSelector.CONTAINS_OPERATOR);
 	}
@@ -824,8 +824,8 @@ public class HTMLDefaultElement implements HTMLElement{
 	// qui abbiamo un po cambiato
 	// metodo completato
 	@Override
-	public HTMLElements getAdiacentSiblingsByTag(String tagName) {
-		HTMLElements found = new HTMLElements();
+	public Elements getAdiacentSiblingsByTag(String tagName) {
+		Elements found = new Elements();
 		int index = this.getIndex(); // facciamo partire il ciclo dall'indice dell'elemento
 		HTMLNodeList listNodes = getParentNode().getChildNodes();
 		for (int i = (index+1); i < listNodes.getLength(); i++) {
@@ -839,10 +839,9 @@ public class HTMLDefaultElement implements HTMLElement{
 		}
 		return found ;
 	}
-	
 	@Override
-	public HTMLElements getGeneralSiblingsByTag(String tagName) {
-		HTMLElements found = new HTMLElements();
+	public Elements getGeneralSiblingsByTag(String tagName) {
+		Elements found = new Elements();
 		int index = this.getIndex(); // facciamo partire il ciclo dall'indice dell'elemento
 		HTMLNodeList listNodes = getParentNode().getChildNodes();
 		for (int i = (index+1); i < listNodes.getLength(); i++) {
@@ -852,7 +851,6 @@ public class HTMLDefaultElement implements HTMLElement{
 		}
 		return found ;
 	}
-
 	@Override
 	public Node next() {
 		// Ottengo il padre

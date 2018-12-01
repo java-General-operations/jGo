@@ -34,11 +34,11 @@ import cloud.jgo.jjdom.css.CSSSelection;
 import cloud.jgo.jjdom.css.CSSSelectionFailedException;
 import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.css.ContextNotFoundException;
-import cloud.jgo.jjdom.dom.HTMLManipulable;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
-import cloud.jgo.jjdom.dom.nodes.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.Element;
+import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 /**
  * @author Martire91<br>
  * This class represents the default css selector
@@ -55,7 +55,7 @@ public class CSSSimpleSelector implements CSSSelector{
 		}
 		CSSSelection selection_ = new CSSSimpleSelection();
 		if (selection.equals(GLOBAL_SELECTOR)) {
-			HTMLElements allElements = HTMLRecursion.getAllElements(rootContext);
+			Elements allElements = HTMLRecursion.getAllElements(rootContext);
 			((CSSSimpleSelection)selection_).selectedItems = allElements ;
 		}
 		else{
@@ -67,7 +67,7 @@ public class CSSSimpleSelector implements CSSSelector{
 			}
 			else{
 				// non ci sono spazi nella selezione
-				HTMLElements elements = new HTMLElements();
+				Elements elements = new Elements();
 				if (selection.contains(",")) { // è semplicemente una selezione con virgole senza spazi e quindi gerarchicità, e senza parentesi quadre
 					elements = multiSelection(selection);
 				}
@@ -83,7 +83,7 @@ public class CSSSimpleSelector implements CSSSelector{
 	
 	
 	
-	public void manageSelectionWithoutHierarchy(String selection,HTMLElements elements){
+	public void manageSelectionWithoutHierarchy(String selection,Elements elements){
 		if (selection.contains("#")&&selection.contains(".")) {
 			/** 
 			 * 	ID AND CLASS
@@ -94,8 +94,8 @@ public class CSSSimpleSelector implements CSSSelector{
 				String className,id = null ;
 				className = selection.substring(0,index).replace(".","").trim();
 				id = selection.substring(index).replace("#","").trim();
-				HTMLElements classElements = ((HTMLManipulable)rootContext).getElementsByClassName(className);
-				HTMLElement element = classElements.getElementById2(id);
+				Elements classElements = ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementsByClassName(className);
+				HTMLElement element = (HTMLElement) classElements.getElementById2(id);
 				elements.add(element);
 			}
 			else{
@@ -104,8 +104,8 @@ public class CSSSimpleSelector implements CSSSelector{
 					String id,className = null ;
 					id = selection.substring(0,index).trim().replace("#","").trim();
 					className = selection.substring(index).replace(".","").trim();
-					HTMLElements classElements = ((HTMLManipulable)rootContext).getElementsByClassName(className);
-					HTMLElement element = classElements.getElementById2(id);
+					Elements classElements = ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementsByClassName(className);
+					HTMLElement element = (HTMLElement) classElements.getElementById2(id);
 					elements.add(element);
 				}
 				else{
@@ -123,7 +123,7 @@ public class CSSSimpleSelector implements CSSSelector{
 			 * 	ID
 			 */
 			if (selection.startsWith("#")) {
-				HTMLElement idElement = ((HTMLManipulable)rootContext).getElementById(selection.replace("#",""));
+				HTMLElement idElement = (HTMLElement) ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementById(selection.replace("#",""));
 				if (idElement!=null) {
 					elements.add(idElement);
 				}
@@ -152,8 +152,8 @@ public class CSSSimpleSelector implements CSSSelector{
 				/*
 				 * Only Class
 				 */
-				HTMLElements classElements = ((HTMLManipulable)rootContext).getElementsByClassName(selection.replace(".",""));
-				for (HTMLElement htmlElement : classElements) {
+				Elements classElements = ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementsByClassName(selection.replace(".",""));
+				for (Element htmlElement : classElements) {
 					elements.add(htmlElement);
 				}
 			}
@@ -166,10 +166,10 @@ public class CSSSimpleSelector implements CSSSelector{
 					className = selection.substring(index).replace(".","").trim();
 					
 					// ottengo gli elementi della classe
-					HTMLElements classElements = ((HTMLManipulable)rootContext).getElementsByClassName(className);
+					Elements classElements = ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementsByClassName(className);
 					/** qui uso la seconda versione del metodo getElementsByTag2 */
-					HTMLElements tagNameElements = classElements.getElementsByTag2(tagName);
-					for (HTMLElement htmlElement : tagNameElements) {
+					Elements tagNameElements = classElements.getElementsByTag2(tagName);
+					for (Element htmlElement : tagNameElements) {
 						elements.add(htmlElement);
 					}
 			}
@@ -178,16 +178,16 @@ public class CSSSimpleSelector implements CSSSelector{
 			/** 
 			 * 	TagName
 			 */
-			HTMLElements tagNameElements = ((HTMLManipulable)rootContext).getElementsByTag(selection);
-			for (HTMLElement htmlElement : tagNameElements) {
+			Elements tagNameElements = ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementsByTag(selection);
+			for (Element htmlElement : tagNameElements) {
 				elements.add(htmlElement);
 			}
 		}
 	}
 	
 	// per selezioni con virgole
-	private HTMLElements multiSelection(int index,Object context){
-		HTMLElements elements = new HTMLElements();
+	private Elements multiSelection(int index,Object context){
+		Elements elements = new Elements();
 		// okok faccio lo split
 		String[]selections = subSelections[index].split(",");
 		
@@ -196,20 +196,20 @@ public class CSSSimpleSelector implements CSSSelector{
 			String currentSelection = selections[i];
 	
 			if (currentSelection.startsWith("#")) {
-				HTMLElement el = ((HTMLManipulable)context).getElementById(currentSelection);
+				HTMLElement el = (HTMLElement) ((cloud.jgo.jjdom.dom.Manipulable)context).getElementById(currentSelection);
 				if (el!=null) {
 					elements.add(el);
 				}
 			}
 			else if(currentSelection.startsWith(".")){
-				HTMLElements els = ((HTMLManipulable)context).getElementsByClassName(currentSelection);
-				for (HTMLElement htmlElement : els) {
+				Elements els = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsByClassName(currentSelection);
+				for (Element htmlElement : els) {
 					elements.add(htmlElement);
 				}
 			}
 			else{
-				HTMLElements els = ((HTMLManipulable)context).getElementsByTag(currentSelection);
-				for (HTMLElement htmlElement : els) {
+				Elements els = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsByTag(currentSelection);
+				for (Element htmlElement : els) {
 					elements.add(htmlElement);
 				}
 			}
@@ -224,8 +224,8 @@ public class CSSSimpleSelector implements CSSSelector{
 	 * @param selection
 	 * @return
 	 */
-	private HTMLElements multiSelection(String selection){
-		HTMLElements elements = new HTMLElements();
+	private Elements multiSelection(String selection){
+		Elements elements = new Elements();
 		// okok faccio lo split
 		String[]selections = selection.split(",");
 		
@@ -234,20 +234,20 @@ public class CSSSimpleSelector implements CSSSelector{
 			String currentSelection = selections[i].trim();
 	
 			if (currentSelection.startsWith("#")) {
-				HTMLElement el = ((HTMLManipulable)rootContext).getElementById(currentSelection.replace("#",""));
+				HTMLElement el = (HTMLElement) ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementById(currentSelection.replace("#",""));
 				if (el!=null) {
 					elements.add(el);
 				}
 			}
 			else if(currentSelection.startsWith(".")){
-				HTMLElements els = ((HTMLManipulable)rootContext).getElementsByClassName(currentSelection.replace(".",""));
-				for (HTMLElement htmlElement : els) {
+				Elements els = ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementsByClassName(currentSelection.replace(".",""));
+				for (Element htmlElement : els) {
 					elements.add(htmlElement);
 				}
 			}
 			else{
-				HTMLElements els = ((HTMLManipulable)rootContext).getElementsByTag(currentSelection);
-				for (HTMLElement htmlElement : els) {
+				Elements els = ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementsByTag(currentSelection);
+				for (Element htmlElement : els) {
 					elements.add(htmlElement);
 				}
 			}
@@ -256,19 +256,19 @@ public class CSSSimpleSelector implements CSSSelector{
 		return elements ;
 	}
 		
-	private HTMLManipulable check(String element){
-		HTMLManipulable manipulable = null ;
+	private cloud.jgo.jjdom.dom.Manipulable check(String element){
+		cloud.jgo.jjdom.dom.Manipulable manipulable = null ;
 		if (element.startsWith("#")) {
 			// id
-			manipulable = ((HTMLManipulable)rootContext).getElementById(element.replace("#",""));
+			manipulable = ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementById(element.replace("#",""));
 		}
 		else if(element.startsWith(".")){
 			// class
-			manipulable = ((HTMLManipulable)rootContext).getElementsByClassName(element.replace(".",""));
+			manipulable = ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementsByClassName(element.replace(".",""));
 		}
 		else{
 			// tagname
-			manipulable = ((HTMLManipulable)rootContext).getElementsByTag(element);
+			manipulable = ((cloud.jgo.jjdom.dom.Manipulable)rootContext).getElementsByTag(element);
 		}
 		return manipulable ;
 	}
@@ -276,11 +276,11 @@ public class CSSSimpleSelector implements CSSSelector{
 	@Override
 	public CSSSelection select(String element, String combiner, String element2) {
 		CSSSelection selection_ = new CSSSimpleSelection();
-		HTMLManipulable manipulable = check(element);
+		cloud.jgo.jjdom.dom.Manipulable manipulable = check(element);
 		// qui controllo se la prima selezione è andata a buon fine 
 		if (manipulable!=null) {
 			// a questo punto controllo il tipo di combinatore 
-			HTMLElements elements = null ;
+			Elements elements = null ;
 			switch(combiner){
 			case CHILDREN_COMBINER :
 				elements = manipulable.getDirectChildrenByTag(element2);
@@ -302,8 +302,8 @@ public class CSSSimpleSelector implements CSSSelector{
 			return null ;
 		}
 	}
-	private HTMLElements supportForAttributeSelection(int index,Object context,CSSSelection selection){
-		HTMLElements elements = null ;
+	private Elements supportForAttributeSelection(int index,Object context,CSSSelection selection){
+		Elements elements = null ;
 		String content = null ;
 		String el = subSelections[index].substring(0,subSelections[index].indexOf("[")).trim();
 		int index_ = subSelections[index].indexOf("[")+1;
@@ -314,14 +314,14 @@ public class CSSSimpleSelector implements CSSSelector{
 			// selezione [attr='value']
 			attr = subString.split("=")[0].trim();
 			val = subString.split("=")[1].replaceAll("'","").trim();
-			elements = ((HTMLManipulable)context).getElementsByAttributeValue(attr, val);
+			elements = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsByAttributeValue(attr, val);
 			((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"[attr=val]|";
 		}
 		else if(subString.contains(DIFFERENT_OPERATOR)&&!subString.contains(STARTS_WITH_OPERATOR)&&!subString.contains(CONTAINS_OPERATOR)&&!subString.contains(ENDS_WITH_OPERATOR)){
 			// selezione [attr!='value']
 			attr = subString.split(DIFFERENT_OPERATOR)[0].trim();
 			val = subString.split(DIFFERENT_OPERATOR)[1].replaceAll("'","").trim();
-			elements = ((HTMLManipulable)context).getElementsByDifferentAttributeValue(attr, val);
+			elements = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsByDifferentAttributeValue(attr, val);
 			((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"[attr"+DIFFERENT_OPERATOR+"val]|";
 		}
 		else if(subString.contains(STARTS_WITH_OPERATOR)&&!subString.contains(DIFFERENT_OPERATOR)&&!subString.contains(CONTAINS_OPERATOR)&&!subString.contains(ENDS_WITH_OPERATOR)){
@@ -329,7 +329,7 @@ public class CSSSimpleSelector implements CSSSelector{
 			subString = subString.replace(STARTS_WITH_OPERATOR,"="); // piccola modifica
 			attr = subString.split("=")[0].trim();
 			val = subString.split("=")[1].replaceAll("'","").trim();
-			elements = ((HTMLManipulable)context).getElementsThatStartWithAttributevalue(attr, val);
+			elements = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsThatStartWithAttributevalue(attr, val);
 			((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"[attr"+STARTS_WITH_OPERATOR+"val]|";
 		}
 		else if(subString.contains(ENDS_WITH_OPERATOR)&&!subString.contains(DIFFERENT_OPERATOR)&&!subString.contains(CONTAINS_OPERATOR)&&!subString.contains(STARTS_WITH_OPERATOR)){
@@ -337,7 +337,7 @@ public class CSSSimpleSelector implements CSSSelector{
 			subString = subString.replace(ENDS_WITH_OPERATOR,"="); // piccola modifica
 			attr = subString.split("=")[0].trim();
 			val = subString.split("=")[1].replaceAll("'","").trim();
-			elements = ((HTMLManipulable)context).getElementsThatEndWithAttributeValue(attr, val);
+			elements = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsThatEndWithAttributeValue(attr, val);
 			((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"[attr"+ENDS_WITH_OPERATOR+"val]|";
 		}
 		else if(subString.contains(CONTAINS_OPERATOR)&&!subString.contains(DIFFERENT_OPERATOR)&&!subString.contains(STARTS_WITH_OPERATOR)&&!subString.contains(ENDS_WITH_OPERATOR)){
@@ -346,13 +346,13 @@ public class CSSSimpleSelector implements CSSSelector{
 			subString = subString.replace(CONTAINS_OPERATOR,"="); // piccola modifica
 			attr = subString.split("=")[0].trim();
 			val = subString.split("=")[1].replaceAll("'","").trim();
-			elements = ((HTMLManipulable)context).getElementsThatContainTheAttributeValue(attr, val);
+			elements = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsThatContainTheAttributeValue(attr, val);
 			((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"[attr"+CONTAINS_OPERATOR+"val]|";
 		}
 		else{
 			// quindi qui si prende l'attributo 
 			String attr_ = subString ;
-			elements = ((HTMLManipulable)context).getElementsByAttribute(attr_);
+			elements = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsByAttribute(attr_);
 			((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"[attr]|";
 		}
 		return elements ;
@@ -386,7 +386,7 @@ public class CSSSimpleSelector implements CSSSelector{
 								((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"multiselection|";
 							}
 							else{
-								selectedNewContext = ((HTMLManipulable)context).getElementById(subSelections[index].replace("#", ""));
+								selectedNewContext = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementById(subSelections[index].replace("#", ""));
 								((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"id|";
 							}
 						}
@@ -397,8 +397,8 @@ public class CSSSimpleSelector implements CSSSelector{
 							 * che si trovano all'interno della stringa
 							 */
 							String element = subSelections[index].substring(0,subSelections[index].indexOf("[")).trim();
-							selectedNewContext = ((HTMLManipulable)context).getElementById(element.replace("#", ""));
-							HTMLElements elements = supportForAttributeSelection(index, selectedNewContext, selection);
+							selectedNewContext = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementById(element.replace("#", ""));
+							Elements elements = supportForAttributeSelection(index, selectedNewContext, selection);
 							if (elements!=null) {
 								for (int i = 0; i < elements.size(); i++) {
 									selection.getSelectedItems().add(elements.get(i));
@@ -417,7 +417,7 @@ public class CSSSimpleSelector implements CSSSelector{
 								((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"multiselection|";
 							}
 							else{
-								selectedNewContext = ((HTMLManipulable)context).getElementsByClassName(subSelections[index].replace(".",""));
+								selectedNewContext = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsByClassName(subSelections[index].replace(".",""));
 								((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"class|";
 							}
 						}
@@ -429,8 +429,8 @@ public class CSSSimpleSelector implements CSSSelector{
 							 */
 							// è una ricerca con attributo
 							String element = subSelections[index].substring(0,subSelections[index].indexOf("[")).trim();
-							selectedNewContext = ((HTMLManipulable)context).getElementsByClassName(element.replace(".",""));
-							HTMLElements elements = supportForAttributeSelection(index,selectedNewContext,selection);
+							selectedNewContext = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsByClassName(element.replace(".",""));
+							Elements elements = supportForAttributeSelection(index,selectedNewContext,selection);
 							if (elements!=null) {
 								for (int i = 0; i < elements.size(); i++) {
 									selection.getSelectedItems().add(elements.get(i));
@@ -450,7 +450,7 @@ public class CSSSimpleSelector implements CSSSelector{
 								((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"multiselection|";
 							}
 							else{
-								selectedNewContext = ((HTMLManipulable)context).getElementsByTag(subSelections[index]);
+								selectedNewContext = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsByTag(subSelections[index]);
 								((CSSSimpleSelection)selection).selectionCriterion = ((CSSSimpleSelection)selection).selectionCriterion+"tagname|";
 							}
 						}
@@ -461,8 +461,8 @@ public class CSSSimpleSelector implements CSSSelector{
 							 * che si trovano all'interno della stringa
 							 */
 							String element = subSelections[index].substring(0,subSelections[index].indexOf("[")).trim();
-							selectedNewContext = ((HTMLManipulable)context).getElementsByTag(element);
-							HTMLElements elements = supportForAttributeSelection(index,selectedNewContext,selection);
+							selectedNewContext = ((cloud.jgo.jjdom.dom.Manipulable)context).getElementsByTag(element);
+							Elements elements = supportForAttributeSelection(index,selectedNewContext,selection);
 							if (elements!=null) {
 								for (int i = 0; i < elements.size(); i++) {
 									selection.getSelectedItems().add(elements.get(i));
@@ -496,9 +496,9 @@ public class CSSSimpleSelector implements CSSSelector{
 				selected = true ;
 				
 			}
-			else if(context instanceof HTMLElements){
+			else if(context instanceof Elements){
 				// se è una lista, aggiungi la lista alla lista di elementi selezionati
-				HTMLElements selectedElements = (HTMLElements) context ;
+				Elements selectedElements = (Elements) context ;
 				for (int i = 0; i <selectedElements.size(); i++) {
 					selection.getSelectedItems().add(selectedElements.get(i));
 				}
@@ -513,10 +513,10 @@ public class CSSSimpleSelector implements CSSSelector{
 	 */
 	public class CSSSimpleSelection implements CSSSelection{
 		private static final long serialVersionUID = 1L;
-		private HTMLElements selectedItems = null ;
+		private Elements selectedItems = null ;
 		private String selectionString = null ;
 		private String selectionCriterion = "" ;
-		private CSSSimpleSelection() {this.selectedItems = new HTMLElements();}
+		private CSSSimpleSelection() {this.selectedItems = new Elements();}
 		@Override
 		public int getCountSelectedItems() {
 			// TODO Auto-generated method stub
@@ -528,7 +528,7 @@ public class CSSSimpleSelector implements CSSSelector{
 			return this.selectionCriterion ;
 		}
 		@Override
-		public HTMLElements getSelectedItems() {
+		public Elements getSelectedItems() {
 			// TODO Auto-generated method stub
 			return this.selectedItems ;
 		}

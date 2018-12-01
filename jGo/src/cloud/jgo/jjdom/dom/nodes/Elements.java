@@ -39,15 +39,16 @@ import java.util.Map.Entry;
 
 import cloud.jgo.£;
 import cloud.jgo.io.File;
-import cloud.jgo.jjdom.dom.HTMLManipulable;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.Manipulable;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 /**
  * 
  * @author Martire91<br>
- * @see HTMLElement
- * This class represents a list of html elements ({@link HTMLElement})
+ * @see Element
+ * This class represents a list of html elements ({@link Element})
  */
-public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipulable{
+public class Elements extends LinkedList<Element> implements Manipulable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -61,9 +62,9 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 	}
 	// questo è ricorsivo
 	@Override
-	public HTMLElement getElementById(String elementId) {
-		HTMLElement found = null ;
-		for (HTMLElement el:this) {
+	public Element getElementById(String elementId) {
+		Element found = null ;
+		for (Element el:this) {
 			el = HTMLRecursion.examinesForId(elementId,el);
 			if (el!=null) {
 				// sappiamo che è un id
@@ -75,11 +76,11 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 		return found ;
 	}
 	// questo no 
-	public HTMLElement getElementById2(String elementId){
-		HTMLElement found = null ;
-		for (HTMLElement el:this) {
-			if (el.getId()!=null) {
-				if (el.getId().equals(elementId)) {
+	public Element getElementById2(String elementId){
+		Element found = null ;
+		for (Element el:this) {
+			if (el.isPresent("id")) {
+				if (el.getAttribute("id").equals(elementId)) {
 					found = el ;
 					break ;
 				}
@@ -97,10 +98,10 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 	// vediamo comunque di fare un esempio
 	// ricorsivo
 	@Override
-	public HTMLElements getElementsByTag(String tagName) {
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
-			HTMLElements newList = HTMLRecursion.examinesForTag(tagName, el);
+	public Elements getElementsByTag(String tagName) {
+		Elements found = new Elements();
+		for (Element el:this) {
+			Elements newList = HTMLRecursion.examinesForTag(tagName, el);
 			if (newList!= null) {
 				for (int i = 0; i < newList.size(); i++) {
 					if (!found.contains(newList.get(i))) {
@@ -112,9 +113,9 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 		return found ;
 	}
 	// questo no
-	public HTMLElements getElementsByTag2(String tagName){
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
+	public Elements getElementsByTag2(String tagName){
+		Elements found = new Elements();
+		for (Element el:this) {
 			if (el.getNodeName().equals(tagName)) {
 				found.add(el);
 			}
@@ -123,15 +124,15 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 	}
 	
 
-	public HTMLElements getDirectChildrenByTag(String tagName) {
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
+	public Elements getDirectChildrenByTag(String tagName) {
+		Elements found = new Elements();
+		for (Element el:this) {
 			// prendo i figli dell'elemento
 			HTMLNodeList list = el.getChildNodes();
 			for (int i = 0; i < list.getLength(); i++) {
-				if (list.item(i)instanceof HTMLElement) {
+				if (list.item(i)instanceof Element) {
 					if (list.item(i).getNodeName().equals(tagName)) {
-						found.add((HTMLElement) list.item(i));
+						found.add((Element) list.item(i));
 					}
 				}
 			}
@@ -141,11 +142,11 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 	
 	// questi i primi fratelli che trova, esce dal ciclo
 	@Override
-	public HTMLElements getAdiacentSiblingsByTag(String tagName) {
+	public Elements getAdiacentSiblingsByTag(String tagName) {
 		boolean exit = false ;
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
-			HTMLElements brothers = el.getAdiacentSiblingsByTag(tagName);
+		Elements found = new Elements();
+		for (Element el:this) {
+			Elements brothers = el.getAdiacentSiblingsByTag(tagName);
 			// nel momento in cui la lista di elementi
 			// ha un size maggiore di 0, si può uscire dal ciclo
 			if (brothers.size()>0) {
@@ -159,11 +160,11 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 	// da testare particolarmente questo metodo
 	
 	@Override
-	public HTMLElements getGeneralSiblingsByTag(String tagName) {
+	public Elements getGeneralSiblingsByTag(String tagName) {
 		boolean exit = false ;
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
-			HTMLElements brothers = el.getGeneralSiblingsByTag(tagName);
+		Elements found = new Elements();
+		for (Element el:this) {
+			Elements brothers = el.getGeneralSiblingsByTag(tagName);
 			// nel momento in cui la lista di elementi
 			// ha un size maggiore di 0, si può uscire dal ciclo
 			if (brothers.size()>0) {
@@ -177,10 +178,10 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 
 	// da sviluppare
 	@Override
-	public HTMLElements getElementsByClassName(String className) {
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
-			HTMLElements newList = HTMLRecursion.examinesForClass(className, el);
+	public Elements getElementsByClassName(String className) {
+		Elements found = new Elements();
+		for (Element el:this) {
+			Elements newList = HTMLRecursion.examinesForClass(className, el);
 			if (newList!= null) {
 				for (int i = 0; i < newList.size(); i++) {
 					if (!found.contains(newList.get(i))) {
@@ -194,9 +195,9 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 
 
 	@Override
-	public HTMLElements getElementsByAttribute(String attribute) {
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
+	public Elements getElementsByAttribute(String attribute) {
+		Elements found = new Elements();
+		for (Element el:this) {
 			if (el.hasAttributes()) {
 				if (el.isPresent(attribute)) {
 					if (!found.contains(el)) {
@@ -210,9 +211,9 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 
 
 	@Override
-	public HTMLElements getElementsByAttributeValue(String value) {
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
+	public Elements getElementsByAttributeValue(String value) {
+		Elements found = new Elements();
+		for (Element el:this) {
 			if (el.hasAttributes()) {
 				// prendo tutti gli attributi 
 				Iterator<Entry<String, String>>iterator = el.getAttributes().entrySet().iterator();
@@ -240,11 +241,11 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 	// magari in futuro ne vorrò prendere nota
 
 	@Override
-	public HTMLElements getElementsByAttributeValue(String attr, String val) {
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
+	public Elements getElementsByAttributeValue(String attr, String val) {
+		Elements found = new Elements();
+		for (Element el:this) {
 			// qui stiamo recuperando la lista di elementi per tag su la lista attuale
-//			HTMLElements newList = HTMLRecursion.examinesForAttributeValue_(attr, val, el, "=");
+//			Elements newList = HTMLRecursion.examinesForAttributeValue_(attr, val, el, "=");
 //			if (newList!= null) {
 //				for (int i = 0; i < newList.size(); i++) {
 //					if (!found.contains(newList.get(i))) {
@@ -268,9 +269,9 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 
 
 	@Override
-	public HTMLElements getElementsByDifferentAttributeValue(String attr, String val) {
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
+	public Elements getElementsByDifferentAttributeValue(String attr, String val) {
+		Elements found = new Elements();
+		for (Element el:this) {
 			if (el.hasAttributes()) {
 				if (el.isPresent(attr)) {
 					// ottengo il valore
@@ -288,9 +289,9 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 
 
 	@Override
-	public HTMLElements getElementsThatStartWithAttributevalue(String attr, String val) {
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
+	public Elements getElementsThatStartWithAttributevalue(String attr, String val) {
+		Elements found = new Elements();
+		for (Element el:this) {
 			if (el.hasAttributes()) {
 				if (el.isPresent(attr)) {
 					String value = el.getAttributeValue(attr);
@@ -307,9 +308,9 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 
 
 	@Override
-	public HTMLElements getElementsThatEndWithAttributeValue(String attr, String val) {
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
+	public Elements getElementsThatEndWithAttributeValue(String attr, String val) {
+		Elements found = new Elements();
+		for (Element el:this) {
 			if (el.hasAttributes()) {
 				if (el.isPresent(attr)) {
 					String value = el.getAttributeValue(attr);
@@ -324,9 +325,9 @@ public class HTMLElements extends LinkedList<HTMLElement> implements HTMLManipul
 		return found ;
 	}
 	@Override
-	public HTMLElements getElementsThatContainTheAttributeValue(String attr, String val) {
-		HTMLElements found = new HTMLElements();
-		for (HTMLElement el:this) {
+	public Elements getElementsThatContainTheAttributeValue(String attr, String val) {
+		Elements found = new Elements();
+		for (Element el:this) {
 			if (el.hasAttributes()) {
 				if (el.isPresent(attr)) {
 					String value = el.getAttributeValue(attr);

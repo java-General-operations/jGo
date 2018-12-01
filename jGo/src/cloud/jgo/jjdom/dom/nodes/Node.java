@@ -25,6 +25,7 @@ import java.io.Serializable;
 
 import cloud.jgo.jjdom.Home;
 import cloud.jgo.jjdom.JjDom;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 /**
  * 
  * @author Martire91<br>
@@ -54,6 +55,11 @@ public interface Node extends Serializable,Home{
 	 * @return the node on which the method was invoked
 	 */
 	public abstract Node printMarkup();
+	/**
+	 * This method returns the element path
+	 * @return the element path
+	 */
+	public abstract String getPath();
 	/**
 	 * This method returns the child nodes
 	 * @return the child nodes

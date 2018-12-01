@@ -23,7 +23,6 @@
 package cloud.jgo.jjdom;
 import static cloud.jgo.jjdom.JjDom.$;
 import static cloud.jgo.jjdom.JjDom.jquery;
-
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -42,10 +41,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Logger;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JOptionPane;
-
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.css.CSSSelection;
@@ -53,13 +50,14 @@ import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.css.NoSelectorSetException;
 import cloud.jgo.jjdom.css.concrete.CSSSimpleSelector;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
-import cloud.jgo.jjdom.dom.nodes.HTMLDocument;
-import cloud.jgo.jjdom.dom.nodes.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.HTMLElements;
+import cloud.jgo.jjdom.dom.nodes.Element;
+import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
 import cloud.jgo.jjdom.dom.nodes.Node;
-import cloud.jgo.jjdom.dom.nodes.HTMLElement.HTMLElementType;
 import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultDocument;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
 import cloud.jgo.jjdom.jquery.Event;
 import cloud.jgo.jjdom.jquery.jQueryNotInitializedException;
 import cloud.jgo.jjdom.jquery.jQuerySupport;
@@ -165,7 +163,7 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
   <li>
   <em>If instead we want to get the selected elements, we just have to do:</em><br>
   <div class="cm_source">
-<code class="cm_n_n_n_0">1 | HTMLElements&nbsp;elements&nbsp;=&nbsp;$(</code><code class="cm_n_n_n_2A00FF">&quot;p&quot;</code><code class="cm_n_n_n_0">).elements();<br>
+<code class="cm_n_n_n_0">1 | Elements&nbsp;elements&nbsp;=&nbsp;$(</code><code class="cm_n_n_n_2A00FF">&quot;p&quot;</code><code class="cm_n_n_n_0">).elements();<br>
 2 |&nbsp;&nbsp;&nbsp;&nbsp;<br>
 3 |&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cm_b_n_n_7F0055">for</code><code class="cm_n_n_n_0">&nbsp;(HTMLElement&nbsp;htmlElement&nbsp;:&nbsp;elements)&nbsp;{<br>
 4 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;elementMarkup&nbsp;=&nbsp;htmlElement.getMarkup();<br>
@@ -245,7 +243,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 */
 	public static HTMLDocument document = null ;
 	private static JjDom instance = new JjDom(); // unica istanza esistente
-    private static HTMLElements elements = null ;
+    private static Elements elements = null ;
     public static int length = 0; // questa variabile va modificata alla selezione
     public static final String start_ready = "$('document').ready(function(){\n";
     public static final String end_ready = "});//end_ready\n";
@@ -895,8 +893,8 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 */
 	public static boolean jqueryIsSet(){
 		boolean set = false ;
-		HTMLElements scripts = JjDom.document.getElementsByTag("script");
-		for (HTMLElement htmlElement : scripts) {
+		Elements scripts = JjDom.document.getElementsByTag("script");
+		for (Element htmlElement : scripts) {
 			if (htmlElement.hasAttributes()) {
 				if (htmlElement.isPresent("src")) {
 					String jquerySource = htmlElement.getAttributeValue("src");
@@ -920,9 +918,9 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 */
 	public static JjDom jqueryInit(){
 		HTMLElement scriptTag = null ;
-		scriptTag = document.createElement(HTMLElementType.SCRIPT);
+		scriptTag = (HTMLElement) document.createElement(HTMLElementType.SCRIPT);
 		scriptTag.setAttribute("src",document.jqueryPath());  
-		document.setJsSourceTag(document.createElement(HTMLElementType.SCRIPT));
+		document.setJsSourceTag((HTMLElement) document.createElement(HTMLElementType.SCRIPT));
 			// aggiungo per prima cosa l'inclusione del sorgente jquery
 			if (document!=null) {
 				if (document.getRootElement()!=null) {
@@ -944,7 +942,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 					else{
 						// creo la testa del sito 
 						
-						HTMLElement head = JjDom.document.createElement(HTMLElementType.HEAD);
+						HTMLElement head = (HTMLElement) JjDom.document.createElement(HTMLElementType.HEAD);
 						
 						// inserisco nella testa il tag script,poichè siamo sicura che l'unic tag che ci va
 						
@@ -988,9 +986,9 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 * @param from from which index of the list you want to start
 	 * @return the elements list
 	 */
-	public static HTMLElements $(String selection,int from){
-		HTMLElements elements = $(selection).elements;
-		HTMLElements elements2 = new HTMLElements();
+	public static Elements $(String selection,int from){
+		Elements elements = $(selection).elements;
+		Elements elements2 = new Elements();
 		for (int i = from; i < elements.size(); i++) {
 			elements2.add(elements.get(i));
 		}
@@ -1006,9 +1004,9 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 * @param from from which index of the list you want to start
 	 * @return the elements list
 	 */
-	public static HTMLElements jquery(String selection,int from){
-		HTMLElements elements = $(selection).elements;
-		HTMLElements elements2 = new HTMLElements();
+	public static Elements jquery(String selection,int from){
+		Elements elements = $(selection).elements;
+		Elements elements2 = new Elements();
 		for (int i = from; i < elements.size(); i++) {
 			elements2.add(elements.get(i));
 		}
@@ -1756,7 +1754,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 					}
 				}
 				else{
-					HTMLElement el = elements.element();
+					HTMLElement el = (HTMLElement) elements.element();
 					if (!el.hasChildNodes()) {
 						htmlString = el.getTextContent();
 					}
@@ -1811,8 +1809,8 @@ public final class JjDom implements jQuerySupport, Serializable{
 			if (currentSelection!=null) {
 				final String jsCode = ".next();";
 				executeMethod(jsCode);
-				HTMLElements listNodes = new HTMLElements();
-				for (HTMLElement htmlElement : elements) {
+				Elements listNodes = new Elements();
+				for (Element htmlElement : elements) {
 					Node next = htmlElement.next();
 					listNodes.add((HTMLElement) next);
 				}
@@ -1838,8 +1836,8 @@ public final class JjDom implements jQuerySupport, Serializable{
 			if (currentSelection!=null) {
 				final String jsCode = ".prev();";
 				executeMethod(jsCode);
-				HTMLElements listNodes = new HTMLElements();
-				for (HTMLElement htmlElement : elements) {
+				Elements listNodes = new Elements();
+				for (Element htmlElement : elements) {
 					Node prev = htmlElement.previous();
 					listNodes.add((HTMLElement)prev);
 				}
@@ -1865,7 +1863,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 	public HTMLElement get(int index) {
 		if (jqueryIsSet()) {
 			cleanUp();
-			return elements.get(index);
+			return (HTMLElement) elements.get(index);
 		}
 		else{
 			try {
@@ -1944,7 +1942,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 * This method returns the selected elements list
 	 * @return the elements list
 	 */
-	public static HTMLElements elements(){
+	public static Elements elements(){
 		if (jqueryIsSet()) {
 			cleanUp();
 			return elements ;
@@ -2360,7 +2358,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 			executeMethod(jsCode);
 			if (currentSelection!=null) {
 				// ottengo gli elementi
-				HTMLElement firstElement = currentSelection.getSelectedItems().element();
+				HTMLElement firstElement = (HTMLElement) currentSelection.getSelectedItems().element();
 				attributeValue = firstElement.getAttributeValue(attributeName);
 			}
 		}
@@ -3532,7 +3530,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 		String prop = null ;
 		if (jqueryIsSet()) {
 			if (currentSelection!=null) {
-				HTMLElement el = elements.element();
+				HTMLElement el = (HTMLElement) elements.element();
 				final String jsCode = ".prop('"+propertyName+"');";
 				executeMethod(jsCode);
 				switch(propertyName){
@@ -3663,7 +3661,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 			if (currentSelection!=null) {
 				final String jsCode = ".first();";
 				executeMethod(jsCode);
-				element = elements.element();
+				element = (HTMLElement) elements.element();
 			}
 		}
 		else{
@@ -3684,7 +3682,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 			if (currentSelection!=null) {
 				final String jsCode = ".last();";
 				executeMethod(jsCode);
-				element = elements.getLast();
+				element = (HTMLElement) elements.getLast();
 			}
 		}
 		else{
@@ -3744,7 +3742,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 				final String jsCode = ".children();";
 				executeMethod(jsCode);
 				list = new HTMLNodeList();
-				for(HTMLElement el:elements){
+				for(Element el:elements){
 					HTMLNodeList listNodes = el.getChildNodes();
 					for (int i = 0; i < listNodes.getLength(); i++) {
 						list.addNode(listNodes.item(i));
@@ -3823,13 +3821,13 @@ public final class JjDom implements jQuerySupport, Serializable{
 	public JjDom find(String selection) {
 		JjDom inst = null ;
 		if (jqueryIsSet()) {
-			HTMLElements listElements = new HTMLElements();
-			for (HTMLElement htmlElement : JjDom.elements) {
+			Elements listElements = new Elements();
+			for (Element htmlElement : JjDom.elements) {
 				// qui cambio contesto
 				getSelector().setRootContext(htmlElement);
 				// a questo punto seleziono normalmente con jquery
-				HTMLElements newElements = jquery(selection).elements();
-				for (HTMLElement htmlElement2 : newElements) {
+				Elements newElements = jquery(selection).elements();
+				for (Element htmlElement2 : newElements) {
 					listElements.add(htmlElement2);
 				}
 			}
