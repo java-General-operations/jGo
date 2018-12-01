@@ -13,11 +13,17 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 
 public class TestMain {
 
-	
 	public static void main(String[] args) {
 		
 		
 		
+		JjDom.newDocument().setMinimalTags().useDoctype(true).home().jqueryInit();
+		
+		
+		JjDom.document.getTitle().setTextContent("Io sono il titolo della pagina web");
+		
+		// aggiungo qualche elemento 
+		Element h1,h2 = null ;
 		
 		
 		
