@@ -26,6 +26,7 @@ import java.io.Serializable;
 import cloud.jgo.jjdom.Home;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
 /**
  * 
  * @author Martire91<br>

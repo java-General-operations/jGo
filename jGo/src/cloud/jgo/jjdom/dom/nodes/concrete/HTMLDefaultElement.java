@@ -33,11 +33,11 @@ import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
 import cloud.jgo.jjdom.dom.nodes.Elements;
-import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
 /**
  * 
  * @author Martire91<br>

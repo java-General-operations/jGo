@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
@@ -36,11 +35,11 @@ import cloud.jgo.jjdom.css.concrete.CSSDefaultRule;
 import cloud.jgo.jjdom.css.concrete.CSSDefaultStyle;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
-import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
 // N.B.

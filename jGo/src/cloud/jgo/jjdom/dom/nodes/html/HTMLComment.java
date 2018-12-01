@@ -25,7 +25,6 @@ import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
 import cloud.jgo.jjdom.dom.nodes.Comment;
-import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.Node.HTMLNodeType;
 import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultDocument;

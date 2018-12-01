@@ -42,6 +42,7 @@ import cloud.jgo.io.File;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
 import cloud.jgo.jjdom.dom.Manipulable;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
 /**
  * 
  * @author Martire91<br>

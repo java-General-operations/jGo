@@ -41,8 +41,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Logger;
+
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JOptionPane;
+
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.css.CSSSelection;
@@ -52,11 +54,11 @@ import cloud.jgo.jjdom.css.concrete.CSSSimpleSelector;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
-import cloud.jgo.jjdom.dom.nodes.HTMLNodeList;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.concrete.HTMLDefaultDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
 import cloud.jgo.jjdom.jquery.Event;
 import cloud.jgo.jjdom.jquery.jQueryNotInitializedException;
@@ -74,7 +76,7 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  * @see jQuerySupport
  * @see JjDom#$(String)
  * @see JjDom#jquery(String)
- * @version 1.0.3
+ * @version 1.0.4
  <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'>-->
     <!--Author : *** Marco Martire *** -->  
    <h1 style='color: #282828;'>jGo<strong style='color: green;'>.cloud</strong>/<a id='link'href='https://www.jgo.cloud/jjdom'>JjDom</a></h1>

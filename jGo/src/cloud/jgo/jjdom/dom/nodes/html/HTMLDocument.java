@@ -23,7 +23,6 @@
 package cloud.jgo.jjdom.dom.nodes.html;
 import java.util.List;
 import java.util.Set;
-
 import cloud.jgo.jjdom.css.CSSRule;
 import cloud.jgo.jjdom.css.CSSStyle;
 import cloud.jgo.jjdom.dom.Manipulable;
