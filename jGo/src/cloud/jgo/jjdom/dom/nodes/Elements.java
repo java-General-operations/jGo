@@ -39,9 +39,8 @@ import java.util.Map.Entry;
 
 import cloud.jgo.£;
 import cloud.jgo.io.File;
-import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.Manipulable;
-import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 /**
  * 
  * @author Martire91<br>
@@ -65,7 +64,7 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 	public Element getElementById(String elementId) {
 		Element found = null ;
 		for (Element el:this) {
-			el = HTMLRecursion.examinesForId(elementId,el);
+			el = Recursion.examinesForId(elementId,el);
 			if (el!=null) {
 				// sappiamo che è un id
 				// per cui al primo elemento trovato, possiamo uscire
@@ -101,7 +100,7 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 	public Elements getElementsByTag(String tagName) {
 		Elements found = new Elements();
 		for (Element el:this) {
-			Elements newList = HTMLRecursion.examinesForTag(tagName, el);
+			Elements newList = Recursion.examinesForTag(tagName, el);
 			if (newList!= null) {
 				for (int i = 0; i < newList.size(); i++) {
 					if (!found.contains(newList.get(i))) {
@@ -181,7 +180,7 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 	public Elements getElementsByClassName(String className) {
 		Elements found = new Elements();
 		for (Element el:this) {
-			Elements newList = HTMLRecursion.examinesForClass(className, el);
+			Elements newList = Recursion.examinesForClass(className, el);
 			if (newList!= null) {
 				for (int i = 0; i < newList.size(); i++) {
 					if (!found.contains(newList.get(i))) {

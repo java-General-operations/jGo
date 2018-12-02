@@ -30,18 +30,23 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
+import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
-import cloud.jgo.jjdom.dom.nodes.Node.HTMLNodeType;
+import cloud.jgo.jjdom.dom.nodes.Node.NodeType;
+import cloud.jgo.jjdom.dom.nodes.NodeList;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
-import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultElement;
+import cloud.jgo.jjdom.dom.nodes.xml.XMLComment;
+import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
+import cloud.jgo.jjdom.dom.nodes.xml.XMLElement;
 /**
  * N:B:
  * Devo risolvere una questione
@@ -52,7 +57,7 @@ import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultElement;
  * quindi poi ultimare
  */
 // questa qui poi diventerà una classe interna
-public abstract class HTMLRecursion {
+public abstract class Recursion {
 	public static void examines_html(Node node,StringBuffer htmlCode){
 		// for doctype from here to @
 		 String key = null ;
@@ -89,10 +94,10 @@ public abstract class HTMLRecursion {
 		}
 		// @
 		if(node.getTextContent()!=null){
-			if(node.getNodeType().equals(HTMLNodeType.HTML_ELEMENT)){
+			if(node.getNodeType().equals(NodeType.ELEMENT)){
 				 htmlCode.append(((HTMLDefaultElement)node).getStartTag());
 			}
-			else if(node.getNodeType().equals(HTMLNodeType.HTML_COMMENT)){
+			else if(node.getNodeType().equals(NodeType.COMMENT)){
 				htmlCode.append(((HTMLComment)node).getStartTag());
 			}
 			htmlCode.append(node.getTextContent());
@@ -132,6 +137,68 @@ public abstract class HTMLRecursion {
 		if (node instanceof HTMLComment) {
 			 htmlCode.append(((HTMLComment)node).getEndTag()+"\n");
 		}
+	}
+	}
+	
+	public static void examines_xml(Node node,StringBuffer xmlCode,String charset){
+		// for doctype from here to @
+		if (node instanceof XMLDocument) {
+			xmlCode.append("<?xml version="+£.escp(XMLDocument.XML_VERSION)+" encoding="+£.escp(charset)+"?>\n");	
+		}
+		 String key = null ;
+		if (node instanceof Element) {
+			// qui che sappiamo che si tratta di un elemento html
+			// gestiamo gli attributi
+			if (((Element)node).hasAttributes()) {
+				//System.out.println("L'elemento "+node.getNodeName()+" ha i seguenti attributi :");
+				Map<String,String>attributes = ((Element)node).getAttributes();
+				Iterator<Entry<String, String>>iterator = attributes.entrySet().iterator();
+				while (iterator.hasNext()) {
+					Map.Entry<java.lang.String, java.lang.String> entry = (Map.Entry<java.lang.String, java.lang.String>) iterator
+							.next();
+					key = entry.getKey();
+					// casomai eliminare da qui a @
+						if (((XMLElement)node).getStartTag().contains(" "+key+"='"+entry.getValue()+"'")) {
+							((XMLElement)node).setStartTag(((XMLElement)node).getStartTag().replace(" "+key+"='"+entry.getValue()+"'",""));
+						}
+						// @ - in tanto
+						((XMLElement)node).setStartTag(((XMLElement)node).getStartTag().replace(">",""));
+						((XMLElement)node).setStartTag(((XMLElement)node).getStartTag()+
+						" "+key+"='"+entry.getValue()+"'"+">");	
+						//System.out.println(key+":"+entry.getValue());
+				}
+			}
+		if(node.getTextContent()!=null){
+			if(node.getNodeType().equals(NodeType.ELEMENT)){
+				 xmlCode.append(((XMLElement)node).getStartTag());
+			}
+			else if(node.getNodeType().equals(NodeType.COMMENT)){
+				xmlCode.append(((XMLComment)node).getStartTag());
+			}
+			xmlCode.append(node.getTextContent());
+		}
+		else{
+			 if (node instanceof Element) {
+				 xmlCode.append(((XMLElement)node).getStartTag()+"\n");
+			}
+		}
+		 for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+			 examines_xml(node.getChildNodes().item(i),xmlCode,charset);
+		 }
+	 // chiudo il tag
+	if (node instanceof Element) {
+		
+		xmlCode.append(((XMLElement)node).getEndTag()+"\n");
+		
+	}
+	else{
+		// qui invece significa che non è un elemento html
+		// quindi deve essere per forza un commento, almeno per il momento 
+		// magari per sicurezza:controllo che sia cosi 
+		if (node instanceof Comment) {
+			 xmlCode.append(((XMLComment)node).getEndTag()+"\n");
+		}
+	}
 	}
 	}
 	

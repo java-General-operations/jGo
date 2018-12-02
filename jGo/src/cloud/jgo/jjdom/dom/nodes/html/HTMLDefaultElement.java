@@ -20,24 +20,20 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom.nodes.html.concrete;
+package cloud.jgo.jjdom.dom.nodes.html;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.css.CSSSelector;
-import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.html.NodeList;
+import cloud.jgo.jjdom.dom.nodes.NodeList;
 /**
  * 
  * @author Martire91<br>
@@ -299,9 +295,9 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLNodeType getNodeType() {
+	public NodeType getNodeType() {
 		// TODO Auto-generated method stub
-		return HTMLNodeType.HTML_ELEMENT ;
+		return NodeType.ELEMENT ;
 	}
 
 	@Override
@@ -617,7 +613,7 @@ public class HTMLDefaultElement implements HTMLElement{
 
 	@Override
 	public String getMarkup() {
-		HTMLRecursion.examines_html(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
+		Recursion.examines_html(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
 		String result = htmlCode.toString();
 		// pulisco il buffer code html
 		htmlCode = new StringBuffer();
@@ -633,7 +629,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	// con questo metodo di calcola dinamicamente il path del nodo
 	@Override
 	public String getPath() {
-		return HTMLRecursion.examinesForTPath(this);
+		return Recursion.examinesForTPath(this);
 	}
 
 	
@@ -695,14 +691,14 @@ public class HTMLDefaultElement implements HTMLElement{
 	
 	@Override
 	public HTMLElement getElementById(String elementId) {
-		return (HTMLElement) HTMLRecursion.examinesForId(elementId, this);
+		return (HTMLElement) Recursion.examinesForId(elementId, this);
 	}
 	
 
 	@Override
 	public Elements getElementsByTag(String tagName) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForTag(tagName,this);
+		return Recursion.examinesForTag(tagName,this);
 	}
 	
 	@Override
@@ -722,7 +718,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	@Override
 	public Elements getElementsByClassName(String className) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForClass(className, this);
+		return Recursion.examinesForClass(className, this);
 	}
 
 	@Override
@@ -790,19 +786,19 @@ public class HTMLDefaultElement implements HTMLElement{
 	@Override
 	public Elements getElementsThatStartWithAttributevalue(String attr, String val) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForAttributeValue_(attr, val, this,CSSSelector.STARTS_WITH_OPERATOR);
+		return Recursion.examinesForAttributeValue_(attr, val, this,CSSSelector.STARTS_WITH_OPERATOR);
 	}
 	
 	@Override
 	public Elements getElementsThatEndWithAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForAttributeValue_(attr, val, this,CSSSelector.ENDS_WITH_OPERATOR);
+		return Recursion.examinesForAttributeValue_(attr, val, this,CSSSelector.ENDS_WITH_OPERATOR);
 	}
 	
 	@Override
 	public Elements getElementsThatContainTheAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForAttributeValue_(attr, val, this,CSSSelector.CONTAINS_OPERATOR);
+		return Recursion.examinesForAttributeValue_(attr, val, this,CSSSelector.CONTAINS_OPERATOR);
 	}
 
 	@Override

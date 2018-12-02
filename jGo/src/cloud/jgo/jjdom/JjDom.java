@@ -52,15 +52,15 @@ import cloud.jgo.jjdom.css.CSSSelection;
 import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.css.NoSelectorSetException;
 import cloud.jgo.jjdom.css.concrete.CSSSimpleSelector;
-import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
+import cloud.jgo.jjdom.dom.nodes.NodeList;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
-import cloud.jgo.jjdom.dom.nodes.html.NodeList;
-import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultDocument;
 import cloud.jgo.jjdom.jquery.Event;
 import cloud.jgo.jjdom.jquery.jQueryNotInitializedException;
 import cloud.jgo.jjdom.jquery.jQuerySupport;
@@ -2987,7 +2987,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 			if (currentSelection!=null) {
 				final String jsCode = ".text();";
 				executeMethod(jsCode);
-				texts = HTMLRecursion.getTexts(elements);
+				texts = Recursion.getTexts(elements);
 			}
 		}
 		else{

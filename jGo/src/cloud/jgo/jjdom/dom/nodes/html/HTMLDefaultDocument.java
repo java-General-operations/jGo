@@ -20,11 +20,12 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom.nodes.html.concrete;
+package cloud.jgo.jjdom.dom.nodes.html;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
@@ -36,12 +37,9 @@ import cloud.jgo.jjdom.css.concrete.CSSDefaultStyle;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.html.NodeList;
+import cloud.jgo.jjdom.dom.nodes.NodeList;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
-import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.Recursion;
 // N.B.
 // ci sono alcuni metodi di questa classe che restituiscono null
 // quindi devo segnalarli
@@ -57,8 +55,6 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		// TODO Auto-generated method stub
 		return "document";
 	}
-
-
 	private static final long serialVersionUID = 12L;
 	private HTMLElement jquerySourceTag = null ;
 	private String jqueryPath = JjDom.JQUERY_URL_SNIPPET;
@@ -86,7 +82,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		
 		// creo automaticamente il nodo root : html
 		
-		rootElement = createElement(HTMLElement.HTMLElementType.HTML);
+		rootElement = (HTMLElement) createElement(HTMLElement.HTMLElementType.HTML);
 		
 		// qui imposto il tag del padre che è il documento 
 		
@@ -220,7 +216,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	// metodo che si occupa di ottenere proprio il codice 
 	@Override
 	public String getMarkup(){
-		HTMLRecursion.examines_html(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
+		Recursion.examines_html(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
 		String result = htmlCode.toString();
 		// pulisco il buffer code html
 		htmlCode = new StringBuffer();
@@ -255,9 +251,9 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 
 	@Override
-	public HTMLNodeType getNodeType() {
+	public NodeType getNodeType() {
 		// TODO Auto-generated method stub
-		return HTMLNodeType.HTML_DOCUMENT;
+		return NodeType.DOCUMENT;
 	}
 
 	@Override
@@ -341,7 +337,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		
 		// qui come nodo ci passo il documento
 	
-		return HTMLRecursion.removeNode(node,this);
+		return Recursion.removeNode(node,this);
 	
 	}
 	
@@ -355,7 +351,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		
 	@Override
 	public Node replaceChild(Node newNode, Node oldNode) {
-		return HTMLRecursion.replaceChild(newNode, oldNode, this);
+		return Recursion.replaceChild(newNode, oldNode, this);
 	}
 
 
@@ -416,20 +412,20 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	// per ora funziona, poi vediamo se mi viene in mente qualcosa
 	@Override
 	public HTMLElement getElementById(String elementId) {
-		HTMLElement idEl = (HTMLElement) HTMLRecursion.examinesForId(elementId,this);
+		HTMLElement idEl = (HTMLElement) Recursion.examinesForId(elementId,this);
 		return idEl;
 	}
 	
 	@Override
 	public Elements getElementsByClassName(String className) {
-		return HTMLRecursion.examinesForClass(className,this);
+		return Recursion.examinesForClass(className,this);
 	}
 
 
 	@Override
 	public Elements getElementsByTag(String tagName) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForTag(tagName,this);
+		return Recursion.examinesForTag(tagName,this);
 	}
 	
 	@Override
@@ -450,49 +446,49 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	@Override
 	public Elements getElementsByType(HTMLElementType type) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForType(type,this);
+		return Recursion.examinesForType(type,this);
 	}
 	
 	@Override
 	public Elements getElementsByAttribute(String attribute) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForAttribute(attribute,this);
+		return Recursion.examinesForAttribute(attribute,this);
 	}
 	
 	@Override
 	public Elements getElementsByAttributeValue(String value) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForAttributeValue(value,this);
+		return Recursion.examinesForAttributeValue(value,this);
 	}
 	
 	@Override
 	public Elements getElementsByAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForAttributeValue_(attr, val, this,"=");
+		return Recursion.examinesForAttributeValue_(attr, val, this,"=");
 	}
 	
 	@Override
 	public Elements getElementsByDifferentAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForAttributeValue_(attr, val, this, CSSSelector.DIFFERENT_OPERATOR);
+		return Recursion.examinesForAttributeValue_(attr, val, this, CSSSelector.DIFFERENT_OPERATOR);
 	}
 	
 	@Override
 	public Elements getElementsThatStartWithAttributevalue(String attr, String val) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForAttributeValue_(attr, val, this, CSSSelector.STARTS_WITH_OPERATOR);
+		return Recursion.examinesForAttributeValue_(attr, val, this, CSSSelector.STARTS_WITH_OPERATOR);
 	}
 	
 	@Override
 	public Elements getElementsThatEndWithAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForAttributeValue_(attr, val, this, CSSSelector.ENDS_WITH_OPERATOR);
+		return Recursion.examinesForAttributeValue_(attr, val, this, CSSSelector.ENDS_WITH_OPERATOR);
 	}
 	
 	@Override
 	public Elements getElementsThatContainTheAttributeValue(String attr, String val) {
 		// TODO Auto-generated method stub
-		return HTMLRecursion.examinesForAttributeValue_(attr, val, this, CSSSelector.CONTAINS_OPERATOR);
+		return Recursion.examinesForAttributeValue_(attr, val, this, CSSSelector.CONTAINS_OPERATOR);
 	}
 
 	@Override
@@ -655,18 +651,18 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	@Override
 	public Set<HTMLComment> getComments() {
 		
-		Set<HTMLComment>comments = HTMLRecursion.getAllComments(this);
+		Set<HTMLComment>comments = Recursion.getAllComments(this);
 		
-		HTMLRecursion.resetCommentsSet();
+		Recursion.resetCommentsSet();
 		
 		return comments ;
 	}
 	
 	@Override
 	public List<HTMLComment> getListComments(){
-		List<HTMLComment>comments = HTMLRecursion.getListComments(this);
+		List<HTMLComment>comments = Recursion.getListComments(this);
 		
-		HTMLRecursion.resetCommentsList();
+		Recursion.resetCommentsList();
 	
 		return comments ;
 	}

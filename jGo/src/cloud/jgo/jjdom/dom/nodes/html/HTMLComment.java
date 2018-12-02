@@ -23,13 +23,12 @@
 package cloud.jgo.jjdom.dom.nodes.html;
 import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
-import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.Node;
-import cloud.jgo.jjdom.dom.nodes.Node.HTMLNodeType;
-import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultDocument;
-import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultElement;
+import cloud.jgo.jjdom.dom.nodes.NodeList;
+import cloud.jgo.jjdom.dom.nodes.Node.NodeType;
 /**
  * 
  * @author Martire91<br>
@@ -112,7 +111,7 @@ public class HTMLComment implements Comment{
 
 	@Override
 	public String getMarkup() {
-		HTMLRecursion.examines_html(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
+		Recursion.examines_html(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
 		String result = htmlCode.toString();
 		// pulisco il buffer code html
 		htmlCode = new StringBuffer();
@@ -209,9 +208,9 @@ public class HTMLComment implements Comment{
 	}
 
 	@Override
-	public HTMLNodeType getNodeType() {
+	public NodeType getNodeType() {
 		// TODO Auto-generated method stub
-		return HTMLNodeType.HTML_COMMENT;
+		return NodeType.COMMENT;
 	}
 
 	@Override
@@ -346,7 +345,7 @@ public class HTMLComment implements Comment{
 
 	@Override
 	public boolean isEqualNode(Node node) {
-		if (node.getNodeType().equals(HTMLNodeType.HTML_COMMENT)) {
+		if (node.getNodeType().equals(NodeType.COMMENT)) {
 			return true ;
 		}
 		else{

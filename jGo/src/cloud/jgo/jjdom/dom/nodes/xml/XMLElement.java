@@ -1,26 +1,24 @@
 package cloud.jgo.jjdom.dom.nodes.xml;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import cloud.jgo.jjdom.JjDom;
+import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
+import cloud.jgo.jjdom.dom.nodes.NodeList;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultDocument;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
-import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultDocument;
-import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultElement;
-import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 
 public class XMLElement implements Element{
 	private String nodeName;
 	private NodeList childNodes = null ;
-	private HTMLDocument document = null ;
+	private XMLDocument document = null ;
 	private String elementName = null ;
-	private HTMLElementType type = null ;
 	private String startTag,endTag = null ;
 	private String originalStartTag,originalEndTag = null ;
 	private String textContent = null;
@@ -36,6 +34,18 @@ public class XMLElement implements Element{
 		this.childNodes = new NodeList();
 		this.attributes = new HashMap<>();
 		this.document = document ;
+	}
+	
+	public String getStartTag() {
+		return this.startTag;
+	}
+	
+	public void setStartTag(String startTag) {
+		this.startTag = startTag;
+	}
+	
+	public String getEndTag() {
+		return this.endTag;
 	}
 		protected XMLElement() {}
 		
@@ -77,14 +87,18 @@ public class XMLElement implements Element{
 
 	@Override
 	public String getMarkup() {
-		// TODO Auto-generated method stub
-		return null;
+		Recursion.examines_xml(this,xmlCode,null); // provvisorio, poi gli dobbiamo passare il document
+		String result = xmlCode.toString();
+		// pulisco il buffer code html
+		xmlCode = new StringBuffer();
+		return result ;	
 	}
 
 	@Override
 	public Node printMarkup() {
 		// TODO Auto-generated method stub
-		return null;
+		System.out.println(getMarkup());
+		return this;
 	}
 
 	@Override
@@ -96,7 +110,7 @@ public class XMLElement implements Element{
 	@Override
 	public NodeList getChildNodes() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.childNodes ;
 	}
 
 	@Override
@@ -180,13 +194,13 @@ public class XMLElement implements Element{
 	@Override
 	public String getNodeValue() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.textContent ;
 	}
 
 	@Override
 	public String getTextContent() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.textContent ;
 	}
 
 	@Override
@@ -222,9 +236,9 @@ public class XMLElement implements Element{
 	}
 
 	@Override
-	public HTMLNodeType getNodeType() {
+	public NodeType getNodeType() {
 		// TODO Auto-generated method stub
-		return null;
+		return NodeType.ELEMENT;
 	}
 
 	@Override

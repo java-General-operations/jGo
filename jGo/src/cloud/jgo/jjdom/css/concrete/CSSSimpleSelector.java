@@ -34,7 +34,7 @@ import cloud.jgo.jjdom.css.CSSSelection;
 import cloud.jgo.jjdom.css.CSSSelectionFailedException;
 import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.css.ContextNotFoundException;
-import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
@@ -55,7 +55,7 @@ public class CSSSimpleSelector implements CSSSelector{
 		}
 		CSSSelection selection_ = new CSSSimpleSelection();
 		if (selection.equals(GLOBAL_SELECTOR)) {
-			Elements allElements = HTMLRecursion.getAllElements(rootContext);
+			Elements allElements = Recursion.getAllElements(rootContext);
 			((CSSSimpleSelection)selection_).selectedItems = allElements ;
 		}
 		else{

@@ -26,7 +26,6 @@ import java.io.Serializable;
 import cloud.jgo.jjdom.Home;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
-import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 /**
  * 
  * @author Martire91<br>
@@ -181,7 +180,7 @@ public interface Node extends Serializable,Home{
 	 * This method returns the node type
 	 * @return the node type
 	 */
-	public abstract HTMLNodeType getNodeType();
+	public abstract NodeType getNodeType();
 	/**
 	 * This method checks if the node on which the method has been invoked has children
 	 * @return true if has children
@@ -229,9 +228,9 @@ public interface Node extends Serializable,Home{
 		 * @author Martire91<br>
 		 *	This Enum represents the HTML node type
 		 */
-		public static enum HTMLNodeType{
-			HTML_ELEMENT,
-			HTML_DOCUMENT,
-			HTML_COMMENT
+		public static enum NodeType{
+			ELEMENT,
+			DOCUMENT,
+			COMMENT
 		}
 }

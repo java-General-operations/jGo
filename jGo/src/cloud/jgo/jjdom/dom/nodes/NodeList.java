@@ -20,11 +20,9 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.jjdom.dom.nodes.html;
+package cloud.jgo.jjdom.dom.nodes;
 import java.io.Serializable;
 import java.util.LinkedList;
-
-import cloud.jgo.jjdom.dom.nodes.Node;
 /**
  * 
  * @author Martire91<br>

@@ -2,32 +2,74 @@ package cloud.jgo.jjdom.dom.nodes.xml;
 import java.util.List;
 import java.util.Set;
 
+import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
+import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Node;
+import cloud.jgo.jjdom.dom.nodes.NodeList;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
-import cloud.jgo.jjdom.dom.nodes.html.NodeList;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 public class XMLDocument implements Document{
 	
 	// in tanto prendo il charset cosi creo il primo tag
 	// inaccesibile però, un pochino come il docType
 	// nell'htmlDocument
-	
+	// <?xml version="1.0" encoding="UTF-8"?>
+	public final static String XML_VERSION = "1.0";
 	private String charset = Document.CHARSET_UTF_8 ;
-	private XMLElement rootElement;
-	
-	
-	public XMLDocument(String rootNode,String charset) {
-		// TODO Auto-generated constructor stub
-		this.rootElement = new XMLElement(rootNode, this);
-		this.charset = charset ;
+	private String charsetName = null ;
+	private NodeList childNodes = null ;
+	private XMLElement rootElement = null ;
+	private StringBuffer xmlCode = new StringBuffer();
+	public XMLDocument(String charsetName,String baseUri,String rootElementName) {
+		this.charsetName = charsetName ;
+		// inizializzo la lista di nodi 
+		this.childNodes = new NodeList();
+		// creo automaticamente il nodo root : html
+		rootElement = new XMLElement(rootElementName, this);
+		// qui imposto il tag del padre che è il documento 
+		
+		((XMLElement)rootElement).setParentNode(this);
+		// aggiungo il nodo all'albero 
+		
+		appendChild(rootElement);
+	}
+	protected XMLDocument(String charsetName,JjDom home){
+		this.charsetName = charsetName ;
+		// inizializzo la lista di nodi 
+		this.childNodes = new NodeList();
 	}
 	@Override
 	public Node appendChild(Node node) {
-		// TODO Auto-generated method stub
-		return null;
+		// controllo se c'è già questo nodo
+				if (this.childNodes.contains(node)) {
+					this.childNodes.remove(node);
+				}
+				// aggiungo il nodo
+			
+				boolean result = this.childNodes.addNode(node);
+				if (result == true) {
+					if (node instanceof HTMLElement) {
+							((HTMLDefaultElement)node).setParentNode(this);
+							if(node.getNodeName().equals("html")){
+								// collego il root element al nodo html ricevuto come parametro
+								this.rootElement = (XMLElement) node ;
+							}
+						}
+						else if(node instanceof HTMLComment){
+							((HTMLComment)node).setParentNode(this);
+						}
+					
+					return  node ;
+				}
+				else {
+					return null ;
+				}
 	}
 
 	@Override
@@ -38,14 +80,16 @@ public class XMLDocument implements Document{
 
 	@Override
 	public String getMarkup() {
-		// TODO Auto-generated method stub
-		return null;
+		Recursion.examines_xml(this,xmlCode,this.charset);
+		String markup = xmlCode.toString();
+		xmlCode = new StringBuffer();
+		return markup ;
 	}
 
 	@Override
 	public Node printMarkup() {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println(getMarkup());
+		return this ;
 	}
 
 	@Override
@@ -57,7 +101,7 @@ public class XMLDocument implements Document{
 	@Override
 	public NodeList getChildNodes() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.childNodes ;
 	}
 
 	@Override
@@ -181,9 +225,9 @@ public class XMLDocument implements Document{
 	}
 
 	@Override
-	public HTMLNodeType getNodeType() {
+	public NodeType getNodeType() {
 		// TODO Auto-generated method stub
-		return null;
+		return NodeType.DOCUMENT;
 	}
 
 	@Override
@@ -256,7 +300,7 @@ public class XMLDocument implements Document{
 	@Override
 	public Element getRootElement() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.rootElement ;
 	}
 
 	@Override

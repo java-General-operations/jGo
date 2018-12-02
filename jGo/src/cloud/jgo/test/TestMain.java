@@ -5,7 +5,7 @@ import javax.xml.ws.spi.http.HttpHandler;
 import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.jjdom.JjDom;
-import cloud.jgo.jjdom.dom.HTMLRecursion;
+import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
@@ -16,8 +16,11 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		// sviluppare i nodi XML adesso :)
+		// okok capire come mai il documento
+		// non me lo stampa correttamente, invece il nodo si
+		// deve essere qualche cavolata @
 		
-		XMLDocument document = new XMLDocument("server.configuration","UTF-8");
+		XMLDocument document = new XMLDocument("UTF-8",null,"server");
 		
 		
 		XMLElement proxy,lport,lhost = null ;
@@ -36,6 +39,7 @@ public class TestMain {
 		document.getRootElement().appendChild(lport);
 		document.getRootElement().appendChild(lhost);
 		
+		document.getRootElement().printMarkup();
 		
 	}
 }
