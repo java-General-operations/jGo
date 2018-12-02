@@ -31,14 +31,14 @@ import cloud.jgo.jjdom.dom.nodes.Node;
  * This class represents a list of html nodes ({@link Node})
  *
  */
-public class HTMLNodeList implements Serializable{
+public class NodeList implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private LinkedList<Node>nodeList = null ;
 	
-	public HTMLNodeList() {
+	public NodeList() {
 		// TODO Auto-generated constructor stub
 		this.nodeList = new LinkedList<>();
 	}

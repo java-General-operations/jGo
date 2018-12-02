@@ -37,7 +37,7 @@ import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 /**
  * 
  * @author Martire91<br>
@@ -47,7 +47,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
 public class HTMLDefaultElement implements HTMLElement{
 	private static final long serialVersionUID = 12L;
 	// il node value e il text content, rappresentano la stessa variabile, poichè sappiamo che sono elementi html
-	private HTMLNodeList childNodes = null ;
+	private NodeList childNodes = null ;
 	private HTMLDocument document = null ;
 	private String elementName = null ;
 	private HTMLElementType type = null ;
@@ -68,7 +68,7 @@ public class HTMLDefaultElement implements HTMLElement{
 		this.originalStartTag = this.startTag;
 		this.endTag = "</"+elementName+">";
 		this.originalEndTag = this.endTag ;
-		this.childNodes = new HTMLNodeList();
+		this.childNodes = new NodeList();
 		this.attributes = new HashMap<>();
 		this.document = document ;
 	}
@@ -230,7 +230,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLNodeList getChildNodes() {
+	public NodeList getChildNodes() {
 		// TODO Auto-generated method stub
 		return this.childNodes ;
 	}
@@ -264,7 +264,7 @@ public class HTMLDefaultElement implements HTMLElement{
 		Node parent = getParentNode();
 		if (parent!=null) {
 			// qui se ha un padre ci rende la vita più facile 
-			HTMLNodeList listNodes = parent.getChildNodes();
+			NodeList listNodes = parent.getChildNodes();
 			int pos = 0 ;
 			boolean found = false ;
 			for (int i = 0; i < listNodes.getLength(); i++) {
@@ -322,7 +322,7 @@ public class HTMLDefaultElement implements HTMLElement{
 		Node parent = getParentNode();
 		if (parent!=null) {
 			// qui se ha un padre ci rende la vita più facile 
-			HTMLNodeList listNodes = parent.getChildNodes();
+			NodeList listNodes = parent.getChildNodes();
 			int pos = 0 ;
 			boolean found = false ;
 			for (int i = 0; i < listNodes.getLength(); i++) {
@@ -565,15 +565,15 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLNodeList getBrothers() {
-		HTMLNodeList list = null ;
+	public NodeList getBrothers() {
+		NodeList list = null ;
 		// individuo il padre del nodo in questione 
 		Node parent = getParentNode();
 		
 		if (parent!=null) {
 			// ottengo i figli del padre 
 			
-			HTMLNodeList childNodes = parent.getChildNodes();
+			NodeList childNodes = parent.getChildNodes();
 			
 			// rimuovo dai figli il nodo in questione 
 			
@@ -681,7 +681,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	@Override
 	public boolean contains(Node node) {
 		boolean contains = false ;
-		HTMLNodeList listNodes = this.childNodes;
+		NodeList listNodes = this.childNodes;
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i).equals(node)) {
 				contains = true ;
@@ -708,7 +708,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	@Override
 	public Elements getDirectChildrenByTag(String tagName) {
 		Elements elements = new Elements();
-		HTMLNodeList listNodes = this.childNodes;
+		NodeList listNodes = this.childNodes;
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i)instanceof HTMLElement) {
 				if (listNodes.item(i).getNodeName().equals(tagName)) {
@@ -827,7 +827,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	public Elements getAdiacentSiblingsByTag(String tagName) {
 		Elements found = new Elements();
 		int index = this.getIndex(); // facciamo partire il ciclo dall'indice dell'elemento
-		HTMLNodeList listNodes = getParentNode().getChildNodes();
+		NodeList listNodes = getParentNode().getChildNodes();
 		for (int i = (index+1); i < listNodes.getLength(); i++) {
 		if (listNodes.item(i).getNodeName().equals(tagName)) {
 			found.add((HTMLElement) listNodes.item(i));
@@ -843,7 +843,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	public Elements getGeneralSiblingsByTag(String tagName) {
 		Elements found = new Elements();
 		int index = this.getIndex(); // facciamo partire il ciclo dall'indice dell'elemento
-		HTMLNodeList listNodes = getParentNode().getChildNodes();
+		NodeList listNodes = getParentNode().getChildNodes();
 		for (int i = (index+1); i < listNodes.getLength(); i++) {
 		if (listNodes.item(i).getNodeName().equals(tagName)) {
 			found.add((HTMLElement) listNodes.item(i));
@@ -857,7 +857,7 @@ public class HTMLDefaultElement implements HTMLElement{
 		Node next = null ;
 		Node parent = this.parentNode;
 		// ottengo i figli del parent 
-		HTMLNodeList list = parent.getChildNodes();
+		NodeList list = parent.getChildNodes();
 		// faccio iterare i figli del parent in modo tale che
 		// individuo l'elemento che si trova dopo
 		// l'elemento in questione, ipotizzando che ci sia
@@ -941,7 +941,7 @@ public class HTMLDefaultElement implements HTMLElement{
 		
 		// prendo i figli del padre 
 		
-		HTMLNodeList list = parent.getChildNodes();
+		NodeList list = parent.getChildNodes();
 		
 		// faccio iterare i figli del padre
 		
@@ -971,7 +971,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	@Override
 	public boolean hasThisChild(Node node) {
 		boolean flag = false ;
-		HTMLNodeList listNodes = getChildNodes();
+		NodeList listNodes = getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i).equals(node)) {
 				flag = true ;
@@ -1090,7 +1090,7 @@ public class HTMLDefaultElement implements HTMLElement{
 		for (int i = 0; i < split.length; i++) {
 			String nodeName = split[i].trim();
 			found = false ;
-			HTMLNodeList listNodes = currentNode.getChildNodes();
+			NodeList listNodes = currentNode.getChildNodes();
 			for (int j = 0; j < listNodes.getLength(); j++) {
 				Node node = listNodes.item(j);
 				if (node.getNodeName().equals(nodeName)) {
@@ -1134,7 +1134,7 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 	@Override
 	public boolean contains(String nodeName) {
-		HTMLNodeList childNodes = getChildNodes();
+		NodeList childNodes = getChildNodes();
 		boolean flag = false ;
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			if (nodeName.equals(childNodes.item(i).getNodeName())) {

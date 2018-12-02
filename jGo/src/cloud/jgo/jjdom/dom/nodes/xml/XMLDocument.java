@@ -1,5 +1,4 @@
 package cloud.jgo.jjdom.dom.nodes.xml;
-
 import java.util.List;
 import java.util.Set;
 
@@ -9,8 +8,7 @@ import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
-
+import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 public class XMLDocument implements Document{
 	
 	// in tanto prendo il charset cosi creo il primo tag
@@ -18,17 +16,13 @@ public class XMLDocument implements Document{
 	// nell'htmlDocument
 	
 	private String charset = Document.CHARSET_UTF_8 ;
-	private String nodeName = null ;
-	private String nodeText=null;
+	private XMLElement rootElement;
 	
-	public XMLDocument(String nodeName,String charset) {
+	
+	public XMLDocument(String rootNode,String charset) {
 		// TODO Auto-generated constructor stub
-		this.nodeName = nodeName ;
+		this.rootElement = new XMLElement(rootNode);
 		this.charset = charset ;
-	}
-	public XMLDocument(String nodeName) {
-		// TODO Auto-generated constructor stub
-		this.nodeName = nodeName ;
 	}
 	@Override
 	public Node appendChild(Node node) {
@@ -61,7 +55,7 @@ public class XMLDocument implements Document{
 	}
 
 	@Override
-	public HTMLNodeList getChildNodes() {
+	public NodeList getChildNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -115,7 +109,7 @@ public class XMLDocument implements Document{
 	}
 
 	@Override
-	public HTMLNodeList getBrothers() {
+	public NodeList getBrothers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -135,7 +129,7 @@ public class XMLDocument implements Document{
 	@Override
 	public String getNodeName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "document";
 	}
 
 	@Override

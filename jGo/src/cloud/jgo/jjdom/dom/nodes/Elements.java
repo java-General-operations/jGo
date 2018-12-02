@@ -41,8 +41,7 @@ import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
 import cloud.jgo.jjdom.dom.Manipulable;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 /**
  * 
  * @author Martire91<br>
@@ -129,7 +128,7 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 		Elements found = new Elements();
 		for (Element el:this) {
 			// prendo i figli dell'elemento
-			HTMLNodeList list = el.getChildNodes();
+			NodeList list = el.getChildNodes();
 			for (int i = 0; i < list.getLength(); i++) {
 				if (list.item(i)instanceof Element) {
 					if (list.item(i).getNodeName().equals(tagName)) {

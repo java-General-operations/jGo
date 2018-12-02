@@ -39,7 +39,7 @@ import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
 // N.B.
@@ -63,7 +63,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	private HTMLElement jquerySourceTag = null ;
 	private String jqueryPath = JjDom.JQUERY_URL_SNIPPET;
 	private String charsetName = null ;
-	private HTMLNodeList childNodes = null ;
+	private NodeList childNodes = null ;
 	private HTMLElement rootElement = null ;
 	private StringBuffer htmlCode = new StringBuffer();
 	private StringBuffer jsBuffer = new StringBuffer(); // LOCATION INTERNAL
@@ -82,7 +82,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		this.home = home ;
 		this.charsetName = charsetName ;
 		// inizializzo la lista di nodi 
-		this.childNodes = new HTMLNodeList();
+		this.childNodes = new NodeList();
 		
 		// creo automaticamente il nodo root : html
 		
@@ -101,7 +101,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		this.home = home ;
 		this.charsetName = charsetName ;
 		// inizializzo la lista di nodi 
-		this.childNodes = new HTMLNodeList();
+		this.childNodes = new NodeList();
 	}
 	
 	@Override
@@ -189,7 +189,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	
 
 	@Override
-	public HTMLNodeList getChildNodes() {
+	public NodeList getChildNodes() {
 		// TODO Auto-generated method stub
 		return this.childNodes ;
 	}
@@ -435,7 +435,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	@Override
 	public Elements getDirectChildrenByTag(String tagName) {
 		Elements elements = new Elements();
-		HTMLNodeList listNodes = this.childNodes;
+		NodeList listNodes = this.childNodes;
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i)instanceof HTMLElement) {
 				if (listNodes.item(i).getNodeName().equals(tagName)) {
@@ -776,7 +776,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	@Override
 	public boolean contains(Node node) {
 		boolean contains = false ;
-		HTMLNodeList listNodes = this.childNodes;
+		NodeList listNodes = this.childNodes;
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i).equals(node)) {
 				contains = true ;
@@ -800,7 +800,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 
 	// restituisce null, per una questione di logica
 	@Override
-	public HTMLNodeList getBrothers() {
+	public NodeList getBrothers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -864,7 +864,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	@Override
 	public boolean hasThisChild(Node node) {
 		boolean flag = false ;
-		HTMLNodeList listNodes = getChildNodes();
+		NodeList listNodes = getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i).equals(node)) {
 				flag = true ;
@@ -985,7 +985,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		for (int i = 0; i < split.length; i++) {
 			String nodeName = split[i].trim();
 			found = false ;
-			HTMLNodeList listNodes = currentNode.getChildNodes();
+			NodeList listNodes = currentNode.getChildNodes();
 			for (int j = 0; j < listNodes.getLength(); j++) {
 				Node node = listNodes.item(j);
 				if (node.getNodeName().equals(nodeName)) {
@@ -1031,7 +1031,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 
 	@Override
 	public boolean contains(String nodeName) {
-		HTMLNodeList childNodes = getChildNodes();
+		NodeList childNodes = getChildNodes();
 		boolean flag = false ;
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			if (nodeName.equals(childNodes.item(i).getNodeName())) {

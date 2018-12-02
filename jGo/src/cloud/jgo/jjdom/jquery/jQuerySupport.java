@@ -24,7 +24,7 @@ package cloud.jgo.jjdom.jquery;
 import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 import cloud.jgo.jjdom.jquery.Event.EventType;
 
 /**
@@ -43,7 +43,7 @@ public interface jQuerySupport {
 	// append method : inserisce il contenuto specificato come ultimo figlio di ciascun elemento nella raccolta jQuery
 	public abstract int length();
 	public abstract JjDom append(String content);
-	public abstract HTMLNodeList children();
+	public abstract NodeList children();
 	public abstract JjDom delay(final int duration);
 	public abstract JjDom val();
 	public abstract JjDom val(String value);

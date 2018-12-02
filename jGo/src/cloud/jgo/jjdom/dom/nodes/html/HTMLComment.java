@@ -42,7 +42,7 @@ public class HTMLComment implements Comment{
 	private String startTag,endTag = null ;
 	private String textContent = null ;
 	private Node parent = null ;
-	private HTMLNodeList childNodes = null ;
+	private NodeList childNodes = null ;
 	private StringBuffer htmlCode = new StringBuffer();
 	private HTMLDocument document = null ;
 	private JjDom home = null ;
@@ -56,7 +56,7 @@ public class HTMLComment implements Comment{
 		this.startTag = "<!--";
 		this.textContent = comment ;
 		this.endTag = "-->";
-		this.childNodes = new HTMLNodeList();
+		this.childNodes = new NodeList();
 		this.document = document ;
 		this.home = this.document.home();
 	}
@@ -119,7 +119,7 @@ public class HTMLComment implements Comment{
 	}
 
 	@Override
-	public HTMLNodeList getChildNodes() {
+	public NodeList getChildNodes() {
 		// TODO Auto-generated method stub
 		return this.childNodes ;
 	}
@@ -154,7 +154,7 @@ public class HTMLComment implements Comment{
 		Node parent = getParentNode();
 		if (parent!=null) {
 			// qui se ha un padre ci rende la vita più facile 
-			HTMLNodeList listNodes = parent.getChildNodes();
+			NodeList listNodes = parent.getChildNodes();
 			int pos = 0 ;
 			boolean found = false ;
 			for (int i = 0; i < listNodes.getLength(); i++) {
@@ -417,15 +417,15 @@ public class HTMLComment implements Comment{
 	}
 
 	@Override
-	public HTMLNodeList getBrothers() {
-		HTMLNodeList list = null ;
+	public NodeList getBrothers() {
+		NodeList list = null ;
 		// individuo il padre del nodo in questione 
 		Node parent = getParentNode();
 		
 		if (parent!=null) {
 			// ottengo i figli del padre 
 			
-			HTMLNodeList childNodes = parent.getChildNodes();
+			NodeList childNodes = parent.getChildNodes();
 			
 			// rimuovo dai figli il nodo in questione 
 			
@@ -438,7 +438,7 @@ public class HTMLComment implements Comment{
 	@Override
 	public boolean contains(Node node) {
 		boolean contains = false ;
-		HTMLNodeList listNodes = this.childNodes;
+		NodeList listNodes = this.childNodes;
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i).equals(node)) {
 				contains = true ;
@@ -469,7 +469,7 @@ public class HTMLComment implements Comment{
 		Node next = null ;
 		Node parent = getParentNode();
 		// ottengo i figli del parent 
-		HTMLNodeList list = parent.getChildNodes();
+		NodeList list = parent.getChildNodes();
 		// faccio iterare i figli del parent in modo tale che
 		// individuo l'elemento che si trova dopo
 		// l'elemento in questione, ipotizzando che ci sia
@@ -503,7 +503,7 @@ public class HTMLComment implements Comment{
 		
 		// prendo i figli del padre 
 		
-		HTMLNodeList list = parent.getChildNodes();
+		NodeList list = parent.getChildNodes();
 		
 		// faccio iterare i figli del padre
 		
@@ -533,7 +533,7 @@ public class HTMLComment implements Comment{
 	@Override
 	public boolean hasThisChild(Node node) {
 		boolean flag = false ;
-		HTMLNodeList listNodes = getChildNodes();
+		NodeList listNodes = getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i).equals(node)) {
 				flag = true ;
@@ -551,7 +551,7 @@ public class HTMLComment implements Comment{
 		for (int i = 0; i < split.length; i++) {
 			String nodeName = split[i].trim();
 			found = false ;
-			HTMLNodeList listNodes = currentNode.getChildNodes();
+			NodeList listNodes = currentNode.getChildNodes();
 			for (int j = 0; j < listNodes.getLength(); j++) {
 				Node node = listNodes.item(j);
 				if (node.getNodeName().equals(nodeName)) {
@@ -596,7 +596,7 @@ public class HTMLComment implements Comment{
 
 	@Override
 	public boolean contains(String nodeName) {
-		HTMLNodeList childNodes = getChildNodes();
+		NodeList childNodes = getChildNodes();
 		boolean flag = false ;
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			if (nodeName.equals(childNodes.item(i).getNodeName())) {

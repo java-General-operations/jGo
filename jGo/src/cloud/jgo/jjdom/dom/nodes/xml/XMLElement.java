@@ -8,9 +8,26 @@ import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
+import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 
 public class XMLElement implements Element{
+	private String nodeName;
+	private NodeList childNodes = null ;
+	private HTMLDocument document = null ;
+	private String elementName = null ;
+	private HTMLElementType type = null ;
+	private String startTag,endTag = null ;
+	private String originalStartTag,originalEndTag = null ;
+	private String textContent = null;
+	private Map<String, String> attributes=null;
+	private Node parentNode=null;
+	private StringBuffer htmlCode = new StringBuffer();
+
+	public XMLElement(String elementName) {
+		// TODO Auto-generated constructor stub
+		this.nodeName = elementName;
+	}
 
 	@Override
 	public Node appendChild(Node node) {
@@ -43,7 +60,7 @@ public class XMLElement implements Element{
 	}
 
 	@Override
-	public HTMLNodeList getChildNodes() {
+	public NodeList getChildNodes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -97,7 +114,7 @@ public class XMLElement implements Element{
 	}
 
 	@Override
-	public HTMLNodeList getBrothers() {
+	public NodeList getBrothers() {
 		// TODO Auto-generated method stub
 		return null;
 	}

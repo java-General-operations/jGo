@@ -58,8 +58,8 @@ import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLNodeList;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
+import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultDocument;
 import cloud.jgo.jjdom.jquery.Event;
 import cloud.jgo.jjdom.jquery.jQueryNotInitializedException;
@@ -3738,15 +3738,15 @@ public final class JjDom implements jQuerySupport, Serializable{
 	}
 
 	@Override
-	public HTMLNodeList children() {
-		HTMLNodeList list = null ;
+	public NodeList children() {
+		NodeList list = null ;
 		if (jqueryIsSet()) {
 			if (currentSelection!=null) {
 				final String jsCode = ".children();";
 				executeMethod(jsCode);
-				list = new HTMLNodeList();
+				list = new NodeList();
 				for(Element el:elements){
-					HTMLNodeList listNodes = el.getChildNodes();
+					NodeList listNodes = el.getChildNodes();
 					for (int i = 0; i < listNodes.getLength(); i++) {
 						list.addNode(listNodes.item(i));
 					}
