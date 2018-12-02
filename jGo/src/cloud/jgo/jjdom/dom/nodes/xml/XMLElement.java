@@ -224,9 +224,9 @@ public class XMLElement implements Element{
 	}
 
 	@Override
-	public HTMLDocument getDocument() {
+	public XMLDocument getDocument() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.document ;
 	}
 
 	@Override

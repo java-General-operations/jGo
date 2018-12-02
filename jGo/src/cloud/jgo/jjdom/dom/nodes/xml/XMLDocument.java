@@ -74,8 +74,10 @@ public class XMLDocument implements Document{
 
 	@Override
 	public Node appendChilds(Node... childs) {
-		// TODO Auto-generated method stub
-		return null;
+		for (int i = 0; i < childs.length; i++) {
+			appendChild(childs[i]);
+		}
+		return this ;
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class TestMain {
 		document.getRootElement().appendChild(lport);
 		document.getRootElement().appendChild(lhost);
 		
-		document.getRootElement().printMarkup();
+		proxy.printMarkup();
 		
 	}
 }
