@@ -21,7 +21,7 @@ public class XMLDocument implements Document{
 	
 	public XMLDocument(String rootNode,String charset) {
 		// TODO Auto-generated constructor stub
-		this.rootElement = new XMLElement(rootNode);
+		this.rootElement = new XMLElement(rootNode, this);
 		this.charset = charset ;
 	}
 	@Override

@@ -171,7 +171,7 @@ public interface Node extends Serializable,Home{
 	 * This method returns the document
 	 * @return the document
 	 */
-	public abstract HTMLDocument getDocument(); // restituisce il documento
+	public abstract Document getDocument(); // restituisce il documento
 	/**
 	 * This method returns the parent node
 	 * @return the parent node

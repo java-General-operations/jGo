@@ -80,7 +80,7 @@ public abstract class HTMLRecursion {
 			}
 			if(((HTMLElement)node).getType().equals(HTMLElementType.HTML)){
 				// qui ottengo il documento del nodo
-				HTMLDocument doc = ((Element) node).getDocument();
+				HTMLDocument doc = (HTMLDocument) ((Element) node).getDocument();
 				if (doc.doctypeIsPresent()) {
 					// inserisco il doctype 
 					htmlCode.append("<!DOCTYPE html>"+"\n");

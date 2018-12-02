@@ -1,14 +1,18 @@
 package cloud.jgo.jjdom.dom.nodes.xml;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
+import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultDocument;
+import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.NodeList;
 
 public class XMLElement implements Element{
@@ -22,17 +26,47 @@ public class XMLElement implements Element{
 	private String textContent = null;
 	private Map<String, String> attributes=null;
 	private Node parentNode=null;
-	private StringBuffer htmlCode = new StringBuffer();
-
-	public XMLElement(String elementName) {
+	private StringBuffer xmlCode = new StringBuffer();
+	public XMLElement(String elementName,XMLDocument Document) {
 		// TODO Auto-generated constructor stub
-		this.nodeName = elementName;
+		this.startTag = "<"+elementName+">";
+		this.originalStartTag = this.startTag;
+		this.endTag = "</"+elementName+">";
+		this.originalEndTag = this.endTag ;
+		this.childNodes = new NodeList();
+		this.attributes = new HashMap<>();
+		this.document = document ;
 	}
+		protected XMLElement() {}
+		
+		/**
+		 * This method sets the parent node
+		 * @param parentNode the parent node
+		 */
+		public void setParentNode(Node parentNode){
+			this.parentNode =  parentNode ;
+		}
 
 	@Override
 	public Node appendChild(Node node) {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.childNodes.contains(node)) {
+			this.childNodes.remove(node);
+		}
+		// aggiungo il nodo
+		
+		boolean result = this.childNodes.addNode(node);
+		if (result == true) {
+			if (node instanceof Element) {
+				((XMLElement)node).setParentNode(this);
+			}
+			else if(node instanceof HTMLComment){
+				((XMLComment)node).setParentNode(this);
+			}
+			return  node ;
+		}
+		else {
+			return null ;
+		}
 	}
 
 	@Override
@@ -134,7 +168,7 @@ public class XMLElement implements Element{
 	@Override
 	public String getNodeName() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.nodeName ;
 	}
 
 	@Override
@@ -158,13 +192,15 @@ public class XMLElement implements Element{
 	@Override
 	public Node setNodeValue(String nodeValue) {
 		// TODO Auto-generated method stub
-		return null;
+		this.textContent = nodeValue ;
+		return this ;
 	}
 
 	@Override
 	public Node setTextContent(String textContent) {
 		// TODO Auto-generated method stub
-		return null;
+		this.textContent = textContent ;
+		return this ;
 	}
 
 	@Override

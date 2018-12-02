@@ -25,6 +25,7 @@ import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.HTMLRecursion;
 import cloud.jgo.jjdom.dom.nodes.Comment;
+import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.Node.HTMLNodeType;
 import cloud.jgo.jjdom.dom.nodes.html.concrete.HTMLDefaultDocument;
@@ -44,14 +45,14 @@ public class HTMLComment implements Comment{
 	private Node parent = null ;
 	private NodeList childNodes = null ;
 	private StringBuffer htmlCode = new StringBuffer();
-	private HTMLDocument document = null ;
+	private Document document = null ;
 	private JjDom home = null ;
 	
 	
 
 	// costruttore della classe 
 	
-	public HTMLComment(String comment,HTMLDocument document) {
+	public HTMLComment(String comment,Document document) {
 		// TODO Auto-generated constructor stub
 		this.startTag = "<!--";
 		this.textContent = comment ;
@@ -391,7 +392,7 @@ public class HTMLComment implements Comment{
 	}
 
 	@Override
-	public HTMLDocument getDocument() {
+	public Document getDocument() {
 		// TODO Auto-generated method stub
 		return this.document ;
 	}

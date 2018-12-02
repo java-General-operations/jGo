@@ -10,6 +10,7 @@ import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
+import cloud.jgo.jjdom.dom.nodes.xml.XMLElement;
 
 public class TestMain {
 
@@ -17,6 +18,23 @@ public class TestMain {
 		// sviluppare i nodi XML adesso :)
 		
 		XMLDocument document = new XMLDocument("server.configuration","UTF-8");
+		
+		
+		XMLElement proxy,lport,lhost = null ;
+		
+		
+		proxy = new XMLElement("proxy", document);
+		lport = new XMLElement("lport", document);
+		lhost = new XMLElement("lhost", document);
+		
+		proxy.setTextContent("8.8.8.8");
+		lport.setTextContent(3333+"");
+		lhost.setTextContent("localhost");
+		
+		
+		document.getRootElement().appendChild(proxy);
+		document.getRootElement().appendChild(lport);
+		document.getRootElement().appendChild(lhost);
 		
 		
 	}
