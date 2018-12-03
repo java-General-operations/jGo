@@ -145,4 +145,6 @@ public interface Command extends Executable{
 	 * @return the flag
 	 */
 	public abstract boolean hasAPhase();
+	// version 1.0.7
+	public abstract void merge(Parameter parameter);
 }

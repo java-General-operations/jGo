@@ -35,6 +35,7 @@ import java.util.Map.Entry;
 
 import cloud.jgo.£;
 import cloud.jgo.utils.command.execution.Execution;
+import cloud.jgo.utils.command.terminal.Terminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
 /**
  * 
@@ -50,6 +51,8 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 	private String command = null;
 	private Object sharedObject = null ;
 	private static String helpValue = "help"; 
+
+	private LocalCommand mergedCommand = null ;
 	private static boolean inputHelpExploitable = false ;
 	private Phase belongsTo = null ;
 	public void setBelongsTo(Phase belongsTo) {
@@ -72,7 +75,6 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 	}
 	
 	
-
 	@Override
 	public String toString() {
 		return this.command ;
@@ -921,7 +923,15 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 				}
 				
 				if(getCommand!=null){
-					objectReturn =  getCommand.execute();
+					if (getCommand.mergedCommand!=null) {
+						
+						// qui dobbiamo praticamente prendere
+						System.out.println("Ciao");
+						
+					}
+					else{
+						objectReturn =  getCommand.execute();
+					}
 					commandReturnList.add(objectReturn);
 					objectReturn = commandReturnList ;
 				}
@@ -1206,7 +1216,6 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 			}
 	    }
 	}
-
 	@Override
 	public Parameter[] params() {
 		if (structure.values().toArray().length>0) {
@@ -1220,5 +1229,9 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 		else{
 			return null ;
 		}
+	}
+	@Override
+	public void merge(Parameter parameter) {
+		mergedCommand = new LocalCommand(this.command+" -"+parameter.getParam(),null);
 	}
 }
