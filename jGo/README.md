@@ -89,7 +89,7 @@ To add jGo to your project, include the following dependency in your pom.xml :<b
 &lt;dependency&gt;
     &lt;groupId&gt;cloud.jgo&lt;/groupId&gt;
     &lt;artifactId&gt;jGo&lt;/artifactId&gt;
-    &lt;version&gt;1.0.1&lt;/version&gt;
+    &lt;version&gt;1.0.6&lt;/version&gt;
 &lt;/dependency&gt;
 </code>
 </pre>
