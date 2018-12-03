@@ -21,7 +21,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
 
 public class XMLElement implements Element{
-	private String nodeName;
+	private String nodeName=null;
 	private NodeList childNodes = null ;
 	private XMLDocument document = null ;
 	private String elementName = null ;
@@ -33,6 +33,7 @@ public class XMLElement implements Element{
 	private StringBuffer xmlCode = new StringBuffer();
 	public XMLElement(String elementName,XMLDocument Document) {
 		// TODO Auto-generated constructor stub
+		this.nodeName = elementName ;
 		this.startTag = "<"+elementName+">";
 		this.originalStartTag = this.startTag;
 		this.endTag = "</"+elementName+">";

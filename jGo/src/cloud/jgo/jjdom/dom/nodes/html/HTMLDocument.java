@@ -37,7 +37,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
  * @author Martire91<br>
  * This interface represents an html document
  */
-public interface HTMLDocument extends Document,Manipulable,Home{
+public interface HTMLDocument extends Document,Home{
 	/**
 	 * This method creates a button
 	 * @param btnText the button text

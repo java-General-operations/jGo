@@ -3,10 +3,11 @@ package cloud.jgo.jjdom.dom.nodes;
 import java.util.List;
 import java.util.Set;
 
+import cloud.jgo.jjdom.dom.Manipulable;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-public interface Document extends Node{
+public interface Document extends Node,Manipulable{
 	/**
 	 * This method creates a comment
 	 * @param comment the comment text

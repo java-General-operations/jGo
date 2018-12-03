@@ -4,10 +4,12 @@ import java.util.Set;
 
 import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
+import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.Element;
+import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.NodeList;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
@@ -174,7 +176,7 @@ public class XMLDocument implements Document{
 	@Override
 	public String getNodeName() {
 		// TODO Auto-generated method stub
-		return "document";
+		return JjDom.DOCUMENT;
 	}
 
 	@Override
@@ -401,5 +403,80 @@ public class XMLDocument implements Document{
 	public Element createElement(String elementName) {
 		// TODO Auto-generated method stub
 		return new XMLElement(elementName, this);
+	}
+	@Override
+	public Element getElementById(String elementId) {
+		XMLElement idEl = (XMLElement) Recursion.examinesForId(elementId,this);
+		return idEl;
+	}
+	@Override
+	public Elements getElementsByTag(String tagName) {
+		// TODO Auto-generated method stub
+		return Recursion.examinesForTag(tagName,this);
+	}
+	@Override
+	public Elements getElementsByClassName(String className) {
+		// TODO Auto-generated method stub
+		return Recursion.examinesForClass(className,this);
+	}
+	@Override
+	public Elements getElementsByAttribute(String attribute) {
+		// TODO Auto-generated method stub
+		return Recursion.examinesForAttribute(attribute,this);
+	}
+	@Override
+	public Elements getElementsByAttributeValue(String value) {
+		// TODO Auto-generated method stub
+		return Recursion.examinesForAttributeValue(value,this);
+	}
+	@Override
+	public Elements getElementsByAttributeValue(String attr, String val) {
+		// TODO Auto-generated method stub
+		return Recursion.examinesForAttributeValue_(attr, val, this,"=");
+	}
+	@Override
+	public Elements getElementsByDifferentAttributeValue(String attr, String val) {
+		// TODO Auto-generated method stub
+		return Recursion.examinesForAttributeValue_(attr, val, this, CSSSelector.DIFFERENT_OPERATOR);
+	}
+	@Override
+	public Elements getElementsThatStartWithAttributevalue(String attr,
+			String val) {
+		// TODO Auto-generated method stub
+		return Recursion.examinesForAttributeValue_(attr, val, this, CSSSelector.STARTS_WITH_OPERATOR);
+	}
+	@Override
+	public Elements getElementsThatEndWithAttributeValue(String attr, String val) {
+		// TODO Auto-generated method stub
+		return Recursion.examinesForAttributeValue_(attr, val, this, CSSSelector.ENDS_WITH_OPERATOR);
+	}
+	@Override
+	public Elements getElementsThatContainTheAttributeValue(String attr,
+			String val) {
+		// TODO Auto-generated method stub
+		return Recursion.examinesForAttributeValue_(attr, val, this, CSSSelector.CONTAINS_OPERATOR);
+	}
+	@Override
+	public Elements getDirectChildrenByTag(String tagName) {
+		Elements elements = new Elements();
+		NodeList listNodes = this.childNodes;
+		for (int i = 0; i < listNodes.getLength(); i++) {
+			if (listNodes.item(i)instanceof Element) {
+				if (listNodes.item(i).getNodeName().equals(tagName)) {
+					elements.add((XMLElement) listNodes.item(i));
+				}
+			}
+		}
+		return elements ;
+	}
+	@Override
+	public Elements getAdiacentSiblingsByTag(String tagName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Elements getGeneralSiblingsByTag(String tagName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
