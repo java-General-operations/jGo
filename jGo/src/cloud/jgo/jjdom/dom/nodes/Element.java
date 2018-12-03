@@ -22,20 +22,20 @@ public interface Element extends Node,Manipulable{
 	 * @param val the attribute value
 	 * @return the element on which the method was invoked
 	 */
-	public abstract HTMLElement setAttribute(String attr,String val);
+	public abstract Element setAttribute(String attr,String val);
 	/**
 	 * This method replaces an attribute value
 	 * @param attr the attribute
 	 * @param newValue new attribute value
 	 * @return the element on which the method was invoked
 	 */
-	public abstract HTMLElement replaceAttributeValue(String attr,String newValue);
+	public abstract Element replaceAttributeValue(String attr,String newValue);
 	/**
 	 * This method removes an attribute
 	 * @param attr the attribute
 	 * @return the element on which the method was invoked
 	 */
-	public abstract HTMLElement removeAttribute(String attr);
+	public abstract Element removeAttribute(String attr);
 	/**
 	 * This method returns the attribute
 	 * @param attr the attribute text

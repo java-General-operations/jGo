@@ -19,6 +19,8 @@ public class TestMain {
 
 	public static void main(String[] args) {
 		
+		// okok abbiamo completato anche l'elemento XML
+		
 		Document document = new XMLDocument(Document.CHARSET_UTF_8,null,"exploit.conf");
 		
 		// windows/x64/meterpreter/reverse_tcp
