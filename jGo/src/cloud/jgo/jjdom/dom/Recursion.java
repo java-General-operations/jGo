@@ -29,7 +29,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
-
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
@@ -145,7 +144,7 @@ public abstract class Recursion {
 		if (node instanceof XMLDocument) {
 			xmlCode.append("<?xml version="+£.escp(XMLDocument.XML_VERSION)+" encoding="+£.escp(charset)+"?>\n");	
 		}
-		 String key = null ;
+		String key = null ;
 		if (node instanceof Element) {
 			// qui che sappiamo che si tratta di un elemento html
 			// gestiamo gli attributi
@@ -168,6 +167,8 @@ public abstract class Recursion {
 						//System.out.println(key+":"+entry.getValue());
 				}
 			}
+		}
+		// @
 		if(node.getTextContent()!=null){
 			if(node.getNodeType().equals(NodeType.ELEMENT)){
 				 xmlCode.append(((XMLElement)node).getStartTag());
@@ -187,18 +188,17 @@ public abstract class Recursion {
 		 }
 	 // chiudo il tag
 	if (node instanceof Element) {
-		
-		xmlCode.append(((XMLElement)node).getEndTag()+"\n");
-		
+			// di sicuro se il nodo non ha un tipo di riferimento
+			// chiudiamo in maniera standart : con il tag di chiusura
+			 xmlCode.append(((XMLElement)node).getEndTag()+"\n");
 	}
 	else{
 		// qui invece significa che non è un elemento html
 		// quindi deve essere per forza un commento, almeno per il momento 
 		// magari per sicurezza:controllo che sia cosi 
-		if (node instanceof Comment) {
+		if (node instanceof XMLComment) {
 			 xmlCode.append(((XMLComment)node).getEndTag()+"\n");
 		}
-	}
 	}
 	}
 	

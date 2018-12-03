@@ -66,10 +66,10 @@ public class XMLElement implements Element{
 		
 		boolean result = this.childNodes.addNode(node);
 		if (result == true) {
-			if (node instanceof Element) {
+			if (node instanceof XMLElement) {
 				((XMLElement)node).setParentNode(this);
 			}
-			else if(node instanceof HTMLComment){
+			else if(node instanceof XMLComment){
 				((XMLComment)node).setParentNode(this);
 			}
 			return  node ;
@@ -81,8 +81,10 @@ public class XMLElement implements Element{
 
 	@Override
 	public Node appendChilds(Node... childs) {
-		// TODO Auto-generated method stub
-		return null;
+		for (int i = 0; i < childs.length; i++) {
+			appendChild(childs[i]);
+		}
+		return this ;
 	}
 
 	@Override

@@ -354,8 +354,8 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		return Recursion.replaceChild(newNode, oldNode, this);
 	}
 
-
-	private HTMLElement createElement(String elementName) {
+	@Override
+	public HTMLElement createElement(String elementName) {
 		HTMLElement element = new HTMLDefaultElement(elementName,this);
 		return element ;
 	}
@@ -384,7 +384,13 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	// tipi di elementi che non sono previsti nei tipi standart della classe HTMLElementType
 	// questo metodo serve per creare elementi nuovi, nel caso non fossero previsti nei tipi predefiniti
 	// ora bisogna capire se questo metodo va bene oppure no, quindi in attesa di test ...
-	@Override
+	/**
+	 * This method creates a new element
+	 * @param elementName the element name
+	 * @param hasClosingTag if is true, it means that the node has a closing tag
+	 * @param thereCanBeMore if is true, it means that there can be + tags of this type
+	 * @return the element
+	 */
 	public HTMLElement createNewElement(String elementName, boolean hasClosingTag, boolean thereCanBeMore) {
 		boolean existingType = false ;
 		HTMLElement element = null ;

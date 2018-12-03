@@ -51,17 +51,12 @@ public class XMLDocument implements Document{
 					this.childNodes.remove(node);
 				}
 				// aggiungo il nodo
-			
 				boolean result = this.childNodes.addNode(node);
 				if (result == true) {
-					if (node instanceof HTMLElement) {
-							((HTMLDefaultElement)node).setParentNode(this);
-							if(node.getNodeName().equals("html")){
-								// collego il root element al nodo html ricevuto come parametro
-								this.rootElement = (XMLElement) node ;
-							}
+					if (node instanceof XMLElement) {
+							((XMLElement)node).setParentNode(this);
 						}
-						else if(node instanceof HTMLComment){
+						else if(node instanceof XMLComment){
 							((HTMLComment)node).setParentNode(this);
 						}
 					
@@ -287,13 +282,6 @@ public class XMLDocument implements Document{
 	}
 
 	@Override
-	public Element createNewElement(String elementName, boolean hasClosingTag,
-			boolean thereCanBeMore) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Comment createComment(String comment) {
 		// TODO Auto-generated method stub
 		return null;
@@ -327,6 +315,11 @@ public class XMLDocument implements Document{
 	public List<? extends Comment> getListComments() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public Element createElement(String elementName) {
+		// TODO Auto-generated method stub
+		return new XMLElement(elementName, this);
 	}
 
 }

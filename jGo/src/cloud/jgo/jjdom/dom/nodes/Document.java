@@ -6,22 +6,19 @@ import java.util.Set;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-
 public interface Document extends Node{
-	/**
-	 * This method creates a new element
-	 * @param elementName the element name
-	 * @param hasClosingTag if is true, it means that the node has a closing tag
-	 * @param thereCanBeMore if is true, it means that there can be + tags of this type
-	 * @return the element
-	 */
-	public abstract Element createNewElement(String elementName,boolean hasClosingTag,boolean thereCanBeMore);
 	/**
 	 * This method creates a comment
 	 * @param comment the comment text
 	 * @return the comment
 	 */
 	public abstract Comment createComment(String comment);
+	/**
+	 * This method creates an element
+	 * @param elementName the element name
+	 * @return the element
+	 */
+	public abstract Element createElement(String elementName);
 	/**
 	 * This method returns the root element
 	 * @return the root element
