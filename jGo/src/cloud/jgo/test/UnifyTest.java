@@ -8,6 +8,7 @@ public static void main(String[] args) {
 	// associare un parametro a un comando, in 
 	// tal modo, quando si inserisce il comando
 	// in realtà si sta inserendo il comando + il parametro
+	// ...
 	
 	
 	
