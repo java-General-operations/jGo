@@ -18,10 +18,6 @@ import cloud.jgo.jjdom.dom.nodes.xml.XMLElement;
 public class TestMain {
 
 	public static void main(String[] args) {
-		// sviluppare i nodi XML adesso :)
-		// okok capire come mai il documento
-		// non me lo stampa correttamente, invece il nodo si
-		// deve essere qualche cavolata @
 		
 		Document document = new XMLDocument(Document.CHARSET_UTF_8,null,"exploit.conf");
 		

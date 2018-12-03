@@ -32,7 +32,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
  *	This interface represents the html node
  *
  */
-public interface Node extends Serializable,Home{
+public interface Node extends Serializable{
 	/**
 	 * This method appends a child node
 	 * @param node the child node

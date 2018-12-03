@@ -582,16 +582,16 @@ public abstract class Recursion {
 	 * resettato a nessuna parte, quindi allo stato attuale, viene 
 	 * riempito sempre, senza però mai essere svuotato, quindi RISOLVERE
 	 */
-	private static Set<HTMLComment> comments = new HashSet<>();
+	private static Set<Comment> comments = new HashSet<>();
 	public static void resetCommentsSet(){
 		comments = new HashSet<>();
 	}
-	public static Set<HTMLComment> getAllComments(Node rootNode){
+	public static Set<Comment> getAllComments(Node rootNode){
 		NodeList listNodes = rootNode.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			Node node = listNodes.item(i);
-			if (node instanceof HTMLComment) {
-				comments.add((HTMLComment) node);
+			if (node instanceof Comment) {
+				comments.add((Comment) node);
 			}
 			else{
 				// se non è un commento, vuol dire che è un nodo
@@ -603,16 +603,16 @@ public abstract class Recursion {
 		return comments ;
 	}
 	
-	private static List<HTMLComment>commentsList = new ArrayList<>();
+	private static List<Comment>commentsList = new ArrayList<>();
 	public static void resetCommentsList(){
 		commentsList = new ArrayList<>();
 	}
-	public static List<HTMLComment> getListComments(Node rootNode){
+	public static List<Comment> getListComments(Node rootNode){
 		NodeList listNodes = rootNode.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			Node node = listNodes.item(i);
-			if (node instanceof HTMLComment) {
-				commentsList.add((HTMLComment) node);
+			if (node instanceof Comment) {
+				commentsList.add((Comment) node);
 			}
 			else{
 				// se non è un commento, vuol dire che è un nodo

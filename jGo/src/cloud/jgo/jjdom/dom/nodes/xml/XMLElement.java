@@ -290,13 +290,6 @@ public class XMLElement implements Element{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	@Override
-	public JjDom home() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public Element getElementById(String elementId) {
 		// TODO Auto-generated method stub

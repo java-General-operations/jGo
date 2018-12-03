@@ -22,6 +22,7 @@
  */
 package cloud.jgo.jjdom.dom.nodes.html;
 import cloud.jgo.£;
+import cloud.jgo.jjdom.Home;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Comment;
@@ -34,7 +35,7 @@ import cloud.jgo.jjdom.dom.nodes.Node.NodeType;
  * @author Martire91<br>
  * This class represente the html comment
  */
-public class HTMLComment implements Comment{
+public class HTMLComment implements Comment,Home{
 	/**
 	 * 
 	 */
@@ -58,7 +59,7 @@ public class HTMLComment implements Comment{
 		this.endTag = "-->";
 		this.childNodes = new NodeList();
 		this.document = document ;
-		this.home = this.document.home();
+		this.home = ((HTMLDocument)this.document).home();
 	}
 	
 	// restituisce - 1 se non trova l'indice

@@ -15,10 +15,6 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 public class XMLDocument implements Document{
-	
-	// in tanto prendo il charset cosi creo il primo tag
-	// inaccesibile però, un pochino come il docType
-	// nell'htmlDocument
 	// <?xml version="1.0" encoding="UTF-8"?>
 	public final static String XML_VERSION = "1.0";
 	private String charset = Document.CHARSET_UTF_8 ;
@@ -26,6 +22,7 @@ public class XMLDocument implements Document{
 	private NodeList childNodes = null ;
 	private XMLElement rootElement = null ;
 	private StringBuffer xmlCode = new StringBuffer();
+	private String textContent=null;
 	public XMLDocument(String charsetName,String baseUri,String rootElementName) {
 		this.charsetName = charsetName ;
 		// inizializzo la lista di nodi 
@@ -92,7 +89,7 @@ public class XMLDocument implements Document{
 	@Override
 	public String getPath() {
 		// TODO Auto-generated method stub
-		return null;
+		return "document";
 	}
 
 	@Override
@@ -103,14 +100,13 @@ public class XMLDocument implements Document{
 
 	@Override
 	public boolean hasThisChild(Node node) {
-		// TODO Auto-generated method stub
-		return false;
+		return false ;
 	}
 
 	@Override
 	public Node child(int index) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.childNodes.item(index);
 	}
 
 	@Override
@@ -128,25 +124,25 @@ public class XMLDocument implements Document{
 	@Override
 	public int getIndex() {
 		// TODO Auto-generated method stub
-		return 0;
+		return -1 ;
 	}
 
 	@Override
 	public Node getFirstChild() {
 		// TODO Auto-generated method stub
-		return null;
+		 return this.childNodes.getFirstItem();
 	}
 
 	@Override
 	public Node getLastChild() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.childNodes.getLastItem();
 	}
 
 	@Override
 	public String getLocalName() {
 		// TODO Auto-generated method stub
-		return null;
+		return getNodeName();
 	}
 
 	@Override
@@ -163,8 +159,16 @@ public class XMLDocument implements Document{
 
 	@Override
 	public void addFirstChild(Node node) {
-		// TODO Auto-generated method stub
-		
+		if(this.childNodes.contains(node)){
+			this.childNodes.remove(node);
+		}
+		this.childNodes.addFirstNode(node);
+		if (node instanceof Element) {
+			((XMLElement)node).setParentNode(this);
+		}
+		else if(node instanceof HTMLComment){
+			((XMLComment)node).setParentNode(this);
+		}
 	}
 
 	@Override
@@ -175,32 +179,41 @@ public class XMLDocument implements Document{
 
 	@Override
 	public boolean contains(Node node) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean contains = false ;
+		NodeList listNodes = this.childNodes;
+		for (int i = 0; i < listNodes.getLength(); i++) {
+			if (listNodes.item(i).equals(node)) {
+				contains = true ;
+				break ;
+			}
+		}
+		return contains ;
 	}
 
 	@Override
 	public String getNodeValue() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.textContent ;
 	}
 
 	@Override
 	public String getTextContent() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.textContent ;
 	}
 
 	@Override
 	public Node setNodeValue(String nodeValue) {
 		// TODO Auto-generated method stub
-		return null;
+		this.textContent = textContent ;
+		return this ;
 	}
 
 	@Override
 	public Node setTextContent(String textContent) {
 		// TODO Auto-generated method stub
-		return null;
+		this.textContent = textContent ;
+		return this ;
 	}
 
 	@Override
@@ -210,9 +223,9 @@ public class XMLDocument implements Document{
 	}
 
 	@Override
-	public HTMLDocument getDocument() {
+	public XMLDocument getDocument() {
 		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override
@@ -229,62 +242,122 @@ public class XMLDocument implements Document{
 
 	@Override
 	public boolean hasChildNodes() {
-		// TODO Auto-generated method stub
-		return false;
+		if (this.childNodes.getLength()>0) {
+			return true ;
+		}
+		else{
+			return false ;
+		}
 	}
 
 	@Override
 	public Node insertBefore(Node newNode, Node refChild) {
 		// TODO Auto-generated method stub
-		return null;
+		return recursive(newNode, refChild, this,"before");
 	}
 
 	@Override
 	public Node insertAfter(Node newNode, Node refChild) {
 		// TODO Auto-generated method stub
-		return null;
+		return recursive(newNode, refChild, this, "after");
+	}
+	
+	private Node recursive(Node newNode, Node refChild,Node node,String mode){
+		Node parent = null ;
+		// qui in tanto vado alla ricerca del nodo padre che contiene 
+		// il riferimento 
+		for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+			// qui per prima cosa verifico che non si tratti proprio di questo nodo
+			if(node.getChildNodes().item(i).equals(refChild)){
+				
+				// okok lo abbiamo trovato già
+				parent = node.getChildNodes().item(i).getParentNode();
+				break ;
+			}
+			
+			// metodo ricorsivo, quindi vuol dire che ancora non si è trovato 
+			recursive(newNode, refChild, node.getChildNodes().item(i),mode);
+		}
+		if (parent!=null) {
+			// qui richiamo il metodo ricorsivo dell'element 
+			if (mode.equals("before")) {
+				return parent.insertBefore(newNode, refChild);
+			}
+			else{
+				// diamo per scontato che si tratti di after
+				return parent.insertAfter(newNode, refChild);
+			}
+		}
+		else{
+			return null ;
+		}
 	}
 
 	@Override
 	public boolean isEqualNode(Node node) {
-		// TODO Auto-generated method stub
-		return false;
+		if (node instanceof XMLDocument) {
+			return true ;
+		}
+		else{
+			return false ;
+		}
 	}
 
 	@Override
 	public Node removeNode(Node node) {
 		// TODO Auto-generated method stub
-		return null;
+		return Recursion.removeNode(node,this);
 	}
 
 	@Override
 	public Node replaceChild(Node newNode, Node oldNode) {
 		// TODO Auto-generated method stub
-		return null;
+		return Recursion.replaceChild(newNode, oldNode, this);
 	}
 
 	@Override
 	public Node getNodeByPath(String nodePath) {
-		// TODO Auto-generated method stub
-		return null;
+		String[]split = nodePath.split("/");
+		Node currentNode = this ;
+		boolean found ;
+		for (int i = 0; i < split.length; i++) {
+			String nodeName = split[i].trim();
+			found = false ;
+			NodeList listNodes = currentNode.getChildNodes();
+			for (int j = 0; j < listNodes.getLength(); j++) {
+				Node node = listNodes.item(j);
+				if (node.getNodeName().equals(nodeName)) {
+					currentNode = node ;
+					found = true ;
+					break ;
+				}
+			}
+			if (!found) {
+				// spezziamo la catena
+				currentNode = null ;
+				break ; // esco dal controllo del path,poichè non è più ricostruibile
+				// in quanto un elemento non è stato trovato
+			}
+		}
+		return currentNode ;
 	}
 
 	@Override
 	public boolean contains(String nodeName) {
-		// TODO Auto-generated method stub
-		return false;
+		NodeList childNodes = getChildNodes();
+		boolean flag = false ;
+		for (int i = 0; i < childNodes.getLength(); i++) {
+			if (nodeName.equals(childNodes.item(i).getNodeName())) {
+				flag = true ;
+				break;
+			}
+		}
+		return flag ;
 	}
-
-	@Override
-	public JjDom home() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public Comment createComment(String comment) {
 		// TODO Auto-generated method stub
-		return null;
+		return new XMLComment(comment, this);
 	}
 
 	@Override
@@ -296,30 +369,37 @@ public class XMLDocument implements Document{
 	@Override
 	public String getCharset() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.charset ;
 	}
 
 	@Override
 	public Document removeNodes(Node... nodes) {
-		// TODO Auto-generated method stub
-		return null;
+		for (int i = 0; i < nodes.length; i++) {
+			removeNode(nodes[i]);
+		}
+		return this ;
 	}
 
 	@Override
 	public Set<? extends Comment> getComments() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Comment>comments = Recursion.getAllComments(this);
+		
+		Recursion.resetCommentsSet();
+		
+		return comments ;
 	}
 
 	@Override
 	public List<? extends Comment> getListComments() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Comment>comments = Recursion.getListComments(this);
+		
+		Recursion.resetCommentsList();
+	
+		return comments ;
 	}
 	@Override
 	public Element createElement(String elementName) {
 		// TODO Auto-generated method stub
 		return new XMLElement(elementName, this);
 	}
-
 }

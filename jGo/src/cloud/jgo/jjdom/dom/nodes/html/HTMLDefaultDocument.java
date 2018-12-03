@@ -34,6 +34,7 @@ import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.css.CSSStyle;
 import cloud.jgo.jjdom.css.concrete.CSSDefaultRule;
 import cloud.jgo.jjdom.css.concrete.CSSDefaultStyle;
+import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
@@ -655,9 +656,8 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	// this is a recursive method
 	
 	@Override
-	public Set<HTMLComment> getComments() {
-		
-		Set<HTMLComment>comments = Recursion.getAllComments(this);
+	public Set<Comment> getComments() {
+		Set<Comment>comments = Recursion.getAllComments(this);
 		
 		Recursion.resetCommentsSet();
 		
@@ -665,8 +665,8 @@ public class HTMLDefaultDocument implements HTMLDocument{
 	}
 	
 	@Override
-	public List<HTMLComment> getListComments(){
-		List<HTMLComment>comments = Recursion.getListComments(this);
+	public List<Comment> getListComments(){
+		List<Comment>comments = Recursion.getListComments(this);
 		
 		Recursion.resetCommentsList();
 	

@@ -24,6 +24,7 @@ package cloud.jgo.jjdom.dom.nodes.html;
 import java.io.Serializable;
 import java.util.Map;
 
+import cloud.jgo.jjdom.Home;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Node;
 /**
@@ -34,7 +35,7 @@ import cloud.jgo.jjdom.dom.nodes.Node;
  * This interface represents the concept of html element
  *
  */
-public interface HTMLElement extends Element{
+public interface HTMLElement extends Element,Home{
 	/**
 	 * This method returns the element type
 	 * @return the element type
