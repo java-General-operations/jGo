@@ -481,9 +481,11 @@ public class XMLDocument implements Document{
 	}
 	@Override
 	public Node removeChildren() {
-		NodeList listNodes = getChildNodes();
-		for (int i = 0; i < listNodes.getLength(); i++) {
-			removeNode(listNodes.item(i));
+		NodeList children = getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			Node currentNode = children.item(i);
+			removeNode(currentNode);
+			i-- ;
 		}
 		return this ;
 	}

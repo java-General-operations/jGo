@@ -115,12 +115,11 @@ Version 1.0.7 - in dev
 - Aggiungere nuovi metodi a jQuerySupport, aggiungere nuovi metodi 
 a gli elementi html, quindi aggiornare jjdom alla prossima versione
 
-- Aggiungere metodo statico che permette di unificare comando e parametro,
-oppure poter dare l'input anche ai comandi
-
 - Poter eseguire i metodi jGo all'interno dei threads
 
-- sto aggiungendo il metodo il metodo getNodeByPath
+- sto aggiungendo il metodo  getNodeByPath
+
+- adesso anche i comandi possono ricevere valore da input come i Parameter
 
 - il metodo contains
 

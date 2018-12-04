@@ -3866,6 +3866,9 @@ public final class JjDom implements jQuerySupport, Serializable{
 					element.setTextContent(null);
 				}
 				// mi serve un metodo che dato un nodo, ne cancella i figli
+				if (element.hasChildNodes()) {
+					element.removeChildren();
+				}
 			}
 		}
 		else

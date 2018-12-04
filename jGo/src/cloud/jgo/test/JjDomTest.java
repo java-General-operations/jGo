@@ -7,7 +7,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 public class JjDomTest {
 public static void main(String[] args) {
 	
-	
+	// 1 : verificare se funziona correttamente il metodo jq empty()
 	// 2 : creare i nuovi metodi jquery
 	// 3 : completare il dom xml, quindi aggiungere i metodi per salvare/serializzare il file
 	
@@ -56,8 +56,7 @@ public static void main(String[] args) {
 	
     // cancello tutti i figli di body 
 	
-	JjDom.document.getRootElement().removeChildren();
-	
+	divParags.removeChildren();
 	
 	JjDom.document.printMarkup();
 
