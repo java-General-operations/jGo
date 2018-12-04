@@ -8,7 +8,6 @@ public class JjDomTest {
 public static void main(String[] args) {
 	
 	
-	// 1 : dobbiamo testare i metodi removeChildren()
 	// 2 : creare i nuovi metodi jquery
 	// 3 : completare il dom xml, quindi aggiungere i metodi per salvare/serializzare il file
 	
@@ -55,12 +54,13 @@ public static void main(String[] args) {
 	
 	JjDom.document.getBody().appendChilds(h1,divParags,divLinks);
 	
-	// vediamo l'altro metodo createElement()
+    // cancello tutti i figli di body 
 	
-	Element pExternal = JjDom.document.createElement("code");
+	JjDom.document.getRootElement().removeChildren();
 	
-	System.out.println(pExternal.getMarkup());
 	
+	JjDom.document.printMarkup();
+
 
 }
 }

@@ -618,8 +618,10 @@ public class HTMLComment implements Comment,Home{
 	public Node removeChildren() {
 		NodeList children = getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
-			removeNode(children.item(i));
+			Node currentNode = children.item(i);
+			removeNode(currentNode);
+			i-- ;
 		}
-		return null ;
+		return this ;
 	}
 }

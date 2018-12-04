@@ -1146,6 +1146,7 @@ public class HTMLDefaultElement implements HTMLElement{
 		for (int i = 0; i < children.getLength(); i++) {
 			Node currentNode = children.item(i);
 			removeNode(currentNode);
+			i-- ;
 		}
 		return this ;
 	}
