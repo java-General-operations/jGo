@@ -36,6 +36,8 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  *
  */
 public interface jQuerySupport {
+	// version 1.0.7
+	public abstract JjDom add(String selection);
 	public abstract String attr(String attributeName);
 	public abstract JjDom attr(String attrName,String attrValue);
 	public abstract JjDom after(final String content);

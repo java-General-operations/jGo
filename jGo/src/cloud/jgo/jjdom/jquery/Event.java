@@ -21,10 +21,14 @@
  * 
  */
 package cloud.jgo.jjdom.jquery;
+
+import cloud.jgo.jjdom.dom.Manipulable;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
+
 /**
  * 
  * @author Martire91<br>
- *	This interface represents the jquery event
+ *	This abstract class represents the jquery event
  */
 public interface Event {
 	public abstract void preventdefault();

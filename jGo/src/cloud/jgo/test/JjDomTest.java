@@ -3,11 +3,12 @@ package cloud.jgo.test;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
+import cloud.jgo.jjdom.jquery.Event;
+import cloud.jgo.jjdom.jquery.jQueryfunction;
 
 public class JjDomTest {
 public static void main(String[] args) {
-	
-	// 1 : verificare se funziona correttamente il metodo jq empty()
+	// concludere questa versione di JjDom con il metodo is
 	// 2 : creare i nuovi metodi jquery
 	// 3 : completare il dom xml, quindi aggiungere i metodi per salvare/serializzare il file
 	
@@ -45,7 +46,7 @@ public static void main(String[] args) {
 	// imposto gli id dei divs
 	divLinks.setAttribute("id","links-div");
 	divParags.setAttribute("id","parags-div");		
-	
+	divParags.setTextContent("div dei paragrafi");
 	
 	// aggiungo i nodi al documento 
 	
@@ -56,10 +57,7 @@ public static void main(String[] args) {
 	
     // cancello tutti i figli di body 
 	
-	divParags.removeChildren();
-	
-	JjDom.document.printMarkup();
-
+	JjDom.printDocumentMarkup();
 
 }
 }

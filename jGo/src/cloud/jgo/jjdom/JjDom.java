@@ -23,6 +23,7 @@
 package cloud.jgo.jjdom;
 import static cloud.jgo.jjdom.JjDom.$;
 import static cloud.jgo.jjdom.JjDom.jquery;
+
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -40,6 +41,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Collections;
 import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -51,6 +53,7 @@ import cloud.jgo.jjdom.css.CSSSelection;
 import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.css.NoSelectorSetException;
 import cloud.jgo.jjdom.css.concrete.CSSSimpleSelector;
+import cloud.jgo.jjdom.dom.Manipulable;
 import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
@@ -3870,6 +3873,31 @@ public final class JjDom implements jQuerySupport, Serializable{
 					element.removeChildren();
 				}
 			}
+			inst = instance ;
+		}
+		else
+		{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
+	}
+
+	@Override
+	public JjDom add(String selection) {
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".add('"+selection+"');";
+			executeMethod(jsCode);
+			// semplicemente aggiungo gli elementi di questa selezione
+			// a quelli precedenti
+			CSSSelection selection_ = selector.select(selection);
+			elements.addAll(selection_.getSelectedItems());
+			inst = instance;
 		}
 		else
 		{
