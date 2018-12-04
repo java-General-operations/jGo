@@ -3851,5 +3851,33 @@ public final class JjDom implements jQuerySupport, Serializable{
 		}
 		return inst ;
 	}
-	
+
+	@Override
+	public JjDom empty() {
+		JjDom inst = null ;
+		if (jqueryIsSet()) {
+			final String jsCode = ".empty();";
+			executeMethod(jsCode);	
+			// ora agisco a livello dom
+			// si da per scontato che ci siamo
+			// elementi selezionati 
+			for (Element element : elements) {
+				// in tanto cancello il testo
+				if (element.getTextContent()!=null) {
+					element.setTextContent(null);
+				}
+				// mi serve un metodo che dato un nodo, ne cancella i figli
+			}
+		}
+		else
+		{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
+	}	
 }

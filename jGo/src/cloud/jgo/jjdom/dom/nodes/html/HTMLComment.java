@@ -613,4 +613,13 @@ public class HTMLComment implements Comment,Home{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Node removeChildren() {
+		NodeList children = getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			removeNode(children.item(i));
+		}
+		return null ;
+	}
 }

@@ -1140,4 +1140,13 @@ public class HTMLDefaultElement implements HTMLElement{
 		}
 		return flag ;
 	}
+	@Override
+	public Node removeChildren() {
+		NodeList children = getChildNodes();
+		for (int i = 0; i < children.getLength(); i++) {
+			Node currentNode = children.item(i);
+			removeNode(currentNode);
+		}
+		return this ;
+	}
 }

@@ -43,6 +43,8 @@ public interface jQuerySupport {
 	// append method : inserisce il contenuto specificato come ultimo figlio di ciascun elemento nella raccolta jQuery
 	public abstract int length();
 	public abstract JjDom append(String content);
+	// version 1.0.7 : elimina tutti i figli della selezione e anche l'eventuale textContent
+	public abstract JjDom empty();
 	public abstract NodeList children();
 	public abstract JjDom delay(final int duration);
 	public abstract JjDom val();

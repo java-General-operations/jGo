@@ -212,6 +212,8 @@ public interface Node extends Serializable{
 	 * @return the deleted node
 	 */
 	public abstract Node removeNode(Node node);
+	// version 1.0.7 : elimina tutti i figli
+	public abstract Node removeChildren();
 	/**
 	 * This method replaces "oldNode" with "newNode"
 	 * @param newNode the new node

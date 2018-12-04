@@ -831,4 +831,13 @@ public class XMLElement implements Element{
 		completePath = completePath +"/"+getPath();
 		return completePath ;
 	}
+
+	@Override
+	public Node removeChildren() {
+		NodeList listNodes = getChildNodes();
+		for (int i = 0; i < listNodes.getLength(); i++) {
+			removeNode(listNodes.item(i));
+		}
+		return this ;
+	}
 }

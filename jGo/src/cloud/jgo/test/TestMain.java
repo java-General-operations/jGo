@@ -1,7 +1,5 @@
 package cloud.jgo.test;
-
 import javax.xml.ws.spi.http.HttpHandler;
-
 import cloud.jgo.£;
 import cloud.jgo.£Func;
 import cloud.jgo.jjdom.JjDom;

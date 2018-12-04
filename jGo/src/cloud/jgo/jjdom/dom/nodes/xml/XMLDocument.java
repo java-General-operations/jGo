@@ -479,4 +479,12 @@ public class XMLDocument implements Document{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public Node removeChildren() {
+		NodeList listNodes = getChildNodes();
+		for (int i = 0; i < listNodes.getLength(); i++) {
+			removeNode(listNodes.item(i));
+		}
+		return this ;
+	}
 }

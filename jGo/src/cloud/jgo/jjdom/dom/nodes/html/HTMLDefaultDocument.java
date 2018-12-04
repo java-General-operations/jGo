@@ -330,16 +330,10 @@ public class HTMLDefaultDocument implements HTMLDocument{
 
 	// questo metodo deve essere ricorsivo
 	// e mi deve restituire l'elemento eliminato
-	
-	
-	
 	@Override
 	public Node removeNode(Node node) {
-		
 		// qui come nodo ci passo il documento
-	
 		return Recursion.removeNode(node,this);
-	
 	}
 	
 	@Override
@@ -1042,5 +1036,14 @@ public class HTMLDefaultDocument implements HTMLDocument{
 			}
 		}
 		return flag ;
+	}
+
+	@Override
+	public Node removeChildren() {
+		NodeList listNodes = getChildNodes();
+		for (int i = 0; i < listNodes.getLength(); i++) {
+			removeNode(listNodes.item(i));
+		}
+		return this ;
 	}
 }
