@@ -970,11 +970,7 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 				// oppure splittarlo per parameters
 				
 				if(rest.equals(LocalCommand.helpValue)){
-				
-					
 					// qui eseguo l'help
-					
-					
 					// qui devo prendere il comando
 					for (int i = 0; i < commands.size(); i++){
 						if(command.equals(commands.get(i).getCommand())){
@@ -982,13 +978,25 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 							break ; // qui posso uscire perchè il comando è senza params e lo abbiamo trovato
 						}
 					}
-					
-					
 //					// eseguo l'help solo se questo è sfruttabile
 //				   if(getCommand.hasInputHelpExploitable()){
 //					   getCommand.getHelpCommand().print();
-//				   }
-//				
+//			   }
+				}
+				else if(!rest.contains(Parameter.SEPARATOR)){
+					for (int i = 0; i < commands.size(); i++){
+						if(command.equals(commands.get(i).getCommand())){
+							getCommand = (LocalCommand) commands.get(i);
+							break ; // qui posso uscire perchè il comando è senza params e lo abbiamo trovato
+						}
+					}
+					if (getCommand!=null) {
+						// solo se il comando non ha un valore da input
+						// setto getCommand a null
+						if (!getCommand.hasInputValueExploitable()) {
+							getCommand = null ;
+						}
+					}
 				}
 				else{
 					

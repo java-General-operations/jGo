@@ -11,8 +11,6 @@ public static void main(String[] args) {
 	// bene adesso
 	// dobbiamo fare le seguenti cose 
 	/**
-	 * 1 verificare che non ci siano problemi con i parametri se c'è un comando con valore da input
-	 * 2 verificare se il caso di mandare un mex di avviso quando non si da il valore input del comando, come faccio con i parametri
 	 * 3 fare quello che ho fatto nel metodo executeInputCommand, quindi in tutti i metodi che eseguono i comandi e parametri
 	 * 4 creare il metodo che unisce un comando con parametro, questo è il lavoro di stamattina.
 	 */
@@ -33,9 +31,48 @@ public static void main(String[] args) {
 		}
 	});
 	
-	// quindi in questo caso, ho creato un comand con valore da input 
+	// aggiungo qualche parametro
+	
+	Parameter cdRoot,cdBack = null ;
+	
+	cdRoot = cd.addParam("root","return to root node");
+	cdBack = cd.addParam("back","return to previous node");
+	Parameter isCurrent = cd.addParam("is:current","verifica");
+	isCurrent.setInputValueExploitable(true);
+	
+	isCurrent.setExecution(new Execution() {
+		
+		@Override
+		public Object exec() {
+			// TODO Auto-generated method stub
+			System.out.println(isCurrent.getInputValue()+" is current node :bu");
+			return null ;
+		}
+	});
+	
+	cdRoot.setExecution(new Execution() {
+		
+		@Override
+		public Object exec() {
+			System.out.println("Sei ritornato nel nodo root");
+			return null ;
+		}
+	});
+	
+	cdBack.setExecution(new Execution() {
+		
+		@Override
+		public Object exec() {
+			// TODO Auto-generated method stub
+			System.out.println("Sei ritornato nel nodo precedente");
+			return null ;
+		}
+	});
 	
 	terminal.addCommand(cd);
+	
+	// cerchiamo altri metodi in cui adattare la situazione del comando con valore da input
+	
 	terminal.open();
 	
 }
