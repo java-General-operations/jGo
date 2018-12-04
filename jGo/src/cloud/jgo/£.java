@@ -167,7 +167,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
  * @version 1.0.7
    <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'> --><br>
     <!--Author : *** Marco Martire *** -->  
-     <img id='logo'src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo2.png' alt='logo jgo' style='float: left;margin-right:15px;'><br>
+     <img id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo' style='float: left;margin-right:15px;'><br>
    <h1 style='color: #282828;'>jGo<strong style='color: green;'>.cloud</strong></h1>
    <em>java General operations</em><br><br><br>
    <strong>Description :</strong><br> This class facilitates all the difficult tasks

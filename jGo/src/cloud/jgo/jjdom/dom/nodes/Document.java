@@ -1,8 +1,6 @@
 package cloud.jgo.jjdom.dom.nodes;
-
 import java.util.List;
 import java.util.Set;
-
 import cloud.jgo.jjdom.dom.Manipulable;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
@@ -19,7 +17,7 @@ public interface Document extends Node,Manipulable{
 	 * @param elementName the element name
 	 * @return the element
 	 */
-	public abstract Element createElement(String elementName);
+	public Element createElement(String elementName);
 	/**
 	 * This method returns the root element
 	 * @return the root element

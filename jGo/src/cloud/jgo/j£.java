@@ -61,7 +61,7 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  * @version 1.0.1
    <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'> --><br>
     <!--Author : *** Marco Martire *** -->  
-     <img id='logo'src='https://www.jgo.cloud/wp-content/uploads/2018/11/jgo2.png' alt='logo jgo' style='float: left;margin-right:15px;'><br>
+     <img id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo' style='float: left;margin-right:15px;'><br>
    <h1 style='color: #282828;'>jGo<strong style='color: green;'>.cloud</strong>/<a href='#'>Boosted</a></h1>
    <em>To be used as a <a href='https://maven.apache.org/'>Maven</a> dependency</em><br><br><br>
    <strong>Description :</strong><br> This class facilitates all the difficult tasks

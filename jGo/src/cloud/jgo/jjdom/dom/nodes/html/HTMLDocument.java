@@ -57,7 +57,7 @@ public interface HTMLDocument extends Document,Home{
 	 * @param type the element type
 	 * @return the element
 	 */
-	public abstract Element createElement(HTMLElement.HTMLElementType type);
+	public abstract HTMLElement createElement(HTMLElement.HTMLElementType type);
 	/**
 	 * This method creates a default element
 	 * @param type the element type

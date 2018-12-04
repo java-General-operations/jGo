@@ -128,3 +128,4 @@ oppure poter dare l'input anche ai comandi
 - ho creato il package definitivo : cloud.jgo.jjdom.dom.nodes.xml per i nodi XML.
 - ho creato l'interfaccia inputSettable per comandi e parametri
 - creato il metodo nell'interfaccia node, removeChildren
+- sto correggendo dei bugs relativi ai metodi (createElement()) del document.

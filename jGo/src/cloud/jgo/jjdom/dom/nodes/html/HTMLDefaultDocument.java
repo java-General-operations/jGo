@@ -349,10 +349,22 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		return Recursion.replaceChild(newNode, oldNode, this);
 	}
 
-	@Override
+	@Deprecated
 	public HTMLElement createElement(String elementName) {
-		HTMLElement element = new HTMLDefaultElement(elementName,this);
-		return element ;
+		HTMLElementType type = null ;
+		HTMLElementType[]types = HTMLElementType.availableTypes;
+		for (HTMLElementType htmlElementType : types) {
+			if (htmlElementType.toString().equals(elementName)) {
+				type = htmlElementType;
+				break;
+			}
+		}
+		if (type!=null) {
+			return createElement(type);
+		}
+		else{
+			return null ;
+		}
 	}
 	
 	// quindi partiamo prima a sviluppare questo metodo qui:
@@ -364,7 +376,7 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		HTMLElement element = null ;
 		for (int i = 0; i < HTMLElementType.availableTypes.length; i++) {
 			if (type.equals(HTMLElementType.availableTypes[i])) {
-				element = createElement(type.toString());
+				element = new HTMLDefaultElement(type.toString(),this);
 				((HTMLDefaultElement)element).setType(type);
 				break ;
 			}
