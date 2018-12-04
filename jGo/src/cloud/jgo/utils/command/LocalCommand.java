@@ -21,7 +21,6 @@
  * 
  */
 package cloud.jgo.utils.command;
-
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import cloud.jgo.£;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.Terminal;
@@ -54,6 +52,7 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 	private String inputValue = null;
 	private boolean inputValueExploitable = false ;
 	private static boolean inputHelpExploitable = false ;
+	private boolean merged = false ;
 	private Phase belongsTo = null ;
 	public void setBelongsTo(Phase belongsTo) {
 		this.belongsTo = belongsTo;
@@ -704,7 +703,6 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 					}
 					if (getCommand!=null) {
 						//2 passo : verifico se il comando ha un valore da input 
-						System.out.println("Ci entra #");
 						if (getCommand.hasInputValueExploitable()) {
 							// controllo se di fatto c'è un valore da input 
 							getCommand.setInputValue(rest);
@@ -964,8 +962,6 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 				// quindi devo prendere quello che c'è dopo il comando
 				int start = command.length();
 				String rest = inputCommand.substring(start).trim();
-				
-				
 				// okok ora qui devo controllare se il resto è uguale all'helps
 				// oppure splittarlo per parameters
 				
@@ -1028,12 +1024,8 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 						}
 					
 					}
-					
 					// ora qui dobbiamo in tanto far iterare la lista di entries
 					if(entries.size()>0){
-						
-						
-						
 						// qui per prima cosa devo individuare il comando
 						for (int i = 0; i < commands.size(); i++){
 							if(command.equals(commands.get(i).getCommand())){
@@ -1041,7 +1033,6 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 								break ; // qui posso uscire perchè il comando è senza params e lo abbiamo trovato
 							}
 						}
-						
 						if(getCommand!=null){
 							
 							boolean thereIsError = false ;
@@ -1261,5 +1252,4 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 		this.inputValueExploitable = exploitable;
 		getHelpCommand().reload(this);
 	}
-
 }

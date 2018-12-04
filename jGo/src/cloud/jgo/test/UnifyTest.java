@@ -7,29 +7,12 @@ import cloud.jgo.utils.command.terminal.LocalTerminal;
 
 public class UnifyTest {
 public static void main(String[] args) {
-	
-	// bene adesso
-	// dobbiamo fare le seguenti cose 
-	/**
-	 * 3 fare quello che ho fatto nel metodo executeInputCommand, quindi in tutti i metodi che eseguono i comandi e parametri
-	 * 4 creare il metodo che unisce un comando con parametro, questo è il lavoro di stamattina.
-	 */
-	
-	
+	//okok testerò meglio queste classi
+	// nello sviluppo di node4j, e cercherò anche
+	// di usare le fasi per rintracciare eventuali bugs
 	LocalTerminal terminal = new LocalTerminal();
 	
 	LocalCommand cd = new LocalCommand("cd","Changes the node");
-	cd.setInputValueExploitable(true);
-	cd.setExecution(new Execution() {
-		
-		@Override
-		public Object exec() {
-			
-			System.out.println("Path:"+cd.getInputValue());
-			cd.setInputValue(null);
-			return null ;
-		}
-	});
 	
 	// aggiungo qualche parametro
 	
@@ -68,12 +51,23 @@ public static void main(String[] args) {
 			return null ;
 		}
 	});
+	// mi creo un altro parametro 
+	
+	Parameter cdParam = cd.addParam("cd","changes the node");
+	cdParam.setInputValueExploitable(true);
+	cdParam.setExecution(new Execution() {
+		
+		@Override
+		public Object exec() {
+			System.out.println(cdParam.getInputValue());
+			return null ;
+		}
+	});
 	
 	terminal.addCommand(cd);
 	
 	// cerchiamo altri metodi in cui adattare la situazione del comando con valore da input
-	
+
 	terminal.open();
-	
 }
 }

@@ -145,5 +145,4 @@ public interface Command extends Executable,InputSettable{
 	 * @return the flag
 	 */
 	public abstract boolean hasAPhase();
-
 }

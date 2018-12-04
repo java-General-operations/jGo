@@ -126,5 +126,4 @@ oppure poter dare l'input anche ai comandi
 
 - sto ridefinendo i packages del dom (JjDom) - praticamente sto ridefinendo i nodi
 - ho creato il package definitivo : cloud.jgo.jjdom.dom.nodes.xml per i nodi XML.
-- ho creato il metodo merge nella classe Command
 - ho creato l'interfaccia inputSettable per comandi e parametri
