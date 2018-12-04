@@ -31,7 +31,7 @@ import cloud.jgo.utils.command.terminal.phase.Phase;
  * @author Martire91<br>
  * This class represents a terminal command
  */
-public interface Command extends Executable{
+public interface Command extends Executable,InputSettable{
 	/**
 	 * This method returns the command
 	 * @return the command
@@ -145,6 +145,5 @@ public interface Command extends Executable{
 	 * @return the flag
 	 */
 	public abstract boolean hasAPhase();
-	// version 1.0.7
-	public abstract void merge(Parameter parameter);
+
 }

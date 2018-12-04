@@ -28,8 +28,7 @@ import cloud.jgo.utils.command.execution.Execution;
  * @author Martire91<br>
  * This class represents a parameter
  */
-public abstract class Parameter implements cloud.jgo.utils.command.execution.Executable,Comparable<Parameter>{
-
+public abstract class Parameter implements cloud.jgo.utils.command.execution.Executable,Comparable<Parameter>,InputSettable{
 	private static final long serialVersionUID = 1L;
 	private Execution execution = null;
 	private Command parent = null;
@@ -50,6 +49,7 @@ public abstract class Parameter implements cloud.jgo.utils.command.execution.Exe
 	 * This method returns the parameter input value
 	 * @return the parameter input value
 	 */
+	@Override
 	public String getInputValue() {
 		return inputValue;
 	}
@@ -68,6 +68,7 @@ public abstract class Parameter implements cloud.jgo.utils.command.execution.Exe
 	 * This method sets the parameter input value
 	 * @param inputValue the parameter input value
 	 */
+	@Override
 	public void setInputValue(String inputValue) {
 		this.inputValue = inputValue;
 	}
@@ -76,6 +77,7 @@ public abstract class Parameter implements cloud.jgo.utils.command.execution.Exe
 	 * this method sets the value from exploitable input
 	 * @param exploitable the flag
 	 */
+	@Override
 	public void setInputValueExploitable(boolean exploitable){
 		this.inputValueExploitable = exploitable ;
 		// qui ricarico l'help del comando
@@ -86,6 +88,7 @@ public abstract class Parameter implements cloud.jgo.utils.command.execution.Exe
 	 * This method checks if the parameter has the input value exploitable
 	 * @return the flag
 	 */
+	@Override
 	public boolean hasInputValueExploitable(){
 		return this.inputValueExploitable ;
 	}

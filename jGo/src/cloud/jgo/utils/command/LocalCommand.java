@@ -51,8 +51,8 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 	private String command = null;
 	private Object sharedObject = null ;
 	private static String helpValue = "help"; 
-
-	private LocalCommand mergedCommand = null ;
+	private String inputValue = null;
+	private boolean inputValueExploitable = false ;
 	private static boolean inputHelpExploitable = false ;
 	private Phase belongsTo = null ;
 	public void setBelongsTo(Phase belongsTo) {
@@ -686,6 +686,37 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 				   }
 				
 				}
+				else if(!rest.contains(Parameter.SEPARATOR)){
+					// quindi qui ha validità solo se è richiesto un valore da input dal comando
+					// e gli viene fornito, perchè se non gli venisse fornito non si entrerebbe quià
+					// dentro
+					// qui dovrebbe entrare
+					// se si da un comando con 
+					// valore di input, non si possono aggiungere parametri
+					// quindi si presume che ci siano pochi comandi con valore da input
+					
+					// 1 passo : prendo il comando 
+					for (int i = 0; i < commands.size(); i++){
+						if(command.equals(commands.get(i).getCommand())){
+							getCommand = (LocalCommand) commands.get(i);
+							break ; // qui posso uscire perchè il comando è senza params e lo abbiamo trovato
+						}
+					}
+					if (getCommand!=null) {
+						//2 passo : verifico se il comando ha un valore da input 
+						System.out.println("Ci entra #");
+						if (getCommand.hasInputValueExploitable()) {
+							// controllo se di fatto c'è un valore da input 
+							getCommand.setInputValue(rest);
+							// eseguo il comando 
+							objectReturn =  getCommand.execute();
+							if (objectReturn!=null) {
+								commandReturnList.add(objectReturn);
+								objectReturn = commandReturnList ;
+							}
+						}
+					}
+				}
 				else{
 					
 					// devo qui prendere i parameters
@@ -716,12 +747,8 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 						}
 					
 					}
-					
 					// ora qui dobbiamo in tanto far iterare la lista di entries
 					if(entries.size()>0){
-						
-						
-						
 						// qui per prima cosa devo individuare il comando
 						for (int i = 0; i < commands.size(); i++){
 							if(command.equals(commands.get(i).getCommand())){
@@ -889,30 +916,15 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 												objectReturn = getParameter.execute();
 												commandReturnList.add(objectReturn);
 												objectReturn = commandReturnList ;
-											}
-											
-										}
-										
-										
-									}
-									
-									
-									
-								}
-								
-								
-							}
-							
-							
+											}	
+										}	
+									}	
+								}	
+							}	
 						}
-		
-					}
-					
-					
-				}
-				
+					}	
+				}	
 			}
-			
 			else if(split.length==1){
 				// non c'è niente dopo il comando,quindi qui posso eseguirlo tranquillamente
 				for (int i = 0; i < commands.size(); i++){
@@ -921,21 +933,11 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 						break ; // qui posso uscire perchè il comando è senza params e lo abbiamo trovato
 					}
 				}
-				
 				if(getCommand!=null){
-					if (getCommand.mergedCommand!=null) {
-						
-						// qui dobbiamo praticamente prendere
-						System.out.println("Ciao");
-						
-					}
-					else{
-						objectReturn =  getCommand.execute();
-					}
+					objectReturn =  getCommand.execute();
 					commandReturnList.add(objectReturn);
 					objectReturn = commandReturnList ;
 				}
-				
 			}
 		}
 		return (ArrayList<Object>) objectReturn ;
@@ -1231,7 +1233,25 @@ public class LocalCommand implements Command,Iterable<Entry<String, Parameter>>,
 		}
 	}
 	@Override
-	public void merge(Parameter parameter) {
-		mergedCommand = new LocalCommand(this.command+" -"+parameter.getParam(),null);
+	public String getInputValue() {
+		// TODO Auto-generated method stub
+		return this.inputValue ;
 	}
+	@Override
+	public void setInputValue(String inputValue) {
+		// TODO Auto-generated method stub
+		this.inputValue = inputValue ;
+	}
+	@Override
+	public boolean hasInputValueExploitable() {
+		// TODO Auto-generated method stub
+		return this.inputValueExploitable;
+	}
+	@Override
+	public void setInputValueExploitable(boolean exploitable) {
+		// TODO Auto-generated method stub
+		this.inputValueExploitable = exploitable;
+		getHelpCommand().reload(this);
+	}
+
 }
