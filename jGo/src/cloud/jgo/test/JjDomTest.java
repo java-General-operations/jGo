@@ -8,10 +8,6 @@ import cloud.jgo.jjdom.jquery.jQueryfunction;
 
 public class JjDomTest {
 public static void main(String[] args) {
-	// concludere questa versione di JjDom con il metodo is
-	// 2 : creare i nuovi metodi jquery
-	// 3 : completare il dom xml, quindi aggiungere i metodi per salvare/serializzare il file
-	
 	
 	JjDom.newDocument().useDoctype(true).setMinimalTags().home().jqueryInit();
 	
