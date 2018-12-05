@@ -20,6 +20,7 @@ public static void main(String[] args) {
 	Element contacts,contact,email,tel ;
 	
 	projectName = document.createElement("project.name");
+	projectName.setAttribute("id","project-name");
 	projectVersion = document.createElement("project.version");
 	projectUrl = document.createElement("project.product");
 	contacts = document.createElement("contacts");
@@ -44,22 +45,9 @@ public static void main(String[] args) {
 	
 	// sappiamo che è solo una configurazione di un progetto
 	
+	Element el = document.getElementById("project-name");
 	
-	Element rootElement = document.getElementsByTag("wasp.project").element();
-
-	
-	// okok adesso voglio ottenere i dati 
-	Element name,version,url,email_,tel_ ;
-	
-	name = rootElement.getElementsByTag("project.name").element();
-	version = rootElement.getElementsByTag("project.version").element();
-	url = rootElement.getElementsByTag("project.product").element();
-	
-	email_ = rootElement.getElementsByTag("contacts").element().getElementsByTag("contact").element().getElementsByTag("email").element();
-	
-	tel_ = rootElement.getElementsByTag("contacts").element().getElementsByTag("contact").element().getElementsByTag("tel").element();
-	
-	System.out.println(tel_.getTextContent());
+	System.out.println(el.getMarkup());
 	
 	
 }

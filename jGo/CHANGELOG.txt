@@ -132,5 +132,6 @@ a gli elementi html, quindi aggiornare jjdom alla prossima versione
 - Ho aggiunto due nuovi metodi nella classe HTMLElement:show and hide
 - aggiungo un nuovo metodo per ottenere le props css da un elemento
 - Ho ridefinito i metodi per aggiungere le proprietà css agli elementi
-- Creare un metodo che controlla se un determinato elemento ha
+- Creato un metodo che controlla se un determinato elemento ha
 una data proprietà css
+- Creare un metodo getElementsByName() nell'interfaccia Manipulable

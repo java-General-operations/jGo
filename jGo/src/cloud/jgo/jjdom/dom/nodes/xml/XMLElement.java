@@ -582,6 +582,11 @@ public class XMLElement implements Element{
 		// TODO Auto-generated method stub
 		return Recursion.examinesForTag(tagName,this);
 	}
+	@Override
+	public Elements getElementsByName(String name) {
+		// TODO Auto-generated method stub
+		return Recursion.examinesForName(name, this);
+	}
 
 	@Override
 	public Elements getElementsByClassName(String className) {

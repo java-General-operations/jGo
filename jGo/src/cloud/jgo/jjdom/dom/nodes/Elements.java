@@ -339,5 +339,20 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 			}
 		}
 		return found ;
+	}
+	@Override
+	public Elements getElementsByName(String name) {
+		Elements found = new Elements();
+		for (Element el:this) {
+			Elements newList = Recursion.examinesForName(name, el);
+			if (newList!= null) {
+				for (int i = 0; i < newList.size(); i++) {
+					if (!found.contains(newList.get(i))) {
+						found.add(newList.get(i));
+					}
+				}
+			}
+		}
+		return found ;
 	}	
 }

@@ -417,6 +417,10 @@ public class XMLDocument implements Document{
 		return Recursion.examinesForTag(tagName,this);
 	}
 	@Override
+	public Elements getElementsByName(String name) {
+		return Recursion.examinesForName(name, this);
+	}
+	@Override
 	public Elements getElementsByClassName(String className) {
 		// TODO Auto-generated method stub
 		return Recursion.examinesForClass(className,this);

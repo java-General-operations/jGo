@@ -45,6 +45,8 @@ public interface Manipulable {
 	 * @return the found elements
 	 */
 	public abstract Elements getElementsByTag(String tagName);
+	// version 1.0.7
+	public abstract Elements getElementsByName(String name);
 	/**
 	 * This method gets the elements by class
 	 * @param className the class name

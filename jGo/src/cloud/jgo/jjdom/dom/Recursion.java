@@ -251,11 +251,6 @@ public abstract class Recursion {
 		}
 		return buffer.toString();
 	}
-	
-	
-	
-	
-	
 	private static Element found = null ;
 	// continuare da qui, facendo un metodo ricorsivo che mi fa ottenere 
 	// un elemento tramite id
@@ -373,8 +368,6 @@ public abstract class Recursion {
 		return elements ;
 		
 	}
-	
-	
 	private static void helpForTag(String tagName,Node node){
 		NodeList listNodes = node.getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
@@ -391,16 +384,55 @@ public abstract class Recursion {
 	 * @
 	 */
 	
+	/*
+	 * Name fino a @
+	 */
 	
+	private static Elements nameListNodes = new Elements();
 	
-	
-	
+	public static Elements examinesForName(String name,Node node){
+		// chiamo il metodo di supporto
+		
+		helpForTag(name, node);
+
+		
+		// qui poi aggiornare con una costante apposita
+		
+		Elements elements = nameListNodes;
+		
+		// reinizializzo di nuovo la variabile statica
+		
+		nameListNodes = new Elements();
+		
+		// restituisco la copia della lista 
+		
+		return elements ;
+		
+	}
+	private static void helpForName(String name,Node node){
+		NodeList listNodes = node.getChildNodes();
+		for (int i = 0; i < listNodes.getLength(); i++) {
+			Node currentNode = listNodes.item(i);
+			if (currentNode.getNodeType().equals(NodeType.ELEMENT)) {
+				Element element = (Element) currentNode ;
+				if (element.isPresent("name")) {
+					String currentName = element.getAttributeValue("name");
+					if (name.equals(currentName)) {
+						nameListNodes.add(element);
+					}
+				}
+			}
+			// ricorsività
+			helpForName(name, currentNode);
+		}
+	}
+	/*
+	 * @
+	 */
 	/*
 	 * TAG fino a @
 	 */
-	
 	private static Elements typeListNodes = new Elements();
-	
 	public static Elements examinesForType(HTMLElementType type,Node node){
 		
 		// chiamo il metodo di supporto

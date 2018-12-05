@@ -703,6 +703,11 @@ public class HTMLDefaultElement implements HTMLElement{
 		// TODO Auto-generated method stub
 		return Recursion.examinesForTag(tagName,this);
 	}
+	@Override
+	public Elements getElementsByName(String name) {
+		// TODO Auto-generated method stub
+		return Recursion.examinesForName(name, this);
+	}
 	
 	@Override
 	public Elements getDirectChildrenByTag(String tagName) {
