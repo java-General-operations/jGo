@@ -128,3 +128,4 @@ a gli elementi html, quindi aggiornare jjdom alla prossima versione
 - ho creato l'interfaccia inputSettable per comandi e parametri
 - creato il metodo nell'interfaccia node, removeChildren
 - sto correggendo dei bugs relativi ai metodi (createElement()) del document.
+- Ho aggiunto una nuova semplicissima classe: jQuerySelector

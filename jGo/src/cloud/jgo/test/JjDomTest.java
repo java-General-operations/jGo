@@ -1,11 +1,9 @@
 package cloud.jgo.test;
-
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.jquery.Event;
 import cloud.jgo.jjdom.jquery.jQueryfunction;
-
 public class JjDomTest {
 public static void main(String[] args) {
 	
@@ -54,6 +52,5 @@ public static void main(String[] args) {
     // cancello tutti i figli di body 
 	
 	JjDom.printDocumentMarkup();
-
 }
 }
