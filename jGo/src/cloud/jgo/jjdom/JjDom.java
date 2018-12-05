@@ -3954,44 +3954,55 @@ public final class JjDom implements jQuerySupport, Serializable{
 	public boolean is(jQuerySelector jquerySelector) {
 		// TODO Auto-generated method stub
 		boolean is = false ;
-		switch(jquerySelector){
-		case VISIBLE:
-			for (Element element:elements) {
-				HTMLElement cast = (HTMLElement)element;
-				if (cast.hasCssProp("display")) {
-					String value = cast.getCssPropValue("display");
-					if (value.equals("none")) {
-						is = false ;
+		if (jqueryIsSet()) {
+			switch(jquerySelector){
+			case VISIBLE:
+				for (Element element:elements) {
+					HTMLElement cast = (HTMLElement)element;
+					if (cast.hasCssProp("display")) {
+						String value = cast.getCssPropValue("display");
+						if (value.equals("none")) {
+							is = false ;
+						}
+						else{
+							is = true ;
+							break ;
+						}
 					}
 					else{
-						is = true ;
-						break ;
-					}
-				}
-				else{
-					is = true ; 
-					break;
-				}
-			}
-			break ;
-		case HIDDEN:
-			for (Element element:elements) {
-				HTMLElement cast = (HTMLElement)element;
-				if (cast.hasCssProp("display")) {
-					String value = cast.getCssPropValue("display");
-					if (value.equals("none")) {
-						is = true ;
+						is = true ; 
 						break;
 					}
+				}
+				break ;
+			case HIDDEN:
+				for (Element element:elements) {
+					HTMLElement cast = (HTMLElement)element;
+					if (cast.hasCssProp("display")) {
+						String value = cast.getCssPropValue("display");
+						if (value.equals("none")) {
+							is = true ;
+							break;
+						}
+						else{
+							is = false ;
+						}
+					}
 					else{
 						is = false ;
 					}
 				}
-				else{
-					is = false ;
-				}
+				break;
 			}
-			break;
+		}
+		else
+		{
+			try {
+				throw new jQueryNotInitializedException();
+			} catch (jQueryNotInitializedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return is;
 	}
