@@ -99,6 +99,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -134,6 +135,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
+
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
@@ -142,6 +144,9 @@ import cloud.jgo.file_manager.JFileView;
 import cloud.jgo.io.jon.JON;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.function;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultDocument;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 import cloud.jgo.net.Server;
 import cloud.jgo.net.ServerTypes;
 import cloud.jgo.net.config.Configuration;
@@ -1212,6 +1217,22 @@ public class £{
 	 */
 	public static LocalTerminal createCustomTerminal(){
 		return new LocalTerminal();
+	}
+	//version 1.0.7
+	public static HTMLDocument createDocument(){
+		return JjDom.newDocument();
+	}
+	// version 1.0.7
+	public static HTMLDocument createDocument(String charsetName,JjDom home){
+		return new HTMLDefaultDocument(charsetName,null,home);
+	}
+	//version 1.0.7
+	public static XMLDocument createDocument(String rootElementName){
+		return new XMLDocument(rootElementName);
+	}
+	// version 1.0.7
+	public static XMLDocument createDocument(String charsetName,String rootElementName){
+		return new XMLDocument(charsetName, rootElementName);
 	}
 	
 	

@@ -138,3 +138,4 @@ una data proprietà css
 - aggiunto il metodo save in JjDom che specifica il document
 - aggiunto il metodo serializle in JjDom che specifica il document
 - modificato metodo deserializes, in modo tale che restituisca un Document + generico
+- aggiunti tutta una serie di override createDocument() al punto di accesso jGo.
