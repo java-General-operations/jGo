@@ -1,13 +1,16 @@
 package cloud.jgo.test;
 import cloud.jgo.jjdom.JjDom;
+import static cloud.jgo.jjdom.JjDom.$;
 import cloud.jgo.jjdom.dom.nodes.Element;
+import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.jquery.Event;
+import cloud.jgo.jjdom.jquery.jQuerySelector;
 import cloud.jgo.jjdom.jquery.jQueryfunction;
 public class JjDomTest {
-public static void main(String[] args) {
+public static void main(String[] args) throws InterruptedException {
 	
-	JjDom.newDocument().useDoctype(true).setMinimalTags().home().jqueryInit();
+JjDom.newDocument().useDoctype(true).setMinimalTags().home().jqueryInit();
 	
 	// aggiungo gli elementi 
 	
@@ -34,9 +37,7 @@ public static void main(String[] args) {
 	link.setTextContent("1 link");
 	link2.setTextContent("2 link");
 	link3.setTextContent("3 link");
-	
-	
-	
+
 	// imposto gli id dei divs
 	divLinks.setAttribute("id","links-div");
 	divParags.setAttribute("id","parags-div");		
@@ -51,6 +52,6 @@ public static void main(String[] args) {
 	
     // cancello tutti i figli di body 
 	
-	JjDom.printDocumentMarkup();
+	
 }
 }

@@ -41,7 +41,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -65,6 +67,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
 import cloud.jgo.jjdom.jquery.Event;
 import cloud.jgo.jjdom.jquery.jQueryNotInitializedException;
+import cloud.jgo.jjdom.jquery.jQuerySelector;
 import cloud.jgo.jjdom.jquery.jQuerySupport;
 import cloud.jgo.jjdom.jquery.jQueryfunction;
 import cloud.jgo.net.tcp.http.headers.Header;
@@ -269,6 +272,15 @@ public final class JjDom implements jQuerySupport, Serializable{
 	private static String urlFileName = null ;
 	private static String urlDirName = null ;
 	private static String urlOnlyFileName = null ;
+	/**
+	 * version 1.0.7
+	 */
+	public static List<jQuerySelector>availableSelectors = new ArrayList<jQuerySelector>();
+	static{
+		// init-list
+		availableSelectors.add(jQuerySelector.VISIBLE);
+		availableSelectors.add(jQuerySelector.HIDDEN);
+	}
 	private JjDom(){} 
 	/**
 	 * 
@@ -1153,6 +1165,17 @@ public final class JjDom implements jQuerySupport, Serializable{
 			// riportiamo a false selectedDocument per questioni di sicurezza
 			selectedDocument = false ;
 			// qui subentra il selettore
+			/*
+			 * da qui a @ - for version 1.0.8
+			 */
+			
+			// qui controlliamo che non si tratti di una selettore jquery
+			
+			
+			
+			/*
+			 * @
+			 */
 						if (selector!=null) {
 							currentSelection = selector.select(selection);
 							elements = currentSelection.getSelectedItems();
@@ -3909,5 +3932,65 @@ public final class JjDom implements jQuerySupport, Serializable{
 			}
 		}
 		return inst ;
+	}
+	@Override
+	public boolean is(jQuerySelector jquerySelector) {
+		// TODO Auto-generated method stub
+		boolean is = false ;
+		final String jsCode = ".is(':"+jquerySelector.name().toLowerCase()+"');";
+		switch(jquerySelector){
+		case VISIBLE:
+			executeMethod(jsCode);
+			for (Element element:elements) {
+				System.out.println("Elemento :"+element.getNodeName()+" ...");
+				System.out.println("Si sta controllando la presenza dell'attributo - display ...");
+				if (element.isPresent("display")) {
+					System.out.println("L'attributo è contenuto");
+					String value = element.getAttributeValue("display");
+					System.out.println("Sto verificando il valore dell'attributo ...");
+					if (value.equals("none")) {
+						is = false ;
+						System.out.println("Il valore è :"+value+" - quindi non è visibile");
+					}
+					else{
+						System.out.println("Il valore è :"+value+" - quindi si può uscire dal ciclo, tutto bene @");
+						is = true ;
+						break ; // qui possiamo uscire, perchè anche se uno degli elementi corrisponde, restituisce true
+					}
+				}
+				else{
+					System.out.println("L'attributo non è contenuto, quindi l'elemento è visibile @ - si esce dal ciclo");
+					is = true ;
+					break ; // anche qui la stessa cosa 
+				}
+			}
+			System.out.println("Ciclo terminato @");
+			break ;
+		case HIDDEN:
+			executeMethod(jsCode);
+			break;
+		case SELECTED:
+			
+			break;
+		}
+		return is;
+	}
+
+	@Override
+	public boolean is(String selector) {
+		jQuerySelector selector_ = null ;
+		if (selector.startsWith(":")) {
+			selector = selector.replace(":","");
+		}
+		for (jQuerySelector jQuerySelector : availableSelectors) {
+			if (selector.equals(jQuerySelector.name().toLowerCase())) {
+				selector_ = jQuerySelector;
+				break;
+			}
+		}
+		if (selector_!=null) {
+			return is(selector_);
+		}
+		return false ;
 	}	
 }
