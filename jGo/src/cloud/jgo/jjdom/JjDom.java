@@ -3937,39 +3937,20 @@ public final class JjDom implements jQuerySupport, Serializable{
 	public boolean is(jQuerySelector jquerySelector) {
 		// TODO Auto-generated method stub
 		boolean is = false ;
-		final String jsCode = ".is(':"+jquerySelector.name().toLowerCase()+"');";
 		switch(jquerySelector){
 		case VISIBLE:
-			executeMethod(jsCode);
 			for (Element element:elements) {
-				System.out.println("Elemento :"+element.getNodeName()+" ...");
-				System.out.println("Si sta controllando la presenza dell'attributo - display ...");
-				if (element.isPresent("display")) {
-					System.out.println("L'attributo è contenuto");
-					String value = element.getAttributeValue("display");
-					System.out.println("Sto verificando il valore dell'attributo ...");
-					if (value.equals("none")) {
-						is = false ;
-						System.out.println("Il valore è :"+value+" - quindi non è visibile");
-					}
-					else{
-						System.out.println("Il valore è :"+value+" - quindi si può uscire dal ciclo, tutto bene @");
-						is = true ;
-						break ; // qui possiamo uscire, perchè anche se uno degli elementi corrisponde, restituisce true
-					}
+				if (element.isPresent("style")) {
+					
+					
 				}
 				else{
-					System.out.println("L'attributo non è contenuto, quindi l'elemento è visibile @ - si esce dal ciclo");
+					// non l'attributo quindi do per scontato che sia visibile
 					is = true ;
-					break ; // anche qui la stessa cosa 
 				}
 			}
-			System.out.println("Ciclo terminato @");
 			break ;
 		case HIDDEN:
-			executeMethod(jsCode);
-			break;
-		case SELECTED:
 			
 			break;
 		}

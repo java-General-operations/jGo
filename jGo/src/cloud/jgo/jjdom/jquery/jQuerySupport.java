@@ -124,7 +124,7 @@ public interface jQuerySupport {
     public abstract HTMLElement first();
     public abstract HTMLElement last();
     public abstract JjDom find(String selection); // this method works with the dom
-    // version 1.0.7
+    // version 1.0.7 - segnalare che lavora solo sul dom
     public abstract boolean is(jQuerySelector jquerySelector);
     public abstract boolean is(String selector);
     // poi qui fare altri override del metodo ... - version 1.0.8

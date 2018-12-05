@@ -26,6 +26,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import javax.swing.JOptionPane;
+
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
@@ -1040,15 +1043,41 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 
 	@Override
-	public HTMLElement addCssProps(String cssProps) {
+	public HTMLElement addCssProps(String... cssProps) {
+		for (int i = 0; i < cssProps.length; i++) {
+			String cssProp = cssProps[i];
+			addCssProp(cssProp);
+		}
+		return this ;
+	}
+	
+	@Override
+	public HTMLElement addCssProp(String cssProp) {
 		if (isPresent("style")) {
-			
 			// prendo il valore attuale css
+			String property = cssProp.substring(0,cssProp.indexOf(":")).trim();
 			String attrValue = getAttributeValue("style");
-			return replaceAttributeValue("style",attrValue+cssProps);
+			// faccio splittare le proprietà
+			boolean notExist = true ;
+			String[]split = attrValue.split(";");
+			for (int i = 0; i < split.length; i++) {
+				String prop,value ;
+				prop = split[i].substring(0,split[i].indexOf(":")).trim();
+				value = split[i].substring(split[i].indexOf(":")).replace(":","").trim();
+				if (prop.equals(property)) {
+					attrValue = attrValue.replace(split[i]+";",cssProp);
+					setAttribute("style",attrValue);
+					notExist = false ;
+					break;
+				}
+			}
+			if (notExist) {
+				return replaceAttributeValue("style",attrValue+cssProp);
+			}
+			return this ;
 		}
 		else{
-			return setAttribute("style",cssProps);
+			return setAttribute("style",cssProp);
 		}
 	}
 
@@ -1149,5 +1178,43 @@ public class HTMLDefaultElement implements HTMLElement{
 			i-- ;
 		}
 		return this ;
+	}
+	@Override
+	public HTMLElement hide() {
+		return setAttribute("style","display: none");
+	}
+	@Override
+	public HTMLElement show() {
+		// TODO Auto-generated method stub
+		return setAttribute("style","display: block");
+	}
+	@Override
+	public String getCssPropValue(String onlyProp) {
+		String prop = getCssProp(onlyProp);
+		if (prop!=null) {
+			int index = prop.indexOf(":");
+			return prop.substring(index).replace(":","").trim();
+		}
+		else{
+			return null ;
+		}
+	}
+	@Override
+	public String getCssProp(String onlyProp) {
+		String prop = null ;
+		if (isPresent("style")) {
+			String attrValue = getAttributeValue("style");
+			String[]split = attrValue.split(";");
+			for (int i = 0; i < split.length; i++) {
+				String _prop_,_value_ = null ;
+				_prop_= split[i].substring(0,split[i].indexOf(":")).trim();
+				_value_= split[i].substring(split[i].indexOf(":")).replace(":","").trim();
+				if (_prop_.equals(onlyProp)) {
+					prop = split[i];
+					break; // trovata
+				}
+			}
+		}
+		return prop ;
 	}
 }

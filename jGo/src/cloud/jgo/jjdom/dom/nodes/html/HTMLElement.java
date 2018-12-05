@@ -92,7 +92,14 @@ public interface HTMLElement extends Element,Home{
 	 * @param cssProps css property
 	 * @return the element on which the method was invoked
 	 */
-	public abstract HTMLElement addCssProps(final String cssProps); // css inline
+	public abstract HTMLElement addCssProps(String...cssProps); // css inline
+	// version 1.0.7
+	public abstract HTMLElement addCssProp(final String cssProp);
+	public abstract String getCssPropValue(String onlyProp);
+	public abstract String getCssProp(String onlyProp);
+	// version 1.0.7 : lavorano solo a livello dom
+	public abstract HTMLElement hide();
+	public abstract HTMLElement show();
 	/**
 	 * 
 	 * @author Martire91<br>

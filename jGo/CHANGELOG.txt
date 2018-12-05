@@ -129,3 +129,6 @@ a gli elementi html, quindi aggiornare jjdom alla prossima versione
 - creato il metodo nell'interfaccia node, removeChildren
 - sto correggendo dei bugs relativi ai metodi (createElement()) del document.
 - Ho aggiunto una nuova semplicissima enum: jQuerySelector
+- Ho aggiunto due nuovi metodi nella classe HTMLElement:show and hide
+- aggiungo un nuovo metodo per ottenere le props css da un elemento
+- Ho ridefinito i metodi per aggiungere le proprietà css agli elementi
