@@ -57,6 +57,7 @@ import cloud.jgo.jjdom.css.NoSelectorSetException;
 import cloud.jgo.jjdom.css.concrete.CSSSimpleSelector;
 import cloud.jgo.jjdom.dom.Manipulable;
 import cloud.jgo.jjdom.dom.Recursion;
+import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
@@ -515,20 +516,14 @@ public final class JjDom implements jQuerySupport, Serializable{
 		// controllo se siamo connessi
 		JjDom inst = null ;
 		if (isConnected()) {
-			
 			// 1 passo : salvo il documento file
 			save(urlOnlyFileName);
-			
 			// 2 passo :serializzo
 			File serFile = new File(urlOnlyFileName.replace(".html",SERIALIZATION_FORMAT));
-			serializle(serFile);
-			
+			serializes(serFile);
 			// ora devo eliminare questi dati nel server 
-			
 			String urlResource = getUrlWithoutProto(JjDom.documentURL);
-			
 			// elimino il primo file 
-			
 			try {
 				ftp_client.deleteFile(urlResource);
 				ftp_client.deleteFile(urlResource.replace(".html",SERIALIZATION_FORMAT));
@@ -545,9 +540,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 			// mi assicuro che siamo sulla cartella giusta per il caricamento
-			
 			try {
 				ftp_client.changeDirectory("/");
 				ftp_client.changeDirectory(urlDirName);
@@ -650,8 +643,8 @@ public final class JjDom implements jQuerySupport, Serializable{
 				// 5 passo : devo creare i files e caricarli 
 				File htmlFile = new File(onlyName);
 				File serFile = new File(onlyName.replace(".html",JjDom.SERIALIZATION_FORMAT));
-				save(htmlFile); // salvo il sorgente html
-				serializle(serFile); // serializzo
+				save(htmlFile,JjDom.document); // salvo il sorgente html
+				serializes(serFile); // serializzo
 				
 				// okok carico i files in maniera spensierata - suppongo 
 				
@@ -777,7 +770,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 * @param file the file destination
 	 * @return the Jjdom instance
 	 */
-	public static JjDom save(File file){
+	public static JjDom save(File file,Document document){
 		£.writeFile(file, false,new String[]{document.getMarkup()});
 		return instance ;
 	}
@@ -788,7 +781,16 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 * @return the Jjdom instance
 	 */
 	public static JjDom save(String fileName){
-		return save(new File(fileName));
+		return save(new File(fileName),JjDom.document);
+	}
+	/**
+	 * This method saves the document in the file
+	 * @param fileName the file name
+	 * @param document the document
+	 * @return the Jjdom instance
+	 */
+	public static JjDom save(String fileName,Document document){
+		return save(new File(fileName),document);
 	}
 	// questo metodo continua il metodo connect
 	// ad una risorsa tipo una cartella, e qui diamo
@@ -851,11 +853,10 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 * @param fileName the file name
 	 * @return the html document
 	 */
-	public static HTMLDocument deserializes(String fileName){
+	public static Document deserializes(String fileName){
 		File file = £.fl(fileName);
 		if (file.exists()) {
-			JjDom.document = £.deserializes(file);
-			return JjDom.document ;
+			return £.deserializes(file);
 		}
 		else{
 			return null ;
@@ -882,10 +883,26 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 * @param fileName the file name
 	 * @return the JjDom instance
 	 */
-	public static JjDom serializle(String fileName){
+	public static JjDom serializes(String fileName){
 		
 		File serFile = £.serializes(document, fileName);
 		
+		if (serFile!=null) {
+			return instance;
+		}
+		else{
+			return null ;
+		}
+	}
+	// version 1.0.7
+	/**
+	 * This method serializes the object/html document
+	 * @param fileName the file name
+	 * @param document the document
+	 * @return the JjDom instance
+	 */
+	public static JjDom serializes(String fileName,Document document){
+		File serFile = £.serializes(document, fileName);
 		if (serFile!=null) {
 			return instance;
 		}
@@ -899,7 +916,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 * @param file the file
 	 * @return the JjDom instance
 	 */
-	public static JjDom serializle(File file){
+	public static JjDom serializes(File file){
 		£.serializes(document, file);
 		return instance ;
 	}

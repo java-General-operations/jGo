@@ -6,8 +6,6 @@ import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 
-
-
 public class XMLTest {
 public static void main(String[] args) {
 	
@@ -46,12 +44,9 @@ public static void main(String[] args) {
 	contacts.appendChild(contact);
 	document.getRootElement().appendChilds(projectName,projectVersion,projectUrl,contacts);
 	
-	// in fine voglio aggiungere un commento 
+	JjDom.serializes("doc.ser", document);
 	
-	Comment comment = document.createComment("Fine del documento");
-	document.getRootElement().appendChild(comment);
-	
-	document.printMarkup();
+	System.out.println("File memorizzato @");
 	
 	
 }

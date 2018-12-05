@@ -135,3 +135,6 @@ a gli elementi html, quindi aggiornare jjdom alla prossima versione
 - Creato un metodo che controlla se un determinato elemento ha
 una data proprietà css
 - Creare un metodo getElementsByName() nell'interfaccia Manipulable
+- aggiunto il metodo save in JjDom che specifica il document
+- aggiunto il metodo serializle in JjDom che specifica il document
+- modificato metodo deserializes, in modo tale che restituisca un Document + generico
