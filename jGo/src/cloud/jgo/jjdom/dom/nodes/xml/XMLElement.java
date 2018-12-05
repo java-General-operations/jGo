@@ -76,8 +76,8 @@ public class XMLElement implements Element{
 			if (node instanceof XMLElement) {
 				((XMLElement)node).setParentNode(this);
 			}
-			else if(node instanceof XMLComment){
-				((XMLComment)node).setParentNode(this);
+			else if(node instanceof Comment){
+				((HTMLComment)node).setParentNode(this);
 			}
 			return  node ;
 		}
@@ -309,7 +309,7 @@ public class XMLElement implements Element{
 				((XMLElement)node).setParentNode(this);
 			}
 			else if(node instanceof Comment){
-				((XMLComment)node).setParentNode(this);
+				((HTMLComment)node).setParentNode(this);
 			}	
 	}
 
@@ -414,7 +414,7 @@ public class XMLElement implements Element{
 							((XMLElement)newNode).setParentNode(this);
 						}
 						else if(newNode instanceof Comment){
-							((XMLComment)newNode).setParentNode(this);
+							((HTMLComment)newNode).setParentNode(this);
 						}
 						this.childNodes.addFirstNode(newNode);
 					}
@@ -430,7 +430,7 @@ public class XMLElement implements Element{
 							((XMLElement)newNode).setParentNode(this);
 						}
 						else if(newNode instanceof Comment){
-							((XMLComment)newNode).setParentNode(this);
+							((HTMLComment)newNode).setParentNode(this);
 						}
 						previousNode = this.childNodes.setNode(index,newNode);
 						// essendo che lo abbiamo sostituito, ora dobbiamo permettere
@@ -467,19 +467,18 @@ public class XMLElement implements Element{
 						((XMLElement)newNode).setParentNode(this);
 					}
 					else if(newNode instanceof Comment){
-						((XMLComment)newNode).setParentNode(this);
+						((HTMLComment)newNode).setParentNode(this);
 					}
 					this.childNodes.addNode(newNode);
 				}
 				else{
 					Node followingNode = this.childNodes.item(index);
-					
 					// sostituisco 
 					if (newNode instanceof Element) {
 						((XMLElement)newNode).setParentNode(this);
 					}
 					else if(newNode instanceof Comment){
-						((XMLComment)newNode).setParentNode(this);
+						((HTMLComment)newNode).setParentNode(this);
 					}
 					followingNode = this.childNodes.setNode(index, newNode);
 					// recursive 

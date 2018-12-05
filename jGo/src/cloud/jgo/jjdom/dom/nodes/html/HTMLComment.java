@@ -59,7 +59,9 @@ public class HTMLComment implements Comment,Home{
 		this.endTag = "-->";
 		this.childNodes = new NodeList();
 		this.document = document ;
-		this.home = ((HTMLDocument)this.document).home();
+		if (this.document instanceof HTMLDocument) {
+			this.home = ((HTMLDocument)this.document).home();
+		}
 	}
 	
 	// restituisce - 1 se non trova l'indice

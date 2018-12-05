@@ -1,5 +1,6 @@
 package cloud.jgo.test;
 import cloud.jgo.jjdom.JjDom;
+import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Elements;
@@ -20,13 +21,17 @@ public static void main(String[] args) {
 	Element contacts,contact,email,tel ;
 	
 	projectName = document.createElement("project.name");
-	projectName.setAttribute("id","project-name");
 	projectVersion = document.createElement("project.version");
 	projectUrl = document.createElement("project.product");
 	contacts = document.createElement("contacts");
 	contact = document.createElement("contact");
 	email = document.createElement("email");
 	tel = document.createElement("tel");
+	
+	// aggiungo qualche nome 
+	projectName.setAttribute("name","project");
+	projectVersion.setAttribute("name","project");
+	projectUrl.setAttribute("name","project");
 	
 	// aggiungo i testi 
 	
@@ -41,13 +46,12 @@ public static void main(String[] args) {
 	contacts.appendChild(contact);
 	document.getRootElement().appendChilds(projectName,projectVersion,projectUrl,contacts);
 	
-	// okok ora dobbiamo concentrarci sul reperimento degli elementi 
+	// in fine voglio aggiungere un commento 
 	
-	// sappiamo che è solo una configurazione di un progetto
+	Comment comment = document.createComment("Fine del documento");
+	document.getRootElement().appendChild(comment);
 	
-	Element el = document.getElementById("project-name");
-	
-	System.out.println(el.getMarkup());
+	document.printMarkup();
 	
 	
 }

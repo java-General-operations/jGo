@@ -46,7 +46,6 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
-import cloud.jgo.jjdom.dom.nodes.xml.XMLComment;
 import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 import cloud.jgo.jjdom.dom.nodes.xml.XMLElement;
 /**
@@ -177,7 +176,7 @@ public abstract class Recursion {
 				 xmlCode.append(((XMLElement)node).getStartTag());
 			}
 			else if(node.getNodeType().equals(NodeType.COMMENT)){
-				xmlCode.append(((XMLComment)node).getStartTag());
+				xmlCode.append(((HTMLComment)node).getStartTag());
 			}
 			xmlCode.append(node.getTextContent());
 		}
@@ -199,8 +198,8 @@ public abstract class Recursion {
 		// qui invece significa che non è un elemento html
 		// quindi deve essere per forza un commento, almeno per il momento 
 		// magari per sicurezza:controllo che sia cosi 
-		if (node instanceof XMLComment) {
-			 xmlCode.append(((XMLComment)node).getEndTag()+"\n");
+		if (node instanceof Comment) {
+			 xmlCode.append(((HTMLComment)node).getEndTag()+"\n");
 		}
 	}
 	}
@@ -393,7 +392,7 @@ public abstract class Recursion {
 	public static Elements examinesForName(String name,Node node){
 		// chiamo il metodo di supporto
 		
-		helpForTag(name, node);
+		helpForName(name, node);
 
 		
 		// qui poi aggiornare con una costante apposita

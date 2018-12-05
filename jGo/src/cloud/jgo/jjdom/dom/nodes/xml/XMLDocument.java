@@ -1,7 +1,6 @@
 package cloud.jgo.jjdom.dom.nodes.xml;
 import java.util.List;
 import java.util.Set;
-
 import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.css.CSSSelector;
@@ -57,7 +56,7 @@ public class XMLDocument implements Document{
 					if (node instanceof XMLElement) {
 							((XMLElement)node).setParentNode(this);
 						}
-						else if(node instanceof XMLComment){
+						else if(node instanceof Comment){
 							((HTMLComment)node).setParentNode(this);
 						}
 					
@@ -170,8 +169,8 @@ public class XMLDocument implements Document{
 		if (node instanceof Element) {
 			((XMLElement)node).setParentNode(this);
 		}
-		else if(node instanceof HTMLComment){
-			((XMLComment)node).setParentNode(this);
+		else if(node instanceof Comment){
+			((HTMLComment)node).setParentNode(this);
 		}
 	}
 
@@ -361,7 +360,7 @@ public class XMLDocument implements Document{
 	@Override
 	public Comment createComment(String comment) {
 		// TODO Auto-generated method stub
-		return new XMLComment(comment, this);
+		return new HTMLComment(comment, this);
 	}
 
 	@Override
