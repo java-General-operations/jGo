@@ -25,17 +25,19 @@ public class XMLDocument implements Document{
 	private XMLElement rootElement = null ;
 	private StringBuffer xmlCode = new StringBuffer();
 	private String textContent=null;
-	public XMLDocument(String charsetName,String baseUri,String rootElementName) {
+	public XMLDocument(String charsetName,String rootElementName) {
 		this.charsetName = charsetName ;
-		// inizializzo la lista di nodi 
 		this.childNodes = new NodeList();
-		// creo automaticamente il nodo root : html
 		rootElement = new XMLElement(rootElementName, this);
-		// qui imposto il tag del padre che è il documento 
-		
 		((XMLElement)rootElement).setParentNode(this);
-		// aggiungo il nodo all'albero 
-		
+		appendChild(rootElement);
+	}
+	public XMLDocument(String rootElementName) {
+		// TODO Auto-generated constructor stub
+		this.charsetName = XMLDocument.CHARSET_UTF_8;
+		this.childNodes = new NodeList();
+		rootElement = new XMLElement(rootElementName, this);
+		((XMLElement)rootElement).setParentNode(this);
 		appendChild(rootElement);
 	}
 	protected XMLDocument(String charsetName,JjDom home){
