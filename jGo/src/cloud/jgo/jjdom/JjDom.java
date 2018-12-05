@@ -3876,7 +3876,6 @@ public final class JjDom implements jQuerySupport, Serializable{
 		}
 		return inst ;
 	}
-
 	@Override
 	public JjDom empty() {
 		JjDom inst = null ;
@@ -3933,6 +3932,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 		}
 		return inst ;
 	}
+	// segnalare che non lavora con i risultati jquery
 	@Override
 	public boolean is(jQuerySelector jquerySelector) {
 		// TODO Auto-generated method stub
@@ -3940,38 +3940,61 @@ public final class JjDom implements jQuerySupport, Serializable{
 		switch(jquerySelector){
 		case VISIBLE:
 			for (Element element:elements) {
-				if (element.isPresent("style")) {
-					
-					
+				HTMLElement cast = (HTMLElement)element;
+				if (cast.hasCssProp("display")) {
+					String value = cast.getCssPropValue("display");
+					if (value.equals("none")) {
+						is = false ;
+					}
+					else{
+						is = true ;
+						break ;
+					}
 				}
 				else{
-					// non l'attributo quindi do per scontato che sia visibile
-					is = true ;
+					is = true ; 
+					break;
 				}
 			}
 			break ;
 		case HIDDEN:
-			
+			for (Element element:elements) {
+				HTMLElement cast = (HTMLElement)element;
+				if (cast.hasCssProp("display")) {
+					String value = cast.getCssPropValue("display");
+					if (value.equals("none")) {
+						is = true ;
+						break;
+					}
+					else{
+						is = false ;
+					}
+				}
+				else{
+					is = false ;
+				}
+			}
 			break;
 		}
 		return is;
 	}
-
+// segnalare che non lavora con i risultati jquery
 	@Override
 	public boolean is(String selector) {
 		jQuerySelector selector_ = null ;
 		if (selector.startsWith(":")) {
 			selector = selector.replace(":","");
-		}
-		for (jQuerySelector jQuerySelector : availableSelectors) {
-			if (selector.equals(jQuerySelector.name().toLowerCase())) {
-				selector_ = jQuerySelector;
-				break;
+			for (jQuerySelector jQuerySelector : availableSelectors) {
+				if (selector.equals(jQuerySelector.name().toLowerCase())) {
+					selector_ = jQuerySelector;
+					break;
+				}
 			}
+			if (selector_!=null)return is(selector_);
+			else return false ;
 		}
-		if (selector_!=null) {
-			return is(selector_);
+		else{
+			return false ;
 		}
-		return false ;
 	}	
 }

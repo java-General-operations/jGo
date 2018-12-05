@@ -97,6 +97,7 @@ public interface HTMLElement extends Element,Home{
 	public abstract HTMLElement addCssProp(final String cssProp);
 	public abstract String getCssPropValue(String onlyProp);
 	public abstract String getCssProp(String onlyProp);
+	public abstract boolean hasCssProp(String onlyProp);
 	// version 1.0.7 : lavorano solo a livello dom
 	public abstract HTMLElement hide();
 	public abstract HTMLElement show();

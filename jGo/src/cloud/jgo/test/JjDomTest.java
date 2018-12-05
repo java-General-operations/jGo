@@ -33,6 +33,7 @@ JjDom.newDocument().useDoctype(true).setMinimalTags().home().jqueryInit();
 	h1.setTextContent("Website");
 	p.setTextContent("1 paragrafo");
 	p2.setTextContent("2 paragrafo");
+	((HTMLElement)p2).setId("p2");
 	p3.setTextContent("3 paragrafo");
 	link.setTextContent("1 link");
 	link2.setTextContent("2 link");
@@ -48,19 +49,11 @@ JjDom.newDocument().useDoctype(true).setMinimalTags().home().jqueryInit();
 	divLinks.appendChilds(link,link2,link3);
 	
 	JjDom.document.getBody().appendChilds(h1,divParags,divLinks);
+	HTMLElement cast = (HTMLElement)p2;
+	// aggiungo qualche props css a p2
 	
-	// lancio una istruzione jquery
-	((HTMLElement)p).addCssProps("display:block;margin:10px;padding:10px;");
+	cast.hide().show();
 	
-	// a un certo punto mi rendo conto che voglio aggiornare
-	// il margine per esempio
-	((HTMLElement)p).addCssProps("margin: 20px;","padding: 40px;");
-	
-	// adesso cerco di ottenere una prop css
-	
-	String margin = ((HTMLElement)p).getCssPropValue("padding");
-	
-	System.out.println(margin);
-	
+	JjDom.document.printMarkup();
 }
 }

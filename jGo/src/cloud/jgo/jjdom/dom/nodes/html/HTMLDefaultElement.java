@@ -1181,12 +1181,12 @@ public class HTMLDefaultElement implements HTMLElement{
 	}
 	@Override
 	public HTMLElement hide() {
-		return setAttribute("style","display: none");
+		return addCssProp("display: none;");
 	}
 	@Override
 	public HTMLElement show() {
 		// TODO Auto-generated method stub
-		return setAttribute("style","display: block");
+		return addCssProp("display: block;");
 	}
 	@Override
 	public String getCssPropValue(String onlyProp) {
@@ -1204,7 +1204,8 @@ public class HTMLDefaultElement implements HTMLElement{
 		String prop = null ;
 		if (isPresent("style")) {
 			String attrValue = getAttributeValue("style");
-			String[]split = attrValue.split(";");
+			String[]split 
+			= attrValue.split(";");
 			for (int i = 0; i < split.length; i++) {
 				String _prop_,_value_ = null ;
 				_prop_= split[i].substring(0,split[i].indexOf(":")).trim();
@@ -1216,5 +1217,23 @@ public class HTMLDefaultElement implements HTMLElement{
 			}
 		}
 		return prop ;
+	}
+	@Override
+	public boolean hasCssProp(String onlyProp) {
+		boolean has = false ;
+		if (isPresent("style")) {
+			String attrValue = getAttributeValue("style");
+			String[]split = attrValue.split(";");
+			for (int i = 0; i < split.length; i++) {
+				String _prop_,_value_ = null ;
+				_prop_= split[i].substring(0,split[i].indexOf(":")).trim();
+				_value_= split[i].substring(split[i].indexOf(":")).replace(":","").trim();
+				if (_prop_.equals(onlyProp)) {
+					has = true ;
+					break ;
+				}
+			}
+		}
+		return has ;
 	}
 }
