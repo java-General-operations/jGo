@@ -47,6 +47,8 @@ public interface Document extends Node,Manipulable{
 	 * @param elements the elements
 	 * @return the document on which the method was invoked
 	 */
+	// version 1.0.7
+	public abstract String getDocumentFormat();
 	/**
 	 * 1 DEFAULT CHARSET : UTF_8
 	 */

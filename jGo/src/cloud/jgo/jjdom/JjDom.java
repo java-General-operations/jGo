@@ -349,14 +349,13 @@ public final class JjDom implements jQuerySupport, Serializable{
 				urlResource = urlResource.substring(0,lastSlash);
 			}
 			JjDom.documentURL = urlResource ;
-			if (urlResource.startsWith(https)||urlResource.startsWith(http)||urlResource.startsWith(ftp)) {
 				if (urlResource.startsWith(https)) {
 					urlResource = urlResource.replace(https,"");
 				}
 				else if(urlResource.startsWith(http)){
 					urlResource = urlResource.replace(http,"");
 				}
-				else{
+				else if(urlResource.startsWith(ftp)){
 					// ftp
 					urlResource = urlResource.replace(ftp,"");
 				}
@@ -465,6 +464,11 @@ public final class JjDom implements jQuerySupport, Serializable{
 					if (JjDom.ftpHost.startsWith("www")) {
 						JjDom.ftpHost = JjDom.ftpHost.replace("www","ftp");
 					}
+					// other controll :
+						if (JjDom.ftpHost.contains(":")) {
+							String toReplaced = JjDom.ftpHost.substring(JjDom.ftpHost.indexOf(":")).trim();
+							JjDom.ftpHost = JjDom.ftpHost.replace(toReplaced,"");
+						}
 					// ci connettiamo al server 
 					try {
 						ftp_client.connect(JjDom.ftpHost,21);
@@ -503,7 +507,6 @@ public final class JjDom implements jQuerySupport, Serializable{
 						}
 					}
 				}
-			}
 		}
 		return inst ;
 	}
@@ -693,6 +696,110 @@ public final class JjDom implements jQuerySupport, Serializable{
 			}
 			return inst ;
 		}
+	// se stiamo usando upload : si da per scontato che ci siamo collegati al server
+		/**
+		 * This method migrates the html document once connected to the ftp server	
+		 * @param fileName the file name
+		 * @return the JjDom instance
+		 */
+		public static JjDom migrate(String fileName,Document document) {
+				JjDom inst = null ;	
+			// 1 passo : controllo la connessione 
+				if (!fileName.startsWith("/")) {
+					fileName = "/"+fileName ;
+				}
+				if (isConnected()) { // sappiamo che se siamo connessi, per forza ci siamo loggati
+					// 2 passo : lavorare sul nome del file : ottenere sia nome del file che path all'interno del server
+					String onlyName = null ;
+					String pathFolder = null ;
+					if (fileName.contains("/")) { // diamo per scontato che se ci sono slash c'è un path 
+						String[]split = fileName.split("/");
+						onlyName = split[split.length-1];
+						// 3 passo : ottengo il path
+						pathFolder = fileName.replace(onlyName,"").trim();
+						onlyName = onlyName.trim();
+					}
+					else{
+						// qui deve trattarsi del solo nome del file 
+						// poichè non ci sono slash nel fileName
+						onlyName = fileName ;
+					}
+					// 4 passo : controllo se c'è un path folder 
+					if (pathFolder!=null) {
+						// 5 passo : 
+						//ottengo il path preciso della cartella :
+						String newPathResource = getUrlWithoutProto(JjDom.documentURL);
+						pathFolder = newPathResource+pathFolder ;
+						// cambiamo directory solo
+						// se il pathFolder non indica il local ip
+						if (pathFolder.split("/").length>1) {
+							try {
+								ftp_client.changeDirectory(pathFolder);
+							} catch (IllegalStateException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (FTPIllegalReplyException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (FTPException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						else{
+							// okok continuare da qui ...
+						}
+					}
+					// 5 passo : devo creare i files e caricarli 
+					File file = new File(onlyName);
+					File serFile = new File(onlyName.replace("."+document.getDocumentFormat(),JjDom.SERIALIZATION_FORMAT));
+					save(file,document); // salvo il sorgente html
+					serializes(serFile); // serializzo
+					// okok carico i files in maniera spensierata - suppongo 
+					try {
+						ftp_client.upload(file);
+						ftp_client.upload(serFile);
+						// una volta caricato i files, elimino quelli locali
+						
+						boolean deleted = file.delete();
+						boolean deleted2 = serFile.delete();
+						if (!deleted) {
+							file.deleteOnExit();
+						}
+						if (!deleted2) {
+							serFile.deleteOnExit();
+						}
+						inst = instance ;
+						// fine metodo  @
+					} catch (IllegalStateException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (FTPIllegalReplyException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (FTPException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (FTPDataTransferException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (FTPAbortedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				return inst ;
+			}
 	private static boolean isConnected() {
 		return ftp_client.isConnected() ;
 	}
@@ -797,8 +904,10 @@ public final class JjDom implements jQuerySupport, Serializable{
 	// il nome del documento che vogliamo attribuire 
 
 	private static String getUrlWithoutProto(String urlResource){
-		int index = urlResource.indexOf("//")+2;
-		urlResource = urlResource.substring(index);
+		if (urlResource.contains("//")) {
+			int index = urlResource.indexOf("//")+2;
+			urlResource = urlResource.substring(index);
+		}
 		return urlResource ;
 	}
 	

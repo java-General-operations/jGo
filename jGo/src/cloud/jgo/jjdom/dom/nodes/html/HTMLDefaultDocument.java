@@ -1040,8 +1040,6 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		}
 		return currentNode ;
 	}
-	
-
 	@Override
 	public boolean contains(String nodeName) {
 		NodeList childNodes = getChildNodes();
@@ -1054,7 +1052,6 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		}
 		return flag ;
 	}
-
 	@Override
 	public Node removeChildren() {
 		NodeList children = getChildNodes();
@@ -1065,6 +1062,9 @@ public class HTMLDefaultDocument implements HTMLDocument{
 		}
 		return this ;
 	}
-
-
+	@Override
+	public String getDocumentFormat() {
+		// TODO Auto-generated method stub
+		return "html";
+	}
 }

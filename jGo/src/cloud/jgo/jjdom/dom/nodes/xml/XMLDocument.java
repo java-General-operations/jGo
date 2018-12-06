@@ -1,6 +1,7 @@
 package cloud.jgo.jjdom.dom.nodes.xml;
 import java.util.List;
 import java.util.Set;
+
 import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.css.CSSSelector;
@@ -493,5 +494,10 @@ public class XMLDocument implements Document{
 			i-- ;
 		}
 		return this ;
+	}
+	@Override
+	public String getDocumentFormat() {
+		// TODO Auto-generated method stub
+		return "xml";
 	}
 }

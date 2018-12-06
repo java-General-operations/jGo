@@ -9,6 +9,8 @@ import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 public class XMLTest {
 public static void main(String[] args) {
 	
+	// BUG da risolvere nel metodo connect, quando lo usiamo per recuperare 
+	// il documento, vedere come risolvere
 	
 	// primo passo : creo il documento XML
 	
@@ -25,17 +27,13 @@ public static void main(String[] args) {
 	contact = document.createElement("contact");
 	email = document.createElement("email");
 	tel = document.createElement("tel");
-	
-	// aggiungo qualche nome 
-	projectName.setAttribute("name","project");
-	projectVersion.setAttribute("name","project");
-	projectUrl.setAttribute("name","project");
+
 	
 	// aggiungo i testi 
 	
 	projectName.setTextContent("My-Project-Test");
 	projectVersion.setTextContent("1.0.0-Snapshot");
-	projectUrl.setTextContent("https://www.github.com//My-Project-Test");
+	projectUrl.setTextContent("https://www.github.com/My-Project-Test");
 	email.setTextContent("wasp91dayno@gmail.com");
 	tel.setTextContent("39321221");
 	// okok annodo gli elementi 
@@ -44,9 +42,7 @@ public static void main(String[] args) {
 	contacts.appendChild(contact);
 	document.getRootElement().appendChilds(projectName,projectVersion,projectUrl,contacts);
 	
-	JjDom.serializes("doc.ser", document);
-	
-	System.out.println("File memorizzato @");
+	// voglio publicare il documento adesso ... 
 	
 	
 }
