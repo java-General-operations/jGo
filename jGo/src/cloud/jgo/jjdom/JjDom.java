@@ -38,9 +38,11 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -704,6 +706,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 		 */
 		public static JjDom migrate(String fileName,Document document) {
 				JjDom inst = null ;	
+				boolean isLocal = false ;
 			// 1 passo : controllo la connessione 
 				if (!fileName.startsWith("/")) {
 					fileName = "/"+fileName ;
@@ -724,14 +727,27 @@ public final class JjDom implements jQuerySupport, Serializable{
 						// poichè non ci sono slash nel fileName
 						onlyName = fileName ;
 					}
+					/*
+					 * da a @
+					 */
+					if (JjDom.documentURL.equals("localhost")||JjDom.documentURL.equals("127.0.0.1")) {
+						isLocal = true ;
+					}
+					else{
+						// potrebbe inoltre trattarsi di un server
+						// nella rete locale, e quindi dobbiamo pensare
+						// anche a questa evenienza, vedere come gestire.
+					}
+					/*
+					 * @
+					 */
 					// 4 passo : controllo se c'è un path folder 
 					if (pathFolder!=null) {
-						// 5 passo : 
-						//ottengo il path preciso della cartella :
 						String newPathResource = getUrlWithoutProto(JjDom.documentURL);
-						pathFolder = newPathResource+pathFolder ;
-						// cambiamo directory solo
-						// se il pathFolder non indica il local ip
+						if (!isLocal) {
+							pathFolder = newPathResource+pathFolder ;	
+						}
+						// cambiamo directory solo se c'è di fatto un percorso
 						if (pathFolder.split("/").length>1) {
 							try {
 								ftp_client.changeDirectory(pathFolder);
@@ -748,9 +764,6 @@ public final class JjDom implements jQuerySupport, Serializable{
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-						}
-						else{
-							// okok continuare da qui ...
 						}
 					}
 					// 5 passo : devo creare i files e caricarli 

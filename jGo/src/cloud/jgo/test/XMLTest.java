@@ -8,7 +8,8 @@ import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 
 public class XMLTest {
 public static void main(String[] args) {
-	
+	// ci sn parecchie cose che vanno segnalate riguardo i metodi connect, migrate
+	//
 	// BUG da risolvere nel metodo connect, quando lo usiamo per recuperare 
 	// il documento, vedere come risolvere
 	
@@ -42,7 +43,8 @@ public static void main(String[] args) {
 	contacts.appendChild(contact);
 	document.getRootElement().appendChilds(projectName,projectVersion,projectUrl,contacts);
 	
-	// voglio publicare il documento adesso ... 
+	// voglio publicare il documento adesso 
+	// adesso voglio verificare la stessa cosa per il server locale
 	
 	
 }
