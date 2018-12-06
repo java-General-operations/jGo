@@ -733,10 +733,33 @@ public final class JjDom implements jQuerySupport, Serializable{
 					if (JjDom.documentURL.equals("localhost")||JjDom.documentURL.equals("127.0.0.1")) {
 						isLocal = true ;
 					}
-					else{
-						// potrebbe inoltre trattarsi di un server
-						// nella rete locale, e quindi dobbiamo pensare
-						// anche a questa evenienza, vedere come gestire.
+					else{// se non ini
+						String host = null ;
+						// faccio dei controlli
+						if (JjDom.documentURL.startsWith("https://")) {
+							host = JjDom.documentURL.replace("https://","");
+						}
+						else if(JjDom.documentURL.startsWith("http://")){
+							host = JjDom.documentURL.replace("http://","");
+						}
+						else if(JjDom.documentURL.startsWith("ftp://")){
+							host = JjDom.documentURL.replace("ftp://","");
+						}
+						else{
+							// qui provvisorio ...
+							// qui ci possono essere altri controlli ...
+							host = JjDom.documentURL;
+						}
+							try {
+								InetAddress serverAddr = InetAddress.getByName(host);
+								InetAddress localAddress = InetAddress.getLocalHost();
+								if (serverAddr.getHostAddress().equals(localAddress.getHostAddress())) {
+									isLocal = true ;
+								}
+							} catch (UnknownHostException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 					}
 					/*
 					 * @

@@ -8,12 +8,10 @@ import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 
 public class XMLTest {
 public static void main(String[] args) {
-	// ci sn parecchie cose che vanno segnalate riguardo i metodi connect, migrate
-	//
-	// BUG da risolvere nel metodo connect, quando lo usiamo per recuperare 
-	// il documento, vedere come risolvere
 	
-	// primo passo : creo il documento XML
+	// ridefinire il metodo migrate se va bene
+	// altrimenti, ridefinire anche il metodo
+	// connect.
 	
 	Document document = new XMLDocument("wasp.project");
 	
@@ -45,7 +43,6 @@ public static void main(String[] args) {
 	
 	// voglio publicare il documento adesso 
 	// adesso voglio verificare la stessa cosa per il server locale
-	
 	
 }
 }
