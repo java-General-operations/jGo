@@ -41,8 +41,9 @@ public static void main(String[] args) {
 	contacts.appendChild(contact);
 	document.getRootElement().appendChilds(projectName,projectVersion,projectUrl,contacts);
 	
-	// voglio publicare il documento adesso 
-	// adesso voglio verificare la stessa cosa per il server locale
+	// adesso voglio fare il test con il server locale
+	
+	JjDom.connect("localhost","wasp91","wasp91dayno").migrate("upload/test/ven.html", document).closeConnection();
 	
 }
 }

@@ -330,187 +330,183 @@ public final class JjDom implements jQuerySupport, Serializable{
 		return instance ;
 	}
 
-	/**
-	 * This method connects to the ftp server and
-	 * downloads the required html document 
-	 * @param urlResource the html resource
-	 * @param ftpUser the ftp username
-	 * @param ftpPassw the ftp password
-	 * @return the JjDom instance
-	 */
-	public static JjDom connect(String urlResource, String ftpUser, String ftpPassw) {
-		String http,https,ftp = null ;
-		http = "http://";https = "https://";ftp = "ftp://";
+	//version 1.0.7
+	// si può specificare sia un file html/xml 
+	// oppure sia un host a cui connettersi
+	public static JjDom connect(String ftpHost,String ftpUser,String ftpPassw){
+		// per prima cosa mi connetto
 		JjDom inst = null ;
-		if (£.connectedToInternet()) {
-			// 1 passo : ottengo nome del file,hostFtp
-			JjDom.ftpUser = ftpUser ;
-			JjDom.ftpPassw = ftpPassw ;
-			if (urlResource.endsWith("/")) {
-				int lastSlash = urlResource.lastIndexOf("/");
-				urlResource = urlResource.substring(0,lastSlash);
+		try {
+			String[]response = ftp_client.connect(ftpHost);
+			for (String reply : response) {
+				System.out.println(reply);
 			}
-			JjDom.documentURL = urlResource ;
-				if (urlResource.startsWith(https)) {
-					urlResource = urlResource.replace(https,"");
+			System.out.println("Wait for...");
+			// controllo se sn connesso 
+			if (ftp_client.isConnected()) {
+				ftp_client.login(ftpUser,ftpPassw);
+				if (ftp_client.isAuthenticated()) {
+					// okok siamo connessi 
+					inst = instance ;
 				}
-				else if(urlResource.startsWith(http)){
-					urlResource = urlResource.replace(http,"");
-				}
-				else if(urlResource.startsWith(ftp)){
-					// ftp
-					urlResource = urlResource.replace(ftp,"");
-				}
-				urlResource = urlResource.trim();
-				// si procede, quindi si prende l'host
-				int index = urlResource.indexOf("/");
-				if (index>-1) {
-					JjDom.ftpHost = urlResource.substring(0,index).trim();
-					JjDom.urlFileName = urlResource.substring(index); // prendo dal primo slash in poi
-					if (JjDom.ftpHost.startsWith("www")) {
-						JjDom.ftpHost = JjDom.ftpHost.replace("www","ftp");
-					}
-					// prendo solo il nome del file
-					String[]split = urlResource.split("/");
-					JjDom.urlOnlyFileName = split[split.length-1].trim();
-					// qui l'ultimo dato che prendo è il path della cartella
-					StringBuffer buffer = new StringBuffer();
-					for (int i = 0; i < split.length-1; i++) {
-						buffer.append(split[i]+"/");
-					}
-					JjDom.urlDirName = buffer.toString().trim(); // N.B. : questa variabile non è usata nel metodo 
-					// okok possiamo connetterci
-					try {
-						ftp_client.connect(JjDom.ftpHost,21);
-					} catch (IllegalStateException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FTPIllegalReplyException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FTPException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					// si continua da qui 
-					if (ftp_client.isConnected()) {
-						// LOGIN
-						try {
-							ftp_client.login(ftpUser, ftpPassw);
-						} catch (IllegalStateException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (FTPIllegalReplyException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (FTPException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						if (ftp_client.isAuthenticated()) {
-							// 2 passo : si scarica il file che ha lo stesso nome del file con estensione
-							// dat
-							File file = new File("tmp.dat");
-							try {
-								ftp_client.download(urlResource.replace(".html",SERIALIZATION_FORMAT),file);
-								// file scaricato
-								// quindi ora deserializzo
-								deserializes(file); // ottengo il documento
-								// elimino il file dat locale
-								boolean deleted = file.delete();
-								if (!deleted) {
-									file.deleteOnExit();
-								}
-								inst = instance ;
-								// fine metodo @
-							} catch (IllegalStateException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (FileNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (FTPIllegalReplyException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (FTPException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (FTPDataTransferException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (FTPAbortedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-					}
-				}
-				else{
-					// in questo caso restituiamo un valore
-					// nel caso in cui la connessione abbia
-					// un esito positivo
-					// non c'è un percorso cartella
-					// allora tentiamo di ottenere l'host
-				    //	sul percorso che abbiamo
-					JjDom.ftpHost = urlResource ;
-					JjDom.urlDirName = JjDom.ftpHost ;
-					if (JjDom.ftpHost.startsWith("www")) {
-						JjDom.ftpHost = JjDom.ftpHost.replace("www","ftp");
-					}
-					// other controll :
-						if (JjDom.ftpHost.contains(":")) {
-							String toReplaced = JjDom.ftpHost.substring(JjDom.ftpHost.indexOf(":")).trim();
-							JjDom.ftpHost = JjDom.ftpHost.replace(toReplaced,"");
-						}
-					// ci connettiamo al server 
-					try {
-						ftp_client.connect(JjDom.ftpHost,21);
-					} catch (IllegalStateException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FTPIllegalReplyException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FTPException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if (isConnected()) {
-						// facciamo il login 
-						try {
-							ftp_client.login(JjDom.ftpUser, JjDom.ftpPassw);
-						} catch (IllegalStateException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (FTPIllegalReplyException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (FTPException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						if (ftp_client.isAuthenticated()) {
-							inst = instance ; 
-						}
-					}
-				}
+			}
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FTPIllegalReplyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FTPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return inst ;
+	}
+	
+	public static JjDom migrate(String urlResource,Document document){
+		JjDom inst = null ;String dirUrl = null;
+		if (isConnected()&&isAuthenticated()) {
+			String onlyFileName = null ;
+			onlyFileName = urlResource.split("/")[urlResource.split("/").length-1].trim();
+			String fileNameWithoutFormat = null;
+			int lastIndex = onlyFileName.lastIndexOf(".");
+			fileNameWithoutFormat = onlyFileName.substring(0,lastIndex).trim();
+			save(onlyFileName, document);
+			serializes(fileNameWithoutFormat+JjDom.SERIALIZATION_FORMAT,document);
+			File docFile,docFileSer = null ;docFile = new File(onlyFileName);
+			docFileSer = new File(fileNameWithoutFormat+JjDom.SERIALIZATION_FORMAT);
+			if (urlResource.split("/").length>1) {
+				dirUrl = urlResource.replace(onlyFileName,"");
+			}
+			if (dirUrl!=null) {			
+				try {
+					ftp_client.changeDirectory(dirUrl);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (FTPIllegalReplyException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (FTPException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}		
+			}
+			try {
+				ftp_client.upload(docFile);
+				ftp_client.upload(docFileSer);
+				System.out.println("uploads completed successfully @");
+				inst = instance ;
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FTPIllegalReplyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FTPException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FTPDataTransferException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FTPAbortedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			boolean deleted,deleted2 ;
+			deleted = docFile.delete();
+			if (!deleted) {
+				docFile.deleteOnExit();
+			}
+			deleted2 = docFileSer.delete();
+			if (!deleted2) {
+				docFileSer.deleteOnExit();
+			}
+		}
+		return inst ;
+	}
+	
+	public static JjDom download2(String urlResource){
+		// qui ottengo il percorso se c'è ne uno
+		JjDom inst = null ;
+		if (urlResource.startsWith("/")) {
+			int indexFirst = urlResource.indexOf("/");
+			urlResource = urlResource.substring(indexFirst).trim();
+		}
+		if (isConnected()&&isAuthenticated()) {
+			// 1 passo : ottengo il file della serializzazione
+			String fileName = urlResource.split("/")[urlResource.split("/").length-1];
+			int lastIndex = fileName.lastIndexOf(".");
+			String onlyFileName = fileName.substring(0,lastIndex);
+			String serFileName = onlyFileName+JjDom.SERIALIZATION_FORMAT;
+			// 2 passo : devo sostituire il vecchio nome del file con il nuovo
+			urlResource = urlResource.replace(fileName,serFileName);
+			// 3 passo : provo a scaricare cosi alla buona il file
+			try {
+				ftp_client.download(urlResource,new java.io.File("tmp.dat"));
+				System.out.println("File scaricato @");
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FTPIllegalReplyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FTPException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FTPDataTransferException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FTPAbortedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
+	}
+	
+	
+	public static boolean isAuthenticated(){
+		return ftp_client.isAuthenticated();
+	}
+	
+	public static JjDom closeConnection(){
+		if (ftp_client.isConnected()) {
+			try {
+				ftp_client.disconnect(true);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FTPIllegalReplyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (FTPException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return instance ;
 	}
 	
 	/**
@@ -590,253 +586,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 		return inst ;
 	}
 	
-	// se stiamo usando upload : si da per scontato che ci siamo collegati al server
-	/**
-	 * This method migrates the html document once connected to the ftp server	
-	 * @param fileName the file name
-	 * @return the JjDom instance
-	 */
-	public static JjDom migrate(String fileName) {
-			JjDom inst = null ;	
-		// 1 passo : controllo la connessione 
-			if (!fileName.startsWith("/")) {
-				fileName = "/"+fileName ;
-			}
-			if (isConnected()) { // sappiamo che se siamo connessi, per forza ci siamo loggati
-				// 2 passo : lavorare sul nome del file : ottenere sia nome del file che path all'interno del server
-				String onlyName = null ;
-				String pathFolder = null ;
-				if (fileName.contains("/")) { // diamo per scontato che se ci sono slash c'è un path 
-					String[]split = fileName.split("/");
-					onlyName = split[split.length-1];
-					// 3 passo : ottengo il path
-					pathFolder = fileName.replace(onlyName,"").trim();
-					onlyName = onlyName.trim();
-				}
-				else{
-					// qui deve trattarsi del solo nome del file 
-					// poichè non ci sono slash nel fileName
-					onlyName = fileName ;
-				}
-				// 4 passo : controllo se c'è un path folder 
-				if (pathFolder!=null) {
-					// 5 passo : 
-					
-					//ottengo il path preciso della cartella :
-					
-					String newPathResource = getUrlWithoutProto(JjDom.documentURL);
-					
-					pathFolder = newPathResource+pathFolder ;
-					// qui dobbiamo cambiare cartella
-					try {
-						ftp_client.changeDirectory(pathFolder);
-					} catch (IllegalStateException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FTPIllegalReplyException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FTPException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				
-				// 5 passo : devo creare i files e caricarli 
-				File htmlFile = new File(onlyName);
-				File serFile = new File(onlyName.replace(".html",JjDom.SERIALIZATION_FORMAT));
-				save(htmlFile,JjDom.document); // salvo il sorgente html
-				serializes(serFile); // serializzo
-				
-				// okok carico i files in maniera spensierata - suppongo 
-				
-				try {
-					ftp_client.upload(htmlFile);
-					ftp_client.upload(serFile);
-					// una volta caricato i files, elimino quelli locali
-					
-					boolean deleted = htmlFile.delete();
-					boolean deleted2 = serFile.delete();
-					
-					if (!deleted) {
-						htmlFile.deleteOnExit();
-					}
-					if (!deleted2) {
-						serFile.deleteOnExit();
-					}
-					
-					inst = instance ;
-					
-					// fine metodo  @
-					
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (FTPIllegalReplyException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (FTPException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (FTPDataTransferException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (FTPAbortedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			return inst ;
-		}
-	// se stiamo usando upload : si da per scontato che ci siamo collegati al server
-		/**
-		 * This method migrates the html document once connected to the ftp server	
-		 * @param fileName the file name
-		 * @return the JjDom instance
-		 */
-		public static JjDom migrate(String fileName,Document document) {
-				JjDom inst = null ;	
-				boolean isLocal = false ;
-			// 1 passo : controllo la connessione 
-				if (!fileName.startsWith("/")) {
-					fileName = "/"+fileName ;
-				}
-				if (isConnected()) { // sappiamo che se siamo connessi, per forza ci siamo loggati
-					// 2 passo : lavorare sul nome del file : ottenere sia nome del file che path all'interno del server
-					String onlyName = null ;
-					String pathFolder = null ;
-					if (fileName.contains("/")) { // diamo per scontato che se ci sono slash c'è un path 
-						String[]split = fileName.split("/");
-						onlyName = split[split.length-1];
-						// 3 passo : ottengo il path
-						pathFolder = fileName.replace(onlyName,"").trim();
-						onlyName = onlyName.trim();
-					}
-					else{
-						// qui deve trattarsi del solo nome del file 
-						// poichè non ci sono slash nel fileName
-						onlyName = fileName ;
-					}
-					/*
-					 * da a @
-					 */
-					if (JjDom.documentURL.equals("localhost")||JjDom.documentURL.equals("127.0.0.1")) {
-						isLocal = true ;
-					}
-					else{// se non ini
-						String host = null ;
-						// faccio dei controlli
-						if (JjDom.documentURL.startsWith("https://")) {
-							host = JjDom.documentURL.replace("https://","");
-						}
-						else if(JjDom.documentURL.startsWith("http://")){
-							host = JjDom.documentURL.replace("http://","");
-						}
-						else if(JjDom.documentURL.startsWith("ftp://")){
-							host = JjDom.documentURL.replace("ftp://","");
-						}
-						else{
-							// qui provvisorio ...
-							// qui ci possono essere altri controlli ...
-							host = JjDom.documentURL;
-						}
-							try {
-								InetAddress serverAddr = InetAddress.getByName(host);
-								InetAddress localAddress = InetAddress.getLocalHost();
-								if (serverAddr.getHostAddress().equals(localAddress.getHostAddress())) {
-									isLocal = true ;
-								}
-							} catch (UnknownHostException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-					}
-					/*
-					 * @
-					 */
-					// 4 passo : controllo se c'è un path folder 
-					if (pathFolder!=null) {
-						String newPathResource = getUrlWithoutProto(JjDom.documentURL);
-						if (!isLocal) {
-							pathFolder = newPathResource+pathFolder ;	
-						}
-						// cambiamo directory solo se c'è di fatto un percorso
-						if (pathFolder.split("/").length>1) {
-							try {
-								ftp_client.changeDirectory(pathFolder);
-							} catch (IllegalStateException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (FTPIllegalReplyException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (FTPException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-					}
-					// 5 passo : devo creare i files e caricarli 
-					File file = new File(onlyName);
-					File serFile = new File(onlyName.replace("."+document.getDocumentFormat(),JjDom.SERIALIZATION_FORMAT));
-					save(file,document); // salvo il sorgente html
-					serializes(serFile); // serializzo
-					// okok carico i files in maniera spensierata - suppongo 
-					try {
-						ftp_client.upload(file);
-						ftp_client.upload(serFile);
-						// una volta caricato i files, elimino quelli locali
-						
-						boolean deleted = file.delete();
-						boolean deleted2 = serFile.delete();
-						if (!deleted) {
-							file.deleteOnExit();
-						}
-						if (!deleted2) {
-							serFile.deleteOnExit();
-						}
-						inst = instance ;
-						// fine metodo  @
-					} catch (IllegalStateException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FTPIllegalReplyException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FTPException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FTPDataTransferException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (FTPAbortedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				}
-				return inst ;
-			}
-	private static boolean isConnected() {
+	public static boolean isConnected() {
 		return ftp_client.isConnected() ;
 	}
 	/**
