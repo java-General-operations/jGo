@@ -1,4 +1,6 @@
 package cloud.jgo.test;
+import javax.swing.JOptionPane;
+
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Document;
@@ -9,8 +11,7 @@ import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 public class XMLTest {
 public static void main(String[] args) {
 	
-	// metodo connect()/migrate() : completati
-	// è il turno di download()
+	
 	
 	Document document = new XMLDocument("wasp.project");
 	
@@ -44,5 +45,6 @@ public static void main(String[] args) {
 	
 	JjDom.connect("localhost","wasp91","wasp91dayno").migrate("upload/test/ven.xml", document).closeConnection();
 	
+	JOptionPane.showMessageDialog(null,"document URL:"+JjDom.documentURL);
 }
 }

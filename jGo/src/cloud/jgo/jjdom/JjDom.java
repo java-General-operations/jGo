@@ -23,7 +23,6 @@
 package cloud.jgo.jjdom;
 import static cloud.jgo.jjdom.JjDom.$;
 import static cloud.jgo.jjdom.JjDom.jquery;
-
 import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -47,10 +46,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JOptionPane;
-
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.css.CSSSelection;
@@ -222,6 +219,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 	private static String documentName = null ; // questa var si inizializza quando ci connettiamo ad una risorsa, oppure quando facciamo la migrazione della pagina web
 	private static boolean selectedDocument = false;
 	private static String selection = null ;
+	public static String documentURL = null ;
 	private static Logger logger = Logger.getLogger("cloud.jgo.jjdom"); // questo verrà usato solo in alcuni metodi
 	/**
 	 * The current selection
@@ -270,7 +268,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 	 * config ftp - version 1.0.1
 	 */
     private static FTPClient ftp_client = new FTPClient();
-    public static String documentURL = null ;
+
 	private static String ftpHost,ftpUser,ftpPassw = null ;
 	private static String urlFileName = null ;
 	private static String urlDirName = null ;
@@ -402,6 +400,7 @@ public final class JjDom implements jQuerySupport, Serializable{
 				ftp_client.upload(docFile);
 				ftp_client.upload(docFileSer);
 				System.out.println("uploads completed successfully @");
+				JjDom.documentURL = urlResource;
 				inst = instance ;
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
@@ -439,16 +438,17 @@ public final class JjDom implements jQuerySupport, Serializable{
 	}
 	
 	public static Document download(String urlResource){
-		Document inst = null ;
-		if (urlResource.startsWith("/")) {
-			int indexFirst = urlResource.indexOf("/");
-			urlResource = urlResource.substring(indexFirst).trim();
-		}
+			Document inst = null ;
 		if (isConnected()&&isAuthenticated()) {
+			if (urlResource.startsWith("/")) {
+				int indexFirst = urlResource.indexOf("/");
+				urlResource = urlResource.substring(indexFirst).trim();
+			}
 			String fileName = urlResource.split("/")[urlResource.split("/").length-1];
 			int lastIndex = fileName.lastIndexOf(".");
 			String onlyFileName = fileName.substring(0,lastIndex);
 			String serFileName = onlyFileName+JjDom.SERIALIZATION_FORMAT;
+			JjDom.documentURL = urlResource ;
 			urlResource = urlResource.replace(fileName,serFileName);
 			try {
 				java.io.File serFile = new java.io.File("tmp.dat");
@@ -513,84 +513,6 @@ public final class JjDom implements jQuerySupport, Serializable{
 		}
 		return instance ;
 	}
-	
-	/**
-	 * This method updates the site once connected to the resource
-	 * @return the JjDom instance
-	 */
-	public static JjDom update() {
-		// controllo se siamo connessi
-		JjDom inst = null ;
-		if (isConnected()) {
-			// 1 passo : salvo il documento file
-			save(urlOnlyFileName);
-			// 2 passo :serializzo
-			File serFile = new File(urlOnlyFileName.replace(".html",SERIALIZATION_FORMAT));
-			serializes(serFile);
-			// ora devo eliminare questi dati nel server 
-			String urlResource = getUrlWithoutProto(JjDom.documentURL);
-			// elimino il primo file 
-			try {
-				ftp_client.deleteFile(urlResource);
-				ftp_client.deleteFile(urlResource.replace(".html",SERIALIZATION_FORMAT));
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (FTPIllegalReplyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (FTPException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// mi assicuro che siamo sulla cartella giusta per il caricamento
-			try {
-				ftp_client.changeDirectory("/");
-				ftp_client.changeDirectory(urlDirName);
-				// carico i files 
-				File htmlFile = new File(urlOnlyFileName);
-				try {
-					ftp_client.upload(htmlFile);
-					ftp_client.upload(serFile);
-					// elimino i file locali
-					boolean deleted = htmlFile.delete();
-					boolean deleted2 = serFile.delete();
-					if (!deleted) {
-						htmlFile.deleteOnExit();
-					}
-					if (!deleted2) {
-						serFile.deleteOnExit();
-					}
-					inst = instance ;
-					// metodo finito @
-				} catch (FTPDataTransferException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (FTPAbortedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (FTPIllegalReplyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (FTPException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		return inst ;
-	}
-	
 	public static boolean isConnected() {
 		return ftp_client.isConnected() ;
 	}
@@ -3924,5 +3846,13 @@ public final class JjDom implements jQuerySupport, Serializable{
 		else{
 			return false ;
 		}
-	}	
+	}
+
+	public static JjDom update(Document document) {
+		return migrate(JjDom.documentURL, document);
+	}
+	
+	public static JjDom update(){
+		return migrate(JjDom.documentURL,JjDom.document);
+	}
 }
