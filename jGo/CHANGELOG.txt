@@ -143,3 +143,4 @@ una data proprietà css
 - Ho creato da capo il metodo connect() e migrate()- JjDom.
 - Ho inoltre aggiunto un nuovo metodo : download() che serve a scaricare il documento.
 Tuttavia questo metodo non è stato ancora completato.
+- perfetto ho completato i metodi download,update e migrate - JjDom

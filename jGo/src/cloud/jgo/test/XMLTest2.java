@@ -8,7 +8,7 @@ import cloud.jgo.jjdom.dom.nodes.Element;
 public class XMLTest2 {
 public static void main(String[] args) {
 	
-	
+	// commit test
 	// okok l'update si fa al momento della migrazione
 	// o meglio dopo la migrazione
 	
