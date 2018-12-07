@@ -9,9 +9,8 @@ import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 public class XMLTest {
 public static void main(String[] args) {
 	
-	// ridefinire il metodo migrate se va bene
-	// altrimenti, ridefinire anche il metodo
-	// connect.
+	// metodo connect()/migrate() : completati
+	// è il turno di download()
 	
 	Document document = new XMLDocument("wasp.project");
 	
@@ -43,7 +42,7 @@ public static void main(String[] args) {
 	
 	// adesso voglio fare il test con il server locale
 	
-	JjDom.connect("localhost","wasp91","wasp91dayno").migrate("upload/test/ven.html", document).closeConnection();
+	JjDom.connect("localhost","wasp91","wasp91dayno").migrate("upload/test/ven.xml", document).closeConnection();
 	
 }
 }

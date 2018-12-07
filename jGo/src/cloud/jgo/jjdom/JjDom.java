@@ -438,25 +438,30 @@ public final class JjDom implements jQuerySupport, Serializable{
 		return inst ;
 	}
 	
-	public static JjDom download2(String urlResource){
-		// qui ottengo il percorso se c'è ne uno
-		JjDom inst = null ;
+	public static Document download(String urlResource){
+		Document inst = null ;
 		if (urlResource.startsWith("/")) {
 			int indexFirst = urlResource.indexOf("/");
 			urlResource = urlResource.substring(indexFirst).trim();
 		}
 		if (isConnected()&&isAuthenticated()) {
-			// 1 passo : ottengo il file della serializzazione
 			String fileName = urlResource.split("/")[urlResource.split("/").length-1];
 			int lastIndex = fileName.lastIndexOf(".");
 			String onlyFileName = fileName.substring(0,lastIndex);
 			String serFileName = onlyFileName+JjDom.SERIALIZATION_FORMAT;
-			// 2 passo : devo sostituire il vecchio nome del file con il nuovo
 			urlResource = urlResource.replace(fileName,serFileName);
-			// 3 passo : provo a scaricare cosi alla buona il file
 			try {
-				ftp_client.download(urlResource,new java.io.File("tmp.dat"));
-				System.out.println("File scaricato @");
+				java.io.File serFile = new java.io.File("tmp.dat");
+				ftp_client.download(urlResource,serFile);
+				inst = JjDom.deserializes(serFile.getPath());
+				if (inst instanceof HTMLDocument) {
+					JjDom.document = (HTMLDocument) inst ;
+				}
+				// elimino il file
+				boolean deleted = serFile.delete();
+				if (!deleted) {
+					serFile.deleteOnExit();
+				}
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
