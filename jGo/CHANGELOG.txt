@@ -148,3 +148,4 @@ Tuttavia questo metodo non è stato ancora completato.
 può anche restituire un percorso relativo a un documento diverso, bisogna
 essere sicuri che il baseURi appartenga al documento su cui si sta lavorando
 segnalare quando si prende il percorso del documento, in quali metodi
+- aggiunto il metodo play per riprodurre i file mp3

@@ -30,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
+
 import javax.imageio.ImageIO;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -42,10 +43,15 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
+
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import com.google.gson.Gson;
+
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.net.Server;
@@ -904,6 +910,28 @@ public final class j£ extends cloud.jgo.£{
 					e.printStackTrace();
 				}
 			}
+		}
+		return inst ;
+	}
+	// version 1.0.7
+	/**
+	 * This method plays an mp3 file
+	 * @param mp3File the mp3 file
+	 * @return jGo access point
+	 */
+	public static j£ play(cloud.jgo.io.File mp3File){
+		j£ inst = null ;
+		Player player = null ;
+		try {
+			player = new Player(new FileInputStream(mp3File));
+			player.play();
+			inst = getPowerfulInstance();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JavaLayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return inst ;
 	}
