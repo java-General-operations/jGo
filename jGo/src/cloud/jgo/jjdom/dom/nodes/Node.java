@@ -213,6 +213,10 @@ public interface Node extends Serializable{
 	 */
 	public abstract Node removeNode(Node node);
 	// version 1.0.7 : elimina tutti i figli
+	/**
+	 * This method eliminates all the children of a given node
+	 * @return the node on which the method was invoked
+	 */
 	public abstract Node removeChildren();
 	/**
 	 * This method replaces "oldNode" with "newNode"
@@ -222,8 +226,18 @@ public interface Node extends Serializable{
 	 */
 	public abstract Node replaceChild(Node newNode,Node oldNode);
 	// from to comment - 1.0.7
+	/**
+	 * This method gets the node path
+	 * @param nodePath the node path
+	 * @return the node on which the method is invoked
+	 */
 	public abstract Node getNodeByPath(String nodePath);
 	// version 1.0.7
+	/**
+	 * This method checks if the node contains the node received as a parameter 
+	 * @param nodeName the node name
+	 * @return true if it contains it
+	 */
 	public abstract boolean contains(String nodeName);
 		/**
 		 * 

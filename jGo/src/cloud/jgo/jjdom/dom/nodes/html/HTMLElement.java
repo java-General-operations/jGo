@@ -95,11 +95,40 @@ public interface HTMLElement extends Element,Home{
 	public abstract HTMLElement addCssProps(String...cssProps); // css inline
 	// version 1.0.7
 	public abstract HTMLElement addCssProp(final String cssProp);
+	//version-1.0.7
+		/**
+		 * 
+		 * This method gets a css property value
+		 * @param onlyProp the css property name
+		 * @return the css property value
+		 */
 	public abstract String getCssPropValue(String onlyProp);
+	//version-1.0.7
+	/**
+	 * 
+	 * This method gets a css property
+	 * @param onlyProp the css property name
+	 * @return the css property
+	 */
 	public abstract String getCssProp(String onlyProp);
+	// version 1.0.7
+	/**
+	 * This method verifies whether the element contains a css property or not.
+	 * @param onlyProp the css property name
+	 * @return true if the element has the css property
+	 */
 	public abstract boolean hasCssProp(String onlyProp);
 	// version 1.0.7 : lavorano solo a livello dom
+		/**
+		 * This method hides the element in the web page
+		 * @return the element on which the method was called
+		 */
 	public abstract HTMLElement hide();
+	// version 1.0.7
+	/**
+	 * This method shows the element in the web page
+	 * @return the element on which the method was called
+	 */
 	public abstract HTMLElement show();
 	/**
 	 * 

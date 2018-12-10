@@ -46,6 +46,12 @@ public interface Manipulable {
 	 */
 	public abstract Elements getElementsByTag(String tagName);
 	// version 1.0.7
+	/**
+	 * Obtains the elements, whose "name"<br>
+	 * attribute corresponds with the one passed as a parameter.
+	 * @param name the name
+	 * @return the list of items found
+	 */
 	public abstract Elements getElementsByName(String name);
 	/**
 	 * This method gets the elements by class
