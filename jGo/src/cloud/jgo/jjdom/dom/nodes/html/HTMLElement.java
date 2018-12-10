@@ -25,13 +25,14 @@ import java.io.Serializable;
 import java.util.Map;
 
 import cloud.jgo.jjdom.Home;
+import cloud.jgo.jjdom.dom.Manipulable;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Node;
 /**
  * 
  * @author Martire91<br>
  * @see Node
- * @see HTMLManipulable
+ * @see Manipulable
  * This interface represents the concept of html element
  *
  */

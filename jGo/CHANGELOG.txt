@@ -138,7 +138,7 @@ una data proprietà css
 - aggiunto il metodo save in JjDom che specifica il document
 - aggiunto il metodo serializle in JjDom che specifica il document
 - modificato metodo deserializes, in modo tale che restituisca un Document + generico
-- aggiunti tutta una serie di override createDocument() al punto di accesso jGo.
+- aggiunti tutta una serie di override createDocument() alla fase WebUtils
 - Aggiunto il metodo getDocumentFormat(), per recuperare il formato di cui necessita il file per questo documento
 - Ho creato da capo il metodo connect() e migrate()- JjDom.
 - Ho inoltre aggiunto un nuovo metodo : download() che serve a scaricare il documento.

@@ -30,6 +30,7 @@ import java.util.Map.Entry;
 import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.css.CSSSelector;
+import cloud.jgo.jjdom.dom.Manipulable;
 import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Element;
@@ -46,7 +47,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
  * 
  * @author Martire91<br>
  * @see Node
- * @see HTMLManipulable
+ * @see Manipulable
  * This class represents the concept of XML element
  *
  */

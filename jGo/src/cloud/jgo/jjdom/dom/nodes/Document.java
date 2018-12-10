@@ -41,13 +41,11 @@ public interface Document extends Node,Manipulable{
 	 * @return the comments list
 	 */
 	public abstract List<?extends Comment>getListComments();
-	/**
-	 * This method adds a class to the elements taken as parameters
-	 * @param className the class name
-	 * @param elements the elements
-	 * @return the document on which the method was invoked
-	 */
 	// version 1.0.7
+	/**
+	 * This method returns the format the file needs for this document.
+	 * @return the document format - example : html
+	 */
 	public abstract String getDocumentFormat();
 	/**
 	 * 1 DEFAULT CHARSET : UTF_8

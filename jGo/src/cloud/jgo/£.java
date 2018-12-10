@@ -172,6 +172,32 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
  * @version 1.0.7
    <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'> --><br>
     <!--Author : *** Marco Martire *** -->  
+    <!-- code to delete (for Maven project) until @-->
+   <style>
+   div.cm_source {
+  overflow: auto;
+  padding: 1em;
+  background-color: #eee;
+  font-family: courier new;
+  font-size: 10pt;
+}
+code.cm_n_n_n_0 {
+  color: #000000;
+}
+code.cm_n_n_n_2A00FF {
+  color: #2A00FF;
+}
+code.cm_b_n_n_7F0055 {
+  font-weight: bold;
+  color: #7F0055;
+}
+code.cm_n_n_n_0 {
+  color: #000000;
+}
+.costants{color:blue;}
+.overrides{color:darkgray;}
+   </style>
+   <!-- @ -->
      <img id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo' style='float: left;margin-right:15px;'><br>
    <h1 style='color: #282828;'>jGo<strong style='color: green;'>.cloud</strong></h1>
    <em>java General operations</em><br><br><br>
@@ -1218,24 +1244,6 @@ public class £{
 	public static LocalTerminal createCustomTerminal(){
 		return new LocalTerminal();
 	}
-	//version 1.0.7
-	public static HTMLDocument createDocument(){
-		return JjDom.newDocument();
-	}
-	// version 1.0.7
-	public static HTMLDocument createDocument(String charsetName,JjDom home){
-		return new HTMLDefaultDocument(charsetName,null,home);
-	}
-	//version 1.0.7
-	public static XMLDocument createDocument(String rootElementName){
-		return new XMLDocument(rootElementName);
-	}
-	// version 1.0.7
-	public static XMLDocument createDocument(String charsetName,String rootElementName){
-		return new XMLDocument(charsetName, rootElementName);
-	}
-	
-	
 	/**
 	 * This method creates a phase terminal.
 	 * @return the created terminal
@@ -1565,7 +1573,47 @@ public class £{
 			}
 			return _W;
 		}
-		
+		/**
+		 * 
+		 * @return
+		 */
+		//version 1.0.7
+		/**
+		 * This method creates an HTML document
+		 * @return the HTML document
+		 */
+		public static HTMLDocument createDocument(){
+			return JjDom.newDocument();
+		}
+		// version 1.0.7
+		/**
+		 * This method creates an HTML document
+		 * @param charsetName the charset name - example : UTF-8
+		 * @param home the JjDom instance
+		 * @return the HTML document
+		 */
+		public static HTMLDocument createDocument(String charsetName,JjDom home){
+			return new HTMLDefaultDocument(charsetName,null,home);
+		}
+		//version 1.0.7
+		/**
+		 * This method creates an XML document
+		 * @param rootElementName the root element name
+		 * @return the XML document
+		 */
+		public static XMLDocument createDocument(String rootElementName){
+			return new XMLDocument(rootElementName);
+		}
+		// version 1.0.7
+		/**
+		 * This method creates an XML document
+		 * @param charsetName the charset name - example : UTF-8
+		 * @param rootElementName the root element name
+		 * @return the XML document
+		 */
+		public static XMLDocument createDocument(String charsetName,String rootElementName){
+			return new XMLDocument(charsetName, rootElementName);
+		}
 		/**
 		 * Jjdom
 		 */

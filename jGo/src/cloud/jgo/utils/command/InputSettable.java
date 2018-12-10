@@ -33,12 +33,12 @@ package cloud.jgo.utils.command;
 public interface InputSettable {
 	/**
 	 * This method gets the input value
-	 * @return
+	 * @return the input value
 	 */
 	public abstract String getInputValue();
 	/**
 	 * This method sets the input value
-	 * @param inputValue
+	 * @param inputValue the input value
 	 */
 	public abstract void setInputValue(String inputValue);
 	/**
