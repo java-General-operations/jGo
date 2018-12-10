@@ -5,17 +5,21 @@
   <version>1.0.7</version>
   <inceptionYear>2018</inceptionYear>
   <name>jGo</name>
-  <description>Java General Operations</description>
-  <!-- this -->
- <url>https://www.jgo.cloud/</url>
-  <!-- this -->
+  <description>${jgo.organization.name}</description>
+  <properties>
+  <jgo.url>https://www.jgo.cloud/</jgo.url>
+  <jgo.author>Marco Martire</jgo.author>
+  <jgo.staff.mail>staff@jgo.cloud</jgo.staff.mail>
+  <jgo.organization.name>Java General Operations</jgo.organization.name>
+  <jgo.organization.url>https://github.com/java-General-operations</jgo.organization.url>
+  </properties>
+ <url>${jgo.url}</url>
   <licenses>
   <license>
     <name>MIT License</name>
     <url>http://www.opensource.org/licenses/mit-license.php</url>
   </license>
 </licenses>
- <!-- this -->
 <distributionManagement>
   <snapshotRepository>
     <id>ossrh</id>
@@ -26,16 +30,14 @@
     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
   </repository>
 </distributionManagement>
-  <!-- this -->
   <developers>
     <developer>
-      <name>Marco Martire</name>
-      <email>staff@jgo.cloud</email>
-      <organization>java General operations</organization>
-      <organizationUrl>https://github.com/java-General-operations</organizationUrl>
+      <name>${jgo.author}</name>
+      <email>${jgo.staff.mail}</email>
+      <organization>${jgo.organization.name}</organization>
+      <organizationUrl>${jgo.organization.url}</organizationUrl>
     </developer>
   </developers>
-   <!-- this -->
   <scm>
   <connection>scm:git:git://github.com/java-General-operations/jGo.git</connection>
   <developerConnection>scm:git:ssh://github.com:java-General-operations/jGo.git</developerConnection>
@@ -60,7 +62,6 @@
           <target>1.8</target>
         </configuration>
       </plugin>
-      <!-- This -->
       <plugin>
       <groupId>org.sonatype.plugins</groupId>
       <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -72,7 +73,6 @@
         <autoReleaseAfterClose>true</autoReleaseAfterClose>
       </configuration>
     </plugin>
-    <!-- This -->
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-source-plugin</artifactId>
@@ -99,7 +99,6 @@
         </execution>
       </executions>
     </plugin>
-    <!-- This -->
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-gpg-plugin</artifactId>
@@ -152,10 +151,9 @@
     <artifactId>basicplayer</artifactId>
     <version>3.0.0.0</version>
 </dependency>
-
 </dependencies>
 	<organization>
-		<name>java General operations</name>
-		<url>https://github.com/java-General-operations</url>
+		<name>${jgo.organization.name}</name>
+		<url>${jgo.organization.url}</url>
 	</organization>
 </project>
