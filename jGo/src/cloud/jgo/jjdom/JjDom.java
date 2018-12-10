@@ -364,6 +364,10 @@ public final class JjDom implements jQuerySupport, Serializable{
 		return inst ;
 	}
 	
+	// agisce sul documento di JjDom
+	public static JjDom migrate(String urlResource){
+		return migrate(urlResource, JjDom.document);
+	}
 	public static JjDom migrate(String urlResource,Document document){
 		JjDom inst = null ;String dirUrl = null;
 		if (isConnected()&&isAuthenticated()) {
@@ -3852,7 +3856,8 @@ public final class JjDom implements jQuerySupport, Serializable{
 		return migrate(JjDom.documentURL, document);
 	}
 	
+	// agisce sul documento di JjDom
 	public static JjDom update(){
-		return migrate(JjDom.documentURL,JjDom.document);
+		return migrate(JjDom.documentURL);
 	}
 }
