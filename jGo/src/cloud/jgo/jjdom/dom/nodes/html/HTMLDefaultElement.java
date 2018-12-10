@@ -638,8 +638,13 @@ public class HTMLDefaultElement implements HTMLElement{
 	
 	@Override
 	public String getBaseURI() {
-		// SVILUPPARE QUESTO METODO APPENA HO UN RIFERIMENTO AL FILE HTML IN QUESTIONE
-			return JjDom.documentURL ;
+		String baseURI = null ;
+		if (JjDom.documentURL!=null) {
+			if (£.extractFormatFromFileName(JjDom.documentURL).equals("html")) {
+				baseURI = JjDom.documentURL;
+			}
+		}
+		return baseURI;
 	}
 	
 	@Override

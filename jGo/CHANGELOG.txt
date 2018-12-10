@@ -144,3 +144,7 @@ una data proprietà css
 - Ho inoltre aggiunto un nuovo metodo : download() che serve a scaricare il documento.
 Tuttavia questo metodo non è stato ancora completato.
 - perfetto ho completato i metodi download,update e migrate - JjDom
+- segnalare che se otteniamo il baseURI del documento HTML per esempio,
+può anche restituire un percorso relativo a un documento diverso, bisogna
+essere sicuri che il baseURi appartenga al documento su cui si sta lavorando
+segnalare quando si prende il percorso del documento, in quali metodi

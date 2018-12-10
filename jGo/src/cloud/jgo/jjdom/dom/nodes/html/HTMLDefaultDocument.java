@@ -592,7 +592,13 @@ public class HTMLDefaultDocument implements HTMLDocument{
 
 	@Override
 	public String getBaseURI() {
-		return JjDom.documentURL;
+		String baseURI = null ;
+		if (JjDom.documentURL!=null) {
+			if (£.extractFormatFromFileName(JjDom.documentURL).equals("html")) {
+				baseURI = JjDom.documentURL;
+			}
+		}
+		return baseURI;
 	}
 	
 	@Override

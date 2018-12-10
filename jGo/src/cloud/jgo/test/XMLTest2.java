@@ -9,11 +9,15 @@ import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 public class XMLTest2 {
 public static void main(String[] args) {
 	
+	// migrate : documentato
+	// download : documentato
+	// update : ?
 	
 	
 	Document document = JjDom.connect("localhost","wasp91","wasp91dayno").download("upload/test/ven.xml");
-	Element rootElement = document.getRootElement();
-	System.out.println(rootElement.getMarkup());
+	
+	
+	System.out.println(document.getBaseURI());
 	
 }
 }

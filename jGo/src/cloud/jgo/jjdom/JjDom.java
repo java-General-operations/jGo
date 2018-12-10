@@ -331,6 +331,13 @@ public final class JjDom implements jQuerySupport, Serializable{
 	//version 1.0.7
 	// si può specificare sia un file html/xml 
 	// oppure sia un host a cui connettersi
+	/**
+	 * This method connects to the server, using an ftp: <a href='http://www.sauronsoftware.it/projects/ftp4j/?lang=it'>ftp4j</a> client.
+	 * @param ftpHost the ftp host - example: ftp.website.com
+	 * @param ftpUser the ftp username
+	 * @param ftpPassw the ftp password
+	 * @return the JjDom instance
+	 */
 	public static JjDom connect(String ftpHost,String ftpUser,String ftpPassw){
 		// per prima cosa mi connetto
 		JjDom inst = null ;
@@ -365,9 +372,20 @@ public final class JjDom implements jQuerySupport, Serializable{
 	}
 	
 	// agisce sul documento di JjDom
+	/**
+	 * This method migrates the JjDom html document, associating a correct URL in the server.
+	 * @param urlResource document URL
+	 * @return the JjDom instance
+	 */
 	public static JjDom migrate(String urlResource){
 		return migrate(urlResource, JjDom.document);
 	}
+	/**
+	 * This method migrates the document passed as a parameter, associating it with a correct URL in the server.
+	 * @param urlResource document URL
+	 * @param document the document
+	 * @return the JjDom instance
+	 */
 	public static JjDom migrate(String urlResource,Document document){
 		JjDom inst = null ;String dirUrl = null;
 		if (isConnected()&&isAuthenticated()) {
@@ -441,6 +459,13 @@ public final class JjDom implements jQuerySupport, Serializable{
 		return inst ;
 	}
 	
+	/**
+	 * This method downloads the document, provided that the connect ()<br>
+	 * method has been called first and a correct path<br>
+	 * has been specified for the resource.
+	 * @param urlResource document URL
+	 * @return the downloaded document
+	 */
 	public static Document download(String urlResource){
 			Document inst = null ;
 		if (isConnected()&&isAuthenticated()) {
@@ -3852,11 +3877,26 @@ public final class JjDom implements jQuerySupport, Serializable{
 		}
 	}
 
+	/**
+	 * This method updates the document,<br>
+	 * useful when you make changes to<br>
+	 * an online document, and you want<br>
+	 * to save these changes.
+	 * @param document the document
+	 * @return the JjDom instance
+	 */
 	public static JjDom update(Document document) {
 		return migrate(JjDom.documentURL, document);
 	}
 	
 	// agisce sul documento di JjDom
+	/**
+	 * This method updates the JjDom document,<br>
+	 * useful when you make changes to<br>
+	 * an online document, and you want<br>
+	 * to save these changes.
+	 * @return the JjDom instance
+	 */
 	public static JjDom update(){
 		return migrate(JjDom.documentURL);
 	}

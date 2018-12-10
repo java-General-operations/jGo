@@ -1,3 +1,25 @@
+/**
+ * JGO - A pure Java library,
+ * its purpose is to make life easier for the programmer.
+ *
+ * J - Java
+ * G - General
+ * O - Operations
+ *
+ * URL Software : https://www.jgo.cloud/
+ * URL Documentation : https://www.jgo.cloud/docs/
+ *
+ * Copyright © 2018 - Marco Martire (www.jgo.cloud)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the MIT License.
+ *
+ * You may obtain a copy of License at :
+ * https://www.jgo.cloud/LICENSE.txt
+ *
+ * To collaborate on this project, you need to do it from the software site.
+ * 
+ */
 package cloud.jgo.jjdom.dom.nodes.xml;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -5,6 +27,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import cloud.jgo.£;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.css.CSSSelector;
 import cloud.jgo.jjdom.dom.Recursion;
@@ -19,7 +42,14 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
-
+/**
+ * 
+ * @author Martire91<br>
+ * @see Node
+ * @see HTMLManipulable
+ * This class represents the concept of XML element
+ *
+ */
 public class XMLElement implements Element{
 	private String nodeName=null;
 	private NodeList childNodes = null ;
@@ -360,8 +390,13 @@ public class XMLElement implements Element{
 
 	@Override
 	public String getBaseURI() {
-		// TODO Auto-generated method stub
-		return null;
+		String baseURI = null ;
+		if (JjDom.documentURL!=null) {
+			if (£.extractFormatFromFileName(JjDom.documentURL).equals("xml")) {
+				baseURI = JjDom.documentURL;
+			}
+		}
+		return baseURI;
 	}
 
 	@Override
