@@ -1,6 +1,6 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/cloud.jgo/jGo.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22cloud.jgo%22%20AND%20a:%22jGo%22)
-[![Javadocs](https://www.javadoc.io/badge/cloud.jgo/jGo.svg)](https://www.javadoc.io/doc/cloud.jgo/jGo)
+[![Javadocs](https://www.javadoc.io/badge/cloud.jgo/jGo.svg?)](https://www.javadoc.io/doc/cloud.jgo/jGo)
 <html>
    <h1><img id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'></h1>
    <h2>java General operations</h2>
