@@ -85,32 +85,6 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  * @version 1.0.4
  <!--<link rel='styleSheet' href='https://www.jgo.cloud/docStyle.css'>-->
     <!--Author : *** Marco Martire *** -->  
-   <!-- code to delete (for Maven project) until @-->
-   <style>
-   div.cm_source {
-  overflow: auto;
-  padding: 1em;
-  background-color: #eee;
-  font-family: courier new;
-  font-size: 10pt;
-}
-code.cm_n_n_n_0 {
-  color: #000000;
-}
-code.cm_n_n_n_2A00FF {
-  color: #2A00FF;
-}
-code.cm_b_n_n_7F0055 {
-  font-weight: bold;
-  color: #7F0055;
-}
-code.cm_n_n_n_0 {
-  color: #000000;
-}
-.costants{color:blue;}
-.overrides{color:darkgray;}
-   </style>
-   <!-- @ -->
    <h1 style='color: #282828;'>jGo<strong style='color: green;'>.cloud</strong>/<a id='link'href='https://www.jgo.cloud/jjdom'>JjDom</a></h1>
    <img id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo' width='50px' height='50px'><br>
    <strong>Description :</strong><br> This technology basically allows you to create or work on a single html document.<br>
