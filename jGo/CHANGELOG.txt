@@ -110,42 +110,39 @@ Version 1.0.6 - 27/11/2018
 
 
 
-Version 1.0.7 - in dev
+Version 1.0.7 - 11/12/2018
 
-- Aggiungere nuovi metodi a jQuerySupport, aggiungere nuovi metodi 
-a gli elementi html, quindi aggiornare jjdom alla prossima versione
+- New methods have been added to the jQuerySupport interface
 
-- Poter eseguire i metodi jGo all'interno dei threads
+- The "getNodePath()" method has been added to the Node interface.
 
-- sto aggiungendo il metodo  getNodeByPath
+- Now even the commands can receive a value from input, just like the parameters.
 
-- adesso anche i comandi possono ricevere valore da input come i Parameter
+- The "contains()" method has been added to the Node interface.
 
-- il metodo contains
+- all the nodes of the dom have been redefined.
 
-- sto ridefinendo i packages del dom (JjDom) - praticamente sto ridefinendo i nodi
-- ho creato il package definitivo : cloud.jgo.jjdom.dom.nodes.xml per i nodi XML.
-- ho creato l'interfaccia inputSettable per comandi e parametri
-- creato il metodo nell'interfaccia node, removeChildren
-- sto correggendo dei bugs relativi ai metodi (createElement()) del document.
-- Ho aggiunto una nuova semplicissima enum: jQuerySelector
-- Ho aggiunto due nuovi metodi nella classe HTMLElement:show and hide
-- aggiungo un nuovo metodo per ottenere le props css da un elemento
-- Ho ridefinito i metodi per aggiungere le proprietà css agli elementi
-- Creato un metodo che controlla se un determinato elemento ha
-una data proprietà css
-- Creare un metodo getElementsByName() nell'interfaccia Manipulable
-- aggiunto il metodo save in JjDom che specifica il document
-- aggiunto il metodo serializle in JjDom che specifica il document
-- modificato metodo deserializes, in modo tale che restituisca un Document + generico
-- aggiunti tutta una serie di override createDocument() alla fase WebUtils
-- Aggiunto il metodo getDocumentFormat(), per recuperare il formato di cui necessita il file per questo documento
-- Ho creato da capo il metodo connect() e migrate()- JjDom.
-- Ho inoltre aggiunto un nuovo metodo : download() che serve a scaricare il documento.
-Tuttavia questo metodo non è stato ancora completato.
-- perfetto ho completato i metodi download,update e migrate - JjDom
-- segnalare che se otteniamo il baseURI del documento HTML per esempio,
-può anche restituire un percorso relativo a un documento diverso, bisogna
-essere sicuri che il baseURi appartenga al documento su cui si sta lavorando
-segnalare quando si prende il percorso del documento, in quali metodi
-- aggiunto il metodo play per riprodurre i file mp3
+- a new package has been added: cloud.jgo.jjdom.dom.nodes.xml : for xml nodes.
+
+- the "inputSettable" interface was created in the package: cloud.jgo.utils.command.
+
+- A new method has been created in the node interface: removeChildren ().
+
+- Bugs have been fixed in the methods that create the elements - JjDom.
+
+- New enum : jQuerySelector.
+
+- Two methods have been added in the HTMLElement class : hide()/show()/getPropCss()...
+
+- A new method has been created in the "Manipulable" interface: getElementsByName().
+
+- Different methods have been redefined in JjDom.
+
+- New methods have been added in the _W: WebUtils phase.
+
+- The "getDocumentFormat()" method has been added to the Document interface.
+
+- New method added to JjDom: download ().
+
+- New method added to the access point jGo: play().
+(Thanks to Marco Martire)
