@@ -25,28 +25,33 @@ package cloud.jgo.jjdom.css.concrete;
 import cloud.jgo.jjdom.css.CSSRule;
 import cloud.jgo.jjdom.css.CSSStyle;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
+
 // tramite tag style
-public class CSSDefaultStyle extends CSSStyle{
+public class CSSDefaultStyle extends CSSStyle {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private HTMLDocument document=null;
+	private HTMLDocument document = null;
 
 	public CSSDefaultStyle(HTMLDocument document) {
 		// TODO Auto-generated constructor stub
-		this.document = document ;
+		this.document = document;
 	}
-	public CSSDefaultStyle(){}
+
+	public CSSDefaultStyle() {
+	}
+
 	public void setDocument(HTMLDocument document) {
 		this.document = document;
 	}
+
 	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("\n");
 		for (int i = 0; i < this.size(); i++) {
-			buffer.append(get(i)+"\n");
+			buffer.append(get(i) + "\n");
 		}
 		return buffer.toString();
 	}
@@ -56,19 +61,19 @@ public class CSSDefaultStyle extends CSSStyle{
 		for (int i = 0; i < rules.length; i++) {
 			add(rules[i]);
 		}
-		return this ;
+		return this;
 	}
 
 	@Override
 	public int countRules() {
 		// TODO Auto-generated method stub
-		return this.size() ;
+		return this.size();
 	}
 
 	@Override
 	public HTMLDocument getDocument() {
 		// TODO Auto-generated method stub
-		return this.document ;
+		return this.document;
 	}
-	
+
 }

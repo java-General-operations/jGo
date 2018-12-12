@@ -28,42 +28,49 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+
 /**
  * 
  * @author Martire91
  *
  */
-public class Download extends Thread{
+public class Download extends Thread {
 
-	private URL url ;
-	private String pathDestination ;
-	public static final int PROTO_HTTP=0,PROTO_HTTPS=1 ;
-	private String downloadOK ;
-	private String downloadNO ;
+	private URL url;
+	private String pathDestination;
+	public static final int PROTO_HTTP = 0, PROTO_HTTPS = 1;
+	private String downloadOK;
+	private String downloadNO;
+
 	public String getDownloadOK() {
 		return downloadOK;
 	}
+
 	public void setDownloadOK(String downloadOK) {
 		this.downloadOK = downloadOK;
 	}
+
 	public String getDownloadNO() {
 		return downloadNO;
 	}
+
 	public void setDownloadNO(String downloadNO) {
 		this.downloadNO = downloadNO;
 	}
 
-	public Download(URL url,String pathDestination) {
+	public Download(URL url, String pathDestination) {
 		// TODO Auto-generated constructor stub
-	this.pathDestination = pathDestination ;
+		this.pathDestination = pathDestination;
 		setName("Download");
-	this.url = url ;
+		this.url = url;
 	}
-	public Download(){
+
+	public Download() {
 		setName("Download");
-		this.url = null ;
-		this.pathDestination = null ;
+		this.url = null;
+		this.pathDestination = null;
 	}
+
 	public String getPathDestination() {
 		return pathDestination;
 	}
@@ -79,38 +86,37 @@ public class Download extends Thread{
 	public void setUrl(URL url) {
 		this.url = url;
 	}
-	
-	
+
 	@Override
 	public void run() {
-	try {
-		download();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		try {
+			download();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	}
+
 	/**
 	 * This method downloads a file from the internet
 	 */
-	private void download() throws IOException{
-	  URLConnection connection = this.url.openConnection();
-	  byte[]buffer = new byte[1024];
-	  BufferedInputStream fis = new BufferedInputStream(connection.getInputStream());
-	  FileOutputStream fos = new FileOutputStream(new File(pathDestination));
-	 int leggi ;
-	 System.out.println("Wait for ...");
-	 while ((leggi = fis.read(buffer,0,buffer.length))>-1) {
-		fos.write(buffer, 0, leggi);
+	private void download() throws IOException {
+		URLConnection connection = this.url.openConnection();
+		byte[] buffer = new byte[1024];
+		BufferedInputStream fis = new BufferedInputStream(connection.getInputStream());
+		FileOutputStream fos = new FileOutputStream(new File(pathDestination));
+		int leggi;
+		System.out.println("Wait for ...");
+		while ((leggi = fis.read(buffer, 0, buffer.length)) > -1) {
+			fos.write(buffer, 0, leggi);
+		}
+		fos.flush();
+		fos.close();
+		if (new File(pathDestination).exists()) {
+			System.out.println(downloadOK);
+		} else {
+			System.err.println(downloadNO);
+		}
 	}
-	 fos.flush();
-	 fos.close();
-	if(new File(pathDestination).exists()){
-		System.out.println(downloadOK);
-	}
-	else{
-		System.err.println(downloadNO);
-	}
-	}
-	
+
 }

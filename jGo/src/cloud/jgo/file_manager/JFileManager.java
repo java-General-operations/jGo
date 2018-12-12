@@ -27,88 +27,76 @@ import java.io.File;
 import java.util.Properties;
 
 import javax.swing.JFileChooser;
+
 /**
  * 
  * @author Martire91
  *
  */
 public class JFileManager {
-	private JFileChooser chooser  = null ;
+	private JFileChooser chooser = null;
 	public final static String KEY_CURRENT_DIRECTORY = "com.jgo.file_manager.current_directory";
 	public final static String KEY_TITLE = "com.jgo.file_manager.title";
 	public final static String KEY_TEXT_APPROVE_BUTTON = "com.jgo.file_manager.text.approve_button";
 	public final static String KEY_MULTI_SELECTION = "com.jgo.file_manager.multi_selection";
 	private Properties props = new Properties();
+
 	public JFileChooser getChooser() {
-		
+
 		return chooser;
 	}
-	
-	public static final int MODE_OPEN = 0 ;
-	public static final int MODE_SAVE = 1 ;
 
+	public static final int MODE_OPEN = 0;
+	public static final int MODE_SAVE = 1;
 
 	public void setChooser(JFileChooser chooser) {
 		this.chooser = chooser;
 	}
+
 	public JFileManager() {
 		// TODO Auto-generated constructor stub
-	this.chooser = new JFileChooser();
-	this.chooser.setFileView(new JFileView());
-	
+		this.chooser = new JFileChooser();
+		this.chooser.setFileView(new JFileView());
+
 	}
-	public java.io.File setVisible(boolean value,int mode,Component parent){
-		
-		if(this.chooser.isVisible()&&value == false){
+
+	public java.io.File setVisible(boolean value, int mode, Component parent) {
+
+		if (this.chooser.isVisible() && value == false) {
 			this.chooser.setVisible(value);
-			return null ;
-		}
-		else{
+			return null;
+		} else {
 			if (mode == JFileManager.MODE_OPEN) {
-				int result=this.chooser.showOpenDialog(parent);	
-				if(result == JFileChooser.APPROVE_OPTION){
+				int result = this.chooser.showOpenDialog(parent);
+				if (result == JFileChooser.APPROVE_OPTION) {
 					return this.chooser.getSelectedFile();
-				}
-				else {
+				} else {
 					this.chooser.setVisible(false);
-					return null ;
+					return null;
 				}
-				
-						
-			    }
-				else if(mode == JFileManager.MODE_SAVE) {
-					int result=this.chooser.showSaveDialog(parent);
-					if (result == JFileChooser.APPROVE_OPTION) {
-						return this.chooser.getSelectedFile();	
-					}
-					else {
-						return null ;
-					}
-					
+
+			} else if (mode == JFileManager.MODE_SAVE) {
+				int result = this.chooser.showSaveDialog(parent);
+				if (result == JFileChooser.APPROVE_OPTION) {
+					return this.chooser.getSelectedFile();
+				} else {
+					return null;
 				}
-				else{
-					return null ;
-				}
+
+			} else {
+				return null;
+			}
 		}
-		
-		
+
 	}
-
-
-
-
 
 	public Properties getProps() {
 		return props;
 	}
 
-
-
-
-
 	public void setProps(Properties props) {
 		this.props = props;
-		if(props.containsKey(JFileManager.KEY_CURRENT_DIRECTORY)){
+		if (props.containsKey(JFileManager.KEY_CURRENT_DIRECTORY)) {
 			// imposto la directory
 			this.chooser.setCurrentDirectory(new File(props.getProperty(JFileManager.KEY_CURRENT_DIRECTORY)));
 		}
@@ -117,11 +105,10 @@ public class JFileManager {
 			String prop = this.props.getProperty(KEY_MULTI_SELECTION);
 			if (prop.equals("true")) {
 				this.chooser.setMultiSelectionEnabled(true);
-			}
-			else if(prop.equals("false")){
+			} else if (prop.equals("false")) {
 				this.chooser.setMultiSelectionEnabled(false);
 			}
-			
+
 		}
 		if (props.containsKey(JFileManager.KEY_TEXT_APPROVE_BUTTON)) {
 			// imposto il testo del button
@@ -130,7 +117,7 @@ public class JFileManager {
 		if (props.containsKey(JFileManager.KEY_TITLE)) {
 			this.chooser.setDialogTitle(props.getProperty(JFileManager.KEY_TITLE));
 		}
-			
+
 	}
-	
+
 }

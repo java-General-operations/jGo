@@ -30,19 +30,20 @@ import javax.xml.bind.Unmarshaller;
 import cloud.jgo.io.File;
 
 public final class XMLConverter {
-	public static cloud.jgo.io.File convertFromObjectInXML(Class type,String fileName,Object obj) throws JAXBException{
+	public static cloud.jgo.io.File convertFromObjectInXML(Class type, String fileName, Object obj)
+			throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(type);
 		Marshaller jaxbMarshaller = context.createMarshaller();
 		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        File file = new File(fileName);
-		jaxbMarshaller.marshal(obj,file);
-		return file ;
+		File file = new File(fileName);
+		jaxbMarshaller.marshal(obj, file);
+		return file;
 	}
-	
-	public static Object convertFromXMLInObject(cloud.jgo.io.File file,Class type) throws JAXBException{
+
+	public static Object convertFromXMLInObject(cloud.jgo.io.File file, Class type) throws JAXBException {
 		JAXBContext jaxbContext = JAXBContext.newInstance(type);
 		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 		Object customer = (Object) jaxbUnmarshaller.unmarshal(file);
-		return customer ;
+		return customer;
 	}
 }

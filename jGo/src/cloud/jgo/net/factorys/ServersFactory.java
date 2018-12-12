@@ -21,6 +21,7 @@
  * 
  */
 package cloud.jgo.net.factorys;
+
 import java.net.SocketException;
 
 import cloud.jgo.net.Server;
@@ -34,64 +35,64 @@ import cloud.jgo.net.tcp.http.HTTPServer;
 import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
 import cloud.jgo.net.tcp.login.TCPLoginServer;
 import cloud.jgo.net.tcp.login.TCPLoginServerConfiguration;
+
 /**
  * 
  * @author Martire91<br>
- *  This class contains the factory method for the servers
+ *         This class contains the factory method for the servers
  */
-public class ServersFactory extends ServerFactory{
+public class ServersFactory extends ServerFactory {
 
-	private static ServersFactory factory = null ;
-	
+	private static ServersFactory factory = null;
+
 	private ServersFactory() {
 		// nothing
 	}
-	public static ServersFactory getInstance(){
-		if(factory == null){
+
+	public static ServersFactory getInstance() {
+		if (factory == null) {
 			factory = new ServersFactory();
 		}
-		return factory ;
+		return factory;
 	}
+
 	@Override
 	public Server createServer(int type, int localPort) {
-      Server server = null ;
-		if(type==ServerTypes.TYPE_TCP.VALUE){
-			
+		Server server = null;
+		if (type == ServerTypes.TYPE_TCP.VALUE) {
+
 			// qui si deve creare un server TCP
 			server = new DefaultTCPServer();
 			server.setLocalPort(localPort);
-		}
-		else if(type == TCPServerTypes.TYPE_HTTP.VALUE){
+		} else if (type == TCPServerTypes.TYPE_HTTP.VALUE) {
 			server = new DefaultHTTPServer(); // restituisco un server da configurare
 			server.setLocalPort(localPort);
-		}
-		else if(type == TCPServerTypes.TYPE_LOGIN.VALUE){
+		} else if (type == TCPServerTypes.TYPE_LOGIN.VALUE) {
 			server = new TCPLoginServer();
 			server.setLocalPort(localPort);
 		}
-		return server ;
+		return server;
 	}
 
 	@Override
 	public Server createServer(Configuration configuration) throws SocketException {
-		Server server = null ; 
-		if(HTTPServerConfiguration.class.isInstance(configuration)){
+		Server server = null;
+		if (HTTPServerConfiguration.class.isInstance(configuration)) {
 			server = new DefaultHTTPServer();
 		}
 		// qui poi se creero altri server mettere qui i rispettivi else if
-		else if(TCPServerConfiguration.class.isInstance(configuration)&&!TCPLoginServerConfiguration.class.isInstance(configuration)){
+		else if (TCPServerConfiguration.class.isInstance(configuration)
+				&& !TCPLoginServerConfiguration.class.isInstance(configuration)) {
 			server = new DefaultTCPServer();
-		}
-		else if(TCPLoginServerConfiguration.class.isInstance(configuration)){
-			
+		} else if (TCPLoginServerConfiguration.class.isInstance(configuration)) {
+
 			server = new TCPLoginServer();
 		}
-		// qui configuro il server 
-		if(server!=null){
-			server.configure(configuration);	
+		// qui configuro il server
+		if (server != null) {
+			server.configure(configuration);
 		}
-		return server ;
+		return server;
 	}
-
 
 }

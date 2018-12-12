@@ -21,22 +21,29 @@
  * 
  */
 package cloud.jgo.utils.command;
+
 /**
  * 
  * @author Martire91<br>
- * Interface for sharing an object between commands
+ *         Interface for sharing an object between commands
  */
 public interface Shareable {
 	/**
 	 * This method returns the shared object
-	 * @param <T> the type
+	 * 
+	 * @param <T>
+	 *            the type
 	 * @return the shared object
 	 */
 	public abstract <T> T getSharedObject();
+
 	/**
 	 * This method shares an object
-	 * @param sharedObject the object
-	 * @param <T> the type
+	 * 
+	 * @param sharedObject
+	 *            the object
+	 * @param <T>
+	 *            the type
 	 */
 	public abstract <T> void shareObject(T sharedObject);
 }

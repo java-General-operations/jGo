@@ -21,28 +21,25 @@
  * 
  */
 package cloud.jgo.net.tcp;
+
 /**
  * 
  * @author Martire91<br>
- * This exception occurs when the chosen port is occupied
+ *         This exception occurs when the chosen port is occupied
  *
  */
-public class NegativeListeningException extends Exception{
+public class NegativeListeningException extends Exception {
 
-	
-	
 	public NegativeListeningException() {
 		// TODO Auto-generated constructor stub
 		super(" - The port is already occupied");
 	}
-	
-	
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Exception in "+getStackTrace()[0].getClassName()+""
-				+ getMessage()+" : "+"Listening Failed # "+getClass().getName();
+		return "Exception in " + getStackTrace()[0].getClassName() + "" + getMessage() + " : " + "Listening Failed # "
+				+ getClass().getName();
 	}
-	
+
 }

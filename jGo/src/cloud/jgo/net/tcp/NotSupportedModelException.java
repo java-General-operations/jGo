@@ -21,24 +21,23 @@
  * 
  */
 package cloud.jgo.net.tcp;
+
 /**
  * 
  * @author Martire91<br>
- * The model set is not supported
+ *         The model set is not supported
  */
-public class NotSupportedModelException extends Exception{
+public class NotSupportedModelException extends Exception {
 
-	
 	public NotSupportedModelException() {
 		// TODO Auto-generated constructor stub
 		super(" - Model type not supported");
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Exception in "+getStackTrace()[0].getClassName()+""
-				+ getMessage()+" : \n"+"You need to set up the server type model #. "+getClass().getName();
+		return "Exception in " + getStackTrace()[0].getClassName() + "" + getMessage() + " : \n"
+				+ "You need to set up the server type model #. " + getClass().getName();
 	}
 }

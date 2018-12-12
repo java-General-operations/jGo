@@ -22,52 +22,48 @@
  */
 package cloud.jgo.net.tcp.http.headers;
 
-public class DefaultHeader extends Header{
-	
-	
-	protected Object value ;
-	private String name ;
+public class DefaultHeader extends Header {
+
+	protected Object value;
+	private String name;
 
 	@Override
 	public String getName() {
 		/*
-		 
-		JGO Auto-generated method stub
-		Author : £ wasp91 £
-		Date 17 feb 2018
-		
-		*/
-		return this.name ;
+		 * 
+		 * JGO Auto-generated method stub Author : £ wasp91 £ Date 17 feb 2018
+		 * 
+		 */
+		return this.name;
 	}
 
 	@Override
 	public Object getValue() {
 		/*
-		 
-		JGO Auto-generated method stub
-		Author : £ wasp91 £
-		Date 17 feb 2018
-		
-		*/
-		return this.value ;
+		 * 
+		 * JGO Auto-generated method stub Author : £ wasp91 £ Date 17 feb 2018
+		 * 
+		 */
+		return this.value;
 	}
 
 	@Override
 	public void setValue(Object value) {
 		/*
-		 
-		JGO Auto-generated method stub
-		Author : £ wasp91 £
-		Date 17 feb 2018
-		
-		*/
-		this.value = value ;
+		 * 
+		 * JGO Auto-generated method stub Author : £ wasp91 £ Date 17 feb 2018
+		 * 
+		 */
+		this.value = value;
 	}
-	
-	// qui dovremo cercare di farsi che solo defaultHeader può impostare questa variabile
+
+	// qui dovremo cercare di farsi che solo defaultHeader può impostare questa
+	// variabile
 	/**
 	 * This method sets header name
-	 * @param name header name
+	 * 
+	 * @param name
+	 *            header name
 	 */
 	public void setName(String name) {
 		this.name = name;

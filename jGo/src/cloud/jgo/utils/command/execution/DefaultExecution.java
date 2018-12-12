@@ -22,9 +22,8 @@
  */
 package cloud.jgo.utils.command.execution;
 
-public abstract class DefaultExecution extends Execution{
+public abstract class DefaultExecution extends Execution {
 
-	
 	/**
 	 * 
 	 */
@@ -33,12 +32,10 @@ public abstract class DefaultExecution extends Execution{
 	@Override
 	public Object exec() {
 		/*
-		 
-		JGO Auto-generated method stub
-		Author : £ wasp91 £
-		Date 13 gen 2018
-		
-		*/
+		 * 
+		 * JGO Auto-generated method stub Author : £ wasp91 £ Date 13 gen 2018
+		 * 
+		 */
 		return null;
 	}
 

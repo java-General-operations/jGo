@@ -33,22 +33,29 @@ import cloud.jgo.£;
 /**
  * 
  * @author Martire91<br>
- * <p>This class simulates the linux Shell.</p>
- * <p>It is useful, however, for simple commands.</p>
+ *         <p>
+ * 		This class simulates the linux Shell.
+ *         </p>
+ *         <p>
+ * 		It is useful, however, for simple commands.
+ *         </p>
  * 
  *
  */
-public final class LinuxTerminal extends Terminal{
-	
+public final class LinuxTerminal extends Terminal {
+
 	public static final String pathExecutable = "/bin/xterm";
-	
+
 	/**
 	 * This method executes the commands
-	 * @param commands the commands
-	 * @throws InterruptedException 1 exception
+	 * 
+	 * @param commands
+	 *            the commands
+	 * @throws InterruptedException
+	 *             1 exception
 	 */
-	public void commands(String...commands) throws InterruptedException {
-		Process p = null ;
+	public void commands(String... commands) throws InterruptedException {
+		Process p = null;
 		try {
 			p = Runtime.getRuntime().exec("/bin/bash");
 		} catch (IOException e1) {
@@ -57,15 +64,15 @@ public final class LinuxTerminal extends Terminal{
 		}
 		OutputStream out = p.getOutputStream();
 		InputStream in = p.getInputStream();
-	
+
 		for (int i = 0; i < commands.length; i++) {
 			String command = commands[i];
-			command = command+"\n";
-			
-			byte[]buffer = command.getBytes();
-			
+			command = command + "\n";
+
+			byte[] buffer = command.getBytes();
+
 			// scrivo i byte sullo stream di output
-			
+
 			try {
 				out.write(buffer);
 				out.flush();
@@ -81,15 +88,15 @@ public final class LinuxTerminal extends Terminal{
 			e.printStackTrace();
 		}
 
-			p.waitFor();
-		
+		p.waitFor();
+
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		String leggi ;
+		String leggi;
 		StringBuffer bufferS = new StringBuffer();
 		try {
-			while((leggi = reader.readLine())!=null){
+			while ((leggi = reader.readLine()) != null) {
 				System.out.println(leggi);
-				bufferS.append(leggi+"\n");
+				bufferS.append(leggi + "\n");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -105,7 +112,7 @@ public final class LinuxTerminal extends Terminal{
 
 	@Override
 	public String command(String command) throws IOException, InterruptedException {
-		Process p=null;
+		Process p = null;
 		try {
 			p = Runtime.getRuntime().exec("/bin/bash");
 		} catch (IOException e) {
@@ -114,41 +121,41 @@ public final class LinuxTerminal extends Terminal{
 		}
 		OutputStream out = p.getOutputStream();
 		InputStream in = p.getInputStream();
-	
-		command = command+"\n";
-		
-		byte[]buffer = command.getBytes();
-		
+
+		command = command + "\n";
+
+		byte[] buffer = command.getBytes();
+
 		// scrivo i byte sullo stream di output
-		
+
 		try {
 			out.write(buffer);
 			out.flush();
 			out.close();
-		
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 		p.waitFor();
-		
+
 		/*
 		 * Okok qui leggo l'output del comando
 		 */
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		String leggi ;
+		String leggi;
 		StringBuffer bufferS = new StringBuffer();
 		try {
-			while((leggi = reader.readLine())!=null){
+			while ((leggi = reader.readLine()) != null) {
 				System.out.println(leggi);
-				bufferS.append(leggi+"\n");
+				bufferS.append(leggi + "\n");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// okok lasciamo gli streams aperti per altri eventuali comandi
 		// vediamo come va in tanto
 		try {
@@ -159,15 +166,15 @@ public final class LinuxTerminal extends Terminal{
 		}
 		return bufferS.toString();
 	}
+
 	@Override
 	public void implOpen() {
 		String cmd = £._I();
 		if (cmd.equals(getExitCommand())) {
 			close();
-		}
-		else{
-			cmd = cmd+"\n";
-			byte[]buffer = cmd.getBytes();
+		} else {
+			cmd = cmd + "\n";
+			byte[] buffer = cmd.getBytes();
 			try {
 				this.process.getOutputStream().write(buffer);
 				this.process.getOutputStream().flush();
@@ -178,12 +185,11 @@ public final class LinuxTerminal extends Terminal{
 		}
 	}
 
-	
-    @Override
-    public void close() {
-    	// TODO Auto-generated method stub
-    	super.close();
-    	try {
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		super.close();
+		try {
 			this.process.getOutputStream().flush();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -201,8 +207,7 @@ public final class LinuxTerminal extends Terminal{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-
+	}
 
 	@Override
 	public String getExitCommand() {
@@ -210,12 +215,12 @@ public final class LinuxTerminal extends Terminal{
 		return (String) this.exitCommand;
 	}
 
-
 	@Override
 	public void setExitCommand(String command) {
 		// TODO Auto-generated method stub
-		this.exitCommand = command ;
+		this.exitCommand = command;
 	}
+
 	@Override
 	public String getCommandRequest() {
 		// TODO Auto-generated method stub

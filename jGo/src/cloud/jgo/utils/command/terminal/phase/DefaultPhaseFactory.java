@@ -21,11 +21,12 @@
  * 
  */
 package cloud.jgo.utils.command.terminal.phase;
+
 // this is a concrete creator
-public class DefaultPhaseFactory implements PhaseFactory{
+public class DefaultPhaseFactory implements PhaseFactory {
 
 	@Override
-	public Phase newInstance(final String phaseName,final int value) {
+	public Phase newInstance(final String phaseName, final int value) {
 		return new DefaultPhase(phaseName, value);
 	}
 

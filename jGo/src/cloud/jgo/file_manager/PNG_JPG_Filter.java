@@ -26,24 +26,23 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
-public class PNG_JPG_Filter extends FileFilter{
+public class PNG_JPG_Filter extends FileFilter {
 
 	@Override
 	public boolean accept(File f) {
-		boolean corrected = false ; 
-		if(f.getName().toLowerCase().endsWith("png")){
-			corrected = true ;
+		boolean corrected = false;
+		if (f.getName().toLowerCase().endsWith("png")) {
+			corrected = true;
+		} else if (f.getName().toLowerCase().endsWith("jpg")) {
+			corrected = true;
 		}
-		else if(f.getName().toLowerCase().endsWith("jpg")) {
-			corrected = true ;
-		}
-		return corrected ;
-				
+		return corrected;
+
 	}
 
 	@Override
 	public String getDescription() {
-		
+
 		return "Images(.png,.jpg)";
 	}
 

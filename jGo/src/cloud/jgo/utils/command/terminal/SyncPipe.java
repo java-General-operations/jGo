@@ -21,30 +21,30 @@
  * 
  */
 package cloud.jgo.utils.command.terminal;
+
 /**
  * This is a support class
  */
 import java.io.InputStream;
 import java.io.OutputStream;
-public class SyncPipe implements Runnable{
-	private  InputStream in = null ;
+
+public class SyncPipe implements Runnable {
+	private InputStream in = null;
 	private OutputStream out = null;
-public SyncPipe(InputStream inputStream, OutputStream outputstream) {
-      in = inputStream;
-      out = outputstream;
-  }
-  public void run() {
-      try
-      {
-          byte[] buffer = new byte[1024];
-          for (int length = 0; (length = in.read(buffer)) != -1; )
-          {
-              out.write(buffer, 0, length);
-          }
-      }
-      catch (Exception e)
-      {
-          e.printStackTrace();
-      }
-  }
+
+	public SyncPipe(InputStream inputStream, OutputStream outputstream) {
+		in = inputStream;
+		out = outputstream;
+	}
+
+	public void run() {
+		try {
+			byte[] buffer = new byte[1024];
+			for (int length = 0; (length = in.read(buffer)) != -1;) {
+				out.write(buffer, 0, length);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

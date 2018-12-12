@@ -28,39 +28,42 @@ import java.net.Socket;
 
 import cloud.jgo.net.Connection;
 import cloud.jgo.net.factorys.ConnectionFactory;
+
 /**
  * 
  * @author Martire91<br>
- * Factory class for tcp connections
+ *         Factory class for tcp connections
  *
  */
-public class TCPFactoryConnection implements ConnectionFactory{
-	private Socket socket = null ;
-	private Connection connection = null ;
+public class TCPFactoryConnection implements ConnectionFactory {
+	private Socket socket = null;
+	private Connection connection = null;
+
 	public TCPFactoryConnection() {
 		// TODO Auto-generated constructor stub
 		this.socket = new Socket();
 	}
+
 	@Override
 	public Connection getConnection(InetSocketAddress remoteAddress) throws IOException {
-		
+
 		try {
 			this.socket.connect(remoteAddress);
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// molto bello qui gli passiamo l'esito della connessione che verrà
-		// memorizzato all'interno della variabile successfully dell'interfaccia Connection
+		// memorizzato all'interno della variabile successfully dell'interfaccia
+		// Connection
 		try {
-			this.connection = new TCPConnection(this.socket,this.socket.isConnected());
+			this.connection = new TCPConnection(this.socket, this.socket.isConnected());
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return this.connection ;
+		return this.connection;
 	}
-	
-	
+
 }

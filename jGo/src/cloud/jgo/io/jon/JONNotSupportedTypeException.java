@@ -21,28 +21,29 @@
  * 
  */
 package cloud.jgo.io.jon;
+
 /**
  * 
  * @author Martire91<br>
- * The type or some sub-type is not supported
+ *         The type or some sub-type is not supported
  *
  */
-public class JONNotSupportedTypeException extends Exception{
-	
+public class JONNotSupportedTypeException extends Exception {
+
 	private static final long serialVersionUID = 1L;
-	private Class<?>clazz = null ;
+	private Class<?> clazz = null;
 
 	public JONNotSupportedTypeException(Class clazz) {
 		// TODO Auto-generated constructor stub
 		super(" - Type non supported #");
-		this.clazz = clazz ;
+		this.clazz = clazz;
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Exception in "+getStackTrace()[0].getClassName()+""
-				+ getMessage()+" :\n"+"Type "+clazz.getSimpleName()+" is not supported "+getClass().getName();
+		return "Exception in " + getStackTrace()[0].getClassName() + "" + getMessage() + " :\n" + "Type "
+				+ clazz.getSimpleName() + " is not supported " + getClass().getName();
 	}
-	
+
 }

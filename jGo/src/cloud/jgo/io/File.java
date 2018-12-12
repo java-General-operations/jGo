@@ -37,56 +37,57 @@ import cloud.jgo.£;
 /**
  * 
  * @author Martire<br>
- * This class is just an extension of the java.io.File class .
- * Adds just a few more features
+ *         This class is just an extension of the java.io.File class . Adds just
+ *         a few more features
  *
  */
-public class File extends java.io.File{
+public class File extends java.io.File {
 
-	
-	// okok ottimo metodo poi però devo continuare dando altre funzionalità a questa classe
+	// okok ottimo metodo poi però devo continuare dando altre funzionalità a questa
+	// classe
 	// e gestendola in un modo più professionale
-	
-	public byte[] getBytes() throws IOException{
+
+	public byte[] getBytes() throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		FileInputStream fis = new FileInputStream(File.this);
 		BufferedInputStream in = new BufferedInputStream(fis);
-		byte[]buffer = new byte[1024];
-		int leggi ;
-		while((leggi = in.read(buffer, 0, buffer.length))>-1){
+		byte[] buffer = new byte[1024];
+		int leggi;
+		while ((leggi = in.read(buffer, 0, buffer.length)) > -1) {
 
 			baos.write(buffer, 0, leggi);
-		
+
 		}
 		baos.flush();
 		baos.close();
 		in.close();
 		return baos.toByteArray();
 	}
-	public Icon getIcon(){
-		
-		if(exists()){
+
+	public Icon getIcon() {
+
+		if (exists()) {
 			return FileSystemView.getFileSystemView().getSystemIcon(File.this);
+		} else {
+			return null;
 		}
-		else{
-			return null ;
-		}
-		
+
 	}
-      public ImageIcon getImageIcon(){
-		
-		if(exists()){
+
+	public ImageIcon getImageIcon() {
+
+		if (exists()) {
 			Icon icon = FileSystemView.getFileSystemView().getSystemIcon(File.this);
-			
-			ImageIcon image = (ImageIcon)icon ;
-			
-			return image ;
+
+			ImageIcon image = (ImageIcon) icon;
+
+			return image;
+		} else {
+			return null;
 		}
-		else{
-			return null ;
-		}
-		
+
 	}
+
 	public File(java.io.File parent, String child) {
 		super(parent, child);
 		// TODO Auto-generated constructor stub

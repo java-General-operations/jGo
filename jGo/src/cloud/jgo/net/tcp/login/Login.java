@@ -21,23 +21,29 @@
  * 
  */
 package cloud.jgo.net.tcp.login;
+
 /**
  * 
  * @author Martire91<br>
- * This is login interface
+ *         This is login interface
  *
  */
 public interface Login {
 	/**
 	 * The login attempts
+	 * 
 	 * @return login attempts
 	 */
 	public abstract int getAttempts();
+
 	/**
 	 * This method is the login
-	 * @param user server user
-	 * @param passw server password
+	 * 
+	 * @param user
+	 *            server user
+	 * @param passw
+	 *            server password
 	 * @return the login result
 	 */
-	public abstract boolean login(String user,String passw);
+	public abstract boolean login(String user, String passw);
 }

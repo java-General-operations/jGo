@@ -27,48 +27,33 @@ import java.net.Proxy;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class DefaultSocket extends Socket{
+public class DefaultSocket extends Socket {
 
 	public DefaultSocket() {
 		super();
 		/*
-		 
-		JGO Auto-generated constructor stub
-		Author : £ wasp91 £
-		Date 04 feb 2018
-		
-		*/
+		 * 
+		 * JGO Auto-generated constructor stub Author : £ wasp91 £ Date 04 feb 2018
+		 * 
+		 */
 	}
 
 	public DefaultSocket(Proxy arg0) {
 		super(arg0);
 		/*
-		 
-		JGO Auto-generated constructor stub
-		Author : £ wasp91 £
-		Date 04 feb 2018
-		
-		*/
+		 * 
+		 * JGO Auto-generated constructor stub Author : £ wasp91 £ Date 04 feb 2018
+		 * 
+		 */
 	}
 
 	public DefaultSocket(String arg0, int arg1) throws UnknownHostException, IOException {
 		super(arg0, arg1);
 		/*
-		 
-		JGO Auto-generated constructor stub
-		Author : £ wasp91 £
-		Date 04 feb 2018
-		
-		*/
+		 * 
+		 * JGO Auto-generated constructor stub Author : £ wasp91 £ Date 04 feb 2018
+		 * 
+		 */
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

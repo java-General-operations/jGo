@@ -21,87 +21,72 @@
  * 
  */
 package cloud.jgo.net.tcp;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.SocketException;
 
 import cloud.jgo.net.Server.Closable;
 
-public class DefaultServerSocket extends ServerSocket{
-	
-	private Closable closable = null ;
-	
+public class DefaultServerSocket extends ServerSocket {
+
+	private Closable closable = null;
+
 	public void setClosable(Closable closable) {
 		this.closable = closable;
 	}
-	
+
 	@Override
 	public void close() throws IOException {
 		// TODO Auto-generated method stub
 		super.close();
-		
-		if(closable!=null){
+
+		if (closable != null) {
 			closable.closeServer();
-			}
+		}
 	}
-	
+
 	public DefaultServerSocket(int lport) throws IOException {
 		super(lport);
 	}
-	
-	
 
 	public DefaultServerSocket(int arg0, int arg1) throws IOException {
 		super(arg0, arg1);
 		/*
-		 
-		JGO Auto-generated constructor stub
-		Author : £ wasp91 £
-		Date 05 feb 2018
-		
-		*/
+		 * 
+		 * JGO Auto-generated constructor stub Author : £ wasp91 £ Date 05 feb 2018
+		 * 
+		 */
 	}
-
 
 	public DefaultServerSocket() throws IOException {
 		super();
 		/*
-		 
-		JGO Auto-generated constructor stub
-		Author : £ wasp91 £
-		Date 05 feb 2018
-		
-		*/
+		 * 
+		 * JGO Auto-generated constructor stub Author : £ wasp91 £ Date 05 feb 2018
+		 * 
+		 */
 	}
 
 	@Override
 	public DefaultSocket accept() throws IOException {
-		if(isClosed()){
+		if (isClosed()) {
 			new SocketException("The server is closed #");
-			return null ;
+			return null;
 		}
-		if(!isBound()){
+		if (!isBound()) {
 			new SocketException("The server is not bound yet");
-			return null ;
-		}
-		else{
+			return null;
+		} else {
 			DefaultSocket socket = new DefaultSocket();
-			
+
 			implAccept(socket);
-			
-			// inserisco la socket nella lista 
-			
-			
-			
-			return socket ;
+
+			// inserisco la socket nella lista
+
+			return socket;
 		}
-		
+
 	}
-	
-	
-	
-	
-	
-	
 
 }

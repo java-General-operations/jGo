@@ -21,12 +21,13 @@
  * 
  */
 package cloud.jgo;
+
 /**
  * 
  * @author Martire91<br>
- * This exception occurs when the effect is not supported
+ *         This exception occurs when the effect is not supported
  */
-public class NotSupportedEffectException extends Exception{
+public class NotSupportedEffectException extends Exception {
 	/*
 	 * Va aggiornata ogni volta che aggiungiamo effetti
 	 */
@@ -34,13 +35,12 @@ public class NotSupportedEffectException extends Exception{
 		// TODO Auto-generated constructor stub
 		super(" - This effect is not supported #");
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Exception in "+getStackTrace()[0].getClassName()+""
-				+ getMessage()+" :\n"+"The set effect is not supported for this method:"
-				+getClass().getName()+"";
-	 
+		return "Exception in " + getStackTrace()[0].getClassName() + "" + getMessage() + " :\n"
+				+ "The set effect is not supported for this method:" + getClass().getName() + "";
+
 	}
 }

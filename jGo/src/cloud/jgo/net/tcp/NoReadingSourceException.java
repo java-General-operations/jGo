@@ -25,24 +25,21 @@ package cloud.jgo.net.tcp;
 /**
  * 
  * @author Martire91<br>
- * The reading source has not been specified
+ *         The reading source has not been specified
  *
  */
-public class NoReadingSourceException extends Exception{
+public class NoReadingSourceException extends Exception {
 
 	public NoReadingSourceException() {
 		// TODO Auto-generated constructor stub
 		super(" - No read source set");
 	}
-	
-	
-	
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Exception in "+getStackTrace()[0].getClassName()+""
-				+ getMessage()+" : "+"read from = null "+getClass().getName();
+		return "Exception in " + getStackTrace()[0].getClassName() + "" + getMessage() + " : " + "read from = null "
+				+ getClass().getName();
 	}
-	
+
 }

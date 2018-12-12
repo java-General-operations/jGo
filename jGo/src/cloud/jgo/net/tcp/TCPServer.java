@@ -635,7 +635,7 @@ public abstract class TCPServer implements Server, Manageable, Iterable<Handler>
 							.getConfig(TCPServerConfiguration.DEFAULT_PRINT_FOR_ACCEPTANCE_SOCKET))) {
 						read(this.countSockets + ") New Connection from "
 								+ this.acceptedConnection.getInetAddress().toString());
-					}	
+					}
 				}
 				return this.acceptedConnection;
 			} else {
@@ -671,10 +671,11 @@ public abstract class TCPServer implements Server, Manageable, Iterable<Handler>
 				read(this.textOfAcceptedSocket);
 			}
 			if (getConfiguration().containsKey(TCPServerConfiguration.DEFAULT_PRINT_FOR_ACCEPTANCE_SOCKET)) {
-				if ((Boolean) getConfiguration().getConfig(TCPServerConfiguration.DEFAULT_PRINT_FOR_ACCEPTANCE_SOCKET)) {
+				if ((Boolean) getConfiguration()
+						.getConfig(TCPServerConfiguration.DEFAULT_PRINT_FOR_ACCEPTANCE_SOCKET)) {
 					read(this.countSockets + ") New Connection from "
 							+ this.acceptedConnection.getInetAddress().toString());
-				}	
+				}
 			}
 			return this.acceptedConnection;
 		}

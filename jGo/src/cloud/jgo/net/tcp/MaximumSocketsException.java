@@ -21,29 +21,26 @@
  * 
  */
 package cloud.jgo.net.tcp;
+
 /**
  * 
  * @author Martire91<br>
- * This exception occurs when the maximum number of acceptable sockets is reached
+ *         This exception occurs when the maximum number of acceptable sockets
+ *         is reached
  *
  */
-public class MaximumSocketsException extends Exception{
+public class MaximumSocketsException extends Exception {
 
-	
 	public MaximumSocketsException() {
 		// TODO Auto-generated constructor stub
 		super(" - Reached maximum number");
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Exception in "+getStackTrace()[0].getClassName()+""
-				+ getMessage()+" : \n"+"The maximum number of acceptable sockets has been reached # \n"+getClass().getName();
+		return "Exception in " + getStackTrace()[0].getClassName() + "" + getMessage() + " : \n"
+				+ "The maximum number of acceptable sockets has been reached # \n" + getClass().getName();
 	}
-	
-	
-	
-	
+
 }

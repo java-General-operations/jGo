@@ -23,25 +23,28 @@
 package cloud.jgo.net.tcp.http;
 
 import java.io.IOException;
+
 /**
  * 
  * @author Martire91<br>
- * it represents a response body
+ *         it represents a response body
  *
  */
-public  class HTTPBody {
+public class HTTPBody {
 
 	// qui ci starebbe bene un bel ByteBuffer
-	
+
 	private HTTPResponse response;
-	private boolean ready = false ;
+	private boolean ready = false;
 
 	/**
 	 * This method adds the text in body
-	 * @param text the text you want to add
+	 * 
+	 * @param text
+	 *            the text you want to add
 	 */
-	public void addBytes(String text){
-		byte[]buffer = text.getBytes();
+	public void addBytes(String text) {
+		byte[] buffer = text.getBytes();
 		// aggiungo anche alla stream completo di byte della risposta
 		try {
 			response.getResponseBytes().write(buffer);
@@ -56,30 +59,35 @@ public  class HTTPBody {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public HTTPBody(HTTPResponse response) {
 		// TODO Auto-generated constructor stub
-		this.response = response ;
+		this.response = response;
 	}
-	
+
 	/**
 	 * This method adds a file in body
-	 * @param file the file you want to add
-	 * @throws IOException 1 exception
+	 * 
+	 * @param file
+	 *            the file you want to add
+	 * @throws IOException
+	 *             1 exception
 	 */
-	public void addBytes(cloud.jgo.io.File file) throws IOException{
-		byte[]buffer = file.getBytes();
+	public void addBytes(cloud.jgo.io.File file) throws IOException {
+		byte[] buffer = file.getBytes();
 		// aggiungo anche alla stream completo di byte della risposta
 		response.getResponseBytes().write(buffer);
 		response.getResponseBytes().flush();
 	}
-	
+
 	/**
 	 * This method adds a buffer in body
-	 * @param buffer the buffer that you want to add
+	 * 
+	 * @param buffer
+	 *            the buffer that you want to add
 	 */
-	public void addBytes(StringBuffer buffer){
-		byte[]bufferBytes = buffer.toString().getBytes();
+	public void addBytes(StringBuffer buffer) {
+		byte[] bufferBytes = buffer.toString().getBytes();
 		// aggiungo anche alla stream completo di byte della risposta
 		try {
 			response.getResponseBytes().write(bufferBytes);
@@ -94,21 +102,22 @@ public  class HTTPBody {
 			e.printStackTrace();
 		}
 	}
+
 	/**
-	 * This method communicates that the body is ready.
-	 * Alert : this method closes the output stream
+	 * This method communicates that the body is ready. Alert : this method closes
+	 * the output stream
 	 */
-	public void ready(){
+	public void ready() {
 		try {
 			response.getResponseBytes().flush();
 			response.getResponseBytes().close();
-			this.ready = true ;
+			this.ready = true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @return true if the body is ready

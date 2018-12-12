@@ -27,16 +27,17 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.filechooser.FileView;
+
 /**
  * 
  * @author Martire91
  *
  */
-public class JFileView extends FileView{
+public class JFileView extends FileView {
 
 	@Override
 	public Icon getIcon(File f) {
 		// TODO Auto-generated method stub
 		return FileSystemView.getFileSystemView().getSystemIcon(f);
-	}	
+	}
 }

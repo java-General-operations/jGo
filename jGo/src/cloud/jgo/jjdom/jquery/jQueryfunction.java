@@ -25,7 +25,7 @@ package cloud.jgo.jjdom.jquery;
 /**
  * 
  * @author Martire91<br>
- *	This class represents the jquery function
+ *         This class represents the jquery function
  */
 public interface jQueryfunction {
 	public abstract void function(Event event);

@@ -21,31 +21,33 @@
  * 
  */
 package cloud.jgo.io.jon;
+
 /**
  * 
  * @author Martire91<br>
- * This exception occurs when the class is not annotated
+ *         This exception occurs when the class is not annotated
  *
  */
-public class JONMarshallingException extends Exception{
+public class JONMarshallingException extends Exception {
 	private static final long serialVersionUID = 1L;
-	private Class<?>clazz = null ;
-	
+	private Class<?> clazz = null;
+
 	public Class<?> getClazz() {
 		return clazz;
 	}
-	public JONMarshallingException(Class<?>clazz) {
+
+	public JONMarshallingException(Class<?> clazz) {
 		// TODO Auto-generated constructor stub
 		super(" - Object is not valid for JON marshalling #");
-		this.clazz = clazz ;
+		this.clazz = clazz;
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Exception in "+getStackTrace()[0].getClassName()+""
-				+ getMessage()+" :\n"+"Class "+clazz.getName()+" is not noted "+getClass().getName();
+		return "Exception in " + getStackTrace()[0].getClassName() + "" + getMessage() + " :\n" + "Class "
+				+ clazz.getName() + " is not noted " + getClass().getName();
 	}
-	//getMessage()+" : "+"read from = null  "+getClass().getName();
-	
+	// getMessage()+" : "+"read from = null "+getClass().getName();
+
 }

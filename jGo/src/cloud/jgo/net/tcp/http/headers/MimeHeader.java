@@ -24,51 +24,45 @@ package cloud.jgo.net.tcp.http.headers;
 
 import javax.activation.MimeType;
 
-public class MimeHeader extends DefaultHeader{
+public class MimeHeader extends DefaultHeader {
 
-	// questi sono ammessi solo i valori 
+	// questi sono ammessi solo i valori
 	// CONTET TYPE e ACCEPT
 	// da comunicare all'utente
-	
-	private Type type = null ;
-	
-	public MimeHeader(MimeType mime){
+
+	private Type type = null;
+
+	public MimeHeader(MimeType mime) {
 		setName(Header.Type.CONTENT_TYPE.getType());
 		setValue(mime);
 	}
-	
-	
+
 	@Override
 	public Type getType() {
 		/*
-		 
-		JGO Auto-generated method stub
-		Author : £ wasp91 £
-		Date 19 feb 2018
-		qui restituiamo il suo tipo specifico ,risolvendo cosi quell'errore 
-		
-		*/
-		return this.type ;
+		 * 
+		 * JGO Auto-generated method stub Author : £ wasp91 £ Date 19 feb 2018 qui
+		 * restituiamo il suo tipo specifico ,risolvendo cosi quell'errore
+		 * 
+		 */
+		return this.type;
 	}
-	
-	
+
 	@Override
 	public MimeType getValue() {
 		/*
-		 
-		JGO Auto-generated method stub
-		Author : £ wasp91 £
-		Date 17 feb 2018
-		
-		*/
+		 * 
+		 * JGO Auto-generated method stub Author : £ wasp91 £ Date 17 feb 2018
+		 * 
+		 */
 		return (MimeType) this.value;
 	}
-	
+
 	@Override
 	public void setValue(Object value) {
 		// qui diamo per scontato che si tratta di un Mime
-		// quindi prendiamo il toString 
-		this.value = value ;
+		// quindi prendiamo il toString
+		this.value = value;
 	}
-	
+
 }

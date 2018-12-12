@@ -21,6 +21,7 @@
  * 
  */
 package cloud.jgo.jjdom.dom.nodes;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 /**
@@ -41,53 +42,55 @@ import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.Manipulable;
+
 /**
  * 
  * @author Martire91<br>
- * @see Element
- * This class represents a list of html elements ({@link Element})
+ * @see Element This class represents a list of html elements ({@link Element})
  */
-public class Elements extends LinkedList<Element> implements Manipulable{
-	
+public class Elements extends LinkedList<Element> implements Manipulable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		for (int i = 0; i < this.size(); i++) {
-		buffer.append((i+1)+") "+get(i)+"\n");
+			buffer.append((i + 1) + ") " + get(i) + "\n");
 		}
 		return buffer.toString();
 	}
+
 	// questo è ricorsivo
 	@Override
 	public Element getElementById(String elementId) {
-		Element found = null ;
-		for (Element el:this) {
-			el = Recursion.examinesForId(elementId,el);
-			if (el!=null) {
+		Element found = null;
+		for (Element el : this) {
+			el = Recursion.examinesForId(elementId, el);
+			if (el != null) {
 				// sappiamo che è un id
 				// per cui al primo elemento trovato, possiamo uscire
-				found = el ;
-				break ;
+				found = el;
+				break;
 			}
 		}
-		return found ;
+		return found;
 	}
-	// questo no 
-	public Element getElementById2(String elementId){
-		Element found = null ;
-		for (Element el:this) {
+
+	// questo no
+	public Element getElementById2(String elementId) {
+		Element found = null;
+		for (Element el : this) {
 			if (el.isPresent("id")) {
 				if (el.getAttribute("id").equals(elementId)) {
-					found = el ;
-					break ;
+					found = el;
+					break;
 				}
 			}
 		}
-		return found ;
+		return found;
 	}
-	
+
 	// qui vediamo bene cosa fa questo metodo
 	// seleziona elementi mediante tagName
 	// su una lista di elementi :
@@ -99,9 +102,9 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 	@Override
 	public Elements getElementsByTag(String tagName) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			Elements newList = Recursion.examinesForTag(tagName, el);
-			if (newList!= null) {
+			if (newList != null) {
 				for (int i = 0; i < newList.size(); i++) {
 					if (!found.contains(newList.get(i))) {
 						found.add(newList.get(i));
@@ -109,79 +112,78 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 				}
 			}
 		}
-		return found ;
+		return found;
 	}
+
 	// questo no
-	public Elements getElementsByTag2(String tagName){
+	public Elements getElementsByTag2(String tagName) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			if (el.getNodeName().equals(tagName)) {
 				found.add(el);
 			}
 		}
-		return found ;
+		return found;
 	}
-	
 
 	public Elements getDirectChildrenByTag(String tagName) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			// prendo i figli dell'elemento
 			NodeList list = el.getChildNodes();
 			for (int i = 0; i < list.getLength(); i++) {
-				if (list.item(i)instanceof Element) {
+				if (list.item(i) instanceof Element) {
 					if (list.item(i).getNodeName().equals(tagName)) {
 						found.add((Element) list.item(i));
 					}
 				}
 			}
 		}
-		return found ;
+		return found;
 	}
-	
+
 	// questi i primi fratelli che trova, esce dal ciclo
 	@Override
 	public Elements getAdiacentSiblingsByTag(String tagName) {
-		boolean exit = false ;
+		boolean exit = false;
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			Elements brothers = el.getAdiacentSiblingsByTag(tagName);
 			// nel momento in cui la lista di elementi
 			// ha un size maggiore di 0, si può uscire dal ciclo
-			if (brothers.size()>0) {
-				found = brothers ;
-				break ;
+			if (brothers.size() > 0) {
+				found = brothers;
+				break;
 			}
 		}
-		return found ;
+		return found;
 	}
 
 	// da testare particolarmente questo metodo
-	
+
 	@Override
 	public Elements getGeneralSiblingsByTag(String tagName) {
-		boolean exit = false ;
+		boolean exit = false;
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			Elements brothers = el.getGeneralSiblingsByTag(tagName);
 			// nel momento in cui la lista di elementi
 			// ha un size maggiore di 0, si può uscire dal ciclo
-			if (brothers.size()>0) {
-				found = brothers ;
-				break ;
+			if (brothers.size() > 0) {
+				found = brothers;
+				break;
 			}
 		}
-		return found ;
+		return found;
 	}
-
 
 	// da sviluppare
 	@Override
 	public Elements getElementsByClassName(String className) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			Elements newList = Recursion.examinesForClass(className, el);
-			if (newList!= null) {
+			if (newList != null) {
 				for (int i = 0; i < newList.size(); i++) {
 					if (!found.contains(newList.get(i))) {
 						found.add(newList.get(i));
@@ -189,14 +191,13 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 				}
 			}
 		}
-		return found ;
+		return found;
 	}
-
 
 	@Override
 	public Elements getElementsByAttribute(String attribute) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			if (el.hasAttributes()) {
 				if (el.isPresent(attribute)) {
 					if (!found.contains(el)) {
@@ -205,17 +206,16 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 				}
 			}
 		}
-		return found ;
+		return found;
 	}
-
 
 	@Override
 	public Elements getElementsByAttributeValue(String value) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			if (el.hasAttributes()) {
-				// prendo tutti gli attributi 
-				Iterator<Entry<String, String>>iterator = el.getAttributes().entrySet().iterator();
+				// prendo tutti gli attributi
+				Iterator<Entry<String, String>> iterator = el.getAttributes().entrySet().iterator();
 				while (iterator.hasNext()) {
 					Map.Entry<java.lang.String, java.lang.String> entry = (Map.Entry<java.lang.String, java.lang.String>) iterator
 							.next();
@@ -223,17 +223,17 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 					if (value.equals(val)) {
 						if (!found.contains(el)) {
 							found.add(el);
-							
-							break ; // qui salto perchè, nel momento in cui trovo un attributo che ha questo valore, non mi interessa trovarne altri
-						    // quindi prendiamo il primo attributo che ha il valore richiesto
+
+							break; // qui salto perchè, nel momento in cui trovo un attributo che ha questo valore,
+									// non mi interessa trovarne altri
+							// quindi prendiamo il primo attributo che ha il valore richiesto
 						}
 					}
 				}
-				
-				
+
 			}
 		}
-		return found ;
+		return found;
 	}
 
 	// questo metodo contiene ancora il codice vecchio commentato
@@ -242,16 +242,17 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 	@Override
 	public Elements getElementsByAttributeValue(String attr, String val) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			// qui stiamo recuperando la lista di elementi per tag su la lista attuale
-//			Elements newList = HTMLRecursion.examinesForAttributeValue_(attr, val, el, "=");
-//			if (newList!= null) {
-//				for (int i = 0; i < newList.size(); i++) {
-//					if (!found.contains(newList.get(i))) {
-//						found.add(newList.get(i));
-//					}
-//				}
-//			}
+			// Elements newList = HTMLRecursion.examinesForAttributeValue_(attr, val, el,
+			// "=");
+			// if (newList!= null) {
+			// for (int i = 0; i < newList.size(); i++) {
+			// if (!found.contains(newList.get(i))) {
+			// found.add(newList.get(i));
+			// }
+			// }
+			// }
 			if (el.hasAttributes()) {
 				if (el.isPresent(attr)) {
 					String value = el.getAttributeValue(attr);
@@ -263,14 +264,13 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 				}
 			}
 		}
-		return found ;
+		return found;
 	}
-
 
 	@Override
 	public Elements getElementsByDifferentAttributeValue(String attr, String val) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			if (el.hasAttributes()) {
 				if (el.isPresent(attr)) {
 					// ottengo il valore
@@ -283,14 +283,13 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 				}
 			}
 		}
-		return found ;
+		return found;
 	}
-
 
 	@Override
 	public Elements getElementsThatStartWithAttributevalue(String attr, String val) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			if (el.hasAttributes()) {
 				if (el.isPresent(attr)) {
 					String value = el.getAttributeValue(attr);
@@ -302,14 +301,13 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 				}
 			}
 		}
-		return found ;
+		return found;
 	}
-
 
 	@Override
 	public Elements getElementsThatEndWithAttributeValue(String attr, String val) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			if (el.hasAttributes()) {
 				if (el.isPresent(attr)) {
 					String value = el.getAttributeValue(attr);
@@ -321,12 +319,13 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 				}
 			}
 		}
-		return found ;
+		return found;
 	}
+
 	@Override
 	public Elements getElementsThatContainTheAttributeValue(String attr, String val) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			if (el.hasAttributes()) {
 				if (el.isPresent(attr)) {
 					String value = el.getAttributeValue(attr);
@@ -338,14 +337,15 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 				}
 			}
 		}
-		return found ;
+		return found;
 	}
+
 	@Override
 	public Elements getElementsByName(String name) {
 		Elements found = new Elements();
-		for (Element el:this) {
+		for (Element el : this) {
 			Elements newList = Recursion.examinesForName(name, el);
-			if (newList!= null) {
+			if (newList != null) {
 				for (int i = 0; i < newList.size(); i++) {
 					if (!found.contains(newList.get(i))) {
 						found.add(newList.get(i));
@@ -353,6 +353,6 @@ public class Elements extends LinkedList<Element> implements Manipulable{
 				}
 			}
 		}
-		return found ;
-	}	
+		return found;
+	}
 }

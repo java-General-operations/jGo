@@ -24,9 +24,7 @@ package cloud.jgo.utils.command;
 
 import cloud.jgo.utils.command.execution.Execution;
 
-public class DefaultParameter extends Parameter{
-
-	
+public class DefaultParameter extends Parameter {
 
 	/**
 	 * 
@@ -36,30 +34,26 @@ public class DefaultParameter extends Parameter{
 	public DefaultParameter(String param, String help) {
 		super(param, help);
 		/*
-		 
-		JGO Auto-generated constructor stub
-		Author : £ wasp91 £
-		Date 06 gen 2018
-		
-		*/
+		 * 
+		 * JGO Auto-generated constructor stub Author : £ wasp91 £ Date 06 gen 2018
+		 * 
+		 */
 	}
 
 	public DefaultParameter(String param, String help, Execution execution) {
 		super(param, help, execution);
 		/*
-		 
-		JGO Auto-generated constructor stub
-		Author : £ wasp91 £
-		Date 06 gen 2018
-		
-		*/
+		 * 
+		 * JGO Auto-generated constructor stub Author : £ wasp91 £ Date 06 gen 2018
+		 * 
+		 */
 	}
 
 	@Override
 	public int compareTo(Parameter o) {
-		
+
 		return this.getParam().compareTo(o.getParam());
-	
+
 	}
 
 }

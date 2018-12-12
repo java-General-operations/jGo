@@ -24,11 +24,11 @@ package cloud.jgo.net.tcp;
 
 import cloud.jgo.net.handlers.Handler;
 
-public class DefaultTCPServer extends TCPServer{
+public class DefaultTCPServer extends TCPServer {
 
 	@Override
 	public void impl(Handler handler) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

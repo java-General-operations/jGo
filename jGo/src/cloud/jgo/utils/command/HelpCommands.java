@@ -29,92 +29,102 @@ import java.util.Iterator;
 import java.util.List;
 
 import cloud.jgo.utils.command.LocalCommand.HelpCommand;
+
 /**
  * 
  * @author Martire91<br>
- * This class is the general help.
- * Useful for terminals.
+ *         This class is the general help. Useful for terminals.
  */
-public class HelpCommands implements Serializable{
+public class HelpCommands implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private List<HelpCommand>helpCommands = new ArrayList<HelpCommand>();
+	private List<HelpCommand> helpCommands = new ArrayList<HelpCommand>();
 
 	/**
 	 * This method adds the command help
-	 * @param help the command help
+	 * 
+	 * @param help
+	 *            the command help
 	 */
-	public void add(HelpCommand help){
+	public void add(HelpCommand help) {
 		this.helpCommands.add(help);
 	}
-	
+
 	/**
 	 * This method counts the helps
+	 * 
 	 * @return the helps number
 	 */
-	public int getCountHelps(){
-		
-		return this.helpCommands.size() ;
-	}
-	
-	/**
-	 * This method adds the helps
-	 * @param args the helps
-	 */
-	public void add(HelpCommand...args){
-		HelpCommand[]array = args;
-		for (int i = 0; i < array.length; i++) {
-			this.helpCommands.add(array[i]);
-		}
-	}
-	
-	/**
-	 * This method adds the helps
-	 * @param array the helps
-	 */
-	public void addArray(HelpCommand[]array){
-		for (int i = 0; i < array.length; i++) {
-			this.helpCommands.add(array[i]);
-		}
-	}
-	
-	/**
-	 * This method adds the helps
-	 * @param commands the helps
-	 */
-	public void add(List<LocalCommand>commands){
+	public int getCountHelps() {
 
-     // gli passiamo una lista specifica di localCommand perchè è il primo elemento che comincia ad avere
-	// un oggetto dedicato helpCommand
-		Iterator<LocalCommand>iterator = commands.iterator();
+		return this.helpCommands.size();
+	}
+
+	/**
+	 * This method adds the helps
+	 * 
+	 * @param args
+	 *            the helps
+	 */
+	public void add(HelpCommand... args) {
+		HelpCommand[] array = args;
+		for (int i = 0; i < array.length; i++) {
+			this.helpCommands.add(array[i]);
+		}
+	}
+
+	/**
+	 * This method adds the helps
+	 * 
+	 * @param array
+	 *            the helps
+	 */
+	public void addArray(HelpCommand[] array) {
+		for (int i = 0; i < array.length; i++) {
+			this.helpCommands.add(array[i]);
+		}
+	}
+
+	/**
+	 * This method adds the helps
+	 * 
+	 * @param commands
+	 *            the helps
+	 */
+	public void add(List<LocalCommand> commands) {
+
+		// gli passiamo una lista specifica di localCommand perchè è il primo elemento
+		// che comincia ad avere
+		// un oggetto dedicato helpCommand
+		Iterator<LocalCommand> iterator = commands.iterator();
 		while (iterator.hasNext()) {
 			LocalCommand localCommand = (LocalCommand) iterator.next();
 			LocalCommand.HelpCommand helpCommand = localCommand.getHelpCommand();
 			helpCommands.add(helpCommand);
 		}
 	}
-	
+
 	/**
 	 * This method prints the general help
 	 */
-	public void print(){
+	public void print() {
 		System.out.println(this);
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		for (int i = 0; i < this.helpCommands.size(); i++) {
-			buffer.append(this.helpCommands.get(i)+"\n");
+			buffer.append(this.helpCommands.get(i) + "\n");
 		}
 		return buffer.toString();
 	}
+
 	/**
 	 * This method sorts the general help
 	 */
-	public void sort(){
+	public void sort() {
 		Collections.sort(this.helpCommands);
 	}
-		
+
 }

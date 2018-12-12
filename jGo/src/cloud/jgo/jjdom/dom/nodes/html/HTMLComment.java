@@ -21,6 +21,7 @@
  * 
  */
 package cloud.jgo.jjdom.dom.nodes.html;
+
 import cloud.jgo.£;
 import cloud.jgo.jjdom.Home;
 import cloud.jgo.jjdom.JjDom;
@@ -30,77 +31,74 @@ import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.NodeList;
 import cloud.jgo.jjdom.dom.nodes.Node.NodeType;
+
 /**
  * 
  * @author Martire91<br>
- * This class represente the html comment
+ *         This class represente the html comment
  */
-public class HTMLComment implements Comment,Home{
+public class HTMLComment implements Comment, Home {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 12L;
-	private String startTag,endTag = null ;
-	private String textContent = null ;
-	private Node parent = null ;
-	private NodeList childNodes = null ;
+	private String startTag, endTag = null;
+	private String textContent = null;
+	private Node parent = null;
+	private NodeList childNodes = null;
 	private StringBuffer htmlCode = new StringBuffer();
-	private Document document = null ;
-	private JjDom home = null ;
-	
-	
+	private Document document = null;
+	private JjDom home = null;
 
-	// costruttore della classe 
-	
-	public HTMLComment(String comment,Document document) {
+	// costruttore della classe
+
+	public HTMLComment(String comment, Document document) {
 		// TODO Auto-generated constructor stub
 		this.startTag = "<!--";
-		this.textContent = comment ;
+		this.textContent = comment;
 		this.endTag = "-->";
 		this.childNodes = new NodeList();
-		this.document = document ;
+		this.document = document;
 		if (this.document instanceof HTMLDocument) {
-			this.home = ((HTMLDocument)this.document).home();
+			this.home = ((HTMLDocument) this.document).home();
 		}
 	}
-	
+
 	// restituisce - 1 se non trova l'indice
-		@Override
-		public int getIndex() {
-			Node parent = getParentNode();
-			int index = -1 ;
-			for (int i = 0; i < parent.getChildNodes().getLength(); i++) {
-				if (parent.getChildNodes().item(i).equals(this)) {
-					index = i ;
-					break ;
-				}
+	@Override
+	public int getIndex() {
+		Node parent = getParentNode();
+		int index = -1;
+		for (int i = 0; i < parent.getChildNodes().getLength(); i++) {
+			if (parent.getChildNodes().item(i).equals(this)) {
+				index = i;
+				break;
 			}
-			return index ;
 		}
+		return index;
+	}
 
 	@Override
 	public Node appendChild(Node node) {
 		if (this.childNodes.contains(node)) {
 			this.childNodes.remove(node);
 		}
-		// imposto il padre 
-		
+		// imposto il padre
+
 		// qui verifico se si tratta di un elemento o commento
-		
+
 		if (node instanceof HTMLElement) {
-			((HTMLDefaultElement)node).setParentNode(this);
-		}
-		else if(node instanceof HTMLComment){
-			((HTMLComment)node).setParentNode(this);
+			((HTMLDefaultElement) node).setParentNode(this);
+		} else if (node instanceof HTMLComment) {
+			((HTMLComment) node).setParentNode(this);
 		}
 		// aggiungo il nodo
-		
+
 		boolean result = this.childNodes.addNode(node);
 		if (result == true) {
-			return  node ;
-		}
-		else {
-			return null ;
+			return node;
+		} else {
+			return null;
 		}
 	}
 
@@ -109,24 +107,24 @@ public class HTMLComment implements Comment,Home{
 		for (int i = 0; i < childs.length; i++) {
 			appendChild(childs[i]);
 		}
-		return this ;
+		return this;
 	}
 
 	@Override
 	public String getMarkup() {
-		Recursion.examines_html(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
+		Recursion.examines_html(this, htmlCode); // provvisorio, poi gli dobbiamo passare il document
 		String result = htmlCode.toString();
 		// pulisco il buffer code html
 		htmlCode = new StringBuffer();
-		return result ;	
+		return result;
 	}
 
 	@Override
 	public NodeList getChildNodes() {
 		// TODO Auto-generated method stub
-		return this.childNodes ;
+		return this.childNodes;
 	}
-	
+
 	@Override
 	public Node child(int index) {
 		// TODO Auto-generated method stub
@@ -151,37 +149,33 @@ public class HTMLComment implements Comment,Home{
 		return this.getNodeName();
 	}
 
-	
 	@Override
 	public Node getNextSibling() {
 		Node parent = getParentNode();
-		if (parent!=null) {
-			// qui se ha un padre ci rende la vita più facile 
+		if (parent != null) {
+			// qui se ha un padre ci rende la vita più facile
 			NodeList listNodes = parent.getChildNodes();
-			int pos = 0 ;
-			boolean found = false ;
+			int pos = 0;
+			boolean found = false;
 			for (int i = 0; i < listNodes.getLength(); i++) {
-				if(listNodes.item(i).equals(this)){
-					pos = i ;
-					found = true ;
-					break ;
+				if (listNodes.item(i).equals(this)) {
+					pos = i;
+					found = true;
+					break;
 				}
 			}
 			if (found) {
-				pos = pos+1 ;
-				if (pos<listNodes.getLength()) {
+				pos = pos + 1;
+				if (pos < listNodes.getLength()) {
 					return listNodes.item(pos);
+				} else {
+					return null;
 				}
-				else{
-					return null ;
-				}
+			} else {
+				return null;
 			}
-			else{
-				return null ;
-			}
-		}
-		else{
-			return null ;
+		} else {
+			return null;
 		}
 	}
 
@@ -196,18 +190,21 @@ public class HTMLComment implements Comment,Home{
 		// SVILUPPARE QUESTO METODO APPENA HO UN RIFERIMENTO AL FILE HTML IN QUESTIONE
 		return JjDom.documentURL;
 	}
+
 	@Override
 	public Node getParentNode() {
 		// TODO Auto-generated method stub
-		return this.parent ;
+		return this.parent;
 	}
-	
+
 	/**
 	 * This method sets the parent node
-	 * @param parentNode the parent node
+	 * 
+	 * @param parentNode
+	 *            the parent node
 	 */
-	public void setParentNode(Node parentNode){
-		this.parent =  parentNode ;
+	public void setParentNode(Node parentNode) {
+		this.parent = parentNode;
 	}
 
 	@Override
@@ -219,176 +216,167 @@ public class HTMLComment implements Comment,Home{
 	@Override
 	public JjDom home() {
 		// TODO Auto-generated method stub
-		return this.home ;
+		return this.home;
 	}
 
 	@Override
 	public String getNodeValue() {
 		// TODO Auto-generated method stub
-		return this.textContent ;
+		return this.textContent;
 	}
 
 	@Override
 	public String getTextContent() {
 		// TODO Auto-generated method stub
-		return this.textContent ;
+		return this.textContent;
 	}
 
 	@Override
 	public boolean hasChildNodes() {
-		if (this.childNodes.getLength()>0) {
-			return true ;
-		}
-		else{
-			return false ;
+		if (this.childNodes.getLength() > 0) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	@Override
 	public Node insertBefore(Node newNode, Node refChild) {
-		boolean found = false ;
-		int pos = 0 ;
+		boolean found = false;
+		int pos = 0;
 		for (int i = 0; i < this.childNodes.getLength(); i++) {
 			if (this.childNodes.item(i).equals(refChild)) {
-				found = true ;
-				pos = i ;
-				break ;
+				found = true;
+				pos = i;
+				break;
 			}
 		}
 		if (found) {
-			if(pos==0){
+			if (pos == 0) {
 				// qui basta aggiungere l'elemento
 				if (newNode instanceof HTMLElement) {
-					((HTMLDefaultElement)newNode).setParentNode(this);
-				}
-				else if(newNode instanceof HTMLComment){
-					((HTMLComment)newNode).setParentNode(this);
+					((HTMLDefaultElement) newNode).setParentNode(this);
+				} else if (newNode instanceof HTMLComment) {
+					((HTMLComment) newNode).setParentNode(this);
 				}
 				this.childNodes.addFirstNode(newNode);
-			}
-			else if(pos > 0){
-				
-				// okok qui il primo passo da fare è : 
-				//verificare se in quella data posizione esiste già un elemento 
-				
-				int index = pos-1 ;
-				
+			} else if (pos > 0) {
+
+				// okok qui il primo passo da fare è :
+				// verificare se in quella data posizione esiste già un elemento
+
+				int index = pos - 1;
+
 				Node previousNode = this.childNodes.item(index);
-				
+
 				// quindi qui dobbiamo sostituire questo elemento prima
 				if (newNode instanceof HTMLElement) {
-					((HTMLDefaultElement)newNode).setParentNode(this);
+					((HTMLDefaultElement) newNode).setParentNode(this);
+				} else if (newNode instanceof HTMLComment) {
+					((HTMLComment) newNode).setParentNode(this);
 				}
-				else if(newNode instanceof HTMLComment){
-					((HTMLComment)newNode).setParentNode(this);
-				}
-				previousNode = this.childNodes.setNode(index,newNode);
-				
+				previousNode = this.childNodes.setNode(index, newNode);
+
 				// essendo che lo abbiamo sostituito, ora dobbiamo permettere
 				// che lo preceda per cui richiamo il metodo
-				// recursive 
-				
+				// recursive
+
 				insertBefore(previousNode, newNode);
 			}
 		}
-		return newNode ;
+		return newNode;
 	}
 
 	@Override
 	public Node insertAfter(Node newNode, Node refChild) {
 		// questo metodo deve inserire l'elemento newNOde
 		// prima di refChild, quindi vediamo i passi da fare :
-		// 1 trovare la posizione di refChild 
-		boolean found = false ;
-		int pos = 0 ;
+		// 1 trovare la posizione di refChild
+		boolean found = false;
+		int pos = 0;
 		for (int i = 0; i < this.childNodes.getLength(); i++) {
 			if (this.childNodes.item(i).equals(refChild)) {
-				found = true ;
-				pos = i ;
-				break ;
+				found = true;
+				pos = i;
+				break;
 			}
 		}
 		if (found) {
-				// okok qui il primo passo da fare è : 
-				//verificare se in quella data posizione esiste già un elemento 
-				
-				int index = pos+1 ;
-				
-				// qui verifico se l'index raggiunto sia minore del lenght attuale della lista
-				if (index>this.childNodes.getLength()-1) {
-					// qui mi basta aggiungere 
-					if (newNode instanceof HTMLElement) {
-						((HTMLDefaultElement)newNode).setParentNode(this);
-					}
-					else if(newNode instanceof HTMLComment){
-						((HTMLComment)newNode).setParentNode(this);
-					}
-					this.childNodes.addNode(newNode);
+			// okok qui il primo passo da fare è :
+			// verificare se in quella data posizione esiste già un elemento
+
+			int index = pos + 1;
+
+			// qui verifico se l'index raggiunto sia minore del lenght attuale della lista
+			if (index > this.childNodes.getLength() - 1) {
+				// qui mi basta aggiungere
+				if (newNode instanceof HTMLElement) {
+					((HTMLDefaultElement) newNode).setParentNode(this);
+				} else if (newNode instanceof HTMLComment) {
+					((HTMLComment) newNode).setParentNode(this);
 				}
-				else{
-					Node followingNode = this.childNodes.item(index);
-					
-					// sostituisco 
-					if (newNode instanceof HTMLElement) {
-						((HTMLDefaultElement)newNode).setParentNode(this);
-					}
-					else if(newNode instanceof HTMLComment){
-						((HTMLComment)newNode).setParentNode(this);
-					}
-					followingNode = this.childNodes.setNode(index, newNode);
-					
-					// recursive 
-					
-					insertAfter(followingNode, newNode);
+				this.childNodes.addNode(newNode);
+			} else {
+				Node followingNode = this.childNodes.item(index);
+
+				// sostituisco
+				if (newNode instanceof HTMLElement) {
+					((HTMLDefaultElement) newNode).setParentNode(this);
+				} else if (newNode instanceof HTMLComment) {
+					((HTMLComment) newNode).setParentNode(this);
 				}
+				followingNode = this.childNodes.setNode(index, newNode);
+
+				// recursive
+
+				insertAfter(followingNode, newNode);
 			}
-		
-		return newNode ;
+		}
+
+		return newNode;
 	}
 
 	@Override
 	public boolean isEqualNode(Node node) {
 		if (node.getNodeType().equals(NodeType.COMMENT)) {
-			return true ;
-		}
-		else{
-			return false ;
+			return true;
+		} else {
+			return false;
 		}
 	}
 
 	@Override
 	public Node removeNode(Node node) {
 		boolean result = this.childNodes.remove(node);
-		if(result == true){
-			return node ;
-		}
-		else{
-			return null;	
+		if (result == true) {
+			return node;
+		} else {
+			return null;
 		}
 	}
 
 	@Override
 	public Node replaceChild(Node newNode, Node oldNode) {
-		boolean found = false ;
-		int pos = 0 ;
+		boolean found = false;
+		int pos = 0;
 		for (int i = 0; i < this.childNodes.getLength(); i++) {
 			if (oldNode.equals(this.childNodes.item(i))) {
-				found = true ;
-				pos = i ;
-				break ;
+				found = true;
+				pos = i;
+				break;
 			}
 		}
 		if (found) {
-			return this.childNodes.setNode(pos,newNode);
-		}
-		else{
-			return null ;		
+			return this.childNodes.setNode(pos, newNode);
+		} else {
+			return null;
 		}
 	}
+
 	public String getStartTag() {
 		return this.startTag;
 	}
-	
+
 	public String getEndTag() {
 		return this.endTag;
 	}
@@ -396,59 +384,59 @@ public class HTMLComment implements Comment,Home{
 	@Override
 	public Document getDocument() {
 		// TODO Auto-generated method stub
-		return this.document ;
+		return this.document;
 	}
 
 	@Override
 	public Node setNodeValue(String nodeValue) {
 		// TODO Auto-generated method stub
-		this.textContent = nodeValue ;
-		return this ;
+		this.textContent = nodeValue;
+		return this;
 	}
 
 	@Override
 	public Node setTextContent(String textContent) {
 		// TODO Auto-generated method stub
-		this.textContent = textContent ;
+		this.textContent = textContent;
 		return this;
 	}
 
 	@Override
 	public Node printMarkup() {
 		£._O(getMarkup().trim());
-		return this ;
+		return this;
 	}
 
 	@Override
 	public NodeList getBrothers() {
-		NodeList list = null ;
-		// individuo il padre del nodo in questione 
+		NodeList list = null;
+		// individuo il padre del nodo in questione
 		Node parent = getParentNode();
-		
-		if (parent!=null) {
-			// ottengo i figli del padre 
-			
+
+		if (parent != null) {
+			// ottengo i figli del padre
+
 			NodeList childNodes = parent.getChildNodes();
-			
-			// rimuovo dai figli il nodo in questione 
-			
+
+			// rimuovo dai figli il nodo in questione
+
 			childNodes.remove(this);
-			list = childNodes ;
+			list = childNodes;
 		}
-		return list ;
+		return list;
 	}
 
 	@Override
 	public boolean contains(Node node) {
-		boolean contains = false ;
+		boolean contains = false;
 		NodeList listNodes = this.childNodes;
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i).equals(node)) {
-				contains = true ;
-				break ;
+				contains = true;
+				break;
 			}
 		}
-		return contains ;
+		return contains;
 	}
 
 	@Override
@@ -458,156 +446,156 @@ public class HTMLComment implements Comment,Home{
 		}
 		// aggiungo il nodo
 		this.childNodes.addFirstNode(node);
-			if (node instanceof HTMLElement) {
-				((HTMLDefaultElement)node).setParentNode(this);
-			}
-			else if(node instanceof HTMLComment){
-				((HTMLComment)node).setParentNode(this);
-			}	
+		if (node instanceof HTMLElement) {
+			((HTMLDefaultElement) node).setParentNode(this);
+		} else if (node instanceof HTMLComment) {
+			((HTMLComment) node).setParentNode(this);
+		}
 	}
 
 	@Override
 	public Node next() {
 		// Ottengo il padre
-		Node next = null ;
+		Node next = null;
 		Node parent = getParentNode();
-		// ottengo i figli del parent 
+		// ottengo i figli del parent
 		NodeList list = parent.getChildNodes();
 		// faccio iterare i figli del parent in modo tale che
 		// individuo l'elemento che si trova dopo
 		// l'elemento in questione, ipotizzando che ci sia
-		boolean flag = false ;
-		int pos = 0 ;
+		boolean flag = false;
+		int pos = 0;
 		for (int i = 0; i < list.getLength(); i++) {
 			Node node = list.item(i);
 			if (node.equals(this)) {
-				flag = true ;
-				pos = i ;
-				break ;
+				flag = true;
+				pos = i;
+				break;
 			}
 		}
 		if (flag) {
 			// verifico se esiste un elemento successivo
-			int value = pos+1 ;
-			if (value <= list.getLength()-1) {
+			int value = pos + 1;
+			if (value <= list.getLength() - 1) {
 				next = list.item(value);
 			}
 		}
-		return next ;
+		return next;
 	}
 
 	@Override
 	public Node previous() {
-		Node previous = null ;
-		boolean flag = false ;
-		int pos = 0 ;
+		Node previous = null;
+		boolean flag = false;
+		int pos = 0;
 		// primo passo, prendo il padre
 		Node parent = getParentNode();
-		
-		// prendo i figli del padre 
-		
+
+		// prendo i figli del padre
+
 		NodeList list = parent.getChildNodes();
-		
+
 		// faccio iterare i figli del padre
-		
+
 		for (int i = 0; i < list.getLength(); i++) {
 			// okok abbiamo trovato l'elemento
-			if(list.item(i).equals(this)){
-				flag = true ; pos = i ; break ;
+			if (list.item(i).equals(this)) {
+				flag = true;
+				pos = i;
+				break;
 			}
 		}
 		if (flag) {
 			// qui dentro verifico se la posizione è corretta per l'array
-			int value = pos - 1 ;
+			int value = pos - 1;
 			if (value > -1) {
-				// quindi qui se vogliamo prendere 
+				// quindi qui se vogliamo prendere
 				// l'elemento precedente, sull'ultimo elemento
 				// della lista quindi il 4, si decrementa, quindi non c'è
 				// mai il rischio di arrivare alla lunghezza
-				//massimo si può prendere l'ultimo elemento della lista
+				// massimo si può prendere l'ultimo elemento della lista
 				// che potrebbe essere pericoloso, peccato che però il metodo
 				// poi decrementa il valore. Kmq testiamolo per bene
 				previous = list.item(value);
 			}
 		}
-		return previous ;
+		return previous;
 	}
 
 	@Override
 	public boolean hasThisChild(Node node) {
-		boolean flag = false ;
+		boolean flag = false;
 		NodeList listNodes = getChildNodes();
 		for (int i = 0; i < listNodes.getLength(); i++) {
 			if (listNodes.item(i).equals(node)) {
-				flag = true ;
-				break ;
+				flag = true;
+				break;
 			}
 		}
-		return flag ;
+		return flag;
 	}
 
 	@Override
 	public Node getNodeByPath(String nodePath) {
-		String[]split = nodePath.split("/");
-		Node currentNode = this ;
-		boolean found ;
+		String[] split = nodePath.split("/");
+		Node currentNode = this;
+		boolean found;
 		for (int i = 0; i < split.length; i++) {
 			String nodeName = split[i].trim();
-			found = false ;
+			found = false;
 			NodeList listNodes = currentNode.getChildNodes();
 			for (int j = 0; j < listNodes.getLength(); j++) {
 				Node node = listNodes.item(j);
 				if (node.getNodeName().equals(nodeName)) {
-					currentNode = node ;
-					found = true ;
-					break ;
+					currentNode = node;
+					found = true;
+					break;
 				}
 				if (node instanceof HTMLElement) {
-					if(nodeName.startsWith("#")){
-						if (((HTMLElement)node).isPresent("id")) {
-							if (((HTMLElement)node).getId().equals(nodeName.replace("#",""))) {
-								currentNode = node ;
-								found = true ;
+					if (nodeName.startsWith("#")) {
+						if (((HTMLElement) node).isPresent("id")) {
+							if (((HTMLElement) node).getId().equals(nodeName.replace("#", ""))) {
+								currentNode = node;
+								found = true;
 								break;
+							}
+						}
+					} else if (nodeName.startsWith(".")) {
+						if (((HTMLElement) node).isPresent("class")) {
+							String classAttributeValue = ((HTMLElement) node).getAttributeValue("class");
+							String[] classes = classAttributeValue.split(" ");
+							for (int k = 0; k < classes.length; k++) {
+								if (classes[k].trim().equals(nodeName.replace(".", ""))) {
+									currentNode = node;
+									found = true;
+									break;
+								}
 							}
 						}
 					}
-					else if(nodeName.startsWith(".")){
-						if (((HTMLElement)node).isPresent("class")) {
-							String classAttributeValue = ((HTMLElement)node).getAttributeValue("class");
-							String[]classes = classAttributeValue.split(" ");
-							for (int k = 0; k < classes.length; k++) {
-							if (classes[k].trim().equals(nodeName.replace(".",""))) {
-								currentNode = node ;
-								found = true ;
-								break;
-							}
-							}
-						}
-					}	
 				}
 			}
 			if (!found) {
 				// spezziamo la catena
-				currentNode = null ;
-				break ; // esco dal controllo del path,poichè non è più ricostruibile
+				currentNode = null;
+				break; // esco dal controllo del path,poichè non è più ricostruibile
 				// in quanto un elemento non è stato trovato
 			}
 		}
-		return currentNode ;
+		return currentNode;
 	}
 
 	@Override
 	public boolean contains(String nodeName) {
 		NodeList childNodes = getChildNodes();
-		boolean flag = false ;
+		boolean flag = false;
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			if (nodeName.equals(childNodes.item(i).getNodeName())) {
-				flag = true ;
+				flag = true;
 				break;
 			}
 		}
-		return flag ;
+		return flag;
 	}
 
 	@Override
@@ -622,8 +610,8 @@ public class HTMLComment implements Comment,Home{
 		for (int i = 0; i < children.getLength(); i++) {
 			Node currentNode = children.item(i);
 			removeNode(currentNode);
-			i-- ;
+			i--;
 		}
-		return this ;
+		return this;
 	}
 }

@@ -21,24 +21,28 @@
  * 
  */
 package cloud.jgo.io.jon;
+
 /**
  * 
  * @author Martire91<br>
- * This exception occurs when trying to save a jon file with another format.
+ *         This exception occurs when trying to save a jon file with another
+ *         format.
  *
  */
-public class JONInvalidFileFormatException extends Exception{
+public class JONInvalidFileFormatException extends Exception {
 	private static final long serialVersionUID = 1L;
 	private String format;
+
 	public JONInvalidFileFormatException(String format) {
 		// TODO Auto-generated constructor stub
 		super(" - JON format absence #");
-		this.format = format ;
+		this.format = format;
 	}
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Exception in "+getStackTrace()[0].getClassName()+""
-				+ getMessage()+" :\n"+"Format '"+this.format+"' is not valid "+getClass().getName();
+		return "Exception in " + getStackTrace()[0].getClassName() + "" + getMessage() + " :\n" + "Format '"
+				+ this.format + "' is not valid " + getClass().getName();
 	}
 }

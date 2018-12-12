@@ -26,19 +26,22 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 /**
  * 
  * @author Martire91<br>
- * This annotation is used to specify the file name that must match the URL of the host
+ *         This annotation is used to specify the file name that must match the
+ *         URL of the host
  *
  */
-public  @interface HTTPMainPage {
+public @interface HTTPMainPage {
 	/**
 	 * Sets the main file names of the site
+	 * 
 	 * @return the file names
 	 */
-	public String[]filesNames();
-	
+	public String[] filesNames();
+
 }

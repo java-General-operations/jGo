@@ -21,23 +21,23 @@
  * 
  */
 package cloud.jgo.net.tcp.login;
+
 /**
  * 
  * @author Martire91<br>
- * This exception 
+ *         This exception
  *
  */
-public class KeyNoSetException extends Exception{
+public class KeyNoSetException extends Exception {
 	public KeyNoSetException() {
 		// TODO Auto-generated constructor stub
 		super(" - Key no set");
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Exception in "+getStackTrace()[0].getClassName()+""
-				+ getMessage()+" : \n"+"The key to encrypt credentials has not been set #. "+getClass().getName();
+		return "Exception in " + getStackTrace()[0].getClassName() + "" + getMessage() + " : \n"
+				+ "The key to encrypt credentials has not been set #. " + getClass().getName();
 	}
 }

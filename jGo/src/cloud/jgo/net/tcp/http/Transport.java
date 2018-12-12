@@ -24,19 +24,22 @@ package cloud.jgo.net.tcp.http;
 
 import java.io.IOException;
 import java.net.SocketException;
+
 /**
  * 
  * @author Martire91<br>
- * This class takes care of transferring the response
+ *         This class takes care of transferring the response
  */
 public abstract class Transport {
 
 	/**
 	 * This method transfers the response
-	 * @param response the response
+	 * 
+	 * @param response
+	 *            the response
 	 */
-	public static void trasfer(HTTPResponse response){
-		if(response.getBody().isReady() && response.getResponseBuffer()!=null){
+	public static void trasfer(HTTPResponse response) {
+		if (response.getBody().isReady() && response.getResponseBuffer() != null) {
 			try {
 				response.output().flush();
 			} catch (IOException e1) {
@@ -57,20 +60,23 @@ public abstract class Transport {
 			}
 		}
 	}
-	
+
 	/**
 	 * This method transfers the responses
-	 * @param responses the responses
-	 * @throws IOException 1 exception
+	 * 
+	 * @param responses
+	 *            the responses
+	 * @throws IOException
+	 *             1 exception
 	 */
-	public static void trasfer(HTTPResponse...responses) throws IOException{
+	public static void trasfer(HTTPResponse... responses) throws IOException {
 		for (HTTPResponse response : responses) {
-			if(response.getBody().isReady() && response.getResponseBuffer()!=null){
+			if (response.getBody().isReady() && response.getResponseBuffer() != null) {
 				response.output().flush();
 				try {
-			    	
+
 					response.output().write(response.getResponseBuffer());
-					
+
 				} catch (SocketException e) {
 					System.err.println("Don't possible to write to socket #");
 				}
@@ -79,9 +85,5 @@ public abstract class Transport {
 			}
 		}
 	}
-	
-	
-	
-	
-	
+
 }

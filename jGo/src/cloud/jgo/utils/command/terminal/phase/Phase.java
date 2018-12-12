@@ -26,66 +26,91 @@ import java.io.Serializable;
 import java.util.List;
 
 import cloud.jgo.utils.command.Command;
+
 // this is a product
 /**
  * 
  * @author Martire91<br>
- * This interface represents a phase
+ *         This interface represents a phase
  */
-public interface Phase extends Serializable{
+public interface Phase extends Serializable {
 	/**
 	 * This method returns the phase name
+	 * 
 	 * @return the phase name
 	 */
 	public abstract String phaseName();
+
 	/**
 	 * This method returns the phase value
+	 * 
 	 * @return the phase value
 	 */
 	public abstract int getValue();
+
 	/**
 	 * This method counts the phase commands
+	 * 
 	 * @return the phase commands number
 	 */
 	public abstract int getCountCommands();
+
 	/**
 	 * This method returns true if the phase is accessible
+	 * 
 	 * @return the flag
 	 */
 	public abstract boolean isAccessible();
+
 	/**
 	 * This method sets the rule for the accessibility
-	 * @param rule the rule
+	 * 
+	 * @param rule
+	 *            the rule
 	 */
 	public abstract void accessibleThrough(Rule rule); // con questo metodo impostiamo un codice che se rispetat
-   /**
-    * This method returns the phase commands list
-    * @return the phase commands list
-    */
-	public abstract List<Command>getCommands();
+
 	/**
-	 * This method returns true if the phase is satisfied 
+	 * This method returns the phase commands list
+	 * 
+	 * @return the phase commands list
+	 */
+	public abstract List<Command> getCommands();
+
+	/**
+	 * This method returns true if the phase is satisfied
+	 * 
 	 * @return the flag
 	 */
-    public abstract boolean isSatisfied();
-    /**
-     * This method sets the rule for the satisfiability
-     * @param rule the rule
-     */
-    public abstract void satisfiableThrough(Rule rule);
-    /**
-     * This method returns the phase description
-     * @return  the phase description
-     */
-    public abstract String description(); 
-    /**
-     * This method returns the phase welcome text
-     * @return the phase welcome text
-     */
-    public abstract String getWelcome();
-    /**
-     * This method sets the phase welcome text
-     * @param welcomeGreeting the phase welcome text
-     */
-    public abstract void setWelcome(String welcomeGreeting);
+	public abstract boolean isSatisfied();
+
+	/**
+	 * This method sets the rule for the satisfiability
+	 * 
+	 * @param rule
+	 *            the rule
+	 */
+	public abstract void satisfiableThrough(Rule rule);
+
+	/**
+	 * This method returns the phase description
+	 * 
+	 * @return the phase description
+	 */
+	public abstract String description();
+
+	/**
+	 * This method returns the phase welcome text
+	 * 
+	 * @return the phase welcome text
+	 */
+	public abstract String getWelcome();
+
+	/**
+	 * This method sets the phase welcome text
+	 * 
+	 * @param welcomeGreeting
+	 *            the phase welcome text
+	 */
+	public abstract void setWelcome(String welcomeGreeting);
 }

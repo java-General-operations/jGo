@@ -21,13 +21,14 @@
  * 
  */
 package cloud.jgo.net.tcp.login;
+
 /**
  * 
  * @author Martire91<br>
- * this interface provides the methods for the authentication
+ *         this interface provides the methods for the authentication
  *
  */
-public interface Authenticatable{
+public interface Authenticatable {
 
 	/**
 	 * Methods that must be implemented
@@ -36,22 +37,27 @@ public interface Authenticatable{
 	 * This method manages the case in which access is granted
 	 */
 	public abstract void doAccessGranted();
+
 	/**
 	 * This method manages the case in which access is failed
 	 */
 	public abstract void doAccessFailed();
-	
+
 	/**
 	 * This method executes the logout
 	 */
 	public abstract void logout();
+
 	/**
 	 * Check if the user is logged in
+	 * 
 	 * @return true if the user is logged
 	 */
 	public abstract boolean isLogged();
+
 	/**
 	 * The login attempts
+	 * 
 	 * @return login attempts
 	 */
 	public abstract int getAttempts();

@@ -28,72 +28,78 @@ import java.io.IOException;
 
 import cloud.jgo.net.Connection;
 import cloud.jgo.net.Server;
+
 /**
  * 
  * @author Martire91<br>
- * This class represents the connection handler,
- * and is an implementation of {@link Connection} and of {@link Handler}
- * (Product)
+ *         This class represents the connection handler, and is an
+ *         implementation of {@link Connection} and of {@link Handler} (Product)
  */
-public abstract class HandlerConnection implements Connection,Handler{
+public abstract class HandlerConnection implements Connection, Handler {
 
 	/**
 	 * This method manages the connection. (Server/side)
-	 * @throws ClassNotFoundException 1 exception
-	 * @throws IOException 2 exception
-	 * @throws InterruptedException 3 exception
-	 * @throws HeadlessException 4 exception
-	 * @throws AWTException 5 exception
+	 * 
+	 * @throws ClassNotFoundException
+	 *             1 exception
+	 * @throws IOException
+	 *             2 exception
+	 * @throws InterruptedException
+	 *             3 exception
+	 * @throws HeadlessException
+	 *             4 exception
+	 * @throws AWTException
+	 *             5 exception
 	 */
-	public abstract void manage() throws ClassNotFoundException, IOException, InterruptedException, HeadlessException, AWTException;
-	private String idSession = null ;
-	
+	public abstract void manage()
+			throws ClassNotFoundException, IOException, InterruptedException, HeadlessException, AWTException;
+
+	private String idSession = null;
+
 	@Override
 	public String idSession() {
 		// TODO Auto-generated method stub
-		return this.idSession ;
+		return this.idSession;
 	}
-	
+
 	@Override
 	public void setIdSession(String id_session) {
 		// TODO Auto-generated method stub
-		this.idSession = id_session ;
+		this.idSession = id_session;
 	}
 
 	@Override
 	public Thread startSession() {
-		Thread th = null ;
+		Thread th = null;
 		th = new Thread(this);
 		th.start();
-		return th ;
+		return th;
 	}
-	
-
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-	try {
 		try {
 			try {
-				manage();
-			} catch (HeadlessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (AWTException e) {
+				try {
+					manage();
+				} catch (HeadlessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (AWTException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} catch (InterruptedException e) {
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	} catch (ClassNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}	
 	}
 }

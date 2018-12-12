@@ -24,33 +24,44 @@ package cloud.jgo.net.tcp;
 
 import cloud.jgo.net.ServerType;
 import cloud.jgo.net.ServerTypes;
+
 /**
  * 
  * @author Martire91<br>
- * This class contains all TCP server types
+ *         This class contains all TCP server types
  *
  */
-public class TCPServerTypes extends ServerTypes{
+public class TCPServerTypes extends ServerTypes {
 	/**
-	 * <p style='color:red'>Still not valid</p>
+	 * <p style='color:red'>
+	 * Still not valid
+	 * </p>
 	 */
-	public final static ServerType TYPE_CHAT_TCP = new ServerType("TCP_CHAT",2);
+	public final static ServerType TYPE_CHAT_TCP = new ServerType("TCP_CHAT", 2);
 	/**
-	 * <p style='color:red'>Still not valid</p>
+	 * <p style='color:red'>
+	 * Still not valid
+	 * </p>
 	 */
-	public final static ServerType TYPE_UNIVOCAL_CHAT_TCP = new ServerType("TCP_UNIVOCAL_CHAT",7);
+	public final static ServerType TYPE_UNIVOCAL_CHAT_TCP = new ServerType("TCP_UNIVOCAL_CHAT", 7);
 	/**
-	 * <p style='color:red'>Still not valid</p>
+	 * <p style='color:red'>
+	 * Still not valid
+	 * </p>
 	 */
-	public final static ServerType TYPE_CHAT_HTTP = new ServerType("HTTP_CHAT",3);
-	public final static ServerType TYPE_HTTP = new ServerType("HTTP",4);
+	public final static ServerType TYPE_CHAT_HTTP = new ServerType("HTTP_CHAT", 3);
+	public final static ServerType TYPE_HTTP = new ServerType("HTTP", 4);
 	/**
-	 * <p style='color:red'>Still not valid</p>
+	 * <p style='color:red'>
+	 * Still not valid
+	 * </p>
 	 */
-	public final static ServerType TYPE_FTP = new ServerType("FTP",5);
+	public final static ServerType TYPE_FTP = new ServerType("FTP", 5);
 	/**
-	 * <p style='color:red'>Still not valid</p>
+	 * <p style='color:red'>
+	 * Still not valid
+	 * </p>
 	 */
-	public final static ServerType TYPE_SSH = new ServerType("SSH",6);
-	public final static ServerType TYPE_LOGIN = new ServerType("TCP-LOGIN",8);	
+	public final static ServerType TYPE_SSH = new ServerType("SSH", 6);
+	public final static ServerType TYPE_LOGIN = new ServerType("TCP-LOGIN", 8);
 }

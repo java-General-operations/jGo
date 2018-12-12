@@ -21,24 +21,24 @@
  * 
  */
 package cloud.jgo.net.tcp;
+
 /**
  * 
  * @author Martire91<br>
- * This exception occurs if the handler has not been set up
+ *         This exception occurs if the handler has not been set up
  *
  */
-public class ModelAbsenceException extends Exception{
+public class ModelAbsenceException extends Exception {
 
 	public ModelAbsenceException() {
 		// TODO Auto-generated constructor stub
 		super(" - No model set");
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Exception in "+getStackTrace()[0].getClassName()+""
-				+ getMessage()+" : \n"+"You need to set up a template for the server #. "+getClass().getName();
+		return "Exception in " + getStackTrace()[0].getClassName() + "" + getMessage() + " : \n"
+				+ "You need to set up a template for the server #. " + getClass().getName();
 	}
 }

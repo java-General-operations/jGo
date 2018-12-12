@@ -37,32 +37,35 @@ import cloud.jgo.net.tcp.NotSupportedModelException;
 import cloud.jgo.net.tcp.TCPServer;
 import cloud.jgo.net.tcp.TCPServerConfiguration;
 import cloud.jgo.net.tcp.TCPServerTypes;
+
 /**
  * 
  * @author Martire91<br>
- * This class is the login tcp server
+ *         This class is the login tcp server
  */
-public final class TCPLoginServer extends TCPServer implements Login{
+public final class TCPLoginServer extends TCPServer implements Login {
 	// queste var vengono prima criptate eppoi serializzate
-	private String password = null ;
-	private String username = null ;
-	public final static int DEFAULT_ATTEMPTS = 5 ;
-	private int attempts = DEFAULT_ATTEMPTS ;
-	private int copiedValueAttempts = attempts ;
+	private String password = null;
+	private String username = null;
+	public final static int DEFAULT_ATTEMPTS = 5;
+	private int attempts = DEFAULT_ATTEMPTS;
+	private int copiedValueAttempts = attempts;
 	private cloud.jgo.net.tcp.login.TCPLoginServerConfiguration configuration2 = new cloud.jgo.net.tcp.login.TCPLoginServerConfiguration();
-	
+
 	// diamo per scontato che la chiave sia stata impostata
 	/**
 	 * This method sets the server password
-	 * @param password server password
+	 * 
+	 * @param password
+	 *            server password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
-		if(getConfiguration().containsKey(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY)){
-			this.password = £.AES_e(this.password,getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
-			this.configuration2.put(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.PASSW,getPassword());
-		}
-		else{
+		if (getConfiguration().containsKey(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY)) {
+			this.password = £.AES_e(this.password,
+					getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
+			this.configuration2.put(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.PASSW, getPassword());
+		} else {
 			// do l'eccezzione dedicata
 			try {
 				throw new KeyNoSetException();
@@ -72,42 +75,45 @@ public final class TCPLoginServer extends TCPServer implements Login{
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean isConfigurated() {
 		// TODO Auto-generated method stub
 		boolean configurated = super.isConfigurated();
 		if (configurated) {
-			if (this.configuration2.getConfig(TCPLoginServerConfiguration.USER)!=null && this.configuration2.getConfig(TCPLoginServerConfiguration.PASSW)!=null) {
-			    configurated = true ;
-			}
-			else{
-				configurated = false ;
+			if (this.configuration2.getConfig(TCPLoginServerConfiguration.USER) != null
+					&& this.configuration2.getConfig(TCPLoginServerConfiguration.PASSW) != null) {
+				configurated = true;
+			} else {
+				configurated = false;
 			}
 		}
-		return configurated ;
+		return configurated;
 	}
 
 	public int getCopiedValueAttempts() {
 		return this.copiedValueAttempts;
 	}
-	
+
 	@Override
 	public cloud.jgo.net.tcp.login.TCPLoginServerConfiguration getConfiguration() {
 		// TODO Auto-generated method stub
 		return this.configuration2;
 	}
+
 	/**
 	 * This method sets the server username
-	 * @param username server username
+	 * 
+	 * @param username
+	 *            server username
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 		if (getConfiguration().containsKey(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY)) {
-			this.username = £.AES_e(this.username,getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
-			this.configuration2.put(TCPLoginServerConfiguration.USER,this.username);
-		}
-		else{
+			this.username = £.AES_e(this.username,
+					getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
+			this.configuration2.put(TCPLoginServerConfiguration.USER, this.username);
+		} else {
 			// do l'eccezzione
 			try {
 				throw new KeyNoSetException();
@@ -117,15 +123,19 @@ public final class TCPLoginServer extends TCPServer implements Login{
 			}
 		}
 	}
+
 	/**
 	 * This method sets the login attempts
-	 * @param attempts the login attempts
+	 * 
+	 * @param attempts
+	 *            the login attempts
 	 */
 	public void setAttempts(int attempts) {
 		this.attempts = attempts;
 		this.copiedValueAttempts = this.attempts;
-		this.configuration2.put(TCPLoginServerConfiguration.ATTEMPTS,this.attempts);
+		this.configuration2.put(TCPLoginServerConfiguration.ATTEMPTS, this.attempts);
 	}
+
 	@Override
 	public void configure(Configuration configuration) {
 		// TODO Auto-generated method stub
@@ -141,33 +151,36 @@ public final class TCPLoginServer extends TCPServer implements Login{
 			setAttempts(this.configuration2.getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.ATTEMPTS));
 		}
 	}
+
 	@Override
 	public void reloadConfiguration() {
 		// TODO Auto-generated method stub
 		configure(this.configuration2);
 	}
-	
+
 	/**
 	 * This is factory method
-	 * @param configuration the login server configuration
+	 * 
+	 * @param configuration
+	 *            the login server configuration
 	 * @return the login server
-	 * @throws SocketException 1 exception
+	 * @throws SocketException
+	 *             1 exception
 	 */
-	public static TCPLoginServer creates(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration configuration) throws SocketException{
-		
+	public static TCPLoginServer creates(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration configuration)
+			throws SocketException {
+
 		return (TCPLoginServer) ServersFactory.getInstance().createServer(configuration);
 	}
 
-	
 	@Override
 	public void setModel(Handler handler) {
-		if (handler!=null) {
-			if(handler instanceof TCPLoginHandlerConnection){
-				this.model = handler ;
-				getConfiguration().put(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.HANDLER_MODEL,this.model);
-			}
-			else{
-				this.model = null ;
+		if (handler != null) {
+			if (handler instanceof TCPLoginHandlerConnection) {
+				this.model = handler;
+				getConfiguration().put(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.HANDLER_MODEL, this.model);
+			} else {
+				this.model = null;
 				try {
 					throw new NotSupportedModelException();
 				} catch (NotSupportedModelException e) {
@@ -177,55 +190,59 @@ public final class TCPLoginServer extends TCPServer implements Login{
 			}
 		}
 	}
-	
+
 	// questo metodo serve a ben poco in questa classe
 	// in quanto la classe non è estendibile
 	@Override
 	final protected void impl(Handler handler) {
-		
-		// qui attivo l'handler 
-		
+
+		// qui attivo l'handler
+
 		handler.startSession();
-		
+
 	}
-	
+
 	/**
 	 * This method returns the server username
+	 * 
 	 * @return server username
 	 */
 	public String getUsername() {
 		return this.username;
 	}
-	
+
 	/**
 	 * This method the server password
+	 * 
 	 * @return server password
 	 */
 	public String getPassword() {
 		return this.password;
 	}
+
 	@Override
-	public boolean login(String user,String passw){
-		boolean logged = false ;
-	    String passMem = £.AES_d(this.password,getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
-		String userMem = £.AES_d(this.username,getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
-		if(user.equals(userMem)&&passw.equals(passMem)){
-			logged = true ;
+	public boolean login(String user, String passw) {
+		boolean logged = false;
+		String passMem = £.AES_d(this.password,
+				getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
+		String userMem = £.AES_d(this.username,
+				getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
+		if (user.equals(userMem) && passw.equals(passMem)) {
+			logged = true;
 		}
-	    return logged ;	
+		return logged;
 	}
 
 	@Override
 	public int getAttempts() {
 		// TODO Auto-generated method stub
-		return this.attempts ;
+		return this.attempts;
 	}
 
 	@Override
 	public ServerType getType() {
 		// TODO Auto-generated method stub
-		return TCPServerTypes.TYPE_LOGIN ;
+		return TCPServerTypes.TYPE_LOGIN;
 	}
-	
-	
+
 }

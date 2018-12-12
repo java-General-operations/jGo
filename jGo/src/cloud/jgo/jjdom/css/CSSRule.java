@@ -23,23 +23,28 @@
 package cloud.jgo.jjdom.css;
 
 import java.util.Hashtable;
+
 /**
  * 
  * @author Martire91<br>
- *	This class represents a css rule
+ *         This class represents a css rule
  */
-public abstract class CSSRule extends Hashtable<CSSPropertyType, String>{
+public abstract class CSSRule extends Hashtable<CSSPropertyType, String> {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	/**
 	 * This method returns the selection
+	 * 
 	 * @return the selection
 	 */
-	public abstract String getSelection() ;
+	public abstract String getSelection();
+
 	/**
 	 * This method returns the possible comment
+	 * 
 	 * @return the possible comment
 	 */
 	public abstract String getComment();

@@ -30,52 +30,70 @@ import cloud.jgo.Home;
 import cloud.jgo.£;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
+
 /**
  * 
  * @author Martire91<br>
- * This class represents the terminal
+ *         This class represents the terminal
  */
-public abstract class Terminal extends Home{
-	public enum Type{WINDOWS,LINUX}
+public abstract class Terminal extends Home {
+	public enum Type {
+		WINDOWS, LINUX
+	}
+
 	/**
 	 * This method returns the text with which the command is requested
+	 * 
 	 * @return the text
 	 */
 	public abstract String getCommandRequest();
+
 	/**
 	 * This method must be implemented to redefine the start of the terminal
 	 */
 	protected abstract void implOpen(); // this method is performed within the open method cycle
+
 	/**
 	 * This method executes the command
-	 * @param command the command
+	 * 
+	 * @param command
+	 *            the command
 	 * @return the returned object
-	 * @throws IOException 1 exception
-	 * @throws InterruptedException 2 exception
+	 * @throws IOException
+	 *             1 exception
+	 * @throws InterruptedException
+	 *             2 exception
 	 */
 	public abstract Object command(String command) throws IOException, InterruptedException;
-	protected Runtime runtime = null ;
-	protected Process process = null ;
-	private OutputStream output ;
-	private InputStream input ;
-	protected Object exitCommand = null ;
-	protected boolean stop = true ;
+
+	protected Runtime runtime = null;
+	protected Process process = null;
+	private OutputStream output;
+	private InputStream input;
+	protected Object exitCommand = null;
+	protected boolean stop = true;
+
 	/**
 	 * This method returns the exit command
+	 * 
 	 * @return the exit command
 	 */
 	public abstract Object getExitCommand();
+
 	/**
 	 * This method sets the exit command
-	 * @param command the exit command
+	 * 
+	 * @param command
+	 *            the exit command
 	 */
 	public abstract void setExitCommand(String command);
+
 	/**
 	 * This method starts the terminal
 	 */
 	final public void open() {
 		if (this instanceof WinTerminal || this instanceof LinuxTerminal) {
-			
+
 			if (WinTerminal.class.isInstance(this)) {
 				this.runtime = Runtime.getRuntime();
 				try {
@@ -84,8 +102,7 @@ public abstract class Terminal extends Home{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-			else{
+			} else {
 				// is LINUX
 				this.runtime = Runtime.getRuntime();
 				try {
@@ -95,30 +112,30 @@ public abstract class Terminal extends Home{
 					e.printStackTrace();
 				}
 			}
-			// qui avvio i threads input / error 
+			// qui avvio i threads input / error
 			new Thread(new SyncPipe(this.process.getErrorStream(), System.err)).start();
 			new Thread(new SyncPipe(this.process.getInputStream(), System.out)).start();
-		}
-		else if(this instanceof LocalPhaseTerminal){
-			((LocalPhaseTerminal)this).orients(); // orientiamo il terminale prima che parte il ciclo, cosi sa da quale oggetto fase deve partire
+		} else if (this instanceof LocalPhaseTerminal) {
+			((LocalPhaseTerminal) this).orients(); // orientiamo il terminale prima che parte il ciclo, cosi sa da quale
+													// oggetto fase deve partire
 		}
 		// qui avvio - £_()
 		LocalCommand.setInputHelpExploitable(true);
-		this.stop = false ;
-		while (this.stop!=true) {
-			if (getCommandRequest()!=null) {
+		this.stop = false;
+		while (this.stop != true) {
+			if (getCommandRequest() != null) {
 				£._O(getCommandRequest());
 			}
 			implOpen();
 		}
 		System.out.println("Terminal is close #");
 	}
+
 	/**
 	 * This method closes the terminal
 	 */
 	public void close() {
-		this.stop = true ;
+		this.stop = true;
 	}
-	
-	
+
 }

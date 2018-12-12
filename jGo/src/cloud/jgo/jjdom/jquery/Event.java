@@ -28,25 +28,23 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 /**
  * 
  * @author Martire91<br>
- *	This abstract class represents the jquery event
+ *         This abstract class represents the jquery event
  */
 public interface Event {
 	public abstract void preventdefault();
-	public abstract void stopPropagation ();
-	public abstract void stopImmediatePropagation ();
+
+	public abstract void stopPropagation();
+
+	public abstract void stopImmediatePropagation();
+
 	public abstract EventType getEventType();
+
 	/**
 	 * 
 	 * @author Martire91<br>
-	 * This interface represents the jquery event type
+	 *         This interface represents the jquery event type
 	 */
-	public static enum EventType{
-		CLICK,
-		DBL_CLICK,
-		SUBMIT,
-		MOUSE_ENTER,
-		MOUSE_LEAVE,
-		MOUSE_OVER,
-		MOUSE_OUT
+	public static enum EventType {
+		CLICK, DBL_CLICK, SUBMIT, MOUSE_ENTER, MOUSE_LEAVE, MOUSE_OVER, MOUSE_OUT
 	}
 }

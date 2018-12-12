@@ -27,8 +27,8 @@ import java.awt.HeadlessException;
 import java.io.IOException;
 
 public class Home {
-	 public static £ home(){
-		 try {
+	public static £ home() {
+		try {
 			return £.getInstance();
 		} catch (HeadlessException e) {
 			// TODO Auto-generated catch block
@@ -43,5 +43,5 @@ public class Home {
 			e.printStackTrace();
 			return null;
 		}
-	 }
+	}
 }
