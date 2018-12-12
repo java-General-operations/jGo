@@ -21,6 +21,7 @@
  * 
  */
 package cloud.jgo.utils.command;
+
 // version 1.0.7
 /**
  * 
