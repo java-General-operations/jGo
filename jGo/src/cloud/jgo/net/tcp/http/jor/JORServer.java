@@ -36,7 +36,7 @@ import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
  * @author Martire91
  * @see JOR
  * @see JORHandlerConnection
- * @version 1.0.3 <!--Author : *** Marco Martire *** -->
+ * @version 1.0.4 <!--Author : *** Marco Martire *** -->
  *          <h1 style='color: #282828;'>jGo<span style='color:
  *          green;'>.cloud</span>/<a
  *          id='link'href='https://www.jgo.cloud/jor'>JOR</a></h1> <img

@@ -146,3 +146,7 @@ Version 1.0.7 - 11/12/2018
 
 - New method added to the access point jGo: play().
 (Thanks to Marco Martire)
+
+
+
+Version 1.0.8 - in dev

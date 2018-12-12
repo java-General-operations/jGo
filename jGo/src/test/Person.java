@@ -7,6 +7,7 @@ import cloud.jgo.net.tcp.http.jor.JOR;
 import cloud.jgo.net.tcp.http.jor.ResponseType;
 
 @JOR(field_id = "name+surname", url_Pattern = "/people", responseType=ResponseType.XML)
+
 @XmlRootElement
 public class Person {
 	

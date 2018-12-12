@@ -1,0 +1,5 @@
+1) Individuare tutti quei punti in cui, la ridefinizione delle configurazioni da server, potrebbe
+creare conflitti - (cloud.jgo.net)
+
+2) Risolvere bug JOR, non dobbiamo per forza specificare lo slash iniziale nel parametro dell'annotazione:
+url_pattern.
