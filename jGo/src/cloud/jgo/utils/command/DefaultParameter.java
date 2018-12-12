@@ -26,11 +26,6 @@ import cloud.jgo.utils.command.execution.Execution;
 
 public class DefaultParameter extends Parameter {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	public DefaultParameter(String param, String help) {
 		super(param, help);
 		/*

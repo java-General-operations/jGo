@@ -372,18 +372,13 @@ public class TCPConnection implements Connection, Controllable, Control {
 		if (this.successfully) {
 			this.out = new ObjectOutputStream(this.socket.getOutputStream());
 			this.in = new ObjectInputStream(this.socket.getInputStream());
-
 			// casomai eliminare da qui a @
 			// invio la lista dei comandi al server
 			this.out.writeObject(client.getClientCommands());
-
 			// ricevo la lista dei comandi impostati dal server
-
 			List<cloud.jgo.utils.command.RemoteCommand> serverCommands = (List<cloud.jgo.utils.command.RemoteCommand>) this.in
 					.readObject();
-
 			client.setServerCommands(serverCommands);
-
 			// @
 		}
 	}

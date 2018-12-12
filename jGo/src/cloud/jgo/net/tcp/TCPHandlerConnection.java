@@ -497,14 +497,10 @@ public abstract class TCPHandlerConnection extends HandlerConnection implements 
 	public void setServer(TCPServer server) throws ClassNotFoundException, IOException {
 		this.server = server;
 		// casomai cancellare da qui fino a @
-
 		// ricevo la lista dei comandi impostati dal client
 		List<cloud.jgo.utils.command.RemoteCommand> clientCommands = (List<cloud.jgo.utils.command.RemoteCommand>) receive();
-
 		// invio la lista dei comandi impostati dal server
-
 		send(this.server.getServerCommands());
-
 		// se la lista dei comandi ricevuti dal client è valida setto la mia lista dei
 		// comandi
 		// cioè i local comandi del server setto

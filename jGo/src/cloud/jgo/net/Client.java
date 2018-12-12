@@ -23,6 +23,7 @@
 package cloud.jgo.net;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.InetAddress;
 /**
  * 

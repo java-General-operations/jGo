@@ -3,3 +3,6 @@ creare conflitti - (cloud.jgo.net)
 
 2) Risolvere bug JOR, non dobbiamo per forza specificare lo slash iniziale nel parametro dell'annotazione:
 url_pattern.
+
+3) Adattare metodi che inviano/ricevono comandi, a comandi che hanno il valore da input, questi metodi sono
+nelle classi TCPServer, TCPClient, TCPHandlerConnection, TCPConnection

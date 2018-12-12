@@ -30,7 +30,7 @@ package cloud.jgo.utils.command;
  * Valid mechanism with commands and parameters.
  *
  */
-public interface InputSettable {
+public interface InputSettable{
 	/**
 	 * This method gets the input value
 	 * @return the input value
