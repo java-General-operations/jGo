@@ -17,13 +17,17 @@ public class MyTCPClient extends TCPClient{
 	@Override
 	public void communicates(Connection connection) throws IOException, ClassNotFoundException {
 		TCPConnection conn = (TCPConnection) connection;
-		
 		// ottengo il comando che voglio inviare 
 		RemoteCommand command = getCMD("open");
-		
 		// invio il comando
 		conn.enter_cmd(command,"notepad","2");
-		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		conn.enter_cmd(command,"start","3");
 	
 	}
 }

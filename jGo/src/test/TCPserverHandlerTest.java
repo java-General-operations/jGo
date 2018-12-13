@@ -15,6 +15,7 @@ public class TCPserverHandlerTest extends TCPHandlerConnection{
 	public void manage()
 			throws ClassNotFoundException, IOException, InterruptedException, HeadlessException, AWTException {
 		execute_cmd();
+		execute_cmd();
 	}
 
 }
