@@ -16,9 +16,11 @@ public static void main(String[] args) throws IOException {
 	
 	RemoteCommand startCommand = new RemoteCommand("start","This command opens the windows cmd");
 	RemoteCommand notepadCommand = new RemoteCommand("notepad","This command opens the windows notepad");
+	RemoteCommand propsSystemCommand = new RemoteCommand("props","get the system properties");
 	
 	startCommand.setInputValueExploitable(true);
 	notepadCommand.setInputValueExploitable(true);
+	
 	
 	startCommand.setExecution(new Execution() {
 		
@@ -53,8 +55,17 @@ public static void main(String[] args) throws IOException {
 		}
 	});
 	
+	propsSystemCommand.setExecution(new Execution() {
+		
+		@Override
+		public Object exec() {
+			
+			return System.getProperties();
+		}
+	});
 	
-	myClient.addClientCommand(startCommand,notepadCommand);
+	
+	myClient.addClientCommand(startCommand,notepadCommand,propsSystemCommand);
 	
 	// mi connetto al server 
 	boolean connected=myClient.connect("localhost",3332);
