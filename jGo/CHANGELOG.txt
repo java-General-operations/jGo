@@ -149,7 +149,7 @@ Version 1.0.7 - 11/12/2018
 
 
 
-Version 1.0.8 - in dev
+Version 1.0.8 - 13/12/2018
 
 - We have redefined all the servers, and eliminated all the bugs deriving from the redefinition of the server configurations.
 
@@ -162,3 +162,4 @@ Version 1.0.8 - in dev
 - fixed other bugs in the TCPLoginServer class
 
 - Resolved BUG JOR, now we can also make mistakes when we insert the url_pattern in the annotation, it will be JOR to adapt it.
+(Thanks to Marco Martire)
