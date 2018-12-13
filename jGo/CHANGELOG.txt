@@ -151,16 +151,14 @@ Version 1.0.7 - 11/12/2018
 
 Version 1.0.8 - in dev
 
-- Abbiamo ridefinito tutti i server, ed eliminato i bugs derivanti dalla ridefinizione delle configurazioni server
+- We have redefined all the servers, and eliminated all the bugs deriving from the redefinition of the server configurations.
 
-- Sto creando una nuova interfaccia net, che raggruppi i metodi per il reperimento dei comandi nel server o client
+- A new interface has been created, but not important. It simply serves to group two methods - ManageableCommands
 
-- Abbiamo testato i metodi che inviano/ricevono comandi - TCPServer
+- We have tested and adjusted the methods that send / receive the commands - TCPServer
 
-- Risolto bug nel metodo isConfifigurated del server TCPLoginServer
+- Fixed bug in the "isConfigurated" method of the TCPServerLogin class
 
-- Risolti bug nel metodo setPassword() del server TCPLoginServer
+- fixed other bugs in the TCPLoginServer class
 
-- Risolti bug nel metodo setUsername() del server TCPLoginServer
-
-- Risolto BUG JOR, ora possiamo anche sbagliare quando inseriamo l'url_pattern nell'annotazione, sarà JOR ad adattarlo.
+- Resolved BUG JOR, now we can also make mistakes when we insert the url_pattern in the annotation, it will be JOR to adapt it.

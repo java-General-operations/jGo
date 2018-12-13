@@ -86,7 +86,13 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  * @see JjDom#jquery(String)
  * @version 1.0.4 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'>--> <!--Author : *** Marco
- *          Martire *** -->
+ *          Martire *** --> <!-- code to delete (for Maven project) until @-->
+ *          <style> div.cm_source { overflow: auto; padding: 1em;
+ *          background-color: #eee; font-family: courier new; font-size: 10pt; }
+ *          code.cm_n_n_n_0 { color: #000000; } code.cm_n_n_n_2A00FF { color:
+ *          #2A00FF; } code.cm_b_n_n_7F0055 { font-weight: bold; color: #7F0055;
+ *          } code.cm_n_n_n_0 { color: #000000; } .costants{color:blue;}
+ *          .overrides{color:darkgray;} </style> <!-- @ -->
  *          <h1 style='color: #282828;'>jGo<strong style='color:
  *          green;'>.cloud</strong>/<a
  *          id='link'href='https://www.jgo.cloud/jjdom'>JjDom</a></h1> <img
@@ -98,13 +104,13 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  *          Moreover you have the possibility to work with jquery and css,<br>
  *          to migrate the site and update it. You can see your site
  *          dynamically<br>
- * 			, at any moment, both the code and the page (front end).
+ *          , at any moment, both the code and the page (front end).
  *          {@link JjDom} is<br>
  *          a union between java, jquery and javascript, and the <a href=
  *          'https://it.wikipedia.org/wiki/Document_Object_Model'>dom</a>
  *          structure.<br>
  *          here are the simple steps to follow to use jjdom :<br>
- * 			<br>
+ *          <br>
  *          <ol>
  *          <li>You create a document - {@link JjDom#newDocument()} |
  *          {@link JjDom#newDocument(String)}</li>
@@ -120,18 +126,18 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  *          {@link JjDom#preview()}</li>
  *          </ol>
  *          <br>
- * 			<br>
+ *          <br>
  *          Here is the url for general documentation :<br>
  *          <a href=
  *          'https://www.jgo.cloud/jjdom'>https://www.jgo.cloud/jjdom</a><br>
- * 			<br>
- * 			<br>
+ *          <br>
+ *          <br>
  *          <em><u>(Write a little and get a lot)</u></em><br>
- * 			<br>
+ *          <br>
  *          <strong>J</strong> - <em>Java</em><br>
  *          <strong>j</strong> - <em>jQuery</em><br>
  *          <strong>Dom</strong> - <em>Dom</em><br>
- * 			<br>
+ *          <br>
  *          Let's see how to use JjDom :
  *          <ul>
  *          <li><em>We do a nice static import of JjDom, so as to have more
@@ -141,7 +147,7 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  *          "cm_b_n_n_7F0055">import static</code><code class=
  *          "cm_n_n_n_0">&nbsp;cloud.jgo.jjdom.JjDom.*;</code> </div><br>
  *          <em>or directly import the necessary method :</em><br>
- * 			<br>
+ *          <br>
  *          <div class="cm_source">
  *          <code class="cm_n_n_n_0">1 | </code><code class=
  *          "cm_b_n_n_7F0055">import</code><code class=
@@ -149,7 +155,7 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  *          "cm_b_n_n_7F0055">static</code><code class=
  *          "cm_n_n_n_0">&nbsp;cloud.jgo.jjdom.JjDom.jquery;</code> </div> <br>
  *          <em>or same thing :</em><br>
- * 			<br>
+ *          <br>
  *          <div class="cm_source">
  *          <code class="cm_n_n_n_0">1 | </code><code class=
  *          "cm_b_n_n_7F0055">import</code><code class=

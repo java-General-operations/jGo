@@ -68,15 +68,21 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  * @see £#_W
  * @version 1.0.2 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'> --><br>
- *          <!--Author : *** Marco Martire *** --> <img
- *          id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'
- *          style='float: left;margin-right:15px;'><br>
+ *          <!--Author : *** Marco Martire *** --> <!-- code to delete (for
+ *          Maven project) until @--> <style> div.cm_source { overflow: auto;
+ *          padding: 1em; background-color: #eee; font-family: courier new;
+ *          font-size: 10pt; } code.cm_n_n_n_0 { color: #000000; }
+ *          code.cm_n_n_n_2A00FF { color: #2A00FF; } code.cm_b_n_n_7F0055 {
+ *          font-weight: bold; color: #7F0055; } code.cm_n_n_n_0 { color:
+ *          #000000; } .costants{color:blue;} .overrides{color:darkgray;}
+ *          </style> <!-- @ --> <img id='logo'src='https://www.jgo.cloud/jgo2/'
+ *          alt='logo jgo' style='float: left;margin-right:15px;'><br>
  *          <h1 style='color: #282828;'>jGo<strong style='color:
  *          green;'>.cloud</strong>/<a href='#'>Boosted</a></h1> <em>To be used
  *          as a <a href='https://maven.apache.org/'>Maven</a>
  *          dependency</em><br>
- * 			<br>
- * 			<br>
+ *          <br>
+ *          <br>
  *          <strong>Description :</strong><br>
  *          This class facilitates all the difficult tasks For example,In a code
  *          line, you take a screenshot, and do other general operations. the
@@ -122,31 +128,31 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  *          the website at
  *          <a href='https://www.jgo.cloud/'>https://www.jgo.cloud/</a>. <br>
  *          <em>Have fun !</em> <br>
- * 			<br>
+ *          <br>
  *          JGO is very powerful and it follows the
  *          <a href='https://jquery.com/'>jquery</a> policy :<br>
- * 			<br>
+ *          <br>
  *          <em><u><a href=
  *          'https://medium.com/laboratoria-how-to/write-less-do-more-e049d0824f4'>(Write
  *          a little and get a lot)</a></u></em><br>
- * 			<br>
+ *          <br>
  *          <strong>j</strong> - <em>java</em><br>
- * 			<br>
+ *          <br>
  *          <strong>G</strong> - <em>General</em><br>
- * 			<br>
+ *          <br>
  *          <strong>o</strong> - <em>operations</em><br>
- * 			<br>
+ *          <br>
  *          <hr>
  *          <strong>1 Example -</strong>This instruction opens the webcam, takes
  *          a snapshot and closes the webcam :<br>
- * 			<br>
+ *          <br>
  *          <div class="cm_source"> 1 | <code class=
  *          "cm_n_n_n_0">j&pound;.openWebcam().capture(</code><code class=
  *          "cm_n_n_n_2A00FF">&quot;snapshot.png&quot;</code><code class=
  *          "cm_n_n_n_0">).closeWebcam();</code> </div> <br>
  *          <strong>2 Example - </strong>This instruction sends a simple email
  *          without authentication :<br>
- * 			<br>
+ *          <br>
  *          <div class="cm_source"> 1 |
  *          <code class="cm_n_n_n_0">j&pound;.sendSimpleEmail(</code><code class
  *          ="cm_n_n_n_2A00FF">&quot;test@tim.it&quot;</code><code class=
@@ -163,27 +169,27 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  *          ="cm_n_n_n_0">);</code> </div> <br>
  *          <strong>3 Example -</strong>This instruction prints in the console
  *          "hello world" and "hello world 2",<br>
- * 			also increases and decreases twice a counter:<br>
- * 			<br>
+ *          also increases and decreases twice a counter:<br>
+ *          <br>
  *          <div class="cm_source">
  *          <code class="cm_n_n_n_0">1 | &pound;._O(</code><code class=
  *          "cm_n_n_n_2A00FF">&quot;Hello&nbsp;world&quot;</code><code class=
  *          "cm_n_n_n_0">).increment().decrement()<br>
   2 |&nbsp;  ._O(</code><code class=
- *          "cm_n_n_n_2A00FF">&quot;Hello&nbsp;World&nbsp;2&quot;</code><code class
+*          "cm_n_n_n_2A00FF">&quot;Hello&nbsp;World&nbsp;2&quot;</code><code class
  *          ="cm_n_n_n_0">).increment().decrement();</code> </div> <br>
  *          <strong>4 Example -</strong> Opens the terminal, opens the notepad
  *          and emits an acoustic signal,<br>
- * 			also prints in the console "Hello world":<br>
- * 			<br>
+ *          also prints in the console "Hello world":<br>
+ *          <br>
  *          <div class="cm_source"> 1 | <code class=
  *          "cm_n_n_n_0">&pound;.openTerminal().openNotepad().beep()._O(</code><code class
  *          ="cm_n_n_n_2A00FF">&quot;Hello&nbsp;World&quot;</code><code class=
  *          "cm_n_n_n_0">);</code> </div> <br>
  *          <strong>5 Example -</strong>This instruction creates a file, a
  *          folder,<br>
- * 			and prints hello world using two alert windows:<br>
- * 			<br>
+ *          and prints hello world using two alert windows:<br>
+ *          <br>
  *          <div class="cm_source"> 1 |
  *          <code class="cm_n_n_n_0">&pound;.createFile(</code><code class=
  *          "cm_n_n_n_2A00FF">&quot;hello&nbsp;world&quot;</code><code class=
@@ -194,7 +200,7 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  *          "cm_n_n_n_0">);</code> </div> <br>
  *          <strong>6 Example (Iteration with jGo) - </strong>Simple use of the
  *          "each" method of jGo:<br>
- * 			<br>
+ *          <br>
  *          <div class="cm_source"> 1 &nbsp;|
  *          <code class="cm_n_n_n_0">String[]arr&nbsp;=&nbsp;{</code><code class
  *          ="cm_n_n_n_2A00FF">&quot;Alan&quot;</code><code class=
@@ -205,7 +211,7 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  *          "cm_n_n_n_0">};<br>
   2 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<br>
   3 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&pound;.each(arr,</code><code class=
- *          "cm_b_n_n_7F0055">new</code><code class=
+*          "cm_b_n_n_7F0055">new</code><code class=
  *          "cm_n_n_n_0">&nbsp;&pound;Func()&nbsp;{<br>
  4 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
  5 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Override<br>
@@ -228,13 +234,13 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  *          Increment the counter twice, create a file, iterate the array using
  *          the "each" method, at the end it queries on google, decreases the
  *          value of the counter, and takes its value:<br>
- * 			<br>
+ *          <br>
  *          <div class="cm_source"> 1 &nbsp;|
  *          <code class="cm_b_n_n_7F0055">int</code><code class=
  *          "cm_n_n_n_0">&nbsp;counterValue&nbsp;=&nbsp;<br>
   2 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
   3 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&pound;.increment().increment().createFile(</code><code class
- *          ="cm_n_n_n_2A00FF">&quot;test.json&quot;</code><code class=
+*          ="cm_n_n_n_2A00FF">&quot;test.json&quot;</code><code class=
  *          "cm_n_n_n_0">)<br>
  4 &nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.each(arr,</code><code class=
  *          "cm_b_n_n_7F0055">new</code><code class=
@@ -259,7 +265,7 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  *          "cm_n_n_n_2A00FF">&quot;jGo&quot;</code><code class=
  *          "cm_n_n_n_0">).decrement().value();</code> </div> <br>
  *          <strong>In jGo there are 3 phases :</strong><br>
- * 			<br>
+ *          <br>
  *          <ul>
  *          <li>{@link #_A} - {@link £.AndroidUtils} -
  *          (<code>cloud.jgo.£.AndroidUtils</code>) -
@@ -277,16 +283,16 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  *          <a href='https://it.wikipedia.org/wiki/World_Wide_Web'>web</a>
  *          programming</em></li>
  *          </ul>
- * 			<br>
+ *          <br>
  *          For example, let's see how to apply some swing methods :<br>
- * 			<br>
+ *          <br>
  *          <div class="cm_source"> 1 |
  *          <code class="cm_n_n_n_0">&pound;.<strong style=
  *          'color: blue;'>_S</strong>.hide(jframe,Effect.<strong style=
  *          'color: blue;'>SLOW</strong>).show(jframe,&nbsp;Effect.<strong style
  *          ='color: blue;'>SLOW</strong>);</code> </div> <br>
  *          We can associate a click event to the button :<br>
- * 			<br>
+ *          <br>
  *          <div class="cm_source">
  *          <code class="cm_n_n_n_0">1 &nbsp;| &pound;.<strong class=
  *          'costants'>_S</strong>.click(button,</code><code class=
@@ -309,7 +315,7 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
 10 |&nbsp;&nbsp;&nbsp;&nbsp;});</code> </div><br>
  *          <strong>In any Phase we find ourselves, we can return to the access
  *          point using the "home ()" method :</strong><br>
- * 			<br>
+ *          <br>
  *          <div class="cm_source">
  *          <code class="cm_n_n_n_0">1 | &pound;.<strong style=
  *          'color: blue;'>_S</strong>.applyEffect(Effect.<strong style=
@@ -318,7 +324,7 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  *          "cm_n_n_n_2A00FF">&quot;Returned&quot;</code><code class=
  *          "cm_n_n_n_0">);</code> </div> <br>
  *          <strong>Now let's move on to the jGo technologies :</strong><br>
- * 			<br>
+ *          <br>
  *          <ul>
  *          <li>{@link JON} -
  *          <code style='color: green;'>Java Object Notation</code> -
