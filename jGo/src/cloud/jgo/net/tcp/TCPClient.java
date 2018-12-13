@@ -52,7 +52,7 @@ import cloud.jgo.utils.command.RemoteCommand;
  *         This class is a tcp client, and is a subclass of {@link Client}
  *
  */
-public abstract class TCPClient extends Client {
+public abstract class TCPClient extends Client implements ManageableCommands{
 
 	@Override
 	public void run() {
@@ -405,6 +405,20 @@ public abstract class TCPClient extends Client {
 	@Override
 	public boolean isConnected() {
 		return this.socket.isConnected();
+	}
+	
+	@Override
+	public RemoteCommand getCMD(String onlyCommand) {
+		RemoteCommand cmd = null ;
+		if (getClientCommands().size()>0) {
+			for(RemoteCommand currentCommand:getClientCommands()) {
+				if (currentCommand.getCommand().equals(onlyCommand)) {
+					cmd = currentCommand ;
+					break ;
+				}
+			}
+		}
+		return cmd ;
 	}
 
 }

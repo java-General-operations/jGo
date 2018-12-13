@@ -150,3 +150,8 @@ Version 1.0.7 - 11/12/2018
 
 
 Version 1.0.8 - in dev
+
+- Abbiamo ridefinito tutti i server, ed eliminato i bugs derivanti dalla ridefinizione delle configurazioni server
+
+- Sto creando una nuova interfaccia net, che raggruppi i metodi per il reperimento dei comandi nel server o client
+

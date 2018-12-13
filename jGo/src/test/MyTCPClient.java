@@ -8,6 +8,8 @@ import cloud.jgo.£;
 import cloud.jgo.net.Connection;
 import cloud.jgo.net.tcp.TCPClient;
 import cloud.jgo.net.tcp.TCPConnection;
+import cloud.jgo.utils.command.LocalCommand;
+import cloud.jgo.utils.command.Parameter;
 import cloud.jgo.utils.command.RemoteCommand;
 
 public class MyTCPClient extends TCPClient{
@@ -15,8 +17,13 @@ public class MyTCPClient extends TCPClient{
 	@Override
 	public void communicates(Connection connection) throws IOException, ClassNotFoundException {
 		TCPConnection conn = (TCPConnection) connection;
-		conn.send("start 2");
-		ArrayList<Object>returnedValue = (ArrayList<Object>) conn.receive();
-	}
+		
+		// ottengo il comando che voglio inviare 
+		RemoteCommand command = getCMD("open");
+		
+		// invio il comando
+		conn.enter_cmd(command,"notepad","2");
+		
 	
+	}
 }

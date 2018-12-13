@@ -61,7 +61,7 @@ import cloud.jgo.utils.command.RemoteCommand;
  *         This class represents a TCP server, and is an implementation of
  *         {@link Server}
  */
-public abstract class TCPServer implements Server, Manageable, Iterable<Handler> {
+public abstract class TCPServer implements Server, Manageable, Iterable<Handler>,ManageableCommands{
 	private List<RemoteCommand> serverCommands = new ArrayList<>(); // i comandi impostati dal server per controllare il
 																	// client
 	protected List<Handler> handlers = new ArrayList<>();
@@ -1057,5 +1057,18 @@ public abstract class TCPServer implements Server, Manageable, Iterable<Handler>
 	public Iterator<Handler> iterator() {
 		// TODO Auto-generated method stub
 		return this.handlers.iterator();
+	}
+	@Override
+	public RemoteCommand getCMD(String onlyCommand) {
+		RemoteCommand cmd = null ;
+		if (getServerCommands().size()>0) {
+			for(RemoteCommand currentCommand:getServerCommands()) {
+				if (currentCommand.getCommand().equals(onlyCommand)) {
+					cmd = currentCommand ;
+					break ;
+				}
+			}
+		}
+		return cmd ;
 	}
 }

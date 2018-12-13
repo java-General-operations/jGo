@@ -23,6 +23,7 @@
 package cloud.jgo.net.tcp;
 
 import cloud.jgo.net.handlers.Handler;
+import cloud.jgo.utils.command.RemoteCommand;
 
 public class DefaultTCPServer extends TCPServer {
 
