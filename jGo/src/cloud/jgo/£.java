@@ -171,7 +171,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
  * @see £#_A
  * @see £#_S
  * @see £#_W
- * @version 1.0.7 <!--<link rel='styleSheet' href=
+ * @version 1.0.8 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'> --><br>
  *          <!--Author : *** Marco Martire *** --> <!-- code to delete (for
  *          Maven project) until @--> <style> div.cm_source { overflow: auto;
