@@ -163,3 +163,4 @@ Version 1.0.8 - 13/12/2018
 
 - Resolved BUG JOR, now we can also make mistakes when we insert the url_pattern in the annotation, it will be JOR to adapt it.
 (Thanks to Marco Martire)
+test
