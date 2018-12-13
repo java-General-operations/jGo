@@ -14,7 +14,7 @@ public class MyLoginHandlerTest extends TCPLoginHandlerConnection{
 	@Override
 	public void doAccessFailed() {
 		// TODO Auto-generated method stub
-		
+		send("I'm sorry @");
 	}
 
 }

@@ -23,11 +23,11 @@ public class MYLoginClientTest extends TCPLoginClient{
 		System.out.print("Mexg for server :");
 		String inputMessage = £._I();
 		getConnection().send(inputMessage);
-		
 	}
 	@Override
 	public void doAccessFailed() {
 		// TODO Auto-generated method stub
-		
+		String accessFailedMex = (String) connection.receive();
+		System.out.println("client ecco la risposta negativa :"+accessFailedMex);
 	}
 }
