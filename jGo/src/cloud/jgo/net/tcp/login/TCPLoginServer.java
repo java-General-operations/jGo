@@ -224,9 +224,9 @@ public final class TCPLoginServer extends TCPServer implements Login {
 	public boolean login(String user, String passw) {
 		boolean logged = false;
 		String passMem = £.AES_d(this.password,
-				getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
+				new SecretKeySpec(((String)getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY)).getBytes(), Encrypts.ALGORITHM));
 		String userMem = £.AES_d(this.username,
-				getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY));
+				new SecretKeySpec(((String)getConfiguration().getConfig(cloud.jgo.net.tcp.login.TCPLoginServerConfiguration.AES_KEY)).getBytes(), Encrypts.ALGORITHM));
 		if (user.equals(userMem) && passw.equals(passMem)) {
 			logged = true;
 		}

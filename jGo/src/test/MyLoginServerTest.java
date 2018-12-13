@@ -1,5 +1,7 @@
 package test;
 
+import java.util.Scanner;
+
 import cloud.jgo.Encrypts;
 import cloud.jgo.net.config.ServerConfiguration;
 import cloud.jgo.net.tcp.NegativeListeningException;
@@ -17,12 +19,22 @@ public static void main(String[] args) {
 	server.getConfiguration().put(TCPServerConfiguration.HANDLER_MODEL,new MyLoginHandlerTest());
 	server.getConfiguration().put(TCPLoginServerConfiguration.USER,"wasp91");
 	server.getConfiguration().put(TCPLoginServerConfiguration.PASSW,"wasp91dayno");
+	server.getConfiguration().put(TCPLoginServerConfiguration.AES_KEY,Encrypts.TEXT_KEY_DEFAULT);
+	server.reloadConfiguration();
 	
-	if (server.isConfigurated()) {
-		System.out.println("Server configurato @");
+	// imposto sorgente lettura e scrittura
+	server.setReadFrom(System.out);
+	server.setWriteFrom(new Scanner(System.in));
+	
+	try {
+		server.listen();
+		System.out.println("Server in ascolto ...");
+	} catch (NegativeListeningException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
-	else {
-		System.err.println("Server non configurato #");
-	}
+	
+	server.startServer();
+	
 }
 }
