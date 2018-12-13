@@ -406,7 +406,6 @@ public abstract class TCPClient extends Client implements ManageableCommands{
 	public boolean isConnected() {
 		return this.socket.isConnected();
 	}
-	
 	@Override
 	public RemoteCommand getCMD(String onlyCommand) {
 		RemoteCommand cmd = null ;
@@ -420,5 +419,17 @@ public abstract class TCPClient extends Client implements ManageableCommands{
 		}
 		return cmd ;
 	}
-
+	@Override
+	public boolean isCMD(String onlyCommand) {
+		boolean result = false ;
+		if (getClientCommands().size()>0) {
+			for(RemoteCommand currentCommand:getClientCommands()) {
+				if (currentCommand.getCommand().equals(onlyCommand)) {
+					result = true ;
+					break ;
+				}
+			}
+		}
+		return result ;
+	}
 }

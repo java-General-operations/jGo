@@ -26,7 +26,6 @@ import cloud.jgo.net.handlers.Handler;
 import cloud.jgo.utils.command.RemoteCommand;
 
 public class DefaultTCPServer extends TCPServer {
-
 	@Override
 	public void impl(Handler handler) {
 		// TODO Auto-generated method stub

@@ -1071,4 +1071,17 @@ public abstract class TCPServer implements Server, Manageable, Iterable<Handler>
 		}
 		return cmd ;
 	}
+	@Override
+	public boolean isCMD(String onlyCommand) {
+		boolean result = false ;
+		if (getServerCommands().size()>0) {
+			for(RemoteCommand currentCommand:getServerCommands()) {
+				if (currentCommand.getCommand().equals(onlyCommand)) {
+					result = true ;
+					break ;
+				}
+			}
+		}
+		return result ;
+	}
 }

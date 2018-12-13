@@ -4,6 +4,6 @@ package cloud.jgo.net.tcp;
 import cloud.jgo.utils.command.RemoteCommand;
 
 public interface ManageableCommands {
-	// ottiene un comando registrato nel Client o Server
 	public abstract RemoteCommand getCMD(String onlyCommand);
+	public abstract boolean isCMD(String onlyCommand);
 }

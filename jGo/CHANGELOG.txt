@@ -155,3 +155,4 @@ Version 1.0.8 - in dev
 
 - Sto creando una nuova interfaccia net, che raggruppi i metodi per il reperimento dei comandi nel server o client
 
+- Abbiamo testato i metodi che inviano/ricevono comandi - TCPServer
