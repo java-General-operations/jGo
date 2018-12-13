@@ -15,26 +15,14 @@ public class MyTCPClient extends TCPClient{
 	@Override
 	public void communicates(Connection connection) throws IOException, ClassNotFoundException {
 		TCPConnection conn = (TCPConnection) connection;
-		while (true) {
-			System.out.print("Command for server:");
-			String command = £._I();
-			conn.send(command);
-			// ricevo la risposta 
-			Object objReturned = conn.receive();
-			// sappiamo che è un arraylist
-			if (objReturned!=null) {
-				ArrayList<Object>listObjs = (ArrayList<Object>) objReturned;
-				Iterator<Object>iterator = listObjs.iterator();
-				while (iterator.hasNext()) {
-					Object object = (Object) iterator.next();
-					if (object!=null) {
-						// diamo per scontato che sono proprietà
-						Properties remoteProps = (Properties) object;
-						remoteProps.list(System.out);
-					}
-				}	
-			}
-		}
+		// inviamo un comando
+		conn.send("props");
+		// ricevo l'oggetto 
+		ArrayList<Object>listObjs = (ArrayList<Object>) conn.receive();
+		// do per scontato che ha un valore
+		Properties props = (Properties) listObjs.get(0);
+		// stampo le props remote
+		props.list(System.out);
 	}
 	
 }

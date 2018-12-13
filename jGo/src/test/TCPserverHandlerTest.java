@@ -3,6 +3,7 @@ package test;
 import java.awt.AWTException;
 import java.awt.HeadlessException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import cloud.jgo.net.tcp.TCPHandlerConnection;
@@ -13,12 +14,9 @@ public class TCPserverHandlerTest extends TCPHandlerConnection{
 	@Override
 	public void manage()
 			throws ClassNotFoundException, IOException, InterruptedException, HeadlessException, AWTException {
-		// TODO Auto-generated method stub
-		while(true) {
-			String mexFromClient = (String) receive();
-			Object objectReturned = RemoteCommand.executeInputCommand(mexFromClient,getClientCommands());
-			send(objectReturned);
-		}
+		String remoteCommand = (String) receive();
+		ArrayList<Object>list = RemoteCommand.executeInputCommand(remoteCommand,getClientCommands());
+		send(list);
 	}
 
 }
