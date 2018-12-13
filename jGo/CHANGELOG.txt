@@ -162,3 +162,5 @@ Version 1.0.8 - in dev
 - Risolti bug nel metodo setPassword() del server TCPLoginServer
 
 - Risolti bug nel metodo setUsername() del server TCPLoginServer
+
+- Risolto BUG JOR, ora possiamo anche sbagliare quando inseriamo l'url_pattern nell'annotazione, sarà JOR ad adattarlo.
