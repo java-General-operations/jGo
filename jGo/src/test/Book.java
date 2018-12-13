@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import cloud.jgo.net.tcp.http.jor.JOR;
 import cloud.jgo.net.tcp.http.jor.ResponseType;
 
-@JOR(field_id = "title+author", url_Pattern = "/books", responseType = ResponseType.XML)
+@JOR(field_id = "title+author", url_Pattern = "programma/marco/books", responseType = ResponseType.XML)
 @XmlRootElement
 public class Book {
 	private int numberPages;

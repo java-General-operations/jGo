@@ -72,6 +72,9 @@ public abstract class JORHandlerConnection extends HTTPHandlerConnection {
 		Map<Object, String> structure = new HashMap<>();
 		Object[] objects = (Object[]) servObject;
 		String url_pattern = annotation.url_Pattern();
+		if (!url_pattern.startsWith("/")) {
+			url_pattern = "/"+url_pattern ;
+		}
 		final String originalUrlPattern = url_pattern;
 		ResponseType typeRes = annotation.responseType();
 		String idField = annotation.field_id();

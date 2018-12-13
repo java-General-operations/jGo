@@ -6,6 +6,10 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
 public class MyJORServerTest {
 public static void main(String[] args) {
 	
+	/*
+	 * JOR presenta qualche bug in Internet explorer
+	 * Da segnalare
+	 */
 	
 	JORServer server = new JORServer();
 	server.setRootFolder("C:\\test");
