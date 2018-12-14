@@ -24,125 +24,188 @@ package cloud.jgo.utils.command;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import cloud.jgo.utils.command.execution.Executable;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.phase.Phase;
+
 /**
  * @author Martire91<br>
- * This class represents a terminal command
+ *         This class represents a terminal command
  */
-public interface Command extends Executable,InputSettable{
+
+public interface Command extends Executable, InputSettable {
 	/**
 	 * This method returns the command
+	 * 
 	 * @return the command
 	 */
+
 	public abstract String getCommand();
+
 	/**
 	 * This method counts the number of command parameters
+	 * 
 	 * @return the parameters number
 	 */
-    public abstract int countParameters();
-    /**
-     * This method returns the command execution
-     * @return the command execution
-     */
+
+	public abstract int countParameters();
+
+	/**
+	 * This method returns the command execution
+	 * 
+	 * @return the command execution
+	 */
+
 	public abstract Execution getExecution();
+
 	/**
 	 * This method returns the command help
+	 * 
 	 * @return the command help
 	 */
+
 	public abstract String getHelp(); // spiega il comando
-	
+
 	/**
 	 * This method returns the command effect
+	 * 
 	 * @return the command effect
 	 */
+
 	public abstract String getEffect(); // comunica l'effetto del comando
-	
+
 	/**
 	 * This method adds a parameter into the command
-	 * @param param the parameter
-	 * @param help the parameter help
+	 * 
+	 * @param param
+	 *            the parameter
+	 * @param help
+	 *            the parameter help
 	 * @return the parameter
 	 */
-	public abstract Parameter addParam(String param,String help);
+	public abstract Parameter addParam(String param, String help);
+
 	/**
 	 * This method returns the parameter
-	 * @param param the parameter text
+	 * 
+	 * @param param
+	 *            the parameter text
 	 * @return the parameter
 	 */
 	public abstract Parameter param(String param);
+
 	/**
 	 * This method returns the parameter to the position index
-	 * @param index the parameter index
+	 * 
+	 * @param index
+	 *            the parameter index
 	 * @return the parameter
 	 */
 	public abstract Parameter param(int index);
+
 	/**
 	 * Check if it's a parameter
-	 * @param param the parameter text
+	 * 
+	 * @param param
+	 *            the parameter text
 	 * @return the flag
 	 */
+
 	public abstract boolean isParameter(String param);
+
 	/**
 	 * This method removes all the parameters
 	 */
 	public abstract void removeAllParameters();
+
 	/**
 	 * This method removes a parameter
-	 * @param param a parameter
+	 * 
+	 * @param param
+	 *            a parameter
 	 * @return true if the parameter is removed
 	 */
 	public abstract boolean removeParam(String param);
+
 	/**
 	 * This method removes a parameter
-	 * @param index the parameter index
+	 * 
+	 * @param index
+	 *            the parameter index
 	 * @return true if the parameter is removed
 	 */
 	public abstract boolean removeParam(int index);
+
 	/**
 	 * This method replaces a parameter
-	 * @param param the old parameter
-	 * @param newValue the new parameter
+	 * 
+	 * @param param
+	 *            the old parameter
+	 * @param newValue
+	 *            the new parameter
 	 * @return true if the parameter is replaced
 	 */
-	public abstract boolean replace(String param,Parameter newValue);
+	public abstract boolean replace(String param, Parameter newValue);
+
 	/**
 	 * This method executes a parameter
-	 * @param param the parameter
+	 * 
+	 * @param param
+	 *            the parameter
 	 * @return the object returned from execution
 	 */
 	public abstract Object executeParam(String param);
+
 	/**
 	 * This method executes a parameter
-	 * @param param the parameter
-	 * @param inputValue parameter input value
+	 * 
+	 * @param param
+	 *            the parameter
+	 * @param inputValue
+	 *            parameter input value
 	 * @return the object returned from execution
 	 */
-	public abstract Object executeParam(String param,String inputValue);
+	public abstract Object executeParam(String param, String inputValue);
+
 	/**
 	 * This method sorts the parameters list
+	 * 
 	 * @return the ordered list
 	 */
 	public abstract List<Parameter> sortParameters(); // se ci sono params li ordina
+
 	/**
 	 * This method checks if there are parameters in the command
+	 * 
 	 * @return the flag
 	 */
+
 	public abstract boolean hasParameters();
+
 	/**
 	 * This method returns the command parameters
+	 * 
 	 * @return the command parameters
 	 */
-	public abstract Parameter[]params();
+
+	public abstract Parameter[] params();
+
 	/**
 	 * This method returns the command phase
+	 * 
 	 * @return the command phase
 	 */
+
 	public abstract Phase getBelongsTo();
+
 	/**
 	 * This method checks if exist a command phase
+	 * 
 	 * @return the flag
 	 */
+
 	public abstract boolean hasAPhase();
 }

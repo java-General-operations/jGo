@@ -203,4 +203,10 @@ public final class WinTerminal extends Terminal {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "cmd";
+	}
 }

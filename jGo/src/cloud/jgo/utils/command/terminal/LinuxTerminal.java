@@ -226,4 +226,10 @@ public final class LinuxTerminal extends Terminal {
 		// TODO Auto-generated method stub
 		return "$_";
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "shell";
+	}
 }

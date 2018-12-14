@@ -66,13 +66,24 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	}
 
 	@Override
-	final public String getCommandRequest() {
-		String text = "£_:";
-		if (currentPhase != null) {
-			if (currentPhase.getWelcome() != null) {
-				text = currentPhase.getWelcome() + "\n" + "£_(" + currentPhase.phaseName() + ") :";
-			} else {
-				text = "£_(" + currentPhase.phaseName() + ") :";
+	public String getCommandRequest() {
+		String text = null ;
+		if (getName()==null) {
+			if (currentPhase != null) {
+				if (currentPhase.getWelcome() != null) {
+					text = currentPhase.getWelcome() + "\n" + "£_(" + currentPhase.phaseName() + ")_:";
+				} else {
+					text = "£_(" + currentPhase.phaseName() + ")_:";
+				}
+			}
+		}
+		else {
+			if (currentPhase != null) {
+				if (currentPhase.getWelcome() != null) {
+					text = currentPhase.getWelcome() + "\n" + getName()+"_(" + currentPhase.phaseName() + ")_:";
+				} else {
+					text = getName()+"_(" + currentPhase.phaseName() + ")_:";
+				}
 			}
 		}
 		return text;
@@ -149,10 +160,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				public Object exec() {
 					StringBuffer buffer = new StringBuffer();
 					buffer.append(
-							"==============================================================================================================================================================\n");
+							"=================================================================================================\n");
 					buffer.append("Description of (" + phase.phaseName() + ")\n");
 					buffer.append(
-							"==============================================================================================================================================================\n");
+							"==================================================================================================\n");
 					buffer.append(phase.description() + ".\n");
 					List<Command> commands = phase.getCommands();
 					if (commands.size() > 0) {
@@ -160,7 +171,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					}
 					buffer.append(commands + "\n");
 					buffer.append(
-							"==============================================================================================================================================================\n");
+							"====================================================================================================\n");
 					return buffer.toString();
 				}
 			});
@@ -246,10 +257,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					StringBuffer buffer = new StringBuffer();
 
 					buffer.append(
-							"==============================================================================================================================================================\n");
+							"=================================================================================================\n");
 					buffer.append("Description of (" + phase.phaseName() + ")\n");
 					buffer.append(
-							"==============================================================================================================================================================\n");
+							"=================================================================================================\n");
 					buffer.append(phase.description() + ".\n");
 					List<Command> commands = phase.getCommands();
 					if (commands.size() > 0) {
@@ -257,7 +268,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					}
 					buffer.append(commands + "\n");
 					buffer.append(
-							"==============================================================================================================================================================\n");
+							"=================================================================================================\n");
 
 					return buffer.toString();
 				}

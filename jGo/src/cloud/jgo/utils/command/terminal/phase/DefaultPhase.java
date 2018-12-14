@@ -25,6 +25,9 @@ package cloud.jgo.utils.command.terminal.phase;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
 

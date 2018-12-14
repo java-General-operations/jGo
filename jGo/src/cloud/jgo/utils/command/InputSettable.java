@@ -22,34 +22,50 @@
  */
 package cloud.jgo.utils.command;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 // version 1.0.7
 /**
  * 
- * @author Martire91
- * The class that extends this interface will<br>
- * have methods to exploit and set values from input.<br>
- * Valid mechanism with commands and parameters.
+ * @author Martire91 The class that extends this interface will<br>
+ *         have methods to exploit and set values from input.<br>
+ *         Valid mechanism with commands and parameters.
  *
  */
-public interface InputSettable{
+
+public interface InputSettable {
 	/**
 	 * This method gets the input value
+	 * 
 	 * @return the input value
 	 */
+
 	public abstract String getInputValue();
+
 	/**
 	 * This method sets the input value
-	 * @param inputValue the input value
+	 * 
+	 * @param inputValue
+	 *            the input value
 	 */
+
 	public abstract void setInputValue(String inputValue);
+
 	/**
 	 * Indicates if the value from input is exploitable or not
+	 * 
 	 * @return true if it is exploitable
 	 */
+
 	public abstract boolean hasInputValueExploitable();
+
 	/**
 	 * Sets the exploitation of the value from input
-	 * @param exploitable the flag
+	 * 
+	 * @param exploitable
+	 *            the flag
 	 */
+
 	public abstract void setInputValueExploitable(boolean exploitable);
 }

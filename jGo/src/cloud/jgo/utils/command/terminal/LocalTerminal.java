@@ -30,6 +30,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import cloud.jgo.£;
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.HelpCommands;
@@ -47,7 +51,10 @@ public class LocalTerminal extends Terminal implements Iterable<Entry<String, Lo
 	private HelpCommands helpCommands = new HelpCommands();
 	private String generalHelpValue = "help";
 	private int countCommands = 0;
-
+	private String name ;
+	public void setName(String name) {
+		this.name = name;
+	}
 	public LocalTerminal() {
 		// private constructor
 	}
@@ -57,6 +64,7 @@ public class LocalTerminal extends Terminal implements Iterable<Entry<String, Lo
 	 * 
 	 * @return the terminal commands number
 	 */
+
 	public int getCountCommands() {
 		return this.commands.size();
 	}
@@ -161,6 +169,7 @@ public class LocalTerminal extends Terminal implements Iterable<Entry<String, Lo
 	 * 
 	 * @return the terminal help
 	 */
+
 	public HelpCommands getHelpCommands() {
 		return this.helpCommands;
 	}
@@ -271,7 +280,19 @@ public class LocalTerminal extends Terminal implements Iterable<Entry<String, Lo
 	@Override
 	public String getCommandRequest() {
 		// TODO Auto-generated method stub
-		return "£_:";
+		String value = "£_:";
+		if (getName()!=null) {
+			if (!getName().equals("")) {
+				value = ""+getName()+"_:";
+			}
+		}
+		return value ;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return this.name ;
 	}
 
 }

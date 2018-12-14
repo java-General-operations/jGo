@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import cloud.jgo.Home;
 import cloud.jgo.£;
 import cloud.jgo.utils.command.LocalCommand;
@@ -46,7 +49,9 @@ public abstract class Terminal extends Home {
 	 * 
 	 * @return the text
 	 */
+
 	public abstract String getCommandRequest();
+	public abstract String getName();
 
 	/**
 	 * This method must be implemented to redefine the start of the terminal
@@ -78,6 +83,7 @@ public abstract class Terminal extends Home {
 	 * 
 	 * @return the exit command
 	 */
+
 	public abstract Object getExitCommand();
 
 	/**

@@ -22,6 +22,9 @@
  */
 package cloud.jgo.utils.command;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import cloud.jgo.utils.command.execution.Execution;
 
 /**
@@ -108,6 +111,7 @@ public abstract class Parameter
 	 * 
 	 * @return the parameter help
 	 */
+
 	public String getParameterHelp() {
 		return this.help;
 	}
@@ -123,6 +127,7 @@ public abstract class Parameter
 	 * 
 	 * @return the parameter only
 	 */
+
 	public String getOnlyParam() {
 		return onlyParam;
 	}
@@ -158,6 +163,7 @@ public abstract class Parameter
 	 * 
 	 * @return the parameter execution
 	 */
+
 	public Execution getExecution() {
 		return this.execution;
 	}
@@ -179,11 +185,13 @@ public abstract class Parameter
 	 * 
 	 * @return the parameter parent
 	 */
+
 	public Command getParent() {
 		return this.parent;
 	}
 
 	@Override
+
 	public boolean hasAnExecution() {
 		if (this.execution != null) {
 			return true;

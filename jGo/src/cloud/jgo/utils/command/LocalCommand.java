@@ -32,6 +32,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import cloud.jgo.£;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.Terminal;
@@ -62,6 +66,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	@Override
+
 	public Phase getBelongsTo() {
 		return this.belongsTo;
 	}
@@ -78,12 +83,18 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		this.helpCommand.reload(this);
 	}
 
+	// version 2.0.0
+	public LocalCommand() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String toString() {
 		return this.command;
 	}
 
 	@Override
+
 	public boolean hasAPhase() {
 		if (getBelongsTo() != null) {
 			return true;
@@ -249,6 +260,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	 * 
 	 * @return the flag
 	 */
+
 	public boolean hasInputHelpExploitable() {
 		return inputHelpExploitable;
 	}
@@ -291,11 +303,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			this.command = command;
 			this.buffer = new StringBuffer();
 			buffer.append(
-					"=================================================================================================================================\n");
+					"===================================================================================\n");
 			buffer.append("HELP Of " + "\"" + this.command.command + "\" - Phase :"
 					+ ((LocalCommand) this.command).getBelongsTo() + "\n");
 			buffer.append(
-					"=================================================================================================================================\n");
+					"===================================================================================\n");
 
 			// qui devo prendere tutti i parameters
 			Collection<Parameter> collection = command.structure.values();
@@ -363,21 +375,25 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	@Override
+
 	public Execution getExecution() {
 		return this.execution;
 	}
 
 	@Override
+
 	public String getHelp() {
 		return this.help;
 	}
 
 	@Override
+
 	public String getEffect() {
 		return this.effect;
 	}
 
 	@Override
+
 	public boolean hasAnExecution() {
 		if (this.execution != null) {
 			return true;
@@ -490,6 +506,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	@Override
+
 	public int countParameters() {
 
 		return this.structure.size();
@@ -531,6 +548,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	@Override
+
 	public String getCommand() {
 		return this.command;
 	}
@@ -1116,6 +1134,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	@Override
+
 	public boolean hasParameters() {
 		if (this.countParameters() > 0) {
 			return true;
@@ -1125,6 +1144,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	@Override
+
 	public <T> T getSharedObject() {
 		// TODO Auto-generated method stub
 		return (T) this.sharedObject;
