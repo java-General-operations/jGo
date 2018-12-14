@@ -169,4 +169,6 @@ Version 1.0.8 - 13/12/2018
 Version 1.0.8 - in dev
 
 - I add the methods to color the strings to the main point jGo
+
+- Aggiungo una nuova classe: ColorString
 (Thanks to Marco Martire)

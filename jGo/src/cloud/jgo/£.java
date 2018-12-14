@@ -139,6 +139,7 @@ import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
 
 import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.AnsiConsole;
 
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.downloads.Download;
@@ -426,7 +427,9 @@ public class £ {
 		SLOW, REALLY_SLOW, FAST, IMPERCEPTIBLE, REALLY_FAST, SUPER_FAST, VERTICAL, HORIZONTAL, CRAZY, TRANSPARENCY, MAXIMIZED, MINIMIZED
 		// continuare da qui facendo la costante super fast
 	}
-
+	static {
+		AnsiConsole.systemInstall();
+	}
 	/**
 	 * The constant represents a textual space
 	 */
@@ -572,8 +575,8 @@ public class £ {
 	 */
 	public final static WebUtils _W = new WebUtils();
 	// version 2.0.0
-	public static Ansi colors(String string,org.fusesource.jansi.Ansi.Color color) {
-		return ansi().fg(color).a(string).reset();
+	public static String colors(String string,org.fusesource.jansi.Ansi.Color color) {
+		return ansi().fg(color).a(string).reset().toString();
 	}
 	// nuovi metodi - version 1.0.5
 	/**
