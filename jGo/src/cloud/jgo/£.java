@@ -33,6 +33,7 @@ import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import static org.fusesource.jansi.Ansi.ansi;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
@@ -137,6 +138,8 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
 
+import org.fusesource.jansi.Ansi;
+
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
@@ -171,7 +174,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
  * @see £#_A
  * @see £#_S
  * @see £#_W
- * @version 1.0.8 <!--<link rel='styleSheet' href=
+ * @version 2.0.0 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'> --><br>
  *          <!--Author : *** Marco Martire *** --> <img
  *          id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'
@@ -568,7 +571,10 @@ public class £ {
 	 * development</em>
 	 */
 	public final static WebUtils _W = new WebUtils();
-
+	// version 2.0.0
+	public static Ansi colors(String string,org.fusesource.jansi.Ansi.Color color) {
+		return ansi().fg(color).a(string).reset();
+	}
 	// nuovi metodi - version 1.0.5
 	/**
 	 * This method iterates the array as if it were a loop

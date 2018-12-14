@@ -2,7 +2,6 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cloud.jgo</groupId>
   <artifactId>jGo</artifactId>
-  <version>1.0.8</version>
   <inceptionYear>2018</inceptionYear>
   <name>jGo</name>
   <description>${jgo.organization.name}</description>
@@ -151,9 +150,15 @@
     <artifactId>jlayer</artifactId>
     <version>1.0.1</version>
 </dependency>
+<dependency>
+  <groupId>org.fusesource.jansi</groupId>
+  <artifactId>jansi</artifactId>
+  <version>1.17.1</version>
+</dependency>
 </dependencies>
 	<organization>
 		<name>${jgo.organization.name}</name>
 		<url>${jgo.organization.url}</url>
 	</organization>
+	<version>2.0.0</version>
 </project>
