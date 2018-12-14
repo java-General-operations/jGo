@@ -3,10 +3,11 @@ package cloud.jgo.utils;
 import org.fusesource.jansi.Ansi.Color;
 import org.fusesource.jansi.AnsiConsole;
 
+import cloud.jgo.Home;
 import cloud.jgo.£;
 
 // version 2.0.0
-public class ColorString {
+public class ColorString{
 	private StringBuffer buffer ;
 	public int length ;
 	public ColorString(String string,Color color) {
@@ -41,7 +42,6 @@ public class ColorString {
 	public String getValue() {
 		return this.buffer.toString();
 	}
-	
 	public void setValue(String value,Color color) {
 		// sostituisco l'intero valore del buffer
 		this.buffer = new StringBuffer(£.colors(value, color));

@@ -165,6 +165,7 @@ import cloud.jgo.net.tcp.http.jor.JOR;
 import cloud.jgo.net.tcp.http.jor.JORServer;
 import cloud.jgo.net.tcp.login.TCPLoginServer;
 import cloud.jgo.registry.WinRegistry;
+import cloud.jgo.utils.ColorString;
 import cloud.jgo.utils.command.terminal.LinuxTerminal;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.WinTerminal;
@@ -577,6 +578,14 @@ public class £ {
 	// version 2.0.0
 	public static String colors(String string,org.fusesource.jansi.Ansi.Color color) {
 		return ansi().fg(color).a(string).reset().toString();
+	}
+	// version 2.0.0 :
+	public static ColorString getString() {
+		return new ColorString();
+	}
+	//version 2.0.0 : 
+	public static ColorString getString(String string,org.fusesource.jansi.Ansi.Color color) {
+		return new ColorString(string, color);
 	}
 	// nuovi metodi - version 1.0.5
 	/**
