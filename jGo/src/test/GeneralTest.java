@@ -8,74 +8,89 @@ import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
+import cloud.jgo.utils.command.terminal.phase.DefaultPhase;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
 import cloud.jgo.utils.command.terminal.phase.PhasesFactory;
 
 public class GeneralTest {
 	public static void main(String[] args) {
+		
+		// due bug da risolvere :
+		// 1) welcome stampato all'infinito ?
+		// 2) Si deve poter scegliere il nome del comando puntatore
+		// 3) se diamo il comando describe su una fase, la descrive. Tuttavia dobbiamo correggere la cornicetta.
 
-		// adesso dobbiamo capire il terminale di fasi, cosi da predisporre
-		// jGo, per lo sviluppo di DomTerminal
-		
-		// vediamo di correggere ad uno a uno tutti i bugs del LocalPhaseTerminal 
-		// prima di cominciare a lavorarci seriamente
-		
-		// 1 bug da risolvere, non deve essere per forza il simbolo di jGo 
-		// come richiesta di comando
-		
-		
+		LocalCommand.color = Color.GREEN;
+		Parameter.color = Color.YELLOW;
+		DefaultPhase.color = Color.CYAN;
+
+		LocalCommand.setInputHelpExploitable(true);
+
 		LocalPhaseTerminal terminal = new LocalPhaseTerminal();
-		terminal.setName(£.colors("DomT4j", Color.CYAN));
+		
 		terminal.useGeneralHelp();
-		Phase phaseVOID = terminal.createPhase(1, £.colors("START",Color.MAGENTA), "Fase iniziale");
-		Phase phaseCompile = terminal.createPhase(2, "compile", "compile application");
-		Phase phaseDeploy = terminal.createPhase(3, "deploy", "deploy application");
-		
-		// mi creo i comandi della seconda fase
-		// 2 fase 
-		LocalCommand commandFolder = new LocalCommand("src","dir sources");
-		LocalCommand comp = new LocalCommand("comp","compile");
-		commandFolder.setInputValueExploitable(true);
-		commandFolder.setInputHelpExploitable(true);
-		commandFolder.setExecution(new Execution() {
-			
-			@Override
-			public Object exec() {
-				
-				String inputValue = commandFolder.getInputValue();
-				
-				System.out.println("dir-src is set:"+inputValue);
-				
-				return null ;
-			}
-		});
-		
-		
-		comp.setExecution(new Execution() {
+
+		terminal.setName("DomT4j");
+
+		// creo le semplici fasi
+
+		Phase startPhase = terminal.createPhase(1, "START", "Fase iniziale @");
+		Phase compilePhase = terminal.createPhase(2, "compile", "In questa fase si compilano i sorgenti");
+		Phase deployPhase = terminal.createPhase(3, "deploy", "In questa fase si deploya l'applicativo");
+
+		// comandi 2 fase :
+
+		LocalCommand srcCommand = new LocalCommand("src", "indica la directory");
+		LocalCommand comp = new LocalCommand("comp", "compile");
+		LocalCommand properties = new LocalCommand("props","the system properties");
+		Parameter osName,osVersion = null ;
+		osName = properties.addParam("os.name", "os.name");
+		osVersion = properties.addParam("os.version","os.version");
+		osName.setExecution(new Execution() {
 			
 			@Override
 			public Object exec() {
 				// TODO Auto-generated method stub
+				return System.getProperty("os.name");
+			}
+		});
+		
+		osVersion.setExecution(new Execution() {
 			
-				System.out.println("comilazione in corso ...\nApplicazione compilata@");
-				
-				// si passa alla prossima phase 
-				
+			@Override
+			public Object exec() {
+				// TODO Auto-generated method stub
+				return System.getProperty("os.version");
+			}
+		});
+
+		srcCommand.setInputValueExploitable(true);
+		comp.setExecution(new Execution() {
+			
+			@Override
+			public Object exec() {
+				System.out.println("Applicazione compilata @");
 				terminal.changePhase(terminal.nextPhase());
-				
 				return null ;
 			}
 		});
 		
-		terminal.addCommandsToPhase(phaseCompile, commandFolder,comp);
+		srcCommand.setExecution(new Execution() {
+			
+			@Override
+			public Object exec() {
+				System.out.println("src-dir is set ="+srcCommand.getInputValue());
+				return null ;
+			}
+		});
 		
+		// aggiungo i comandi alla fase apposita 
+		
+		terminal.addCommandsToPhase(compilePhase,srcCommand,comp,properties);
 		
 		
 		terminal.open();
-		
-		
-		
-		
+
 	}
 }

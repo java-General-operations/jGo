@@ -171,12 +171,10 @@ Version 1.0.8 - in dev
 - I add the methods to color the strings to the main point jGo
 
 - Aggiungo una nuova classe: ColorString
-(Thanks to Marco Martire)
-
-- abbiamo aggiunto un nuovo costruttore alla classe LocalCommand - provvisorio
 
 - Ho tolto il modificatore final dal metodi getCommandRequest del terminale
 - aggiunto un nuovo metodo al terminal:getName();
 - abbiamo ridefinito il metodo dei terminali : getCommandRequest
 - Stiamo perfezionando la classe LocalPhaseTerminal, la stiamo rendendo + flessibbile, inoltre adesso non siamo
 + vincolati a usare il comando di richiesta comandi, di default(£), ma possiamo specificare il nome del terminale.
+- aggiunta nuova variabile statica a Parameter, LocalCommand e DefaultPhase

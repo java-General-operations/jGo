@@ -36,6 +36,8 @@ import java.util.Map.Entry;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.fusesource.jansi.Ansi.Color;
+
 import cloud.jgo.£;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.Terminal;
@@ -57,6 +59,8 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private static String helpValue = "help";
 	private String inputValue = null;
 	private boolean inputValueExploitable = false;
+	// version 2.0.0
+	public static Color color = Color.DEFAULT;
 	private static boolean inputHelpExploitable = false;
 	private boolean merged = false;
 	private Phase belongsTo = null;
@@ -81,11 +85,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		this.command = command;
 		// setto l'help
 		this.helpCommand.reload(this);
-	}
-
-	// version 2.0.0
-	public LocalCommand() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -302,12 +301,20 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		public void reload(LocalCommand command) {
 			this.command = command;
 			this.buffer = new StringBuffer();
-			buffer.append(
-					"===================================================================================\n");
-			buffer.append("HELP Of " + "\"" + this.command.command + "\" - Phase :"
-					+ ((LocalCommand) this.command).getBelongsTo() + "\n");
-			buffer.append(
-					"===================================================================================\n");
+			buffer.append("===================================================================================\n");
+			if (this.command.getBelongsTo()!=null) {
+				buffer.append("HELP Of " + "\"" + £.colors(this.command.command, LocalCommand.color) + "\" - Phase :"
+						+ £.colors(this.command.getBelongsTo().phaseName(),
+								cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
+						+ "\n");	
+			}
+			else{
+				buffer.append("HELP Of " + "\"" + £.colors(this.command.command, LocalCommand.color) + "\" - Phase :"
+						+ £.colors("absent",
+								Color.DEFAULT)
+						+ "\n");
+			}
+			buffer.append("===================================================================================\n");
 
 			// qui devo prendere tutti i parameters
 			Collection<Parameter> collection = command.structure.values();
@@ -326,7 +333,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 					Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter> entry = (Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter>) iterator
 							.next();
 					Parameter param = entry.getValue();
-					buffer.append(param.getParam() + "=" + param.getParameterHelp() + "  / has input value ="
+					buffer.append(£.colors(param.getParam(),cloud.jgo.utils.command.Parameter.color) + "=" + param.getParameterHelp() + "  / has input value ="
 							+ param.hasInputValueExploitable() + "\n");
 				}
 			}
