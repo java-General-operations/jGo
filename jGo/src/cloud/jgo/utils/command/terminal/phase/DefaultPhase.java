@@ -83,7 +83,6 @@ public class DefaultPhase implements Phase {
 		((LocalCommand) command).getHelpCommand().reload(((LocalCommand) command)); // aggiorno l'help del comando
 		this.commands.add(command);
 	}
-
 	/**
 	 * This method adds the commands into the phase
 	 * 
@@ -209,4 +208,5 @@ public class DefaultPhase implements Phase {
 	public void welcomeHasBeenPrinted(boolean flag) {
 		this.hasBeenPrinted = flag ;
 	}
+
 }
