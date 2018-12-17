@@ -176,7 +176,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
  * @see £#_A
  * @see £#_S
  * @see £#_W
- * @version 2.0.0 <!--<link rel='styleSheet' href=
+ * @version 1.1.0 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'> --><br>
  *          <!--Author : *** Marco Martire *** --> <img
  *          id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'

@@ -105,7 +105,8 @@ public interface Phase extends Serializable {
 	 * @return the phase welcome text
 	 */
 	public abstract String getWelcome();
-
+	//version 2.0.0
+	public abstract boolean welcomeHasBeenPrinted();
 	/**
 	 * This method sets the phase welcome text
 	 * 

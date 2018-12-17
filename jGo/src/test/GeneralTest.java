@@ -20,6 +20,7 @@ public class GeneralTest {
 		// 1) welcome stampato all'infinito ?
 		// 2) Si deve poter scegliere il nome del comando puntatore
 		// 3) se diamo il comando describe su una fase, la descrive. Tuttavia dobbiamo correggere la cornicetta.
+		// 4) risolvere il bug del metodo welcome()
 
 		LocalCommand.color = Color.GREEN;
 		Parameter.color = Color.YELLOW;
@@ -37,6 +38,7 @@ public class GeneralTest {
 
 		Phase startPhase = terminal.createPhase(1, "START", "Fase iniziale @");
 		Phase compilePhase = terminal.createPhase(2, "compile", "In questa fase si compilano i sorgenti");
+		compilePhase.setWelcome("Welcome");
 		Phase deployPhase = terminal.createPhase(3, "deploy", "In questa fase si deploya l'applicativo");
 
 		// comandi 2 fase :

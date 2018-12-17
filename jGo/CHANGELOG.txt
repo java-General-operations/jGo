@@ -166,7 +166,7 @@ Version 1.0.8 - 13/12/2018
 
 
 
-Version 1.0.8 - in dev
+Version 1.1.0 - in dev
 
 - I add the methods to color the strings to the main point jGo
 
@@ -178,3 +178,4 @@ Version 1.0.8 - in dev
 - Stiamo perfezionando la classe LocalPhaseTerminal, la stiamo rendendo + flessibbile, inoltre adesso non siamo
 + vincolati a usare il comando di richiesta comandi, di default(£), ma possiamo specificare il nome del terminale.
 - aggiunta nuova variabile statica a Parameter, LocalCommand e DefaultPhase
+- aggiunto nuovo metodo in Phase:welcomeHasBeenPrinted();

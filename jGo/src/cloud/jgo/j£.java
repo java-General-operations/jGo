@@ -66,7 +66,7 @@ import cloud.jgo.net.tcp.http.jor.JORServer;
  * @see £#_A
  * @see £#_S
  * @see £#_W
- * @version 1.0.2 <!--<link rel='styleSheet' href=
+ * @version 1.0.3 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'> --><br>
  *          <!--Author : *** Marco Martire *** --> <img
  *          id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'
