@@ -177,5 +177,6 @@ Version 1.1.0 - in dev
 - abbiamo ridefinito il metodo dei terminali : getCommandRequest
 - Stiamo perfezionando la classe LocalPhaseTerminal, la stiamo rendendo + flessibbile, inoltre adesso non siamo
 + vincolati a usare il comando di richiesta comandi, di default(£), ma possiamo specificare il nome del terminale.
-- aggiunta nuova variabile statica a Parameter, LocalCommand e DefaultPhase
-- aggiunto nuovo metodo in Phase:welcomeHasBeenPrinted();
+- aggiunta nuova variabile statica a Parameter, LocalCommand e DefaultPhase:color
+- aggiunto nuovo metodo al terminale delle fasi:setPointerName()
+- aggiunto metodo LocalCommand, per impostare il comando vero e proprio.

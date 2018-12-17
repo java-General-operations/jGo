@@ -66,7 +66,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	public Phase getStartPhase() {
 		return startPhase;
 	}
-
+	// version 1.1.0
+	public void setPointerName(String pointerCommandName) {
+	pointerCommand.setCommand(pointerCommandName);
+	}
 	@Override
 	public String getCommandRequest() {
 		String text = null;
@@ -365,11 +368,11 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 					StringBuffer buffer = new StringBuffer();
 					buffer.append(
-							"==============================================================================================================================================================\n");
+							"========================================================================\n");
 					buffer.append("Description of (" + £.colors(currentPhase.phaseName(),
 							cloud.jgo.utils.command.terminal.phase.DefaultPhase.color) + ")\n");
 					buffer.append(
-							"==============================================================================================================================================================\n");
+							"========================================================================\n");
 
 					buffer.append(((DefaultPhase) currentPhase).description() + ".\n");
 
@@ -386,7 +389,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					}
 
 					buffer.append(
-							"==============================================================================================================================================================\n");
+							"========================================================================\n");
 
 					return buffer.toString();
 				} else {

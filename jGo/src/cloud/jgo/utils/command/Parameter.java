@@ -45,7 +45,7 @@ public abstract class Parameter
 	private String onlyParam;
 	private String inputValue = null;
 	private boolean inputValueExploitable = false;
-	// version 2.0.0
+	// version 1.1.0
 	public static Color color = Color.DEFAULT;
 
 	public String getParam() {

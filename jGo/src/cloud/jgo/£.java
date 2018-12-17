@@ -575,15 +575,15 @@ public class £ {
 	 * development</em>
 	 */
 	public final static WebUtils _W = new WebUtils();
-	// version 2.0.0
+	// version 1.1.0
 	public static String colors(String string,org.fusesource.jansi.Ansi.Color color) {
 		return ansi().fg(color).a(string).reset().toString();
 	}
-	// version 2.0.0 :
+	// version 1.1.0 :
 	public static ColorString getString() {
 		return new ColorString();
 	}
-	//version 2.0.0 : 
+	//version 1.1.0 : 
 	public static ColorString getString(String string,org.fusesource.jansi.Ansi.Color color) {
 		return new ColorString(string, color);
 	}

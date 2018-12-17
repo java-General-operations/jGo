@@ -1,8 +1,18 @@
 package test;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.SocketAddress;
+import java.util.Map.Entry;
+
 import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.£;
+import cloud.jgo.net.Server;
+import cloud.jgo.net.ServerTypes;
+import cloud.jgo.net.factorys.ServersFactory;
+import cloud.jgo.net.tcp.TCPServerTypes;
 import cloud.jgo.utils.ColorString;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
@@ -18,81 +28,34 @@ public class GeneralTest {
 		
 		// due bug da risolvere :
 		// 1) welcome stampato all'infinito ?
-		// 2) Si deve poter scegliere il nome del comando puntatore
-		// 3) se diamo il comando describe su una fase, la descrive. Tuttavia dobbiamo correggere la cornicetta.
-		// 4) risolvere il bug del metodo welcome()
 
 		LocalCommand.color = Color.GREEN;
 		Parameter.color = Color.YELLOW;
 		DefaultPhase.color = Color.CYAN;
 
-		LocalCommand.setInputHelpExploitable(true);
 
+		// 1 passo : creo il terminale 
+		
 		LocalPhaseTerminal terminal = new LocalPhaseTerminal();
 		
+		terminal.setName(£.colors("Person4j",Color.GREEN));
+		
 		terminal.useGeneralHelp();
-
-		terminal.setName("DomT4j");
-
-		// creo le semplici fasi
-
-		Phase startPhase = terminal.createPhase(1, "START", "Fase iniziale @");
-		Phase compilePhase = terminal.createPhase(2, "compile", "In questa fase si compilano i sorgenti");
-		compilePhase.setWelcome("Welcome");
-		Phase deployPhase = terminal.createPhase(3, "deploy", "In questa fase si deploya l'applicativo");
-
-		// comandi 2 fase :
-
-		LocalCommand srcCommand = new LocalCommand("src", "indica la directory");
-		LocalCommand comp = new LocalCommand("comp", "compile");
-		LocalCommand properties = new LocalCommand("props","the system properties");
-		Parameter osName,osVersion = null ;
-		osName = properties.addParam("os.name", "os.name");
-		osVersion = properties.addParam("os.version","os.version");
-		osName.setExecution(new Execution() {
-			
-			@Override
-			public Object exec() {
-				// TODO Auto-generated method stub
-				return System.getProperty("os.name");
-			}
-		});
 		
-		osVersion.setExecution(new Execution() {
-			
-			@Override
-			public Object exec() {
-				// TODO Auto-generated method stub
-				return System.getProperty("os.version");
-			}
-		});
-
-		srcCommand.setInputValueExploitable(true);
-		comp.setExecution(new Execution() {
-			
-			@Override
-			public Object exec() {
-				System.out.println("Applicazione compilata @");
-				terminal.changePhase(terminal.nextPhase());
-				return null ;
-			}
-		});
+		LocalCommand.setInputHelpExploitable(true);
 		
-		srcCommand.setExecution(new Execution() {
-			
-			@Override
-			public Object exec() {
-				System.out.println("src-dir is set ="+srcCommand.getInputValue());
-				return null ;
-			}
-		});
+		// 2 passo : creo le fasi 
 		
-		// aggiungo i comandi alla fase apposita 
+		Phase startPhase,personPhase,endPhase ;
 		
-		terminal.addCommandsToPhase(compilePhase,srcCommand,comp,properties);
+		startPhase = terminal.createPhase(1, "START", "Fase iniziale");
+		personPhase = terminal.createPhase(2, "PERSON", "In questa fase si creano le persone");
+		endPhase = terminal.createPhase(3, "END", "Fase finale - persona creata @");
+		
+		// 3 passo : mi creo i comandi della seconda fase
+		
+	
 		
 		
-		terminal.open();
-
 	}
 }

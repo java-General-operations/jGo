@@ -59,7 +59,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private static String helpValue = "help";
 	private String inputValue = null;
 	private boolean inputValueExploitable = false;
-	// version 2.0.0
+	// version 1.1.0
 	public static Color color = Color.DEFAULT;
 	private static boolean inputHelpExploitable = false;
 	private boolean merged = false;
@@ -86,7 +86,10 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		// setto l'help
 		this.helpCommand.reload(this);
 	}
-
+	// version 1.1.0
+	public void setCommand(String command) {
+		this.command = command;
+	}
 	@Override
 	public String toString() {
 		return this.command;
