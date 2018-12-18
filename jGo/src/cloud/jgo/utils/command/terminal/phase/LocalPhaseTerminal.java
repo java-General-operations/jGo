@@ -43,7 +43,7 @@ import cloud.jgo.utils.command.terminal.LocalTerminal;
  *         This class represents the phases terminal
  */
 public class LocalPhaseTerminal extends LocalTerminal implements Structure {
-	private Phase currentPhase, startPhase = null;
+	protected Phase currentPhase, startPhase = null;
 	private List<Phase> phases = new ArrayList<>();
 	protected LocalCommand pointerCommand = new LocalCommand("use", "this command points to a specific phase");
 	private LocalCommand resetCommand = null;
@@ -66,33 +66,29 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	public Phase getStartPhase() {
 		return startPhase;
 	}
+
 	// version 1.0.9
 	public void setPointerName(String pointerCommandName) {
-	pointerCommand.setCommand(pointerCommandName);
+		pointerCommand.setCommand(pointerCommandName);
 	}
+
 	@Override
 	public String getCommandRequest() {
 		String text = null;
 		if (getName() == null) {
 			if (currentPhase != null) {
-				if (currentPhase.getWelcome() != null) {
-					text = currentPhase.getWelcome() + "\n" + "£_(" + £.colors(currentPhase.phaseName(),
-							cloud.jgo.utils.command.terminal.phase.DefaultPhase.color) + ")_:";
 
-				} else {
-					text = "£_(" + £.colors(currentPhase.phaseName(),
-							cloud.jgo.utils.command.terminal.phase.DefaultPhase.color) + ")_:";
-				}
+				text = "£_("
+						+ £.colors(currentPhase.phaseName(), cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
+						+ ")_:";
+
 			}
 		} else {
 			if (currentPhase != null) {
-				if (currentPhase.getWelcome() != null) {
-					text = currentPhase.getWelcome() + "\n" + getName() + "_(" + £.colors(currentPhase.phaseName(),
-							cloud.jgo.utils.command.terminal.phase.DefaultPhase.color) + ")_:";
-				} else {
-					text = getName() + "_(" + £.colors(currentPhase.phaseName(),
-							cloud.jgo.utils.command.terminal.phase.DefaultPhase.color) + ")_:";
-				}
+
+				text = getName() + "_("
+						+ £.colors(currentPhase.phaseName(), cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
+						+ ")_:";
 			}
 		}
 		return text;
@@ -367,12 +363,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				if (currentPhase != null) {
 
 					StringBuffer buffer = new StringBuffer();
-					buffer.append(
-							"========================================================================\n");
+					buffer.append("========================================================================\n");
 					buffer.append("Description of (" + £.colors(currentPhase.phaseName(),
 							cloud.jgo.utils.command.terminal.phase.DefaultPhase.color) + ")\n");
-					buffer.append(
-							"========================================================================\n");
+					buffer.append("========================================================================\n");
 
 					buffer.append(((DefaultPhase) currentPhase).description() + ".\n");
 
@@ -388,8 +382,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 								(i + 1) + ")" + commands.get(i).getCommand() + "=" + commands.get(i).getHelp() + "\n");
 					}
 
-					buffer.append(
-							"========================================================================\n");
+					buffer.append("========================================================================\n");
 
 					return buffer.toString();
 				} else {

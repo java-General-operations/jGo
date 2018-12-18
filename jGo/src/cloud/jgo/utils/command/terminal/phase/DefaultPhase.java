@@ -43,7 +43,7 @@ public class DefaultPhase implements Phase {
 	/**
 	 * this is a concrete product
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 12L;
 	private Rule accessibilityRule = null;
 	private Rule satisfiabilityRule = null;
 	private String phaseName = null;
@@ -69,7 +69,6 @@ public class DefaultPhase implements Phase {
 	}
 
 	private List<Command> commands = new ArrayList<>();
-	private String welcome = null;
 
 	/**
 	 * This method adds a command into the phase
@@ -191,17 +190,5 @@ public class DefaultPhase implements Phase {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	@Override
-	public String getWelcome() {
-		// TODO Auto-generated method stub
-		return this.welcome;
-	}
-
-	@Override
-	public void setWelcome(String welcomeGreeting) {
-		// TODO Auto-generated method stub
-		this.welcome = welcomeGreeting;
 	}
 }

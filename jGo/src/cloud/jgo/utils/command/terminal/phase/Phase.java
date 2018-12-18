@@ -98,18 +98,4 @@ public interface Phase extends Serializable {
 	 * @return the phase description
 	 */
 	public abstract String description();
-
-	/**
-	 * This method returns the phase welcome text
-	 * 
-	 * @return the phase welcome text
-	 */
-	public abstract String getWelcome();
-	/**
-	 * This method sets the phase welcome text
-	 * 
-	 * @param welcomeGreeting
-	 *            the phase welcome text
-	 */
-	public abstract void setWelcome(String welcomeGreeting);
 }
