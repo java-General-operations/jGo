@@ -6,7 +6,7 @@ import org.fusesource.jansi.AnsiConsole;
 import cloud.jgo.Home;
 import cloud.jgo.£;
 
-// version 1.1.0
+// version 1.0.9
 public class ColorString{
 	private StringBuffer buffer ;
 	public int length ;

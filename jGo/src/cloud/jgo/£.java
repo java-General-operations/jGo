@@ -176,7 +176,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
  * @see £#_A
  * @see £#_S
  * @see £#_W
- * @version 1.1.0 <!--<link rel='styleSheet' href=
+ * @version 1.0.9 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'> --><br>
  *          <!--Author : *** Marco Martire *** --> <img
  *          id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'
@@ -575,15 +575,15 @@ public class £ {
 	 * development</em>
 	 */
 	public final static WebUtils _W = new WebUtils();
-	// version 1.1.0
+	// version 1.0.9
 	public static String colors(String string,org.fusesource.jansi.Ansi.Color color) {
 		return ansi().fg(color).a(string).reset().toString();
 	}
-	// version 1.1.0 :
+	// version 1.0.9 :
 	public static ColorString getString() {
 		return new ColorString();
 	}
-	//version 1.1.0 : 
+	//version 1.0.9 : 
 	public static ColorString getString(String string,org.fusesource.jansi.Ansi.Color color) {
 		return new ColorString(string, color);
 	}

@@ -51,8 +51,7 @@ public class DefaultPhase implements Phase {
 	private boolean accessible = true;
 	private boolean satisfied = true;
 	private String description = null;
-	private boolean hasBeenPrinted = false ;
-	// version 1.1.0
+	// version 1.0.9
 	public static Color color = Color.DEFAULT;
 
 	/**
@@ -205,8 +204,4 @@ public class DefaultPhase implements Phase {
 		// TODO Auto-generated method stub
 		this.welcome = welcomeGreeting;
 	}
-	public void welcomeHasBeenPrinted(boolean flag) {
-		this.hasBeenPrinted = flag ;
-	}
-
 }

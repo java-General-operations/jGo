@@ -66,7 +66,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	public Phase getStartPhase() {
 		return startPhase;
 	}
-	// version 1.1.0
+	// version 1.0.9
 	public void setPointerName(String pointerCommandName) {
 	pointerCommand.setCommand(pointerCommandName);
 	}
