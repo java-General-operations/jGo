@@ -180,3 +180,4 @@ Version 1.0.9 - in dev
 - aggiunta nuova variabile statica a Parameter, LocalCommand e DefaultPhase:color
 - aggiunto nuovo metodo al terminale delle fasi:setPointerName()
 - aggiunto metodo LocalCommand, per impostare il comando vero e proprio.
+- eliminato campo welcome nella classe DefaultPhase, e quindi abbiamo aggiornato la serial version della stessa.
