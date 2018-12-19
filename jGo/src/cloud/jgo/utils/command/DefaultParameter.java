@@ -47,7 +47,7 @@ public class DefaultParameter extends Parameter {
 	@Override
 	public int compareTo(Parameter o) {
 
-		return this.getParam().compareTo(o.getParam());
+		return this.getOnlyParam().compareTo(o.getOnlyParam());
 
 	}
 

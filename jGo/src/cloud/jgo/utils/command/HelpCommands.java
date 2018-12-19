@@ -35,11 +35,10 @@ import cloud.jgo.utils.command.LocalCommand.HelpCommand;
  * @author Martire91<br>
  *         This class is the general help. Useful for terminals.
  */
-public class HelpCommands implements Serializable {
+public class HelpCommands implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private List<HelpCommand> helpCommands = new ArrayList<HelpCommand>();
-
 	/**
 	 * This method adds the command help
 	 * 

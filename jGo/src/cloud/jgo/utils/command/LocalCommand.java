@@ -81,6 +81,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	// okoko qui creiamo i costruttori
 
 	public LocalCommand(String command, String help) {
+		// quando inizializzo il costruttore
 		this.help = help;
 		this.command = command;
 		// setto l'help
@@ -318,26 +319,37 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						+ "\n");
 			}
 			buffer.append("===================================================================================\n");
-
 			// qui devo prendere tutti i parameters
 			Collection<Parameter> collection = command.structure.values();
+			List<Parameter>orderParameters = command.sortParameters();
 			// qui ci sarà la descrizione del comando root
 			buffer.append(this.command.getHelp().toUpperCase() + "\n\n");
-			buffer.append("* Parameters :" + collection + " :\n\n");
-
-			if (this.command.hasParameters()) {
-
-				// ci sono parametri
-
-				// quindi qui devo prendere i params
-				Iterator<Entry<String, Parameter>> iterator = command.iterator();
-				List<Parameter> params = new ArrayList<>();
-				while (iterator.hasNext()) {
-					Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter> entry = (Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter>) iterator
-							.next();
-					Parameter param = entry.getValue();
-					buffer.append(£.colors(param.getParam(),cloud.jgo.utils.command.Parameter.color) + "=" + param.getParameterHelp() + "  / has input value ="
-							+ param.hasInputValueExploitable() + "\n");
+			if (orderParameters!=null) {
+				buffer.append("* Parameters :" + orderParameters + " :\n\n");
+				if (this.command.hasParameters()) {
+					// ci sono parametri
+					// quindi qui devo prendere i params
+					Iterator<Parameter> iterator = orderParameters.iterator();
+					while (iterator.hasNext()) {
+						Parameter param = iterator.next();
+						buffer.append(£.colors(param.getParam(),cloud.jgo.utils.command.Parameter.color) + "=" + param.getParameterHelp() + "  / has input value ="
+								+ param.hasInputValueExploitable() + "\n");
+					}
+				}
+			}
+			else {
+				buffer.append("* Parameters :" + collection + " :\n\n");
+				if (this.command.hasParameters()) {
+					// ci sono parametri
+					// quindi qui devo prendere i params
+					Iterator<Entry<String, Parameter>> iterator = command.iterator();
+					while (iterator.hasNext()) {
+						Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter> entry = (Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter>) iterator
+								.next();
+						Parameter param = entry.getValue();
+						buffer.append(£.colors(param.getParam(),cloud.jgo.utils.command.Parameter.color) + "=" + param.getParameterHelp() + "  / has input value ="
+								+ param.hasInputValueExploitable() + "\n");
+					}
 				}
 			}
 		}
@@ -1244,4 +1256,5 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		this.inputValueExploitable = exploitable;
 		getHelpCommand().reload(this);
 	}
+
 }

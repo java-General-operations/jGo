@@ -36,7 +36,7 @@ import cloud.jgo.utils.command.terminal.phase.Phase;
  *         This class represents a terminal command
  */
 
-public interface Command extends Executable, InputSettable {
+public interface Command extends Executable, InputSettable{
 	/**
 	 * This method returns the command
 	 * 
