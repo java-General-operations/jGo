@@ -4,6 +4,7 @@ import org.fusesource.jansi.Ansi.Color;
 import org.fusesource.jansi.AnsiConsole;
 
 import cloud.jgo.Home;
+import cloud.jgo.j£;
 import cloud.jgo.£;
 
 // version 1.0.9
@@ -14,7 +15,7 @@ public class ColorString{
 		// TODO Auto-generated constructor stub
 		AnsiConsole.systemInstall();
 		this.buffer = new StringBuffer();
-		this.buffer.append(£.colors(string, color));
+		this.buffer.append(j£.colors(string, color));
 		this.length = this.buffer.length();
 	}
 	public ColorString() {
@@ -24,13 +25,13 @@ public class ColorString{
 		this.length = this.buffer.length();
 	}
 	public ColorString append(String text,Color color) {
-		this.buffer.append(£.colors(text, color));
+		this.buffer.append(j£.colors(text, color));
 		// aggiorno la lunghezza
 		this.length = this.buffer.length();
 		return this ;
 	}
 	public ColorString append(char charat,Color color) {
-		this.buffer.append(£.colors(""+charat, color));
+		this.buffer.append(j£.colors(""+charat, color));
 		this.length = this.buffer.length();
 		return this ;
 	}
@@ -44,7 +45,7 @@ public class ColorString{
 	}
 	public void setValue(String value,Color color) {
 		// sostituisco l'intero valore del buffer
-		this.buffer = new StringBuffer(£.colors(value, color));
+		this.buffer = new StringBuffer(j£.colors(value, color));
 		this.length = this.buffer.length();
 	}
 }

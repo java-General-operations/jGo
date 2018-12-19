@@ -22,6 +22,8 @@
  */
 package cloud.jgo;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -45,6 +47,8 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import org.fusesource.jansi.AnsiConsole;
+
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
@@ -60,6 +64,7 @@ import cloud.jgo.net.tcp.TCPServer;
 import cloud.jgo.net.tcp.http.HTTPServer;
 import cloud.jgo.net.tcp.http.jor.JOR;
 import cloud.jgo.net.tcp.http.jor.JORServer;
+import cloud.jgo.utils.ColorString;
 
 /**
  * @author Martire91
@@ -351,6 +356,8 @@ public final class j£ extends cloud.jgo.£ {
 		webcamPanel = new WebcamPanel(webcam);
 		webcamPanel.setDisplayDebugInfo(true);
 		webcamPanel.setMirrored(true);
+		// ansi init - version 1.0.9
+		AnsiConsole.systemInstall();
 	}
 
 	private static j£ getPowerfulInstance() {
@@ -366,7 +373,18 @@ public final class j£ extends cloud.jgo.£ {
 
 	private j£() {
 	}
-
+	// version 1.0.9
+		public static String colors(String string,org.fusesource.jansi.Ansi.Color color) {
+			return ansi().fg(color).a(string).reset().toString();
+		}
+		// version 1.0.9 :
+		public static ColorString getString() {
+			return new ColorString();
+		}
+		//version 1.0.9 : 
+		public static ColorString getString(String string,org.fusesource.jansi.Ansi.Color color) {
+			return new ColorString(string, color);
+		}
 	/**
 	 * This method retrieves the object from a json file
 	 * 

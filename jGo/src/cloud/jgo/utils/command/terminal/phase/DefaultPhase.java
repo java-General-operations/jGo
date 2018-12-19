@@ -28,8 +28,6 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.fusesource.jansi.Ansi.Color;
-
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
 
@@ -51,8 +49,6 @@ public class DefaultPhase implements Phase {
 	private boolean accessible = true;
 	private boolean satisfied = true;
 	private String description = null;
-	// version 1.0.9
-	public static Color color = Color.DEFAULT;
 
 	/**
 	 * This method returns the satisfiability Rule

@@ -25,8 +25,6 @@ package cloud.jgo.utils.command;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.fusesource.jansi.Ansi.Color;
-
 import cloud.jgo.utils.command.execution.Execution;
 
 /**
@@ -45,8 +43,6 @@ public abstract class Parameter
 	private String onlyParam;
 	private String inputValue = null;
 	private boolean inputValueExploitable = false;
-	// version 1.0.9
-	public static Color color = Color.DEFAULT;
 
 	public String getParam() {
 		return param;

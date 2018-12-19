@@ -36,8 +36,7 @@ import java.util.Map.Entry;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.fusesource.jansi.Ansi.Color;
-
+import cloud.jgo.j£;
 import cloud.jgo.£;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.Terminal;
@@ -59,11 +58,24 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private static String helpValue = "help";
 	private String inputValue = null;
 	private boolean inputValueExploitable = false;
-	// version 1.0.9
-	public static Color color = Color.DEFAULT;
 	private static boolean inputHelpExploitable = false;
 	private boolean merged = false;
 	private Phase belongsTo = null;
+
+	public LocalCommand(String command, String help) {
+		// quando inizializzo il costruttore
+		this.help = help;
+		this.command = command;
+		// setto l'help
+		this.helpCommand.reload(this);
+	}
+
+	public LocalCommand(String command, String help, Execution execution) {
+		this.command = command;
+		this.help = help;
+		this.helpCommand.reload(this);
+		this.execution = execution;
+	}
 
 	public void setBelongsTo(Phase belongsTo) {
 		this.belongsTo = belongsTo;
@@ -76,21 +88,19 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	// qui ci sarà una struttura dati che reggerà il gioco
-	protected Map<String, Parameter> structure = new HashMap<String, Parameter>();
-	public boolean useThread = false;
-	// okoko qui creiamo i costruttori
+	private Map<String, Parameter> structure = new HashMap<String, Parameter>();
 
-	public LocalCommand(String command, String help) {
-		// quando inizializzo il costruttore
-		this.help = help;
-		this.command = command;
-		// setto l'help
-		this.helpCommand.reload(this);
+	public Map<String, Parameter> getStructure() {
+		return structure;
 	}
+
+	public boolean useThread = false;
+
 	// version 1.0.9
 	public void setCommand(String command) {
 		this.command = command;
 	}
+
 	@Override
 	public String toString() {
 		return this.command;
@@ -274,8 +284,8 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	 *         This class is the command help
 	 */
 	public static class HelpCommand implements Serializable, Comparable<HelpCommand> {
-		private LocalCommand command = null;
-		private StringBuffer buffer = new StringBuffer();
+		protected LocalCommand command = null;
+		protected StringBuffer buffer = new StringBuffer();
 		private final static long serialVersionUID = 1L;
 
 		/**
@@ -305,51 +315,32 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		public void reload(LocalCommand command) {
 			this.command = command;
 			this.buffer = new StringBuffer();
-			buffer.append("===================================================================================\n");
-			if (this.command.getBelongsTo()!=null) {
-				buffer.append("HELP Of " + "\"" + £.colors(this.command.command, LocalCommand.color) + "\" - Phase :"
-						+ £.colors(this.command.getBelongsTo().phaseName(),
-								cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
-						+ "\n");	
-			}
-			else{
-				buffer.append("HELP Of " + "\"" + £.colors(this.command.command, LocalCommand.color) + "\" - Phase :"
-						+ £.colors("absent",
-								Color.DEFAULT)
-						+ "\n");
-			}
-			buffer.append("===================================================================================\n");
+			buffer.append(
+					"=================================================================================================================================\n");
+			buffer.append("HELP Of " + "\"" + this.command.command + "\" - Phase :"
+					+ ((LocalCommand) this.command).getBelongsTo() + "\n");
+			buffer.append(
+					"=================================================================================================================================\n");
+
 			// qui devo prendere tutti i parameters
 			Collection<Parameter> collection = command.structure.values();
-			List<Parameter>orderParameters = command.sortParameters();
 			// qui ci sarà la descrizione del comando root
 			buffer.append(this.command.getHelp().toUpperCase() + "\n\n");
-			if (orderParameters!=null) {
-				buffer.append("* Parameters :" + orderParameters + " :\n\n");
-				if (this.command.hasParameters()) {
-					// ci sono parametri
-					// quindi qui devo prendere i params
-					Iterator<Parameter> iterator = orderParameters.iterator();
-					while (iterator.hasNext()) {
-						Parameter param = iterator.next();
-						buffer.append(£.colors(param.getParam(),cloud.jgo.utils.command.Parameter.color) + "=" + param.getParameterHelp() + "  / has input value ="
-								+ param.hasInputValueExploitable() + "\n");
-					}
-				}
-			}
-			else {
-				buffer.append("* Parameters :" + collection + " :\n\n");
-				if (this.command.hasParameters()) {
-					// ci sono parametri
-					// quindi qui devo prendere i params
-					Iterator<Entry<String, Parameter>> iterator = command.iterator();
-					while (iterator.hasNext()) {
-						Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter> entry = (Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter>) iterator
-								.next();
-						Parameter param = entry.getValue();
-						buffer.append(£.colors(param.getParam(),cloud.jgo.utils.command.Parameter.color) + "=" + param.getParameterHelp() + "  / has input value ="
-								+ param.hasInputValueExploitable() + "\n");
-					}
+			buffer.append("* Parameters :" + collection + " :\n\n");
+
+			if (this.command.hasParameters()) {
+
+				// ci sono parametri
+
+				// quindi qui devo prendere i params
+				Iterator<Entry<String, Parameter>> iterator = command.iterator();
+				List<Parameter> params = new ArrayList<>();
+				while (iterator.hasNext()) {
+					Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter> entry = (Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter>) iterator
+							.next();
+					Parameter param = entry.getValue();
+					buffer.append(param.getParam() + "=" + param.getParameterHelp() + "  / has input value ="
+							+ param.hasInputValueExploitable() + "\n");
 				}
 			}
 		}
@@ -359,13 +350,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			return this.command.command.compareTo(arg0.command.command);
 		}
 
-	}
-
-	public LocalCommand(String command, String help, Execution execution) {
-		this.command = command;
-		this.help = help;
-		this.helpCommand.reload(this);
-		this.execution = execution;
 	}
 
 	@Override

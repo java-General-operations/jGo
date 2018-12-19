@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 import javax.lang.model.element.ElementKind;
 import javax.swing.JOptionPane;
 
+import cloud.jgo.j£;
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
@@ -92,7 +93,7 @@ public abstract class Recursion {
 				HTMLDocument doc = (HTMLDocument) ((Element) node).getDocument();
 				if (doc.doctypeIsPresent()) {
 					// inserisco il doctype
-					htmlCode.append(£.colors("<",Element.tag_color)+"!DOCTYPE html"+£.colors(">",Element.tag_color) + "\n");
+					htmlCode.append(j£.colors("<",Element.tag_color)+"!DOCTYPE html"+j£.colors(">",Element.tag_color) + "\n");
 				}
 			}
 		}
@@ -100,19 +101,19 @@ public abstract class Recursion {
 		if (node.getTextContent() != null) {
 			if (node.getNodeType().equals(NodeType.ELEMENT)) {
 //				htmlCode.append(((HTMLDefaultElement) node).getStartTag()); - questa era
-				String colorStartTag = £.colors("<",Element.tag_color)+((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">","")+£.colors(">",Element.tag_color);
+				String colorStartTag = j£.colors("<",Element.tag_color)+((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">","")+j£.colors(">",Element.tag_color);
 				htmlCode.append(colorStartTag);
 				
 			} else if (node.getNodeType().equals(NodeType.COMMENT)) {
 				//htmlCode.append(((HTMLComment) node).getStartTag()); - questa era
-				String colorStartTag = £.colors("<",Element.tag_color)+((HTMLComment) node).getStartTag().replace("<","").replace(">","")+£.colors(">",Element.tag_color);
+				String colorStartTag = j£.colors("<",Element.tag_color)+((HTMLComment) node).getStartTag().replace("<","").replace(">","")+j£.colors(">",Element.tag_color);
 				htmlCode.append(colorStartTag);
 			}
 			htmlCode.append(node.getTextContent());
 		} else {
 			if (node instanceof Element) {
 //				htmlCode.append(((HTMLDefaultElement) node).getStartTag() + "\n"); - questa era
-				String colorStartTag = £.colors("<",Element.tag_color)+((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">","")+£.colors(">",Element.tag_color)+ "\n";
+				String colorStartTag = j£.colors("<",Element.tag_color)+((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">","")+j£.colors(">",Element.tag_color)+ "\n";
 				htmlCode.append(colorStartTag);
 			}
 		}
@@ -127,14 +128,14 @@ public abstract class Recursion {
 				// solo se ha il tag di chisura lo inseriamo nel codice html
 				if (((HTMLElement) node).getType().hasClosingTag()) {
 					//htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n"); - era questo
-					String colorEndTag = £.colors("</",Element.tag_color)+((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">","")+£.colors(">",Element.tag_color)+ "\n";
+					String colorEndTag = j£.colors("</",Element.tag_color)+((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">","")+j£.colors(">",Element.tag_color)+ "\n";
 					htmlCode.append(colorEndTag);
 				}
 			} else {
 				// di sicuro se il nodo non ha un tipo di riferimento
 				// chiudiamo in maniera standart : con il tag di chiusura
 				//htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n"); - era questo
-				String colorEndTag = £.colors("</",Element.tag_color)+((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">","")+£.colors(">",Element.tag_color)+ "\n";
+				String colorEndTag = j£.colors("</",Element.tag_color)+((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">","")+j£.colors(">",Element.tag_color)+ "\n";
 				htmlCode.append(colorEndTag);
 			}
 		} else {
@@ -146,7 +147,7 @@ public abstract class Recursion {
 
 			if (node instanceof HTMLComment) {
 				//htmlCode.append(((HTMLComment) node).getEndTag() + "\n"); - era questo
-				String colorEndTag = £.colors("<",Element.tag_color)+((HTMLComment) node).getEndTag().replace("<","").replace(">","")+£.colors(">",Element.tag_color);
+				String colorEndTag = j£.colors("<",Element.tag_color)+((HTMLComment) node).getEndTag().replace("<","").replace(">","")+j£.colors(">",Element.tag_color);
 				htmlCode.append(colorEndTag);
 			}
 		}

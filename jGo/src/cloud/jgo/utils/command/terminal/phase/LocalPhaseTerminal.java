@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.fusesource.jansi.Ansi.Color;
 
+import cloud.jgo.j£;
 import cloud.jgo.£;
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
@@ -44,10 +45,10 @@ import cloud.jgo.utils.command.terminal.LocalTerminal;
  */
 public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	protected Phase currentPhase, startPhase = null;
-	private List<Phase> phases = new ArrayList<>();
+	protected List<Phase> phases = new ArrayList<>();
 	protected LocalCommand pointerCommand = new LocalCommand("use", "this command points to a specific phase");
-	private LocalCommand resetCommand = null;
-	private LocalCommand describerCommand = null;
+	protected LocalCommand resetCommand = null;
+	protected LocalCommand describerCommand = null;
 
 	/**
 	 * This method returns the current phase
@@ -74,22 +75,11 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 	@Override
 	public String getCommandRequest() {
-		String text = null;
-		if (getName() == null) {
-			if (currentPhase != null) {
+		String text = "£_:";
+		if (currentPhase != null) {
 
-				text = "£_("
-						+ £.colors(currentPhase.phaseName(), cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
-						+ ")_:";
+			text = "£_(" + currentPhase.phaseName() + ") :";
 
-			}
-		} else {
-			if (currentPhase != null) {
-
-				text = getName() + "_("
-						+ £.colors(currentPhase.phaseName(), cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
-						+ ")_:";
-			}
 		}
 		return text;
 	}
@@ -139,10 +129,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			if (value > 1) { // diamo per scontato che la prima fase è la numero 1
 				// okok qui completo il metodo
 				// aggiungo al puntatore un link che accederà a questa fase
-				Parameter p_link = pointerCommand.addParam(phase.phaseName(), // forse non va bene
-						"Go to ("
-								+ £.colors(phase.phaseName(), cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
-								+ ") phase @");
+				Parameter p_link = pointerCommand.addParam(phase.phaseName(),
+						"Go to (" + phase.phaseName() + ") phase @");
 				// senza valore da input
 
 				// aggiungo l'esecuzione
@@ -161,20 +149,16 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			}
 			// anche se la fase è la start mi serve attribuire una descrizione
 			Parameter p_link_desc = describerCommand.addParam(phase.phaseName(),
-					"This parameter describes the ("
-							+ £.colors(phase.phaseName(), cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
-							+ ") phase @");
+					"This parameter describes the (" + phase.phaseName() + ") phase @");
 			p_link_desc.setExecution(new Execution() {
 				@Override
 				public Object exec() {
 					StringBuffer buffer = new StringBuffer();
 					buffer.append(
-							"=================================================================================================\n");
-					buffer.append("Description of ("
-							+ £.colors(phase.phaseName(), cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
-							+ ")\n");
+							"==============================================================================================================================================================\n");
+					buffer.append("Description of (" + phase.phaseName() + ")\n");
 					buffer.append(
-							"==================================================================================================\n");
+							"==============================================================================================================================================================\n");
 					buffer.append(phase.description() + ".\n");
 					List<Command> commands = phase.getCommands();
 					if (commands.size() > 0) {
@@ -182,7 +166,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					}
 					buffer.append(commands + "\n");
 					buffer.append(
-							"====================================================================================================\n");
+							"==============================================================================================================================================================\n");
 					return buffer.toString();
 				}
 			});
@@ -211,88 +195,6 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		// una fase non si aggiungano anche ai comandi del terminale
 		if (commands != null) {
 			addCommands(commands);
-		}
-	}
-
-	/**
-	 * This method creates a phase
-	 * 
-	 * @param value
-	 *            the phase value
-	 * @param phaseName
-	 *            the phase name
-	 * @param phaseDescription
-	 *            the phase description
-	 * @return the phase
-	 */
-	public Phase createPhase(final int value, String phaseName, String phaseDescription) {
-
-		// verifico che non sia nessun phase con questo valore
-		if (phase(value) == null && phase(phaseName) == null) {
-			Phase phase = PhasesFactory.create(phaseName, value);
-			((DefaultPhase) phase).setDescription(phaseDescription);
-			if (value == 1) {
-				startPhase = phase;
-			}
-			phases.add(phase);
-			if (value > 1) { // diamo per scontato che la prima fase è la numero 1
-				// okok qui completo il metodo
-				// aggiungo al puntatore un link che accederà a questa fase
-				Parameter p_link = pointerCommand.addParam(phase.phaseName(),
-						"Go to ("
-								+ £.colors(phase.phaseName(), cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
-								+ ") phase @");
-				// senza valore da input
-
-				// aggiungo l'esecuzione
-				p_link.setExecution(new Execution() {
-
-					@Override
-					public Object exec() {
-
-						// permetti l'accesso a questa fase appena impostata solo se
-
-						changePhase(phase);
-
-						return null;
-					}
-				});
-			}
-
-			// anche se la fase è la start mi serve attribuire una descrizione
-			Parameter p_link_desc = describerCommand.addParam(phase.phaseName(),
-					"This parameter describes the ("
-							+ £.colors(phase.phaseName(), cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
-							+ ") phase @");
-			p_link_desc.setExecution(new Execution() {
-
-				@Override
-				public Object exec() {
-
-					StringBuffer buffer = new StringBuffer();
-
-					buffer.append(
-							"=================================================================================================\n");
-					buffer.append("Description of ("
-							+ £.colors(phase.phaseName(), cloud.jgo.utils.command.terminal.phase.DefaultPhase.color)
-							+ ")\n");
-					buffer.append(
-							"=================================================================================================\n");
-					buffer.append(phase.description() + ".\n");
-					List<Command> commands = phase.getCommands();
-					if (commands.size() > 0) {
-						buffer.append("# Supported commands :");
-					}
-					buffer.append(commands + "\n");
-					buffer.append(
-							"=================================================================================================\n");
-
-					return buffer.toString();
-				}
-			});
-			return phase;
-		} else {
-			return null;
 		}
 	}
 	// implemento e adatto il metodo implOpen
@@ -363,10 +265,11 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				if (currentPhase != null) {
 
 					StringBuffer buffer = new StringBuffer();
-					buffer.append("========================================================================\n");
-					buffer.append("Description of (" + £.colors(currentPhase.phaseName(),
-							cloud.jgo.utils.command.terminal.phase.DefaultPhase.color) + ")\n");
-					buffer.append("========================================================================\n");
+					buffer.append(
+							"==============================================================================================================================================================\n");
+					buffer.append("Description of (" + currentPhase.phaseName() + ")\n");
+					buffer.append(
+							"==============================================================================================================================================================\n");
 
 					buffer.append(((DefaultPhase) currentPhase).description() + ".\n");
 
@@ -382,7 +285,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 								(i + 1) + ")" + commands.get(i).getCommand() + "=" + commands.get(i).getHelp() + "\n");
 					}
 
-					buffer.append("========================================================================\n");
+					buffer.append(
+							"==============================================================================================================================================================\n");
 
 					return buffer.toString();
 				} else {

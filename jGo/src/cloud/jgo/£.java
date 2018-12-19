@@ -33,7 +33,6 @@ import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
-import static org.fusesource.jansi.Ansi.ansi;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
@@ -102,7 +101,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -138,10 +136,6 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
-
-import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.AnsiConsole;
-
 import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
@@ -429,9 +423,6 @@ public class £ {
 		SLOW, REALLY_SLOW, FAST, IMPERCEPTIBLE, REALLY_FAST, SUPER_FAST, VERTICAL, HORIZONTAL, CRAZY, TRANSPARENCY, MAXIMIZED, MINIMIZED
 		// continuare da qui facendo la costante super fast
 	}
-	static {
-		AnsiConsole.systemInstall();
-	}
 	/**
 	 * The constant represents a textual space
 	 */
@@ -576,18 +567,6 @@ public class £ {
 	 * development</em>
 	 */
 	public final static WebUtils _W = new WebUtils();
-	// version 1.0.9
-	public static String colors(String string,org.fusesource.jansi.Ansi.Color color) {
-		return ansi().fg(color).a(string).reset().toString();
-	}
-	// version 1.0.9 :
-	public static ColorString getString() {
-		return new ColorString();
-	}
-	//version 1.0.9 : 
-	public static ColorString getString(String string,org.fusesource.jansi.Ansi.Color color) {
-		return new ColorString(string, color);
-	}
 	// nuovi metodi - version 1.0.5
 	/**
 	 * This method iterates the array as if it were a loop
