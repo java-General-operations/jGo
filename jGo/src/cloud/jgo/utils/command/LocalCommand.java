@@ -1199,12 +1199,9 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			}
 		} else {
 			// qui entra se l'oggetto condiviso è null
-
-			// qui cancello il parametro perchè non vi è più l'oggetto condiviso
+			// cancello il parametro perchè non vi è più l'oggetto condiviso
 			if (isParameter("to_string")) {
-				boolean removedParam = this.removeParam("to_string");
-				// stampa di test :
-				System.out.println("Param toString relativo all'oggetto condiviso cancellato :" + removedParam);
+				removeParam("to_string");
 			}
 		}
 	}

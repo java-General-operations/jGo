@@ -188,3 +188,4 @@ Version 1.0.9 - in dev
 inserirli all'interno del root, non ha logica avere un file xml con + nodi root, non con JjDom.
 - risolto bug imprevisto e grave nel costruttore della classe XMLElement, inoltre abbiamo aggiunto anche il serial version.
 - Abbiamo aggiunto il serial version anche per XMLDocument
+- eliminata stampa imprevista nel metodo shareObject() della classe LocalCommand, quando attribuiamo un valore pari a null.
