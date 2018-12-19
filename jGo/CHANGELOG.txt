@@ -182,3 +182,7 @@ Version 1.0.9 - in dev
 - aggiunto metodo LocalCommand, per impostare il comando vero e proprio.
 - eliminato campo welcome nella classe DefaultPhase, e quindi abbiamo aggiornato la serial version della stessa.
 - abbiamo reso la variabile currentPhase del Terminale delle fasi visibile anche alle sottoclassi
+- abbiamo aggiunto un nuovo costruttore nella classe XMLDocument per permettere di creare documenti vuoti
+- stiamo ridefinendo il metodo appendChild della classe XMLDocument
+- quindi adesso possiamo creare un xmldocument vuoto, però una volta inserito il root, gli elementi poi dbbiamo
+inserirli all'interno del root, non ha logica avere un file xml con + nodi root, non con JjDom.

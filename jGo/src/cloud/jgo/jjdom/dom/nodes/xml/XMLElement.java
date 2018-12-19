@@ -87,7 +87,12 @@ public class XMLElement implements Element {
 	public String getEndTag() {
 		return this.endTag;
 	}
-
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.nodeName ;
+	}
 	protected XMLElement() {
 	}
 

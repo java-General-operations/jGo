@@ -69,6 +69,12 @@ public class XMLDocument implements Document {
 		((XMLElement) rootElement).setParentNode(this);
 		appendChild(rootElement);
 	}
+	// version 1.0.9
+	public XMLDocument() {
+		// TODO Auto-generated constructor stub
+		this.charsetName = XMLDocument.CHARSET_UTF_8;
+		this.childNodes = new NodeList();
+	}
 
 	protected XMLDocument(String charsetName, JjDom home) {
 		this.charsetName = charsetName;
@@ -86,11 +92,11 @@ public class XMLDocument implements Document {
 		boolean result = this.childNodes.addNode(node);
 		if (result == true) {
 			if (node instanceof XMLElement) {
+				this.rootElement = (XMLElement) node;
 				((XMLElement) node).setParentNode(this);
 			} else if (node instanceof Comment) {
 				((HTMLComment) node).setParentNode(this);
 			}
-
 			return node;
 		} else {
 			return null;
