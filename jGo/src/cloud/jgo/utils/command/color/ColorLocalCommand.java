@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.j£;
+import cloud.jgo.utils.command.DefaultParameter;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
 import cloud.jgo.utils.command.LocalCommand.HelpCommand;
@@ -33,6 +34,25 @@ public class ColorLocalCommand extends LocalCommand {
 	public ColorHelpCommand getHelpCommand() {
 		// TODO Auto-generated method stub
 		return this.helpCommand ;
+	}
+	
+	@Override
+	public ColorParameter addParam(String param, String help) {
+		ColorParameter param_ = null;
+		if (!isParameter(param)) {
+
+			param_ = new ColorParameter(param, help);
+
+			// qui setto il parent del parametro
+			param_.setParent(this);
+
+			// aggiungo il param alla struttura dati
+
+			this.structure.put(param, param_);
+
+			this.helpCommand.reload(this);
+		}
+		return param_;
 	}
 
 	public static class ColorHelpCommand extends HelpCommand {

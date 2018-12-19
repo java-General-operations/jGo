@@ -88,7 +88,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	// qui ci sarà una struttura dati che reggerà il gioco
-	private Map<String, Parameter> structure = new HashMap<String, Parameter>();
+	protected Map<String, Parameter> structure = new HashMap<String, Parameter>();
 
 	public Map<String, Parameter> getStructure() {
 		return structure;
