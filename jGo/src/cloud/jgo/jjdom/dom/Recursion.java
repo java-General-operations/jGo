@@ -104,12 +104,16 @@ public abstract class Recursion {
 				htmlCode.append(colorStartTag);
 				
 			} else if (node.getNodeType().equals(NodeType.COMMENT)) {
-				htmlCode.append(((HTMLComment) node).getStartTag());
+				//htmlCode.append(((HTMLComment) node).getStartTag()); - questa era
+				String colorStartTag = £.colors("<",Element.tag_color)+((HTMLComment) node).getStartTag().replace("<","").replace(">","")+£.colors(">",Element.tag_color);
+				htmlCode.append(colorStartTag);
 			}
 			htmlCode.append(node.getTextContent());
 		} else {
 			if (node instanceof Element) {
-				htmlCode.append(((HTMLDefaultElement) node).getStartTag() + "\n");
+//				htmlCode.append(((HTMLDefaultElement) node).getStartTag() + "\n"); - questa era
+				String colorStartTag = £.colors("<",Element.tag_color)+((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">","")+£.colors(">",Element.tag_color)+ "\n";
+				htmlCode.append(colorStartTag);
 			}
 		}
 
@@ -122,13 +126,16 @@ public abstract class Recursion {
 			if (((HTMLElement) node).getType() != null) {
 				// solo se ha il tag di chisura lo inseriamo nel codice html
 				if (((HTMLElement) node).getType().hasClosingTag()) {
-					// per il momento inserisco una @ per capire
-					htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n");
+					//htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n"); - era questo
+					String colorEndTag = £.colors("</",Element.tag_color)+((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">","")+£.colors(">",Element.tag_color)+ "\n";
+					htmlCode.append(colorEndTag);
 				}
 			} else {
 				// di sicuro se il nodo non ha un tipo di riferimento
 				// chiudiamo in maniera standart : con il tag di chiusura
-				htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n");
+				//htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n"); - era questo
+				String colorEndTag = £.colors("</",Element.tag_color)+((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">","")+£.colors(">",Element.tag_color)+ "\n";
+				htmlCode.append(colorEndTag);
 			}
 		} else {
 
@@ -138,7 +145,9 @@ public abstract class Recursion {
 			// magari per sicurezza:controllo che sia cosi
 
 			if (node instanceof HTMLComment) {
-				htmlCode.append(((HTMLComment) node).getEndTag() + "\n");
+				//htmlCode.append(((HTMLComment) node).getEndTag() + "\n"); - era questo
+				String colorEndTag = £.colors("<",Element.tag_color)+((HTMLComment) node).getEndTag().replace("<","").replace(">","")+£.colors(">",Element.tag_color);
+				htmlCode.append(colorEndTag);
 			}
 		}
 	}

@@ -8,7 +8,7 @@ import cloud.jgo.jjdom.dom.Manipulable;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 
 public interface Element extends Node,Manipulable{
-	public static Color tag_color = Color.DEFAULT;
+	public static Color tag_color = Color.GREEN;
 	/**
 	 * this method checks if this element has brothers
 	 * @return true if has brothers
