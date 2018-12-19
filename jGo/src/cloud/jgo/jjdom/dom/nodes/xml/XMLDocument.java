@@ -45,6 +45,10 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
  *         This class represents an XML document
  */
 public class XMLDocument implements Document {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public final static String XML_VERSION = "1.0";
 	private String charset = Document.CHARSET_UTF_8;
 	private String charsetName = null;

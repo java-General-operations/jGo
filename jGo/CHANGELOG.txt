@@ -186,3 +186,5 @@ Version 1.0.9 - in dev
 - stiamo ridefinendo il metodo appendChild della classe XMLDocument
 - quindi adesso possiamo creare un xmldocument vuoto, però una volta inserito il root, gli elementi poi dbbiamo
 inserirli all'interno del root, non ha logica avere un file xml con + nodi root, non con JjDom.
+- risolto bug imprevisto e grave nel costruttore della classe XMLElement, inoltre abbiamo aggiunto anche il serial version.
+- Abbiamo aggiunto il serial version anche per XMLDocument

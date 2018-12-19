@@ -53,6 +53,10 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
  *
  */
 public class XMLElement implements Element {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nodeName = null;
 	private NodeList childNodes = null;
 	private XMLDocument document = null;
@@ -64,7 +68,7 @@ public class XMLElement implements Element {
 	private Node parentNode = null;
 	private StringBuffer xmlCode = new StringBuffer();
 
-	public XMLElement(String elementName, XMLDocument Document) {
+	public XMLElement(String elementName, XMLDocument document) {
 		// TODO Auto-generated constructor stub
 		this.nodeName = elementName;
 		this.startTag = "<" + elementName + ">";
