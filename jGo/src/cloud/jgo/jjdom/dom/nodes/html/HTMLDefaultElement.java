@@ -30,6 +30,8 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
+import org.fusesource.jansi.Ansi.Color;
+
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
@@ -59,7 +61,6 @@ public class HTMLDefaultElement implements HTMLElement {
 	private Node parentNode = null;
 	private StringBuffer htmlCode = new StringBuffer();
 	private JjDom home = null;
-
 	// unico costruttore
 	// si deve creare una instanza di questa classe
 	public HTMLDefaultElement(String elementName, HTMLDocument document) {

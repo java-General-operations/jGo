@@ -177,7 +177,7 @@ Version 1.0.9 - in dev
 - abbiamo ridefinito il metodo dei terminali : getCommandRequest
 - Stiamo perfezionando la classe LocalPhaseTerminal, la stiamo rendendo + flessibbile, inoltre adesso non siamo
 + vincolati a usare il comando di richiesta comandi, di default(£), ma possiamo specificare il nome del terminale.
-- aggiunta nuova variabile statica a Parameter, LocalCommand e DefaultPhase:color
+- aggiunta nuova variabile statica a Parameter, LocalCommand e DefaultPhase:provvisorie
 - aggiunto nuovo metodo al terminale delle fasi:setPointerName()
 - aggiunto metodo LocalCommand, per impostare il comando vero e proprio.
 - eliminato campo welcome nella classe DefaultPhase, e quindi abbiamo aggiornato la serial version della stessa.
@@ -189,3 +189,4 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - risolto bug imprevisto e grave nel costruttore della classe XMLElement, inoltre abbiamo aggiunto anche il serial version.
 - Abbiamo aggiunto il serial version anche per XMLDocument
 - eliminata stampa imprevista nel metodo shareObject() della classe LocalCommand, quando attribuiamo un valore pari a null.
+- aggiunta la var statica tag_color a Element - provvisoria

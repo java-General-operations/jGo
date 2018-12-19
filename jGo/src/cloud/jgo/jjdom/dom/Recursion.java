@@ -31,6 +31,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import javax.lang.model.element.ElementKind;
 import javax.swing.JOptionPane;
 
 import cloud.jgo.£;
@@ -91,14 +92,17 @@ public abstract class Recursion {
 				HTMLDocument doc = (HTMLDocument) ((Element) node).getDocument();
 				if (doc.doctypeIsPresent()) {
 					// inserisco il doctype
-					htmlCode.append("<!DOCTYPE html>" + "\n");
+					htmlCode.append(£.colors("<",Element.tag_color)+"!DOCTYPE html"+£.colors(">",Element.tag_color) + "\n");
 				}
 			}
 		}
 		// @
 		if (node.getTextContent() != null) {
 			if (node.getNodeType().equals(NodeType.ELEMENT)) {
-				htmlCode.append(((HTMLDefaultElement) node).getStartTag());
+//				htmlCode.append(((HTMLDefaultElement) node).getStartTag()); - questa era
+				String colorStartTag = £.colors("<",Element.tag_color)+((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">","")+£.colors(">",Element.tag_color);
+				htmlCode.append(colorStartTag);
+				
 			} else if (node.getNodeType().equals(NodeType.COMMENT)) {
 				htmlCode.append(((HTMLComment) node).getStartTag());
 			}
