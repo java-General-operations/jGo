@@ -82,20 +82,17 @@ public abstract class ColorRecursion {
 				if (((HTMLElement) node).getType().hasClosingTag()) {
 					// per il momento inserisco una @ per capire
 //					htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n");
-					htmlCode.append("<",DomColors.tag_color).append(((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">",""),DomColors.nodeName_color).append(">\n",DomColors.tag_color);
+					htmlCode.append("</",DomColors.tag_color).append(((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">",""),DomColors.nodeName_color).append(">\n",DomColors.tag_color);
 				}
 			} else {
 				// di sicuro se il nodo non ha un tipo di riferimento
 				// chiudiamo in maniera standart : con il tag di chiusura
-				htmlCode.append("<",DomColors.tag_color).append(((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">",""),DomColors.nodeName_color).append(">\n",DomColors.tag_color);
+				htmlCode.append("</",DomColors.tag_color).append(((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">",""),DomColors.nodeName_color).append(">\n",DomColors.tag_color);
 			}
 		} else {
-
 			// qui invece significa che non è un elemento html
 			// quindi deve essere per forza un commento, almeno per il momento
-
 			// magari per sicurezza:controllo che sia cosi
-
 			if (node instanceof HTMLComment) {
 //				htmlCode.append(((HTMLComment) node).getEndTag() + "\n");
 				htmlCode.append(((HTMLComment) node).getEndTag()+"\n",DomColors.comment_color);

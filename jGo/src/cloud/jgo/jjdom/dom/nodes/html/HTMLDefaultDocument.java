@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
@@ -57,7 +56,6 @@ public class HTMLDefaultDocument implements HTMLDocument {
 		// TODO Auto-generated method stub
 		return "document";
 	}
-
 	private static final long serialVersionUID = 12L;
 	private HTMLElement jquerySourceTag = null;
 	private String jqueryPath = JjDom.JQUERY_URL_SNIPPET;
