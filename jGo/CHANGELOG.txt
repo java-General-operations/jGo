@@ -191,3 +191,4 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - aggiunta nuova classe : TerminalColors, per definire i colori del terminale.
 - aggiunto un nuovo metodo nella classe JjDom;permette di impostare il tipo del documento HTML usato con JjDom:documentTypeUsed()
 - aggiunta una nuova eccezzione in JjDom:InvalidDocumentTypeException
+- aggiunto nuvo metodo al punto di accesso jGo potenziato:colorTheStringsSyntax()

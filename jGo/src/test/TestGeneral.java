@@ -1,5 +1,8 @@
 package test;
 
+import org.fusesource.jansi.Ansi.Color;
+
+import cloud.jgo.j£;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultDocument;
@@ -11,12 +14,13 @@ public static void main(String[] args) {
 	
 	
 	
-	JjDom.newDocument().useDoctype(true).setMinimalTags().home().jqueryInit();
+	String startTag = "<h2>";
 	
 	
 	
-	JjDom.document.printMarkup();
+	String stringaTrasformata = j£.colorTheStringsSyntax(startTag,Color.RED);
 	
+	System.out.println(stringaTrasformata);
 	
 	
 	

@@ -32,6 +32,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringBufferInputStream;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
@@ -46,7 +47,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
+import org.fusesource.jansi.Ansi.Color;
 import org.fusesource.jansi.AnsiConsole;
 
 import javazoom.jl.decoder.JavaLayerException;
@@ -384,6 +387,35 @@ public final class j£ extends cloud.jgo.£ {
 		//version 1.0.9 : 
 		public static ColorString getString(String string,org.fusesource.jansi.Ansi.Color color) {
 			return new ColorString(string, color);
+		}
+		// version 1.0.9: 
+		public static String colorTheStringsSyntax(String string,Color color) {
+			string = string.replaceAll("'","\"");
+			StringBuffer buffer = new StringBuffer();
+			boolean colors = false ;
+			char[]charat = string.toCharArray();
+			char symbol = '\"';String trasformer = £.getString(symbol);
+			boolean last;
+			for (int i = 0; i < charat.length; i++) {
+				last = false ; // reset var
+				if (j£.getString(charat[i]).equals(trasformer)&&!colors) {
+					colors = true;
+				}
+				else if(j£.getString(charat[i]).equals(trasformer)&&colors) {
+					last = true ;
+				}
+				// qui controllo se devo appendere il testo colorandolo oppure no
+				if (colors) {
+					buffer.append(j£.colors(£.getString(charat[i]), color));
+					if (last) {
+						colors = false ;
+					}
+				}
+				else {
+					buffer.append(charat[i]);
+				}
+			}
+			return buffer.toString();
 		}
 	/**
 	 * This method retrieves the object from a json file
