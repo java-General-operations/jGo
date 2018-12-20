@@ -8,6 +8,7 @@ import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
+import cloud.jgo.utils.command.terminal.TerminalColors;
 
 public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 	
@@ -26,7 +27,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 							StringBuffer buffer = new StringBuffer();
 							buffer.append("========================================================================\n");
 							buffer.append("Description of (" + j£.colors(currentPhase.phaseName(),
-									ColorPhase.color) + ")\n");
+									TerminalColors.PHASE_COLOR) + ")\n");
 							buffer.append("========================================================================\n");
 
 							buffer.append(((DefaultPhase) currentPhase).description() + ".\n");
@@ -65,7 +66,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 			if (currentPhase != null) {
 
 				text = "£_("
-						+ j£.colors(currentPhase.phaseName(), ColorPhase.color)
+						+ j£.colors(currentPhase.phaseName(), TerminalColors.PHASE_COLOR)
 						+ ")_:";
 
 			}
@@ -73,7 +74,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 			if (currentPhase != null) {
 
 				text = getName() + "_("
-						+ j£.colors(currentPhase.phaseName(), ColorPhase.color)
+						+ j£.colors(currentPhase.phaseName(), TerminalColors.PHASE_COLOR)
 						+ ")_:";
 			}
 		}
@@ -113,7 +114,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 				// aggiungo al puntatore un link che accederà a questa fase
 				Parameter p_link = pointerCommand.addParam(phase.phaseName(), // forse non va bene
 						"Go to ("
-								+ j£.colors(phase.phaseName(), ColorPhase.color)
+								+ j£.colors(phase.phaseName(),  TerminalColors.PHASE_COLOR)
 								+ ") phase @");
 				// senza valore da input
 
@@ -134,7 +135,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 			// anche se la fase è la start mi serve attribuire una descrizione
 			Parameter p_link_desc = describerCommand.addParam(phase.phaseName(),
 					"This parameter describes the ("
-							+ j£.colors(phase.phaseName(), ColorPhase.color)
+							+ j£.colors(phase.phaseName(),  TerminalColors.PHASE_COLOR)
 							+ ") phase @");
 			p_link_desc.setExecution(new Execution() {
 				@Override
@@ -143,7 +144,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 					buffer.append(
 							"=================================================================================================\n");
 					buffer.append("Description of ("
-							+ j£.colors(phase.phaseName(),ColorPhase.color)
+							+ j£.colors(phase.phaseName(), TerminalColors.PHASE_COLOR)
 							+ ")\n");
 					buffer.append(
 							"==================================================================================================\n");

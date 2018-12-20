@@ -21,10 +21,6 @@
  * 
  */
 package cloud.jgo.utils.command;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import cloud.jgo.utils.command.execution.Execution;
 
 /**

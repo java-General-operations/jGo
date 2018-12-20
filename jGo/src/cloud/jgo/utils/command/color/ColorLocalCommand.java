@@ -1,24 +1,20 @@
 package cloud.jgo.utils.command.color;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.fusesource.jansi.Ansi.Color;
-
 import cloud.jgo.j£;
 import cloud.jgo.utils.command.DefaultParameter;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
 import cloud.jgo.utils.command.LocalCommand.HelpCommand;
 import cloud.jgo.utils.command.execution.Execution;
-import cloud.jgo.utils.command.terminal.phase.ColorPhase;
+import cloud.jgo.utils.command.terminal.TerminalColors;
+
 
 public class ColorLocalCommand extends LocalCommand {
-
-	public static Color color = Color.DEFAULT;
 	private ColorHelpCommand helpCommand = new ColorHelpCommand();
 
 	public ColorLocalCommand(String command, String help) {
@@ -36,35 +32,16 @@ public class ColorLocalCommand extends LocalCommand {
 		return this.helpCommand ;
 	}
 	
-	@Override
-	public ColorParameter addParam(String param, String help) {
-		ColorParameter param_ = null;
-		if (!isParameter(param)) {
-
-			param_ = new ColorParameter(param, help);
-
-			// qui setto il parent del parametro
-			param_.setParent(this);
-
-			// aggiungo il param alla struttura dati
-
-			this.structure.put(param, param_);
-
-			this.helpCommand.reload(this);
-		}
-		return param_;
-	}
-
 	public static class ColorHelpCommand extends HelpCommand {
 		public void reload(LocalCommand command) {
 			this.command = command;
 			this.buffer = new StringBuffer();
 			buffer.append("===================================================================================\n");
 			if (this.command.getBelongsTo() != null) {
-				buffer.append("HELP Of " + "\"" + j£.colors(this.command.getCommand(), color) + "\" - Phase :"
-						+ j£.colors(this.command.getBelongsTo().phaseName(), ColorPhase.color) + "\n");
+				buffer.append("HELP Of " + "\"" + j£.colors(this.command.getCommand(), TerminalColors.COMMAND_COLOR) + "\" - Phase :"
+						+ j£.colors(this.command.getBelongsTo().phaseName(), TerminalColors.PHASE_COLOR) + "\n");
 			} else {
-				buffer.append("HELP Of " + "\"" + j£.colors(this.command.getCommand(), ColorLocalCommand.color)
+				buffer.append("HELP Of " + "\"" + j£.colors(this.command.getCommand(), TerminalColors.COMMAND_COLOR)
 						+ "\" - Phase :" + j£.colors("absent", Color.DEFAULT) + "\n");
 			}
 			buffer.append("===================================================================================\n");
@@ -81,7 +58,7 @@ public class ColorLocalCommand extends LocalCommand {
 					Iterator<Parameter> iterator = orderParameters.iterator();
 					while (iterator.hasNext()) {
 						Parameter param = iterator.next();
-						buffer.append(j£.colors(param.getParam(), ColorParameter.color) + "=" + param.getParameterHelp()
+						buffer.append(j£.colors(param.getParam(),TerminalColors.PARAMETER_COLOR) + "=" + param.getParameterHelp()
 								+ "  / has input value =" + param.hasInputValueExploitable() + "\n");
 					}
 				}
@@ -95,7 +72,7 @@ public class ColorLocalCommand extends LocalCommand {
 						Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter> entry = (Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter>) iterator
 								.next();
 						Parameter param = entry.getValue();
-						buffer.append(j£.colors(param.getParam(), ColorParameter.color) + "=" + param.getParameterHelp()
+						buffer.append(j£.colors(param.getParam(), TerminalColors.PARAMETER_COLOR) + "=" + param.getParameterHelp()
 								+ "  / has input value =" + param.hasInputValueExploitable() + "\n");
 					}
 				}

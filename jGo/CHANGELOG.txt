@@ -190,3 +190,4 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - Abbiamo aggiunto il serial version anche per XMLDocument
 - eliminata stampa imprevista nel metodo shareObject() della classe LocalCommand, quando attribuiamo un valore pari a null.
 - aggiunto il nuovo package in JjDom, per i nodi colorati a livello di sintassi.
+- aggiunta nuova classe : TerminalColors, per definire i colori del terminale.

@@ -21,7 +21,6 @@
  * 
  */
 package cloud.jgo.utils.command;
-
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -32,10 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import cloud.jgo.j£;
 import cloud.jgo.£;
 import cloud.jgo.utils.command.execution.Execution;
