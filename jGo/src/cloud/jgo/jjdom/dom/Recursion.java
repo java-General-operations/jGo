@@ -93,28 +93,21 @@ public abstract class Recursion {
 				HTMLDocument doc = (HTMLDocument) ((Element) node).getDocument();
 				if (doc.doctypeIsPresent()) {
 					// inserisco il doctype
-					htmlCode.append(j£.colors("<",Element.tag_color)+"!DOCTYPE html"+j£.colors(">",Element.tag_color) + "\n");
+					htmlCode.append("<!DOCTYPE html>" + "\n");
 				}
 			}
 		}
 		// @
 		if (node.getTextContent() != null) {
 			if (node.getNodeType().equals(NodeType.ELEMENT)) {
-//				htmlCode.append(((HTMLDefaultElement) node).getStartTag()); - questa era
-				String colorStartTag = j£.colors("<",Element.tag_color)+((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">","")+j£.colors(">",Element.tag_color);
-				htmlCode.append(colorStartTag);
-				
+				htmlCode.append(((HTMLDefaultElement) node).getStartTag());
 			} else if (node.getNodeType().equals(NodeType.COMMENT)) {
-				//htmlCode.append(((HTMLComment) node).getStartTag()); - questa era
-				String colorStartTag = j£.colors("<",Element.tag_color)+((HTMLComment) node).getStartTag().replace("<","").replace(">","")+j£.colors(">",Element.tag_color);
-				htmlCode.append(colorStartTag);
+				htmlCode.append(((HTMLComment) node).getStartTag());
 			}
 			htmlCode.append(node.getTextContent());
 		} else {
 			if (node instanceof Element) {
-//				htmlCode.append(((HTMLDefaultElement) node).getStartTag() + "\n"); - questa era
-				String colorStartTag = j£.colors("<",Element.tag_color)+((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">","")+j£.colors(">",Element.tag_color)+ "\n";
-				htmlCode.append(colorStartTag);
+				htmlCode.append(((HTMLDefaultElement) node).getStartTag() + "\n");
 			}
 		}
 
@@ -127,16 +120,13 @@ public abstract class Recursion {
 			if (((HTMLElement) node).getType() != null) {
 				// solo se ha il tag di chisura lo inseriamo nel codice html
 				if (((HTMLElement) node).getType().hasClosingTag()) {
-					//htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n"); - era questo
-					String colorEndTag = j£.colors("</",Element.tag_color)+((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">","")+j£.colors(">",Element.tag_color)+ "\n";
-					htmlCode.append(colorEndTag);
+					// per il momento inserisco una @ per capire
+					htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n");
 				}
 			} else {
 				// di sicuro se il nodo non ha un tipo di riferimento
 				// chiudiamo in maniera standart : con il tag di chiusura
-				//htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n"); - era questo
-				String colorEndTag = j£.colors("</",Element.tag_color)+((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">","")+j£.colors(">",Element.tag_color)+ "\n";
-				htmlCode.append(colorEndTag);
+				htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n");
 			}
 		} else {
 
@@ -146,13 +136,10 @@ public abstract class Recursion {
 			// magari per sicurezza:controllo che sia cosi
 
 			if (node instanceof HTMLComment) {
-				//htmlCode.append(((HTMLComment) node).getEndTag() + "\n"); - era questo
-				String colorEndTag = j£.colors("<",Element.tag_color)+((HTMLComment) node).getEndTag().replace("<","").replace(">","")+j£.colors(">",Element.tag_color);
-				htmlCode.append(colorEndTag);
+				htmlCode.append(((HTMLComment) node).getEndTag() + "\n");
 			}
 		}
 	}
-
 	public static void examines_xml(Node node, StringBuffer xmlCode, String charset) {
 		// for doctype from here to @
 		if (node instanceof XMLDocument) {

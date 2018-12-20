@@ -21,17 +21,12 @@
  * 
  */
 package cloud.jgo.jjdom.dom.nodes.html;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import javax.swing.JOptionPane;
-
-import org.fusesource.jansi.Ansi.Color;
-
 import cloud.jgo.£;
 import cloud.jgo.io.File;
 import cloud.jgo.jjdom.JjDom;
@@ -76,13 +71,8 @@ public class HTMLDefaultElement implements HTMLElement {
 		this.attributes = new HashMap<>();
 		this.document = document;
 	}
-
 	// version 1.0.6
-	protected HTMLDefaultElement() {
-		// TODO Auto-generated constructor stub
-
-	}
-
+	protected HTMLDefaultElement() {}
 	/**
 	 * This method returns the start tag
 	 * 
