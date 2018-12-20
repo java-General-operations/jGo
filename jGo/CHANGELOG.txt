@@ -169,9 +169,7 @@ Version 1.0.8 - 13/12/2018
 Version 1.0.9 - in dev
 
 - I add the methods to color the strings to the main point jGo
-
 - Aggiungo una nuova classe: ColorString
-
 - Ho tolto il modificatore final dal metodi getCommandRequest del terminale
 - aggiunto un nuovo metodo al terminal:getName();
 - abbiamo ridefinito il metodo dei terminali : getCommandRequest
@@ -191,3 +189,5 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - eliminata stampa imprevista nel metodo shareObject() della classe LocalCommand, quando attribuiamo un valore pari a null.
 - aggiunto il nuovo package in JjDom, per i nodi colorati a livello di sintassi.
 - aggiunta nuova classe : TerminalColors, per definire i colori del terminale.
+- aggiunto un nuovo metodo nella classe JjDom;permette di impostare il tipo del documento HTML usato con JjDom:documentTypeUsed()
+- aggiunta una nuova eccezzione in JjDom:InvalidDocumentTypeException

@@ -66,6 +66,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
+import cloud.jgo.jjdom.dom.nodes.html.color.HTMLColorDocument;
 import cloud.jgo.jjdom.jquery.Event;
 import cloud.jgo.jjdom.jquery.jQueryNotInitializedException;
 import cloud.jgo.jjdom.jquery.jQuerySelector;
@@ -277,7 +278,6 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 * jQuery URL Snippet
 	 */
 	public transient final static String JQUERY_URL_SNIPPET = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js";
-
 	/**
 	 * Document Selection
 	 */
@@ -292,6 +292,8 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 * The current selection
 	 */
 	public static String $these = null; // non è altro che la selezione corrente
+	// version 1.0.9 : segnalare
+	public static Class<?extends HTMLDocument>documentTypeUsed = null ; // default value
 	/**
 	 * It is the "this" jquery, and therefore works only with the jquery results
 	 */
@@ -337,7 +339,6 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 * config ftp - version 1.0.1
 	 */
 	private static FTPClient ftp_client = new FTPClient();
-
 	private static String ftpHost, ftpUser, ftpPassw = null;
 	private static String urlFileName = null;
 	private static String urlDirName = null;
@@ -351,10 +352,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 		availableSelectors.add(jQuerySelector.VISIBLE);
 		availableSelectors.add(jQuerySelector.HIDDEN);
 	}
-
-	private JjDom() {
-	}
-
+	private JjDom() {}
 	/**
 	 * 
 	 * @author Martire91<br>
@@ -776,23 +774,34 @@ public final class JjDom implements jQuerySupport, Serializable {
 		document.printMarkup();
 		return instance;
 	}
-
 	// default : CHARSET_UTF_8
 	/**
-	 * This method creates a new html document
-	 * 
+	 * This method creates a new html document.
+	 * Takes into account the type of document used.
 	 * @see #newDocument(String)
 	 * @see #newVoidDocument(String)
 	 * @return the html document
 	 */
 	public static HTMLDocument newDocument() {
-		document = new HTMLDefaultDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
+		if (documentTypeUsed==null) {
+			document = new HTMLDefaultDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
+		}
+		else {
+			if (documentTypeUsed.getSimpleName().equals("HTMLDefaultDocument")) {
+				document = new HTMLDefaultDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
+			}
+			else if(documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
+				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
+			}
+			else {
+				// qui dare una eccezzione ...
+			}
+		}
 		return document;
 	}
-
 	/**
-	 * This method creates a new html document
-	 * 
+	 * This method creates a new html document.
+	 * Takes into account the type of document used.
 	 * @see #newDocument()
 	 * @see #newVoidDocument(String)
 	 * @param charsetName
@@ -800,12 +809,32 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 * @return the html document
 	 */
 	public static HTMLDocument newDocument(String charsetName) {
-		document = new HTMLDefaultDocument(charsetName, null, instance);
+		if (documentTypeUsed==null) {
+			document = new HTMLDefaultDocument(charsetName, null, instance);
+		}
+		else {
+			if (documentTypeUsed.getSimpleName().equals("HTMLDefaultDocument")) {
+				document = new HTMLDefaultDocument(charsetName, null, instance);
+			}
+			else if(documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
+				document = new HTMLColorDocument(charsetName, null, instance);
+			}
+			else {
+				// qui dare una eccezzione ...
+				try {
+					throw new InvalidDocumentTypeException(documentTypeUsed);
+				} catch (InvalidDocumentTypeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 		return document;
 	}
 
 	/**
-	 * This method creates a new void document
+	 * This method creates a new void document.
+	 * Does not take into account the type of document used.
 	 * 
 	 * @see #newDocument()
 	 * @see #newDocument(String)

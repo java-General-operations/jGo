@@ -96,14 +96,12 @@ public class HTMLDefaultDocument implements HTMLDocument {
 
 		appendChild(rootElement);
 	}
-
 	protected HTMLDefaultDocument(String charsetName, JjDom home) {
 		this.home = home;
 		this.charsetName = charsetName;
 		// inizializzo la lista di nodi
 		this.childNodes = new NodeList();
 	}
-
 	@Override
 	public CSSStyle createStyle() {
 		// TODO Auto-generated method stub

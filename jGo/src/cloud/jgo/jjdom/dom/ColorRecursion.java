@@ -67,7 +67,7 @@ public abstract class ColorRecursion {
 		} else {
 			if (node instanceof Element) {
 //				htmlCode.append(((HTMLDefaultElement) node).getStartTag() + "\n");
-				htmlCode.append("<",DomColors.tag_color).append(((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">",""),DomColors.nodeName_color).append(">",DomColors.tag_color);
+				htmlCode.append("<",DomColors.tag_color).append(((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">",""),DomColors.nodeName_color).append(">\n",DomColors.tag_color);
 			}
 		}
 
