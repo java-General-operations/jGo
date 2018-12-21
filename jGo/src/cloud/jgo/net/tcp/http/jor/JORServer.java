@@ -55,7 +55,7 @@ import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
  *          <li>Create a JOR server</li>
  *          <li>Create the objects to represent</li>
  *          <li>Add objects to a list or array.</li>
- *          <li>create a JOR request handler</li>
+ *          <li>Create a JOR request handler</li>
  *          <li>Apply the JOR annotation to the class of the object you want to
  *          represent</li>
  *          <li>Implement the methods if necessary:
