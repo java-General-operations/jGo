@@ -45,10 +45,10 @@ import cloud.jgo.utils.command.terminal.phase.Phase;
 public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>, Shareable {
 	private static final long serialVersionUID = 1L;
 	private Execution execution = null;
-	private String help = null;
+	protected String help = null;
 	private String effect = null;
 	private LocalCommand.HelpCommand helpCommand = new LocalCommand.HelpCommand();
-	private String command = null;
+	protected String command = null;
 	private Object sharedObject = null;
 	private static String helpValue = "help";
 	private String inputValue = null;
@@ -666,13 +666,10 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 				// quindi devo prendere quello che c'è dopo il comando
 				int start = command.length();
 				String rest = inputCommand.substring(start).trim();
-
 				// okok ora qui devo controllare se il resto è uguale all'helps
 				// oppure splittarlo per parameters
 				if (rest.equals(LocalCommand.helpValue)) {
-
 					// qui eseguo l'help
-
 					// qui devo prendere il comando
 					for (int i = 0; i < commands.size(); i++) {
 						if (command.equals(commands.get(i).getCommand())) {
