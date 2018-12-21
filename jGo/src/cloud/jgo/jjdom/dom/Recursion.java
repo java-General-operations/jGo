@@ -488,13 +488,13 @@ public abstract class Recursion {
 
 		String[] split = null;
 
-		split = finalPath.split(Pattern.quote(File.separator));
+		split = finalPath.split(Pattern.quote("/"));
 
 		List<String> list = new ArrayList<>();
 
 		for (int i = split.length; i > 0; i--) {
 			if (i > 0) {
-				list.add(split[i - 1] + File.separator);
+				list.add(split[i - 1] + "/");
 			} else {
 				list.add(split[i - 1]);
 			}
@@ -515,12 +515,12 @@ public abstract class Recursion {
 	}
 
 	private static void helpForPath(Node node) {
-		path.append(node.getNodeName() + File.separator);
+		path.append(node.getNodeName() + "/");
 		Node parent = node.getParentNode();
 		if (!node.getNodeName().equalsIgnoreCase("html")) { // verifico che il nodo ricevuto non sia il nodo root html
 			if (parent != null) {
 				// aggiungo al path
-				path.append(parent.getNodeName() + File.separator);
+				path.append(parent.getNodeName() + "/");
 
 				// ricorsività
 
@@ -528,7 +528,7 @@ public abstract class Recursion {
 			}
 		} else {
 			// in caso contrario finisce il metodo
-			path.append(parent.getNodeName() + File.separator);
+			path.append(parent.getNodeName() + "/");
 			return;
 		}
 	}
