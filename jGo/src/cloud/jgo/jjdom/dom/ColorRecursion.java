@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import org.fusesource.jansi.Ansi.Color;
 
+import cloud.jgo.j£;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.Node.NodeType;
@@ -50,7 +51,7 @@ public abstract class ColorRecursion {
 				HTMLDocument doc = (HTMLDocument) ((Element) node).getDocument();
 				if (doc.doctypeIsPresent()) {
 					// inserisco il doctype
-					htmlCode.append('<',DomColors.tag_color).append("!DOCTYPE html",DomColors.nodeName_color).append(">\n",DomColors.tag_color);
+					htmlCode.append('<',DomColors.TAG_COLOR).append("!DOCTYPE html",DomColors.NODENAME_COLOR).append(">\n",DomColors.TAG_COLOR);
 				}
 			}
 		}
@@ -58,16 +59,16 @@ public abstract class ColorRecursion {
 		if (node.getTextContent() != null) {
 			if (node.getNodeType().equals(NodeType.ELEMENT)) {
 //				htmlCode.append(((HTMLDefaultElement) node).getStartTag());
-				htmlCode.append("<",DomColors.tag_color).append(((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">",""),DomColors.nodeName_color).append(">",DomColors.tag_color);
+				htmlCode.append("<",DomColors.TAG_COLOR).append(j£.colorTheStringsSyntax(((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">",""),DomColors.ATTRIBUTE_VALUE_COLOR),DomColors.NODENAME_COLOR).append(">",DomColors.TAG_COLOR);
 			} else if (node.getNodeType().equals(NodeType.COMMENT)) {
 //				htmlCode.append(((HTMLComment) node).getStartTag());
-				htmlCode.append(((HTMLComment) node).getStartTag(),DomColors.comment_color);
+				htmlCode.append(((HTMLComment) node).getStartTag(),DomColors.COMMENT_COLOR);
 			}
-			htmlCode.append(node.getTextContent(),Color.DEFAULT); // provvisoria
+			htmlCode.append(node.getTextContent(),DomColors.NODEVALUE_COLOR); // provvisoria
 		} else {
 			if (node instanceof Element) {
 //				htmlCode.append(((HTMLDefaultElement) node).getStartTag() + "\n");
-				htmlCode.append("<",DomColors.tag_color).append(((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">",""),DomColors.nodeName_color).append(">\n",DomColors.tag_color);
+				htmlCode.append("<",DomColors.TAG_COLOR).append(j£.colorTheStringsSyntax(((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">",""),DomColors.ATTRIBUTE_VALUE_COLOR),DomColors.NODENAME_COLOR).append(">\n",DomColors.TAG_COLOR);
 			}
 		}
 
@@ -82,12 +83,12 @@ public abstract class ColorRecursion {
 				if (((HTMLElement) node).getType().hasClosingTag()) {
 					// per il momento inserisco una @ per capire
 //					htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n");
-					htmlCode.append("</",DomColors.tag_color).append(((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">",""),DomColors.nodeName_color).append(">\n",DomColors.tag_color);
+					htmlCode.append("</",DomColors.TAG_COLOR).append(((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">",""),DomColors.NODENAME_COLOR).append(">\n",DomColors.TAG_COLOR);
 				}
 			} else {
 				// di sicuro se il nodo non ha un tipo di riferimento
 				// chiudiamo in maniera standart : con il tag di chiusura
-				htmlCode.append("</",DomColors.tag_color).append(((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">",""),DomColors.nodeName_color).append(">\n",DomColors.tag_color);
+				htmlCode.append("</",DomColors.TAG_COLOR).append(((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">",""),DomColors.NODENAME_COLOR).append(">\n",DomColors.TAG_COLOR);
 			}
 		} else {
 			// qui invece significa che non è un elemento html
@@ -95,7 +96,7 @@ public abstract class ColorRecursion {
 			// magari per sicurezza:controllo che sia cosi
 			if (node instanceof HTMLComment) {
 //				htmlCode.append(((HTMLComment) node).getEndTag() + "\n");
-				htmlCode.append(((HTMLComment) node).getEndTag()+"\n",DomColors.comment_color);
+				htmlCode.append(((HTMLComment) node).getEndTag()+"\n",DomColors.COMMENT_COLOR);
 			}
 		}
 	}
