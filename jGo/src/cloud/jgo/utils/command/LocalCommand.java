@@ -311,11 +311,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			this.command = command;
 			this.buffer = new StringBuffer();
 			buffer.append(
-					"=================================================================================================================================\n");
+					"===================================================================================\n");
 			buffer.append("HELP Of " + "\"" + this.command.command + "\" - Phase :"
 					+ ((LocalCommand) this.command).getBelongsTo() + "\n");
 			buffer.append(
-					"=================================================================================================================================\n");
+					"===================================================================================\n");
 
 			// qui devo prendere tutti i parameters
 			Collection<Parameter> collection = command.structure.values();
@@ -362,7 +362,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 
 					@Override
 					public void run() {
-						System.out.println("Thread partito ...");
 						getExecution().exec();
 					}
 				}).start();
@@ -417,7 +416,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 
 			this.structure.put(param, param_);
 
-			this.helpCommand.reload(this);
+			getHelpCommand().reload(this);
 		}
 		return param_;
 	}
@@ -485,7 +484,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 
 		this.structure = new HashMap<String, Parameter>();
 
-		this.helpCommand.reload(this);
+		getHelpCommand().reload(this);
 
 	}
 
@@ -495,7 +494,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			Parameter param_ = this.structure.remove(param);
 
 			if (param_ != null) {
-				this.helpCommand.reload(this);
+				getHelpCommand().reload(this);
 				return true;
 
 			} else {
@@ -536,7 +535,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 				boolean flag = this.structure.replace(param, param_, newValue);
 
 				if (flag == true) {
-					this.helpCommand.reload(this);
+					getHelpCommand().reload(this);
 				}
 				return flag;
 			} else {
