@@ -192,3 +192,5 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - aggiunto un nuovo metodo nella classe JjDom;permette di impostare il tipo del documento HTML usato con JjDom:documentTypeUsed()
 - aggiunta una nuova eccezzione in JjDom:InvalidDocumentTypeException
 - aggiunto nuvo metodo al punto di accesso jGo potenziato:colorTheStringsSyntax()
+- adattato diversi metodi della classe LocalCommand tenendo conto delle sotto classi
+- aggiunta una interfaccia colorable che viene implementata da tutti i nodi colorabili
