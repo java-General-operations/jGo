@@ -198,3 +198,4 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - risolto bug webcam in j£
 - Abbiamo ridefinito i metodi webcam di j£
 - Creati due nuovi metodi nell'interfaccia Shareable
+- aggiunto metodo alla classe Parameter:shared()

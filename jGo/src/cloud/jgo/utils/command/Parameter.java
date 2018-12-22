@@ -39,13 +39,13 @@ public abstract class Parameter
 	private String onlyParam;
 	private String inputValue = null;
 	private boolean inputValueExploitable = false;
-
+	//version 1.0.9
+	protected boolean shared = false ;
+	public boolean shared() {return this.shared;}
 	public String getParam() {
 		return param;
 	}
-
 	public boolean usThread = false;
-
 	// questo metodo serve a condividere un oggetto
 
 	/**

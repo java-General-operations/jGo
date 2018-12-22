@@ -22,6 +22,8 @@
  */
 package cloud.jgo.utils.command;
 
+import java.util.List;
+
 /**
  * 
  * @author Martire91<br>
@@ -48,6 +50,6 @@ public interface Shareable {
 	public abstract <T> void shareObject(T sharedObject);
 	
 	// version 1.0.9
-	public abstract void shareParameter(Parameter parameter);
-	public abstract Parameter getSharedParameter();
+	public abstract Parameter shareParameter(Parameter parameter);
+	public abstract List<Parameter> getSharedParameters();
 }

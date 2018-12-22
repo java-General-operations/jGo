@@ -50,8 +50,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private LocalCommand.HelpCommand helpCommand = new LocalCommand.HelpCommand();
 	protected String command = null;
 	private Object sharedObject = null;
-	// version 1.0.9
-	private Parameter sharedParameter = null ;
 	private static String helpValue = "help";
 	private String inputValue = null;
 	private boolean inputValueExploitable = false;
@@ -104,7 +102,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	@Override
-
 	public boolean hasAPhase() {
 		if (getBelongsTo() != null) {
 			return true;
@@ -1234,16 +1231,21 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		getHelpCommand().reload(this);
 	}
 
+	
 	@Override
-	public void shareParameter(Parameter parameter) {
-		// TODO Auto-generated method stub
-		this.sharedParameter = parameter ;
-		
+	public Parameter shareParameter(Parameter parameter) {
+		Parameter p = addParam(parameter.getOnlyParam(),parameter.getParameterHelp());
+		// adesso vado a prendere le info + importanti del parametro che ho ricevuto
+		p.setInputValueExploitable(parameter.hasInputValueExploitable());
+		p.shared = true ;
+		return p ;
 	}
 
 	@Override
-	public Parameter getSharedParameter() {
-		return this.sharedParameter ;
+	public List<Parameter> getSharedParameters() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 
 }
