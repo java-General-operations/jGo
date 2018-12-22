@@ -46,4 +46,8 @@ public interface Shareable {
 	 *            the type
 	 */
 	public abstract <T> void shareObject(T sharedObject);
+	
+	// version 1.0.9
+	public abstract void shareParameter(Parameter parameter);
+	public abstract Parameter getSharedParameter();
 }

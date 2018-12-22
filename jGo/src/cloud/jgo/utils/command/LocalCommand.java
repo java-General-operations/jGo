@@ -50,6 +50,8 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private LocalCommand.HelpCommand helpCommand = new LocalCommand.HelpCommand();
 	protected String command = null;
 	private Object sharedObject = null;
+	// version 1.0.9
+	private Parameter sharedParameter = null ;
 	private static String helpValue = "help";
 	private String inputValue = null;
 	private boolean inputValueExploitable = false;
@@ -1230,6 +1232,18 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		// TODO Auto-generated method stub
 		this.inputValueExploitable = exploitable;
 		getHelpCommand().reload(this);
+	}
+
+	@Override
+	public void shareParameter(Parameter parameter) {
+		// TODO Auto-generated method stub
+		this.sharedParameter = parameter ;
+		
+	}
+
+	@Override
+	public Parameter getSharedParameter() {
+		return this.sharedParameter ;
 	}
 
 }

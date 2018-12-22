@@ -11,17 +11,16 @@ import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.j£;
 
-public class GeneralTest {
+public class LocalTerminalTest {
 @SuppressWarnings("static-access")
 public static void main(String[] args) {
 	
 	
 	
 	
-	j£.openWebcam().capture("Ciao.png").capture("test.png").capture("test2.png").closeWebcam();
 	
 	
-	System.out.println("Istruzione jGo eseguita @");
+	
 	
 }
 }

@@ -197,3 +197,4 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - segnalare che quando si lavora con i nodi colorati, bisogna tenere presente che bisogna installare jansi con il metodo e didistallare quando il nostro software viene spento
 - risolto bug webcam in j£
 - Abbiamo ridefinito i metodi webcam di j£
+- Creati due nuovi metodi nell'interfaccia Shareable
