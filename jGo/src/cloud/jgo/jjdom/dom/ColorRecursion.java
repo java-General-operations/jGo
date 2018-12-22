@@ -51,7 +51,6 @@ public abstract class ColorRecursion {
 				HTMLDocument doc = (HTMLDocument) ((Element) node).getDocument();
 				if (doc.doctypeIsPresent()) {
 					// inserisco il doctype
-					System.out.println("Ci passa @");
 					htmlCode.append('<',DomColors.TAG_COLOR).append("!DOCTYPE html",DomColors.NODENAME_COLOR).append(">\n",DomColors.TAG_COLOR);
 				}
 			}
