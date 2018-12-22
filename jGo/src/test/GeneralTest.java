@@ -16,18 +16,12 @@ public class GeneralTest {
 public static void main(String[] args) {
 	
 	
-	j£.openWebcam();
 	
-	j£.capture("test.png");
 	
-	j£.capture("test2.png");
+	j£.openWebcam().capture("Ciao.png").capture("test.png").capture("test2.png").closeWebcam();
 	
-	j£.closeWebcam();
 	
-	// riapro la webcam
+	System.out.println("Istruzione jGo eseguita @");
 	
-	j£.openWebcam();
-	
-	j£.getJFrameWebcam("Ciao", null, true);
 }
 }

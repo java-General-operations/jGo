@@ -1095,9 +1095,10 @@ public final class j£ extends cloud.jgo.£ {
 		if (webcam == null) {
 			webcam = Webcam.getDefault();
 			webcam.setViewSize(WebcamResolution.VGA.getSize());
-			webcamPanel = new WebcamPanel(webcam);
-			webcamPanel.setDisplayDebugInfo(true);
-			webcamPanel.setMirrored(true);
+			boolean flag = webcam.open();
+			if (flag) {
+				inst = getPowerfulInstance();
+			}
 		} else {
 			if (!webcam.isOpen()) {
 				boolean flag = webcam.open();
@@ -1108,7 +1109,6 @@ public final class j£ extends cloud.jgo.£ {
 		}
 		return inst;
 	}
-
 	/**
 	 * This method closes the webcam
 	 * 
@@ -1117,18 +1117,20 @@ public final class j£ extends cloud.jgo.£ {
 	public static j£ closeWebcam() {
 		j£ inst = null;
 		if (webcam != null) {
-			boolean flag = webcam.close();
-			if (flag) {
-				inst = getPowerfulInstance();
+			if (webcam.isOpen()) {
+				boolean flag = webcam.close();
+				if (flag) {
+					inst = getPowerfulInstance();
+				}
 			}
 		}
 		return inst;
 	}
-
 	// version 1.0.5
 	/**
-	 * This method returns a desktop application for webcam monitoring. It works
-	 * only if the webcam is open.
+	 * This method returns a desktop application for webcam monitoring. 
+	 * It works only if the webcam has been activated,
+	 * so if the open method has been called
 	 * 
 	 * @param title
 	 *            jframe title
@@ -1139,7 +1141,10 @@ public final class j£ extends cloud.jgo.£ {
 	 * @return the jframe
 	 */
 	public static JFrame getJFrameWebcam(String title, ImageIcon icon, boolean visibility) {
-		if (webcamPanel != null) {
+		if (webcam != null) {
+			webcamPanel = new WebcamPanel(webcam);
+			webcamPanel.setDisplayDebugInfo(true);
+			webcamPanel.setMirrored(true);
 			JFrame frame = j£._S.createFrame(title, icon, false);
 			frame.setLocationRelativeTo(null);
 			frame.add(webcamPanel);
@@ -1154,7 +1159,9 @@ public final class j£ extends cloud.jgo.£ {
 	}
 
 	/**
-	 * This method returns a desktop application for webcam monitoring
+	 * This method returns a desktop application for webcam monitoring.
+	 * It works only if the webcam has been activated,
+	 * so if the open method has been called
 	 * 
 	 * @param title
 	 *            jframe title
@@ -1169,7 +1176,10 @@ public final class j£ extends cloud.jgo.£ {
 	 * @return the jframe
 	 */
 	public static JFrame getJFrameWebcam(String title, ImageIcon icon, int width, int height, boolean visibility) {
-		if (webcamPanel != null) {
+		if (webcam != null) {
+			webcamPanel = new WebcamPanel(webcam);
+			webcamPanel.setDisplayDebugInfo(true);
+			webcamPanel.setMirrored(true);
 			JFrame frame = j£._S.createFrame(title, width, height, icon, visibility);
 			frame.setLocationRelativeTo(null);
 			frame.add(webcamPanel);
