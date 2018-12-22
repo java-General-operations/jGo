@@ -12,7 +12,19 @@ public class LocalTerminalTest {
 @SuppressWarnings("static-access")
 public static void main(String[] args) {
 	
-	// prossimo passo : filtrare i parametri condivisi di un comando
+	// un altra cosa che potrei fare è la seguente
+	// crearmi un altro metodo che praticamente condivide
+	// pienamente il parametro, e per questi tipi di parametri
+	// deve esserci solo una esecuzione che li gestisce
+	// tutti, facilitando la vita del programmatore, quindi
+	// quindi risparmiandogli di creare per ogni parametro
+	// condiviso, una specifica esecuzione
+	
+	
+	// Okok Ora devo assicurarmi che il discorso del parametro
+	// condiviso funzioni anche tra + comandi, e non solo due
+	
+	
 	
 	LocalTerminal terminal = new LocalTerminal();
 	
@@ -98,16 +110,40 @@ public static void main(String[] args) {
 		}
 	});
 	
-	terminal.addCommands(p,p2);
+	// mi creo l'ultimo comando 
+	
+	LocalCommand p3 = new LocalCommand("p3", "p3");
+	Parameter nodeName3 = p3.shareParameter(nodeName);
+	Parameter nodeValue3 = p3.shareParameter(nodeValue);
+	
+	
+	
+	nodeName3.setExecution(new Execution() {
+		
+		@Override
+		public Object exec() {
+			// TODO Auto-generated method stub
+			System.out.println(nodeName3.getInputValue());
+			return null ;
+		}
+	});
+	
+	nodeValue3.setExecution(new Execution() {
+		
+		@Override
+		public Object exec() {
+			// TODO Auto-generated method stub
+			System.out.println(nodeValue3.getInputValue());
+			return null ;
+		}
+	});
+	
+	terminal.addCommands(p,p2,p3);
+	
+	
 	
 
-	// cerco di ottenere i parametri del secondo comando: solo quelli condivisi
-	
-	List<Parameter> sharedParams = p2.getUnSharedParameters();
-	
-	for (Parameter parameter : sharedParams) {
-		System.out.println(parameter);
-	}
+	terminal.open();
 	
 }
 }
