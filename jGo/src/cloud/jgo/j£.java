@@ -49,6 +49,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.Ansi.Color;
 import org.fusesource.jansi.AnsiConsole;
 
@@ -353,16 +354,15 @@ public final class j£ extends cloud.jgo.£ {
 	 */
 	public final static Webcam webcam = Webcam.getDefault();
 	private static WebcamPanel webcamPanel = null;
+	// version 1.0.9
+	public static AnsiConsole ANSI_CONSOLE ;
 	static {
 		instance = getPowerfulInstance();
 		webcam.setViewSize(WebcamResolution.VGA.getSize()); // è per metodi statici, quindi via le preoccupazioni
 		webcamPanel = new WebcamPanel(webcam);
 		webcamPanel.setDisplayDebugInfo(true);
 		webcamPanel.setMirrored(true);
-		// ansi init - version 1.0.9
-		AnsiConsole.systemInstall();
 	}
-
 	private static j£ getPowerfulInstance() {
 		if (instance == null) {
 			instance = new j£();
@@ -378,7 +378,9 @@ public final class j£ extends cloud.jgo.£ {
 	}
 	// version 1.0.9
 		public static String colors(String string,org.fusesource.jansi.Ansi.Color color) {
-			return ansi().fg(color).a(string).reset().toString();
+			// ansi init - version 1.0.9
+			String stringColored =  ansi().fg(color).a(string).reset().toString();
+			return stringColored ;
 		}
 		// version 1.0.9 :
 		public static ColorString getString() {

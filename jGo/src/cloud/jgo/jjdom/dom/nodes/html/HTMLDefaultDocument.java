@@ -59,13 +59,13 @@ public class HTMLDefaultDocument implements HTMLDocument {
 	private static final long serialVersionUID = 12L;
 	private HTMLElement jquerySourceTag = null;
 	private String jqueryPath = JjDom.JQUERY_URL_SNIPPET;
-	private String charsetName = null;
-	private NodeList childNodes = null;
-	private HTMLElement rootElement = null;
+	protected String charsetName = null;
+	protected NodeList childNodes = null;
+	protected HTMLElement rootElement = null;
 	private StringBuffer htmlCode = new StringBuffer();
 	private StringBuffer jsBuffer = new StringBuffer(); // LOCATION INTERNAL
 	private boolean doctype = false;
-	private JjDom home = null;
+	public JjDom home = null;
 	private String textContent = null;
 	private HTMLElement metaTag, head, title, body, style = null;
 	private CSSStyle styleSheet = null;

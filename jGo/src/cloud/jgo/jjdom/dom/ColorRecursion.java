@@ -14,7 +14,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
+import cloud.jgo.jjdom.dom.nodes.html.color.HTMLColorElement;
 import cloud.jgo.utils.ColorString;
 
 public abstract class ColorRecursion {
@@ -46,11 +46,12 @@ public abstract class ColorRecursion {
 					// System.out.println(key+":"+entry.getValue());
 				}
 			}
-			if (((HTMLElement) node).getType().equals(HTMLElementType.HTML)) {
+			if (((HTMLElement) node).getType().equals(HTMLElement.HTMLElementType.HTML)) {
 				// qui ottengo il documento del nodo
 				HTMLDocument doc = (HTMLDocument) ((Element) node).getDocument();
 				if (doc.doctypeIsPresent()) {
 					// inserisco il doctype
+					System.out.println("Ci passa @");
 					htmlCode.append('<',DomColors.TAG_COLOR).append("!DOCTYPE html",DomColors.NODENAME_COLOR).append(">\n",DomColors.TAG_COLOR);
 				}
 			}
@@ -58,7 +59,7 @@ public abstract class ColorRecursion {
 		// @
 		if (node.getTextContent() != null) {
 			if (node.getNodeType().equals(NodeType.ELEMENT)) {
-//				htmlCode.append(((HTMLDefaultElement) node).getStartTag());
+//				htmlCode.append(((HTMLColorElement) node).getStartTag());
 				htmlCode.append("<",DomColors.TAG_COLOR).append(j£.colorTheStringsSyntax(((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">",""),DomColors.ATTRIBUTE_VALUE_COLOR),DomColors.NODENAME_COLOR).append(">",DomColors.TAG_COLOR);
 			} else if (node.getNodeType().equals(NodeType.COMMENT)) {
 //				htmlCode.append(((HTMLComment) node).getStartTag());
@@ -67,7 +68,7 @@ public abstract class ColorRecursion {
 			htmlCode.append(node.getTextContent(),DomColors.NODEVALUE_COLOR); // provvisoria
 		} else {
 			if (node instanceof Element) {
-//				htmlCode.append(((HTMLDefaultElement) node).getStartTag() + "\n");
+//				htmlCode.append(((HTMLColorElement) node).getStartTag() + "\n");
 				htmlCode.append("<",DomColors.TAG_COLOR).append(j£.colorTheStringsSyntax(((HTMLDefaultElement) node).getStartTag().replace("<","").replace(">",""),DomColors.ATTRIBUTE_VALUE_COLOR),DomColors.NODENAME_COLOR).append(">\n",DomColors.TAG_COLOR);
 			}
 		}
@@ -78,11 +79,11 @@ public abstract class ColorRecursion {
 
 		// chiudo il tag
 		if (node instanceof Element) {
-			if (((HTMLElement) node).getType() != null) {
+			if (((HTMLDefaultElement) node).getType() != null) {
 				// solo se ha il tag di chisura lo inseriamo nel codice html
-				if (((HTMLElement) node).getType().hasClosingTag()) {
+				if (((HTMLDefaultElement) node).getType().hasClosingTag()) {
 					// per il momento inserisco una @ per capire
-//					htmlCode.append(((HTMLDefaultElement) node).getEndTag() + "\n");
+//					htmlCode.append(((HTMLColorElement) node).getEndTag() + "\n");
 					htmlCode.append("</",DomColors.TAG_COLOR).append(((HTMLDefaultElement) node).getEndTag().replace("</","").replace(">",""),DomColors.NODENAME_COLOR).append(">\n",DomColors.TAG_COLOR);
 				}
 			} else {

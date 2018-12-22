@@ -29,4 +29,9 @@ public class HTMLColorElement extends HTMLDefaultElement implements Colorable{
 		return result;
 	}
 
+	@Override
+	protected void setType(HTMLElementType type) {
+		// TODO Auto-generated method stub
+		super.setType(type);
+	}
 }

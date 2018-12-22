@@ -791,7 +791,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 				document = new HTMLDefaultDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
 			}
 			else if(documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
-				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
+				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8,instance);
 			}
 			else {
 				// qui dare una eccezzione ...
@@ -817,7 +817,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 				document = new HTMLDefaultDocument(charsetName, null, instance);
 			}
 			else if(documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
-				document = new HTMLColorDocument(charsetName, null, instance);
+				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8,instance);
 			}
 			else {
 				// qui dare una eccezzione ...
