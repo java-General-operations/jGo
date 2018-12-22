@@ -199,3 +199,4 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - Abbiamo ridefinito i metodi webcam di j£
 - Creati due nuovi metodi nell'interfaccia Shareable
 - aggiunto metodo alla classe Parameter:shared()
+- aggiunto metodo alla classe LocalCommand:getUnSharedParameters()

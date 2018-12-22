@@ -1243,8 +1243,25 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 
 	@Override
 	public List<Parameter> getSharedParameters() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Parameter>params = sortParameters();
+		List<Parameter>sharedParams = new ArrayList<>();
+		for (int i = 0; i < params.size(); i++) {
+			if (params.get(i).shared) {
+				sharedParams.add(params.get(i));
+			}
+		}
+		return sharedParams ;
+	}
+	
+	public List<Parameter>getUnSharedParameters(){
+		List<Parameter>params = sortParameters();
+		List<Parameter>unSharedParams = new ArrayList<>();
+		for (int i = 0; i < params.size(); i++) {
+			if (!params.get(i).shared) {
+				unSharedParams.add(params.get(i));
+			}
+		}
+		return unSharedParams ;
 	}
 
 

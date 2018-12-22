@@ -1,13 +1,6 @@
 package test;
 
-import org.fusesource.jansi.AnsiConsole;
-
-import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamPanel;
-
-import java.util.Scanner;
-
-import org.fusesource.jansi.Ansi.Color;
+import java.util.List;
 
 import cloud.jgo.j£;
 import cloud.jgo.utils.command.LocalCommand;
@@ -19,7 +12,7 @@ public class LocalTerminalTest {
 @SuppressWarnings("static-access")
 public static void main(String[] args) {
 	
-	
+	// prossimo passo : filtrare i parametri condivisi di un comando
 	
 	LocalTerminal terminal = new LocalTerminal();
 	
@@ -77,6 +70,8 @@ public static void main(String[] args) {
 	
 	Parameter nodeValue2=p2.shareParameter(nodeValue);
 	Parameter nodeName2=p2.shareParameter(nodeName);
+	Parameter param = p2.addParam("test", "test");
+	
 	
 	nodeName2.setExecution(new Execution() {
 		
@@ -105,9 +100,14 @@ public static void main(String[] args) {
 	
 	terminal.addCommands(p,p2);
 	
-	terminal.open();
+
+	// cerco di ottenere i parametri del secondo comando: solo quelli condivisi
 	
+	List<Parameter> sharedParams = p2.getUnSharedParameters();
 	
+	for (Parameter parameter : sharedParams) {
+		System.out.println(parameter);
+	}
 	
 }
 }
