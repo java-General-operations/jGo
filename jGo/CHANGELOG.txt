@@ -195,3 +195,5 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - adattato diversi metodi della classe LocalCommand tenendo conto delle sotto classi
 - aggiunta una interfaccia colorable che viene implementata da tutti i nodi colorabili
 - segnalare che quando si lavora con i nodi colorati, bisogna tenere presente che bisogna installare jansi con il metodo e didistallare quando il nostro software viene spento
+- risolto bug webcam in j£
+- Abbiamo ridefinito i metodi webcam di j£

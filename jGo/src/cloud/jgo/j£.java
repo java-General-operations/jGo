@@ -352,17 +352,14 @@ public final class j£ extends cloud.jgo.£ {
 	 * this.pannelloWebcam.setDisplayDebugInfo(true);
 	 * this.pannelloWebcam.setMirrored(true);
 	 */
-	public final static Webcam webcam = Webcam.getDefault();
+	private static Webcam webcam = null;
 	private static WebcamPanel webcamPanel = null;
 	// version 1.0.9
-	public static AnsiConsole ANSI_CONSOLE ;
+	public static AnsiConsole ANSI_CONSOLE;
 	static {
 		instance = getPowerfulInstance();
-		webcam.setViewSize(WebcamResolution.VGA.getSize()); // è per metodi statici, quindi via le preoccupazioni
-		webcamPanel = new WebcamPanel(webcam);
-		webcamPanel.setDisplayDebugInfo(true);
-		webcamPanel.setMirrored(true);
 	}
+
 	private static j£ getPowerfulInstance() {
 		if (instance == null) {
 			instance = new j£();
@@ -376,49 +373,53 @@ public final class j£ extends cloud.jgo.£ {
 
 	private j£() {
 	}
+
 	// version 1.0.9
-		public static String colors(String string,org.fusesource.jansi.Ansi.Color color) {
-			// ansi init - version 1.0.9
-			String stringColored =  ansi().fg(color).a(string).reset().toString();
-			return stringColored ;
-		}
-		// version 1.0.9 :
-		public static ColorString getString() {
-			return new ColorString();
-		}
-		//version 1.0.9 : 
-		public static ColorString getString(String string,org.fusesource.jansi.Ansi.Color color) {
-			return new ColorString(string, color);
-		}
-		// version 1.0.9: 
-		public static String colorTheStringsSyntax(String string,Color color) {
-			string = string.replaceAll("'","\"");
-			StringBuffer buffer = new StringBuffer();
-			boolean colors = false ;
-			char[]charat = string.toCharArray();
-			char symbol = '\"';String trasformer = £.getString(symbol);
-			boolean last;
-			for (int i = 0; i < charat.length; i++) {
-				last = false ; // reset var
-				if (j£.getString(charat[i]).equals(trasformer)&&!colors) {
-					colors = true;
-				}
-				else if(j£.getString(charat[i]).equals(trasformer)&&colors) {
-					last = true ;
-				}
-				// qui controllo se devo appendere il testo colorandolo oppure no
-				if (colors) {
-					buffer.append(j£.colors(£.getString(charat[i]), color));
-					if (last) {
-						colors = false ;
-					}
-				}
-				else {
-					buffer.append(charat[i]);
-				}
+	public static String colors(String string, org.fusesource.jansi.Ansi.Color color) {
+		// ansi init - version 1.0.9
+		String stringColored = ansi().fg(color).a(string).reset().toString();
+		return stringColored;
+	}
+
+	// version 1.0.9 :
+	public static ColorString getString() {
+		return new ColorString();
+	}
+
+	// version 1.0.9 :
+	public static ColorString getString(String string, org.fusesource.jansi.Ansi.Color color) {
+		return new ColorString(string, color);
+	}
+
+	// version 1.0.9:
+	public static String colorTheStringsSyntax(String string, Color color) {
+		string = string.replaceAll("'", "\"");
+		StringBuffer buffer = new StringBuffer();
+		boolean colors = false;
+		char[] charat = string.toCharArray();
+		char symbol = '\"';
+		String trasformer = £.getString(symbol);
+		boolean last;
+		for (int i = 0; i < charat.length; i++) {
+			last = false; // reset var
+			if (j£.getString(charat[i]).equals(trasformer) && !colors) {
+				colors = true;
+			} else if (j£.getString(charat[i]).equals(trasformer) && colors) {
+				last = true;
 			}
-			return buffer.toString();
+			// qui controllo se devo appendere il testo colorandolo oppure no
+			if (colors) {
+				buffer.append(j£.colors(£.getString(charat[i]), color));
+				if (last) {
+					colors = false;
+				}
+			} else {
+				buffer.append(charat[i]);
+			}
 		}
+		return buffer.toString();
+	}
+
 	/**
 	 * This method retrieves the object from a json file
 	 * 
@@ -1091,10 +1092,18 @@ public final class j£ extends cloud.jgo.£ {
 	 */
 	public static j£ openWebcam() {
 		j£ inst = null;
-		if (webcam != null) {
-			boolean flag = webcam.open();
-			if (flag) {
-				inst = getPowerfulInstance();
+		if (webcam == null) {
+			webcam = Webcam.getDefault();
+			webcam.setViewSize(WebcamResolution.VGA.getSize());
+			webcamPanel = new WebcamPanel(webcam);
+			webcamPanel.setDisplayDebugInfo(true);
+			webcamPanel.setMirrored(true);
+		} else {
+			if (!webcam.isOpen()) {
+				boolean flag = webcam.open();
+				if (flag) {
+					inst = getPowerfulInstance();
+				}
 			}
 		}
 		return inst;
@@ -1118,7 +1127,8 @@ public final class j£ extends cloud.jgo.£ {
 
 	// version 1.0.5
 	/**
-	 * This method returns a desktop application for webcam monitoring
+	 * This method returns a desktop application for webcam monitoring. It works
+	 * only if the webcam is open.
 	 * 
 	 * @param title
 	 *            jframe title
@@ -1129,14 +1139,18 @@ public final class j£ extends cloud.jgo.£ {
 	 * @return the jframe
 	 */
 	public static JFrame getJFrameWebcam(String title, ImageIcon icon, boolean visibility) {
-		JFrame frame = j£._S.createFrame(title, icon, false);
-		frame.setLocationRelativeTo(null);
-		frame.add(webcamPanel);
-		if (visibility) {
-			frame.setVisible(true);
+		if (webcamPanel != null) {
+			JFrame frame = j£._S.createFrame(title, icon, false);
+			frame.setLocationRelativeTo(null);
+			frame.add(webcamPanel);
+			if (visibility) {
+				frame.setVisible(true);
+			}
+			frame.pack();
+			return frame;
+		} else {
+			return null;
 		}
-		frame.pack();
-		return frame;
 	}
 
 	/**
@@ -1155,13 +1169,17 @@ public final class j£ extends cloud.jgo.£ {
 	 * @return the jframe
 	 */
 	public static JFrame getJFrameWebcam(String title, ImageIcon icon, int width, int height, boolean visibility) {
-		JFrame frame = j£._S.createFrame(title, width, height, icon, visibility);
-		frame.setLocationRelativeTo(null);
-		frame.add(webcamPanel);
-		if (visibility) {
-			frame.setVisible(true);
+		if (webcamPanel != null) {
+			JFrame frame = j£._S.createFrame(title, width, height, icon, visibility);
+			frame.setLocationRelativeTo(null);
+			frame.add(webcamPanel);
+			if (visibility) {
+				frame.setVisible(true);
+			}
+			return frame;
+		} else {
+			return null;
 		}
-		return frame;
 	}
 
 	/**
