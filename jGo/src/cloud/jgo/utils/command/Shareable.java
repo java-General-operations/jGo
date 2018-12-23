@@ -56,5 +56,8 @@ public interface Shareable {
 	public abstract Parameter shareParameter(Parameter parameter);
 	public abstract List<Parameter> getSharedParameters();
 	public abstract void shareItEntirely(Parameter parameter,SharedExecution execution);
+	// in questo metodo si da per scontato che il parametro abbia già una esecuzione
+	// condividibile
+	public abstract void shareItEntirely(Parameter parameter);
 	
 }

@@ -1278,4 +1278,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		p.setExecution(execution);
 		p.shared = true ;
 	}
+
+	@Override
+	public void shareItEntirely(Parameter parameter) {
+		shareItEntirely(parameter, (SharedExecution) parameter.getExecution());
+	}
+	
+	
 }
