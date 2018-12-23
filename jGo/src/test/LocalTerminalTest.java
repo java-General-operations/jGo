@@ -29,35 +29,32 @@ public static void main(String[] args) {
 	// mi creo qualche comando 
 	
 	LocalCommand p,p2 ;
-	LocalCommand start = new LocalCommand("start","start");
-	start.setExecution(new Execution() {
-		
-		@Override
-		public Object exec() {
-			// TODO Auto-generated method stub
-			return £.openTerminal();
-		}
-	});
 	p = new LocalCommand("p","p");
 	p2 = new LocalCommand("p2","p2");
 	
-	p.setInputValueExploitable(true);
-	p2.setInputValueExploitable(true);
+	
+	Parameter paramP,paramP2 ;
+	
+	paramP = p.addParam("test_p","test p");
+	
+	paramP2 = p2.addParam("test_p2","test p2");
+	
+	
+	// adesso mi creo una esecuzione che dovrà essere condivisa tra i params di p e p2
+	
+	Execution execution = new MySharedExecution();
+	
+	paramP.setExecution(execution);
+	paramP2.setExecution(execution);
 	
 	
 	
-	SharedExecution execution = new MySharedExecution();
+	// aggiungo i comandi 
 	
-
-	p.setExecution(execution);p2.setExecution(execution);
-	
-	
-	// aggiungo i comandi al terminale 
-	
-	terminal.addCommands(p,p2,start);
-	
+	terminal.addCommands(p,p2);
 	
 	terminal.open();
+	
 	
 	
 }
