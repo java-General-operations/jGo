@@ -7,7 +7,7 @@ import cloud.jgo.utils.command.Sharer;
 
 public abstract class SharedExecution extends Execution{
 	
-	public abstract Object sharedExec(Sharer sharer);
+	protected abstract Object sharedExec(Sharer sharer);
 	
 	private Sharer currentSharer = null ;
 	

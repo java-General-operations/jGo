@@ -356,16 +356,19 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	public Object execute() {
 		Object execute = null;
 		if (hasAnExecution()) {
-
 			if (useThread == true) {
 				new Thread(new Runnable() {
-
 					@Override
 					public void run() {
-						getExecution().exec();
+						if (getExecution()instanceof SharedExecution) {
+							((SharedExecution)getExecution()).setCurrentSharer(LocalCommand.this);
+						}
 					}
 				}).start();
 			} else {
+				if (getExecution()instanceof SharedExecution) {
+					((SharedExecution)getExecution()).setCurrentSharer(this);
+				}
 				execute = getExecution().exec();
 			}
 			return execute;
@@ -703,11 +706,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						if (getCommand.hasInputValueExploitable()) {
 							// controllo se di fatto c'è un valore da input
 							getCommand.setInputValue(rest);
-							// qui verifico se una esecuzione condivisa 
-							if (getCommand.getExecution()instanceof SharedExecution) {
-								// qui impostiamo il comando che sta generando l'esecuzione
-								((SharedExecution)getCommand.getExecution()).setCurrentSharer(getCommand);
-							}
 								// eseguo il comando
 								objectReturn = getCommand.execute();
 							if (objectReturn != null) {
@@ -788,13 +786,9 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 											// qui devo controllare se l'entry ha il valore del parametro
 											if (entry.value != null) {
 												// setto il valore sfruttabile
-
 												getParameter.setInputValue(entry.value);
-
 												// eseguo il parametro
-
 												objectReturn = getParameter.execute();
-
 												if (objectReturn != null) {
 													commandReturnList.add(objectReturn);
 
@@ -924,9 +918,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 					}
 				}
 				if (getCommand != null) {
-					if (getCommand.getExecution()instanceof SharedExecution) {
-						((SharedExecution)getCommand.getExecution()).setCurrentSharer(getCommand);
-					}
 					objectReturn = getCommand.execute();
 					commandReturnList.add(objectReturn);
 					objectReturn = commandReturnList;

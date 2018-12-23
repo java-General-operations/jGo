@@ -22,6 +22,7 @@
  */
 package cloud.jgo.utils.command;
 import cloud.jgo.utils.command.execution.Execution;
+import cloud.jgo.utils.command.execution.SharedExecution;
 
 /**
  * 
@@ -29,7 +30,7 @@ import cloud.jgo.utils.command.execution.Execution;
  *         This class represents a parameter
  */
 public abstract class Parameter
-		implements cloud.jgo.utils.command.execution.Executable, Comparable<Parameter>, InputSettable {
+		implements cloud.jgo.utils.command.execution.Executable, Comparable<Parameter>, InputSettable, Sharer {
 	private static final long serialVersionUID = 1L;
 	private Execution execution = null;
 	private Command parent = null;
@@ -45,7 +46,7 @@ public abstract class Parameter
 	public String getParam() {
 		return param;
 	}
-	public boolean usThread = false;
+	public boolean useThread = false;
 	// questo metodo serve a condividere un oggetto
 
 	/**
@@ -147,11 +148,27 @@ public abstract class Parameter
 
 	@Override
 	public Object execute() {
+		Object execute = null ;
 		if (hasAnExecution()) {
-			return getExecution().exec();
-		} else {
-			return null;
-		}
+			if (useThread) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						if (getExecution()instanceof SharedExecution) {
+							((SharedExecution)getExecution()).setCurrentSharer(Parameter.this);
+						}
+						getExecution().exec();
+					}
+				}).start();
+			}
+			else {
+				if (getExecution()instanceof SharedExecution) {
+					((SharedExecution)getExecution()).setCurrentSharer(this);
+				}
+			execute = getExecution().exec();
+			}
+		} 
+		return execute ;
 	}
 
 	/**
@@ -176,10 +193,6 @@ public abstract class Parameter
 		((LocalCommand) this.parent).getHelpCommand().reload((LocalCommand) this.parent);
 	}
 	
-
-	
-	
-
 	/**
 	 * This method returns the parameter parent
 	 * 
@@ -198,5 +211,11 @@ public abstract class Parameter
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public Type getSharerType() {
+		// TODO Auto-generated method stub
+		return Type.PARAMETER ;
 	}
 }
