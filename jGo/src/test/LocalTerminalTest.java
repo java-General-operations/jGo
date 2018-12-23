@@ -6,6 +6,7 @@ import cloud.jgo.j£;
 import cloud.jgo.£;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
+import cloud.jgo.utils.command.Sharer;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
@@ -44,36 +45,64 @@ public static void main(String[] args) {
 	nodeValue.setInputValueExploitable(true);
 	
 	
-	// un parametro per essere condiviso interamente, deve avere una esecuzione condividibile
+	
+	Execution nodeNameExecution = new SharedExecution() {
+		
+		@Override
+		protected Object sharedExec(Sharer sharer) {
+			
+			
+			
+			Parameter p = (Parameter) sharer ;
+			
+			
+			System.out.println("NodeName:"+p.getInputValue()+" - parent command:"+p.getParent().getCommand());
+			
+			
+			return null ;
+			
+		}
+	};
 	
 	
-	Execution ex = new MySharedExecution();
+	
+	Execution nodeValueExecution = new SharedExecution() {
+		
+		@Override
+		protected Object sharedExec(Sharer sharer) {
+			
+			
+			
+			Parameter p = (Parameter) sharer ;
+			
+			
+			System.out.println("NodeValue:"+p.getInputValue()+" - parent command:"+p.getParent().getCommand());
+			
+			
+			return null ;
+			
+		}
+	};
+	
+	// in tanto installo le due esecuzioni nei due parametri originali
+	
+	nodeName.setExecution(nodeNameExecution);
+	nodeValue.setExecution(nodeValueExecution);
 	
 	
-	// per prima cosa setto l'esecuzione dei parametri
+	// ora condivido i due parametri 
 	
-	nodeName.setExecution(ex);
-	nodeValue.setExecution(ex);
+	// con create
 	
+	create.shareItEntirely(nodeName);
+	create.shareItEntirely(nodeValue);
 	
+	// aggiungo i comandi al terminale 
 	
-	// okok posso condividere i parametri con create 
+	terminal.addCommands(create,set);
 	
-	create.shareItEntirely(nodeName,(SharedExecution) ex);
-	create.shareItEntirely(nodeValue,(SharedExecution) ex);
+	terminal.open();
 	
-	
-	
-	// quindi adesso se voglio eliminare un parametro condiviso
-	// uso il metodo per eliminare parametri normale 
-	
-	boolean deleted=create.removeParam("nodeName");
-	boolean deleted2 = create.removeParam("nodeValue");
-	
-	System.out.println("Parametro eliminato:"+deleted);
-	System.out.println("Parametro eliminato:"+deleted2);
-	
-	System.out.println("Has parameters:"+create.hasParameters());
 	
 	
 	

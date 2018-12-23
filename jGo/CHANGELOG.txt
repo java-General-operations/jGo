@@ -203,4 +203,4 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - aggiunta l'interfaccia Sharer:per ora vuota, indica solo che gli elementi che impl questa interfaccia, possono condividere risorse
 - Command estende questa interfaccia, per il momento
 - aggiunta nuova interfaccia SharedExecution, sarà l'esecuzione condivisa, per comandi la cui esecuzione è uguale
-- aggiunti nuovi metodi all'interfaccia per condividere parametri interamente
+- aggiunti nuovi metodi all'interfaccia Shareable :per condividere parametri interamente
