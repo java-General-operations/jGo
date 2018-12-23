@@ -25,6 +25,7 @@ package cloud.jgo.utils.command;
 import java.util.List;
 
 import cloud.jgo.utils.command.execution.Execution;
+import cloud.jgo.utils.command.execution.SharedExecution;
 
 /**
  * 
@@ -54,4 +55,6 @@ public interface Shareable {
 	// version 1.0.9
 	public abstract Parameter shareParameter(Parameter parameter);
 	public abstract List<Parameter> getSharedParameters();
+	public abstract void shareItEntirely(Parameter parameter,SharedExecution execution);
+	
 }

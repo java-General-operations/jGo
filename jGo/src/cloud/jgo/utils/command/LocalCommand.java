@@ -1269,4 +1269,13 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		// TODO Auto-generated method stub
 		return Type.COMMAND;
 	}
+
+	@Override
+	public void shareItEntirely(Parameter parameter, SharedExecution execution) {
+		Parameter p = addParam(parameter.getOnlyParam(),parameter.getParameterHelp());
+		// adesso vado a prendere le info + importanti del parametro che ho ricevuto
+		p.setInputValueExploitable(parameter.hasInputValueExploitable());
+		p.setExecution(execution);
+		p.shared = true ;
+	}
 }
