@@ -349,11 +349,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 
 	@Override
 	public void setExecution(Execution execution) {
-		if (execution instanceof SharedExecution)
-		{
-			
-		}
-		else this.execution = execution;
+		this.execution = execution;
 	}
 
 	@Override
@@ -707,8 +703,14 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						if (getCommand.hasInputValueExploitable()) {
 							// controllo se di fatto c'è un valore da input
 							getCommand.setInputValue(rest);
-							// eseguo il comando
-							objectReturn = getCommand.execute();
+							// qui verifico se una esecuzione condivisa 
+							if (getCommand.getExecution()instanceof SharedExecution) {
+								System.exit(0);
+								// qui impostiamo il comando che sta generando l'esecuzione
+								((SharedExecution)getCommand.getExecution()).setCurrentSharer(getCommand);
+							}
+								// eseguo il comando
+								objectReturn = getCommand.execute();
 							if (objectReturn != null) {
 								commandReturnList.add(objectReturn);
 								objectReturn = commandReturnList;
@@ -923,6 +925,9 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 					}
 				}
 				if (getCommand != null) {
+					if (getCommand.getExecution()instanceof SharedExecution) {
+						((SharedExecution)getCommand.getExecution()).setCurrentSharer(getCommand);
+					}
 					objectReturn = getCommand.execute();
 					commandReturnList.add(objectReturn);
 					objectReturn = commandReturnList;
@@ -1267,5 +1272,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			}
 		}
 		return unSharedParams ;
+	}
+
+	@Override
+	public Type getSharerType() {
+		// TODO Auto-generated method stub
+		return Type.COMMAND;
 	}
 }

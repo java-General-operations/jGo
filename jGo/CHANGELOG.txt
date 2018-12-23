@@ -200,3 +200,6 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - Creati due nuovi metodi nell'interfaccia Shareable
 - aggiunto metodo alla classe Parameter:shared()
 - aggiunto metodo alla classe LocalCommand:getUnSharedParameters()
+- aggiunta l'interfaccia Sharer:per ora vuota, indica solo che gli elementi che impl questa interfaccia, possono condividere risorse
+- Command estende questa interfaccia, per il momento
+- aggiunta nuova interfaccia SharedExecution, sarà l'esecuzione condivisa, per comandi la cui esecuzione è uguale
