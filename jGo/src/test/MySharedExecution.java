@@ -34,7 +34,7 @@ public class MySharedExecution extends SharedExecution{
 		else {
 			// PARAMETER
 			Parameter p = (Parameter) sharer;
-			System.out.println("esecuzione del param:"+p.getParam());
+			System.out.println("esecuzione del param:"+p.getParam()+" - inputValue:"+p.getInputValue());
 			
 		}
 		return null ;

@@ -15,10 +15,6 @@ public class LocalTerminalTest {
 public static void main(String[] args) {
 	
 	
-	// okok adesso dobbiamo testare se da problemi con i valori da input
-	
-	
-	
 	LocalTerminal terminal = new LocalTerminal();
 	
 	terminal.useGeneralHelp();
@@ -37,7 +33,11 @@ public static void main(String[] args) {
 	
 	paramP = p.addParam("test_p","test p");
 	
+	paramP.setInputValueExploitable(true);
+	
 	paramP2 = p2.addParam("test_p2","test p2");
+	
+	paramP2.setInputValueExploitable(true);
 	
 	
 	// adesso mi creo una esecuzione che dovrà essere condivisa tra i params di p e p2
