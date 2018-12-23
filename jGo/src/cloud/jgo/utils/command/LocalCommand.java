@@ -705,7 +705,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 							getCommand.setInputValue(rest);
 							// qui verifico se una esecuzione condivisa 
 							if (getCommand.getExecution()instanceof SharedExecution) {
-								System.exit(0);
 								// qui impostiamo il comando che sta generando l'esecuzione
 								((SharedExecution)getCommand.getExecution()).setCurrentSharer(getCommand);
 							}

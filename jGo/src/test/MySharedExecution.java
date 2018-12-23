@@ -13,15 +13,22 @@ public class MySharedExecution extends SharedExecution{
 	@Override
 	public Object sharedExec(Sharer sharer) {
 		if (sharer.getSharerType()==Type.COMMAND) {
+			System.out.println("Ci ebtra");
+			LocalCommand command = (LocalCommand) sharer ;
 			
-			// qui controllo di che comando si tratta 
+			String inputValue = null ;
 			
-			if (((LocalCommand)sharer).getCommand().equals("p")) {
-				System.out.println("Esecuzione di p ...");
+			inputValue = command.getInputValue();
+			
+			if (command.getCommand().equals("p")) {
+				
+				return "esecuzione di p:"+inputValue;
 			}
-			else if(((LocalCommand)sharer).getCommand().equals("p2")){
-				System.out.println("Esecuzione di p2 ...");
+			else if(command.getCommand().equals("p2")) {
+				
+				return "esecuzione di p2:"+inputValue;
 			}
+			
 			
 		}
 		return null ;
