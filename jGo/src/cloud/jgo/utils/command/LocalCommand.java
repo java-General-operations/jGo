@@ -34,6 +34,7 @@ import java.util.Map.Entry;
 import cloud.jgo.j£;
 import cloud.jgo.£;
 import cloud.jgo.utils.command.execution.Execution;
+import cloud.jgo.utils.command.execution.SharedExecution;
 import cloud.jgo.utils.command.terminal.Terminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
 
@@ -348,7 +349,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 
 	@Override
 	public void setExecution(Execution execution) {
-		this.execution = execution;
+		if (execution instanceof SharedExecution)
+		{
+			
+		}
+		else this.execution = execution;
 	}
 
 	@Override
@@ -1263,6 +1268,4 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		}
 		return unSharedParams ;
 	}
-
-
 }

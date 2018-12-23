@@ -175,6 +175,10 @@ public abstract class Parameter
 		// qui ricarico l'help del comando
 		((LocalCommand) this.parent).getHelpCommand().reload((LocalCommand) this.parent);
 	}
+	
+
+	
+	
 
 	/**
 	 * This method returns the parameter parent

@@ -24,6 +24,8 @@ package cloud.jgo.utils.command;
 
 import java.util.List;
 
+import cloud.jgo.utils.command.execution.Execution;
+
 /**
  * 
  * @author Martire91<br>
