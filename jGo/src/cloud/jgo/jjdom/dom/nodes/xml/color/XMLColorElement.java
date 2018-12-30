@@ -1,8 +1,10 @@
 package cloud.jgo.jjdom.dom.nodes.xml.color;
 
+import cloud.jgo.jjdom.dom.ColorRecursion;
 import cloud.jgo.jjdom.dom.nodes.html.color.Colorable;
 import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 import cloud.jgo.jjdom.dom.nodes.xml.XMLElement;
+import cloud.jgo.utils.ColorString;
 
 public class XMLColorElement extends XMLElement implements Colorable{
 	
@@ -14,8 +16,10 @@ public class XMLColorElement extends XMLElement implements Colorable{
 
 	@Override
 	public String getColorMarkup() {
-		// TODO Auto-generated method stub
-		return null;
+		ColorString xmlCode = new ColorString();
+		ColorRecursion.examines_xml(this, xmlCode,null); // provvisorio, poi gli dobbiamo passare il document
+		String result = xmlCode.toString();
+		return result;
 	}
 
 	public XMLColorElement() {

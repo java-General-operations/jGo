@@ -53,7 +53,7 @@ public class XMLDocument implements Document {
 	private String charset = Document.CHARSET_UTF_8;
 	private String charsetName = null;
 	private NodeList childNodes = null;
-	private XMLElement rootElement = null;
+	protected XMLElement rootElement = null;
 	private StringBuffer xmlCode = new StringBuffer();
 	private String textContent = null;
 

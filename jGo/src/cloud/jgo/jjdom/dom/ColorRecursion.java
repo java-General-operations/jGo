@@ -112,11 +112,17 @@ public abstract class ColorRecursion {
 	}
 	
 	// okok ora dobbiamo sviluppare questo metodo : 
-		public static void examines_xml(Node node, StringBuffer xmlCode, String charset) {
+		public static void examines_xml(Node node, ColorString xmlCode, String charset) {
 			// for doctype from here to @
 			if (node instanceof XMLDocument) {
-				xmlCode.append(
-						"<?xml version=" + £.escp(XMLDocument.XML_VERSION) + " encoding=" + £.escp(charset) + "?>\n");
+//				xmlCode.append(
+//						"<?xml version=" + £.escp(XMLDocument.XML_VERSION) + " encoding=" + £.escp(charset) + "?>\n");
+				xmlCode.append("<",DomColors.TAG_COLOR).append("xml",DomColors.NODENAME_COLOR)
+				       .append(" ",Color.DEFAULT).append("version",Color.DEFAULT).append("=",Color.DEFAULT)
+				       .append(£.escp(XMLDocument.XML_VERSION),DomColors.ATTRIBUTE_VALUE_COLOR)
+				       .append(" ", Color.DEFAULT).append("encoding=",Color.DEFAULT)
+				       .append(£.escp(charset),DomColors.ATTRIBUTE_VALUE_COLOR).append("?",Color.DEFAULT).append(">",DomColors.TAG_COLOR)
+				       .append("\n",Color.DEFAULT);
 			}
 			String key = null;
 			if (node instanceof Element) {
@@ -147,14 +153,21 @@ public abstract class ColorRecursion {
 			// @
 			if (node.getTextContent() != null) {
 				if (node.getNodeType().equals(NodeType.ELEMENT)) {
-					xmlCode.append(((XMLElement) node).getStartTag());
+//					xmlCode.append(((XMLElement) node).getStartTag(),DomColors.TAG_COLOR);
+					xmlCode.append("<",DomColors.TAG_COLOR).append(j£.colorTheStringsSyntax(((XMLElement) node).getStartTag().replace("<","").replace(">",""),DomColors.ATTRIBUTE_VALUE_COLOR),DomColors.NODENAME_COLOR).append(">",DomColors.TAG_COLOR);
 				} else if (node.getNodeType().equals(NodeType.COMMENT)) {
-					xmlCode.append(((HTMLComment) node).getStartTag());
+					xmlCode.append(((HTMLComment) node).getStartTag(),DomColors.COMMENT_COLOR);
 				}
-				xmlCode.append(node.getTextContent());
+				if (node.getNodeType().equals(NodeType.COMMENT)) {
+					xmlCode.append(node.getTextContent(),DomColors.COMMENT_COLOR);
+				}
+				else {
+					xmlCode.append(node.getTextContent(),DomColors.NODEVALUE_COLOR);
+				}
 			} else {
 				if (node instanceof Element) {
-					xmlCode.append(((XMLElement) node).getStartTag() + "\n");
+//					xmlCode.append(((XMLElement) node).getStartTag() + "\n");
+					xmlCode.append("<",DomColors.TAG_COLOR).append(j£.colorTheStringsSyntax(((XMLElement) node).getStartTag().replace("<","").replace(">",""),DomColors.ATTRIBUTE_VALUE_COLOR),DomColors.NODENAME_COLOR).append(">\n",DomColors.TAG_COLOR);
 				}
 			}
 			for (int i = 0; i < node.getChildNodes().getLength(); i++) {
@@ -164,13 +177,13 @@ public abstract class ColorRecursion {
 			if (node instanceof Element) {
 				// di sicuro se il nodo non ha un tipo di riferimento
 				// chiudiamo in maniera standart : con il tag di chiusura
-				xmlCode.append(((XMLElement) node).getEndTag() + "\n");
+				xmlCode.append(((XMLElement) node).getEndTag() + "\n",DomColors.TAG_COLOR);
 			} else {
 				// qui invece significa che non è un elemento html
 				// quindi deve essere per forza un commento, almeno per il momento
 				// magari per sicurezza:controllo che sia cosi
 				if (node instanceof Comment) {
-					xmlCode.append(((HTMLComment) node).getEndTag() + "\n");
+					xmlCode.append(((HTMLComment) node).getEndTag() + "\n",DomColors.COMMENT_COLOR);
 				}
 			}
 		}
