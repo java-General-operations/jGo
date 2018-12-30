@@ -319,27 +319,39 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 
 			// qui devo prendere tutti i parameters
 			Collection<Parameter> collection = command.structure.values();
+			List<Parameter>orderParameters = command.sortParameters();
 			// qui ci sarà la descrizione del comando root
 			buffer.append(this.command.getHelp().toUpperCase() + "   / has input value ="+this.command.hasInputValueExploitable()+"\n\n");
-			buffer.append("* Parameters :" + collection + " :\n\n");
-
-			if (this.command.hasParameters()) {
-
-				// ci sono parametri
-
-				// quindi qui devo prendere i params
-				Iterator<Entry<String, Parameter>> iterator = command.iterator();
-				List<Parameter> params = new ArrayList<>();
-				while (iterator.hasNext()) {
-					Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter> entry = (Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter>) iterator
-							.next();
-					Parameter param = entry.getValue();
-					buffer.append(param.getParam() + "=" + param.getParameterHelp() + "  / has input value ="
-							+ param.hasInputValueExploitable() + "\n");
+			if (orderParameters!=null) {
+				buffer.append("* Parameters :" + orderParameters + " :\n\n");
+				if (this.command.hasParameters()) {
+					// ci sono parametri
+					// quindi qui devo prendere i params
+					Iterator<Parameter> iterator =orderParameters.iterator();
+					while (iterator.hasNext()) {
+						Parameter param = iterator.next();
+						buffer.append(param.getParam() + "=" + param.getParameterHelp() + "  / has input value ="
+								+ param.hasInputValueExploitable() + "\n");
+					}
 				}
 			}
+			else {
+				buffer.append("* Parameters :" + collection + " :\n\n");
+				if (this.command.hasParameters()) {
+					// ci sono parametri
+					// quindi qui devo prendere i params
+					Iterator<Entry<String, Parameter>> iterator =command.iterator();
+					
+					while (iterator.hasNext()) {
+						Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter> entry = (Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter>) iterator
+								.next();
+						Parameter param = entry.getValue();
+						buffer.append(param.getParam() + "=" + param.getParameterHelp() + "  / has input value ="
+								+ param.hasInputValueExploitable() + "\n");
+					}
+				}	
+			}
 		}
-
 		@Override
 		public int compareTo(HelpCommand arg0) {
 			return this.command.command.compareTo(arg0.command.command);

@@ -33,19 +33,13 @@ public static void main(String[] args) {
 	
 	HTMLElement element,element2 ;
 	
-	element = JjDom.document.createElement(newType);
-	element2 = JjDom.document.createElement(newType);
-	
-	element.setTextContent("XCiao");
-	element2.setTextContent("XCiao");
 	
 	
-	// aggiungo gli elementi al documento 
 	
 	
-	JjDom.document.getBody().appendChilds(element,element2);
 	
-	JjDom.printDocumentMarkup();
+	
+	
 	
 	
 	
