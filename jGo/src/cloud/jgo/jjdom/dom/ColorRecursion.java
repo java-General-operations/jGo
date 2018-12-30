@@ -111,7 +111,67 @@ public abstract class ColorRecursion {
 		}
 	}
 	
-	
-	
-	
+	// okok ora dobbiamo sviluppare questo metodo : 
+		public static void examines_xml(Node node, StringBuffer xmlCode, String charset) {
+			// for doctype from here to @
+			if (node instanceof XMLDocument) {
+				xmlCode.append(
+						"<?xml version=" + £.escp(XMLDocument.XML_VERSION) + " encoding=" + £.escp(charset) + "?>\n");
+			}
+			String key = null;
+			if (node instanceof Element) {
+				// qui che sappiamo che si tratta di un elemento html
+				// gestiamo gli attributi
+				if (((Element) node).hasAttributes()) {
+					// System.out.println("L'elemento "+node.getNodeName()+" ha i seguenti attributi
+					// :");
+					Map<String, String> attributes = ((Element) node).getAttributes();
+					Iterator<Entry<String, String>> iterator = attributes.entrySet().iterator();
+					while (iterator.hasNext()) {
+						Map.Entry<java.lang.String, java.lang.String> entry = (Map.Entry<java.lang.String, java.lang.String>) iterator
+								.next();
+						key = entry.getKey();
+						// casomai eliminare da qui a @
+						if (((XMLElement) node).getStartTag().contains(" " + key + "='" + entry.getValue() + "'")) {
+							((XMLElement) node).setStartTag(((XMLElement) node).getStartTag()
+									.replace(" " + key + "='" + entry.getValue() + "'", ""));
+						}
+						// @ - in tanto
+						((XMLElement) node).setStartTag(((XMLElement) node).getStartTag().replace(">", ""));
+						((XMLElement) node).setStartTag(
+								((XMLElement) node).getStartTag() + " " + key + "='" + entry.getValue() + "'" + ">");
+						// System.out.println(key+":"+entry.getValue());
+					}
+				}
+			}
+			// @
+			if (node.getTextContent() != null) {
+				if (node.getNodeType().equals(NodeType.ELEMENT)) {
+					xmlCode.append(((XMLElement) node).getStartTag());
+				} else if (node.getNodeType().equals(NodeType.COMMENT)) {
+					xmlCode.append(((HTMLComment) node).getStartTag());
+				}
+				xmlCode.append(node.getTextContent());
+			} else {
+				if (node instanceof Element) {
+					xmlCode.append(((XMLElement) node).getStartTag() + "\n");
+				}
+			}
+			for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+				examines_xml(node.getChildNodes().item(i), xmlCode, charset);
+			}
+			// chiudo il tag
+			if (node instanceof Element) {
+				// di sicuro se il nodo non ha un tipo di riferimento
+				// chiudiamo in maniera standart : con il tag di chiusura
+				xmlCode.append(((XMLElement) node).getEndTag() + "\n");
+			} else {
+				// qui invece significa che non è un elemento html
+				// quindi deve essere per forza un commento, almeno per il momento
+				// magari per sicurezza:controllo che sia cosi
+				if (node instanceof Comment) {
+					xmlCode.append(((HTMLComment) node).getEndTag() + "\n");
+				}
+			}
+		}
 }
