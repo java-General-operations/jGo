@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.j£;
+import cloud.jgo.£;
+import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.Node.NodeType;
@@ -15,6 +17,8 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.color.HTMLColorElement;
+import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
+import cloud.jgo.jjdom.dom.nodes.xml.XMLElement;
 import cloud.jgo.utils.ColorString;
 
 public abstract class ColorRecursion {
@@ -106,6 +110,7 @@ public abstract class ColorRecursion {
 			}
 		}
 	}
+	
 	
 	
 	
