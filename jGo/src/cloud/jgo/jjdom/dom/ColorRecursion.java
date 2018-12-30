@@ -106,4 +106,7 @@ public abstract class ColorRecursion {
 			}
 		}
 	}
+	
+	
+	
 }
