@@ -23,8 +23,13 @@
 package cloud.jgo.jjdom.dom.nodes.html;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
+import cloud.jgo.£;
 import cloud.jgo.jjdom.Home;
 import cloud.jgo.jjdom.dom.Manipulable;
 import cloud.jgo.jjdom.dom.nodes.Element;
@@ -204,8 +209,9 @@ public interface HTMLElement extends Element, Home {
 		 * @param flag
 		 *            the flag
 		 */
-		public void setClosingTag(boolean flag) {
+		public HTMLElementType setClosingTag(boolean flag) {
 			this.hasClosingTag = flag;
+			return this ;
 		}
 
 		/**
@@ -214,8 +220,9 @@ public interface HTMLElement extends Element, Home {
 		 * @param flag
 		 *            the flag
 		 */
-		public void setThereCanBeMore(boolean flag) {
+		public HTMLElementType setThereCanBeMore(boolean flag) {
 			this.thereCanBeMore = flag;
+			return this ;
 		}
 
 		private HTMLElementType(String tagName, boolean hasClosingTag, boolean thereCanBeMore) {
@@ -275,22 +282,68 @@ public interface HTMLElement extends Element, Home {
 		public final static HTMLElementType CAPTION = new HTMLElementType("caption", true, true);
 		public final static HTMLElementType COL = new HTMLElementType("col", false, true);
 		public final static HTMLElementType COL_GROUP = new HTMLElementType("colgroup", true, true);
-		public final static HTMLElementType[] availableTypes = { HTML, HEAD, TITLE, SCRIPT, LINK, BODY, DIV, TABLE, TH,
-				TR, TD, TBODY, THEAD, TFOOT, STRONG, IMG, H1, H2, H3, H4, P, A, BR, UL, OL, LI, SPAN, EM, FORM, INPUT,
-				LABEL, OPTION, SELECT, TIME, VIDEO, META, STYLE, CODE, BUTTON, ARTICLE, ASIDE, CANVAS, CAPTION, COL,
-				COL_GROUP };
-
+		public static List<HTMLElementType> availableTypes = new ArrayList<>();
+		static {
+			/*
+			 
+			 	HTML, HEAD, 
+			 	TITLE, 
+			 	SCRIPT, LINK,
+				BODY, DIV, 
+				TABLE, TH,
+				TR, TD,
+				TBODY, THEAD,
+				TFOOT,
+				STRONG, IMG,
+				H1, H2, H3,
+				H4, P, A,
+				BR, UL, OL,
+				LI,
+				SPAN, EM, FORM,
+				INPUT,
+				LABEL, OPTION, SELECT,
+				TIME, VIDEO, META,
+				STYLE,
+				CODE, BUTTON, ARTICLE,
+				ASIDE, CANVAS, CAPTION,
+				COL,
+				COL_GROUP 
+			 
+			 */
+			availableTypes.add(HTML);availableTypes.add(HEAD);
+			availableTypes.add(TITLE);availableTypes.add(SCRIPT);
+			availableTypes.add(LINK);availableTypes.add(BODY);
+			availableTypes.add(DIV);availableTypes.add(TABLE);
+			availableTypes.add(TH);availableTypes.add(TR);
+			availableTypes.add(TD);availableTypes.add(TBODY);
+			availableTypes.add(THEAD);availableTypes.add(TFOOT);
+			availableTypes.add(STRONG);availableTypes.add(IMG);
+			availableTypes.add(H1);availableTypes.add(H2);
+			availableTypes.add(H3);availableTypes.add(H4);
+			availableTypes.add(P);availableTypes.add(A);
+			availableTypes.add(BR);availableTypes.add(UL);
+			availableTypes.add(OL);availableTypes.add(LI);
+			availableTypes.add(SPAN);availableTypes.add(EM);
+			availableTypes.add(FORM);availableTypes.add(INPUT);
+			availableTypes.add(LABEL);availableTypes.add(OPTION);
+			availableTypes.add(SELECT);availableTypes.add(TIME);
+			availableTypes.add(VIDEO);availableTypes.add(META);
+			availableTypes.add(STYLE);availableTypes.add(CODE);
+			availableTypes.add(BUTTON);availableTypes.add(ARTICLE);
+			availableTypes.add(ASIDE);availableTypes.add(CANVAS);
+			availableTypes.add(CAPTION);availableTypes.add(COL);
+			availableTypes.add(COL_GROUP);
+		}
 		public static HTMLElementType parse(String type) {
 			HTMLElementType typ = null;
-			for (int i = 0; i < availableTypes.length; i++) {
-				if (type.equals(availableTypes[i].toString())) {
-					typ = availableTypes[i];
+			for (int i = 0; i < availableTypes.size(); i++) {
+				if (type.equals(availableTypes.get(i).toString())) {
+					typ = availableTypes.get(i);
 					break;
 				}
 			}
 			return typ;
 		}
-
 		@Override
 		public String toString() {
 			// TODO Auto-generated method stub

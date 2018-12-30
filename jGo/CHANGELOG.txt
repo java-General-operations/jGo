@@ -205,3 +205,6 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - aggiunta nuova interfaccia SharedExecution, sarà l'esecuzione condivisa, per comandi la cui esecuzione è uguale
 - aggiunti nuovi metodi all'interfaccia Shareable :per condividere parametri interamente
 - aggiunto nuovo metodo statico nell'interfaccia HTMLElement: createNewElement()
+- adesso vogliamo dare all'utente la possibilità di ampliare la lista di tipi elementi predefiniti
+- abbiamo trasformato i tipi predefiniti di elementi html, da array in lista per una questione di comodità. cosi da poter aggiungere
+all'occorrenza nuovi tipi predefiniti di elementi html.

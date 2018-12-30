@@ -1,4 +1,6 @@
 package cloud.jgo.jjdom.dom.nodes.html.color;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import cloud.jgo.jjdom.JjDom;
@@ -42,8 +44,8 @@ public class HTMLColorDocument extends HTMLDefaultDocument implements Colorable{
 	
 	public HTMLColorElement createColorElement(HTMLElementType type) {
 		HTMLColorElement element = null;
-		for (int i = 0; i < HTMLElementType.availableTypes.length; i++) {
-			if (type.equals(HTMLElementType.availableTypes[i])) {
+		for (int i = 0; i < HTMLElementType.availableTypes.size(); i++) {
+			if (type.equals(HTMLElementType.availableTypes.get(i))) {
 				element = new HTMLColorElement(type.toString(), this);
 				element.setType(type);
 				break;
@@ -54,7 +56,7 @@ public class HTMLColorDocument extends HTMLDefaultDocument implements Colorable{
 	
 	public HTMLColorElement createColorElement(String elementName) {
 		HTMLElementType type = null;
-		HTMLElementType[] types = HTMLElementType.availableTypes;
+		List<HTMLElement.HTMLElementType>types = HTMLElementType.availableTypes;
 		for (HTMLElementType htmlElementType : types) {
 			if (htmlElementType.toString().equals(elementName)) {
 				type = htmlElementType;

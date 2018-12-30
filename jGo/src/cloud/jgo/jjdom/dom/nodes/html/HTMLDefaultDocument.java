@@ -347,7 +347,7 @@ public class HTMLDefaultDocument implements HTMLDocument {
 	@Deprecated
 	public HTMLElement createElement(String elementName) {
 		HTMLElementType type = null;
-		HTMLElementType[] types = HTMLElementType.availableTypes;
+		List<HTMLElementType> types = HTMLElementType.availableTypes;
 		for (HTMLElementType htmlElementType : types) {
 			if (htmlElementType.toString().equals(elementName)) {
 				type = htmlElementType;
@@ -369,8 +369,8 @@ public class HTMLDefaultDocument implements HTMLDocument {
 	@Override
 	public HTMLElement createElement(HTMLElementType type) {
 		HTMLElement element = null;
-		for (int i = 0; i < HTMLElementType.availableTypes.length; i++) {
-			if (type.equals(HTMLElementType.availableTypes[i])) {
+		for (int i = 0; i < HTMLElementType.availableTypes.size(); i++) {
+			if (type.equals(HTMLElementType.availableTypes.get(i))) {
 				element = new HTMLDefaultElement(type.toString(), this);
 				((HTMLDefaultElement) element).setType(type);
 				break;
@@ -406,8 +406,8 @@ public class HTMLDefaultDocument implements HTMLDocument {
 		boolean existingType = false;
 		HTMLElement element = null;
 		HTMLElementType type = null;
-		for (int i = 0; i < HTMLElementType.availableTypes.length; i++) {
-			if (elementName.equals(HTMLElementType.availableTypes[i].toString())) {
+		for (int i = 0; i < HTMLElementType.availableTypes.size(); i++) {
+			if (elementName.equals(HTMLElementType.availableTypes.get(i).toString())) {
 				// okok il tipo esiste quindi, non vale niente
 				existingType = true;
 				break;

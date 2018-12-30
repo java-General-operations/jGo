@@ -10,36 +10,42 @@ public class NodiHTMLNonPredefiniti {
 public static void main(String[] args) {
 	
 	
-	
+	// adesso però vogliamo poter ampliare la lista di tipi predefiniti ...
 	
 	JjDom.newDocument().setMinimalTags().useDoctype(true).home().jqueryInit();
 	
 	
-	// mi creo gli elementi 
+	// adesso mettiamo il caso che voglio aggiungere un nuovo tipo a quelli predefiniti
 	
-	
-	HTMLElement el,el2 = null ;
 	
 	HTMLElement.HTMLElementType newType = HTMLElementType.newType("el");
-	newType.setClosingTag(true);
-	newType.setThereCanBeMore(true);
 	
-	el = HTMLElement.createNewElement("el",newType,JjDom.document);
-	el2 = HTMLElement.createNewElement("el", newType, JjDom.document);
+	// configuro il nuovo tipo :
 	
-	// aggiungo il testo 
-	String testo = "testo di prova";
+	newType.setClosingTag(true).setThereCanBeMore(true);
 	
-	el.setTextContent(testo);
-	el2.setTextContent(testo);
+	// con questa istruzione aggiungo il nuovo tipo a quelli predefiniti 
+	
+	HTMLElement.HTMLElementType.availableTypes.add(newType);
 	
 	
-	JjDom.document.getBody().appendChilds(el,el2);
+	// adesso mi creo gli elementi con questo tipo
+	
+	HTMLElement element,element2 ;
+	
+	element = JjDom.document.createElement(newType);
+	element2 = JjDom.document.createElement(newType);
+	
+	element.setTextContent("XCiao");
+	element2.setTextContent("XCiao");
+	
+	
+	// aggiungo gli elementi al documento 
+	
+	
+	JjDom.document.getBody().appendChilds(element,element2);
 	
 	JjDom.printDocumentMarkup();
-	
-	
-
 	
 	
 	
