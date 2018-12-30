@@ -64,7 +64,13 @@ public abstract class ColorRecursion {
 //				htmlCode.append(((HTMLComment) node).getStartTag());
 				htmlCode.append(((HTMLComment) node).getStartTag(),DomColors.COMMENT_COLOR);
 			}
-			htmlCode.append(node.getTextContent(),DomColors.NODEVALUE_COLOR); // provvisoria
+			// questo controllo è valido solo per commenti
+			if (node.getNodeType().equals(NodeType.COMMENT)) {
+				htmlCode.append(node.getTextContent(),DomColors.COMMENT_COLOR); // provvisoria	
+			}
+			else {
+				htmlCode.append(node.getTextContent(),DomColors.NODEVALUE_COLOR); // provvisoria	
+			}
 		} else {
 			if (node instanceof Element) {
 //				htmlCode.append(((HTMLColorElement) node).getStartTag() + "\n");

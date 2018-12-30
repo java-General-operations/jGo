@@ -54,7 +54,7 @@ public class ColorLocalCommand extends LocalCommand {
 			Collection<Parameter> collection = command.getStructure().values();
 			List<Parameter> orderParameters = command.sortParameters();
 			// qui ci sarà la descrizione del comando root
-			buffer.append(this.command.getHelp().toUpperCase() + "\n\n");
+			buffer.append(this.command.getHelp().toUpperCase() + "   / has input value ="+j£.colors(this.command.hasInputValueExploitable()+"",Color.GREEN)+"\n\n");
 			if (orderParameters != null) {
 				buffer.append("* Parameters :" + orderParameters + " :\n\n");
 				if (this.command.hasParameters()) {
@@ -64,7 +64,7 @@ public class ColorLocalCommand extends LocalCommand {
 					while (iterator.hasNext()) {
 						Parameter param = iterator.next();
 						buffer.append(j£.colors(param.getParam(), TerminalColors.PARAMETER_COLOR) + "="
-								+ param.getParameterHelp() + "  / has input value =" + param.hasInputValueExploitable()
+								+ param.getParameterHelp() + "  / has input value =" + j£.colors(param.hasInputValueExploitable()+"",Color.GREEN)
 								+ "\n");
 					}
 				}
@@ -79,7 +79,7 @@ public class ColorLocalCommand extends LocalCommand {
 								.next();
 						Parameter param = entry.getValue();
 						buffer.append(j£.colors(param.getParam(), TerminalColors.PARAMETER_COLOR) + "="
-								+ param.getParameterHelp() + "  / has input value =" + param.hasInputValueExploitable()
+								+ param.getParameterHelp() + "  / has input value =" + j£.colors(param.hasInputValueExploitable()+"",Color.GREEN)
 								+ "\n");
 					}
 				}

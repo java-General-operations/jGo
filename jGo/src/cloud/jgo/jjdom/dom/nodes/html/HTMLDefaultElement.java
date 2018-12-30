@@ -21,6 +21,7 @@
  * 
  */
 package cloud.jgo.jjdom.dom.nodes.html;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -72,7 +73,8 @@ public class HTMLDefaultElement implements HTMLElement {
 		this.document = document;
 	}
 	// version 1.0.6
-	protected HTMLDefaultElement() {}
+	protected HTMLDefaultElement() {
+	}
 	/**
 	 * This method returns the start tag
 	 * 

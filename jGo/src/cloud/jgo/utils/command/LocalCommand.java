@@ -320,7 +320,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			// qui devo prendere tutti i parameters
 			Collection<Parameter> collection = command.structure.values();
 			// qui ci sarà la descrizione del comando root
-			buffer.append(this.command.getHelp().toUpperCase() + "\n\n");
+			buffer.append(this.command.getHelp().toUpperCase() + "   / has input value ="+this.command.hasInputValueExploitable()+"\n\n");
 			buffer.append("* Parameters :" + collection + " :\n\n");
 
 			if (this.command.hasParameters()) {

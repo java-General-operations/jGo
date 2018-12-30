@@ -327,5 +327,10 @@ public interface HTMLElement extends Element, Home {
 		}
 
 	}
-
+	// version 1.0.9 : serve per creare elementi il cui tipo non è predefinito
+	public static HTMLElement createNewElement(String elementName,HTMLElement.HTMLElementType newType, HTMLDocument document) {
+		HTMLElement element = new HTMLDefaultElement(elementName, document);
+		((HTMLDefaultElement)element).setType(newType);
+		return element ;
+	}
 }

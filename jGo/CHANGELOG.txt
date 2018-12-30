@@ -204,3 +204,4 @@ inserirli all'interno del root, non ha logica avere un file xml con + nodi root,
 - Command estende questa interfaccia, per il momento
 - aggiunta nuova interfaccia SharedExecution, sarà l'esecuzione condivisa, per comandi la cui esecuzione è uguale
 - aggiunti nuovi metodi all'interfaccia Shareable :per condividere parametri interamente
+- aggiunto nuovo metodo statico nell'interfaccia HTMLElement: createNewElement()
