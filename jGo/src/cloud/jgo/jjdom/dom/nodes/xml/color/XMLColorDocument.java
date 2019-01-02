@@ -2,6 +2,7 @@ package cloud.jgo.jjdom.dom.nodes.xml.color;
 
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.ColorRecursion;
+import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.color.Colorable;
@@ -34,6 +35,11 @@ public class XMLColorDocument extends XMLDocument implements Colorable{
 	}
 
 
+	public XMLColorDocument() {
+		super();
+	}
+
+
 	@Override
 	public XMLColorElement createElement(String elementName) {
 		return new XMLColorElement(elementName, this);
@@ -43,6 +49,12 @@ public class XMLColorDocument extends XMLDocument implements Colorable{
 	public XMLColorElement getRootElement() {
 		// TODO Auto-generated method stub
 		return (XMLColorElement) this.rootElement ;
+	}
+	
+	@Override
+	public XMLColorComment createComment(String comment) {
+		// TODO Auto-generated method stub
+		return new XMLColorComment(comment, this);
 	}
 
 }

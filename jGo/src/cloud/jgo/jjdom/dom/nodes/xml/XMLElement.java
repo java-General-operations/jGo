@@ -147,7 +147,7 @@ public class XMLElement implements Element {
 	}
 
 	@Override
-	public Node printMarkup() {
+	public XMLElement printMarkup() {
 		// TODO Auto-generated method stub
 		System.out.println(getMarkup());
 		return this;

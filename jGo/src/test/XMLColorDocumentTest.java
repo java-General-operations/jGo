@@ -16,9 +16,10 @@ public static void main(String[] args) {
 	
 	
 	
-	XMLDocument document = new XMLDocument(Document.CHARSET_UTF_8, "server.config");
 	
-	System.out.println(document.getMarkup());
+	
+	
+	
 	
 	
 	

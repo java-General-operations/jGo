@@ -124,7 +124,7 @@ public class XMLDocument implements Document {
 	}
 
 	@Override
-	public Node printMarkup() {
+	public XMLDocument printMarkup() {
 		System.out.println(getMarkup());
 		return this;
 	}
@@ -247,7 +247,7 @@ public class XMLDocument implements Document {
 	@Override
 	public Node setNodeValue(String nodeValue) {
 		// TODO Auto-generated method stub
-		this.textContent = textContent;
+		this.textContent = nodeValue;
 		return this;
 	}
 
