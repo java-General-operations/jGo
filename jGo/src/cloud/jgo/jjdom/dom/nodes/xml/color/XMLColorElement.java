@@ -32,5 +32,11 @@ public class XMLColorElement extends XMLElement implements Colorable{
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	@Override
+	public XMLColorDocument getDocument() {
+		// TODO Auto-generated method stub
+		return (XMLColorDocument) super.getDocument();
+	}
 
 }

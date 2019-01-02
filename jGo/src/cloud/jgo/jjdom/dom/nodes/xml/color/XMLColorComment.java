@@ -8,6 +8,11 @@ import cloud.jgo.utils.ColorString;
 
 public class XMLColorComment extends HTMLComment implements Colorable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public XMLColorComment(String comment, Document document) {
 		super(comment, document);
 		// TODO Auto-generated constructor stub
@@ -19,6 +24,12 @@ public class XMLColorComment extends HTMLComment implements Colorable{
 		ColorRecursion.examines_xml(this, xmlCode,null); // provvisorio, poi gli dobbiamo passare il document
 		String result = xmlCode.toString();
 		return result;
+	}
+	
+	@Override
+	public XMLColorDocument getDocument() {
+		// TODO Auto-generated method stub
+		return (XMLColorDocument) super.getDocument();
 	}
 
 }
