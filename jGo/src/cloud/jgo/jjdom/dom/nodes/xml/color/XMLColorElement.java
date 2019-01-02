@@ -32,4 +32,5 @@ public class XMLColorElement extends XMLElement implements Colorable{
 		// TODO Auto-generated constructor stub
 	}
 
+
 }

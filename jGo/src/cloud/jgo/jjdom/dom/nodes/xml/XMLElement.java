@@ -97,8 +97,7 @@ public class XMLElement implements Element {
 		// TODO Auto-generated method stub
 		return this.nodeName ;
 	}
-	protected XMLElement() {
-	}
+	protected XMLElement() {}
 
 	/**
 	 * This method sets the parent node

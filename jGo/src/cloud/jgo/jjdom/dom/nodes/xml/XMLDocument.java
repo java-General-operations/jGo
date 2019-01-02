@@ -405,7 +405,7 @@ public class XMLDocument implements Document {
 	}
 
 	@Override
-	public Element getRootElement() {
+	public XMLElement getRootElement() {
 		// TODO Auto-generated method stub
 		return this.rootElement;
 	}
@@ -443,13 +443,13 @@ public class XMLDocument implements Document {
 	}
 
 	@Override
-	public Element createElement(String elementName) {
+	public XMLElement createElement(String elementName) {
 		// TODO Auto-generated method stub
 		return new XMLElement(elementName, this);
 	}
 
 	@Override
-	public Element getElementById(String elementId) {
+	public XMLElement getElementById(String elementId) {
 		XMLElement idEl = (XMLElement) Recursion.examinesForId(elementId, this);
 		return idEl;
 	}

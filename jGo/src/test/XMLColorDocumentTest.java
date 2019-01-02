@@ -2,6 +2,12 @@ package test;
 
 import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.Node;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
+import cloud.jgo.jjdom.dom.nodes.html.color.HTMLColorDocument;
+import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
+import cloud.jgo.jjdom.dom.nodes.xml.XMLElement;
 import cloud.jgo.jjdom.dom.nodes.xml.color.XMLColorDocument;
 import cloud.jgo.jjdom.dom.nodes.xml.color.XMLColorElement;
 
@@ -10,23 +16,11 @@ public static void main(String[] args) {
 	
 	
 	
-	XMLColorDocument doc = new XMLColorDocument(Document.CHARSET_UTF_8, null, "server.config");
+	XMLDocument document = new XMLDocument(Document.CHARSET_UTF_8, "server.config");
+	
+	System.out.println(document.getMarkup());
 	
 	
-	// aggiungo un nodo al root 
-	
-	XMLColorElement element = doc.createElement("lport");
-	
-	element.setTextContent(3333+"");
-	
-	doc.getRootElement().appendChild(element);
-	
-	// adesso mi trasferisco dal documento alla porta nodo 
-	
-	Node node = doc.getNodeByPath("server.config/lport");
-	
-	
-	System.out.println(node);
 	
 	
 	
