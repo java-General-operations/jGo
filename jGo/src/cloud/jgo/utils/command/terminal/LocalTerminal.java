@@ -265,7 +265,7 @@ public class LocalTerminal extends Terminal implements Iterable<Entry<String, Lo
 
 	@Override
 	public void setExitCommand(String exitCommand) {
-		this.exitCommand = new LocalCommand(exitCommand, "");
+		this.exitCommand = new LocalCommand(exitCommand, "Closes the program and uninstall the components");
 		((LocalCommand) this.exitCommand).setExecution(new Execution() {
 
 			@Override

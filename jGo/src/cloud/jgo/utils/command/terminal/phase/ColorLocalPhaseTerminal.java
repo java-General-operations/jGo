@@ -13,6 +13,19 @@ import cloud.jgo.utils.command.terminal.TerminalColors;
 
 public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 	
+@Override
+public void setExitCommand(String exitCommand) {
+	this.exitCommand = new ColorLocalCommand(exitCommand, "Closes the program and uninstall the components");
+	((ColorLocalCommand) this.exitCommand).setExecution(new Execution() {
+		@Override
+		public Object exec() {
+			close();
+			return null;
+		}
+	});
+	addCommand((LocalCommand) this.exitCommand);
+}
+	
 	@Override
 	public void useGeneralHelp() {
 		ColorLocalCommand helpCommand = new ColorLocalCommand(generalHelpValue, "Show General Help commands", new Execution() {
