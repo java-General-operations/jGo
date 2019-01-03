@@ -7,7 +7,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
 import cloud.jgo.utils.command.terminal.phase.Rule;
 
-public class LocalPhasesTerminalTest {
+public class ColorLocalPhasesTerminalTest {
 public static void main(String[] args) {
 	
 	
@@ -19,7 +19,7 @@ public static void main(String[] args) {
 	
 	Phase start = terminal.createPhase(1, "start", "start", new Command[] {});
 	Phase seconda = terminal.createPhase(2, "seconda", "seconda", new Command[] {});
-	
+		
 	
 	
 	terminal.open();

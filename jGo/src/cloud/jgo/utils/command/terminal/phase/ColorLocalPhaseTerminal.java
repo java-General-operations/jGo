@@ -13,16 +13,10 @@ import cloud.jgo.utils.command.terminal.TerminalColors;
 
 public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 	
-	
-	
-	
 	public ColorLocalPhaseTerminal() {
-		// chiamo prima il super costruttore
-		// eppoi vario soltanto l'esecuzione del camando describe
-		super();
-		// TODO Auto-generated constructor stub
+		this.pointerCommand = new ColorLocalCommand("use", "This command points to a specific phase");
+		this.describerCommand = new ColorLocalCommand("describe","This command describes a specific phase");
 		this.describerCommand.setExecution(new Execution() {
-
 			@Override
 			public Object exec() {
 
@@ -34,7 +28,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 							TerminalColors.PHASE_COLOR) + ")\n");
 					buffer.append("========================================================================\n");
 
-					buffer.append(((DefaultPhase) currentPhase).description() + ".\n");
+					buffer.append(((DefaultPhase) currentPhase).description() + ".\n\n");
 
 					// qui inserisco i comandi supportati di questa fase
 
@@ -45,7 +39,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 					for (int i = 0; i < commands.size(); i++) {
 
 						buffer.append(
-								(i + 1) + ")" + commands.get(i).getCommand() + "=" + commands.get(i).getHelp() + "\n");
+								(i + 1) + ")" + j£.colors(commands.get(i).getCommand(),TerminalColors.COMMAND_COLOR) + "=" + commands.get(i).getHelp() + "\n");
 					}
 
 					buffer.append("========================================================================\n");
@@ -57,8 +51,10 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 
 			}
 		});
+		addCommand(this.pointerCommand);
+		addCommand(this.describerCommand);
 	}
-	
+
 	@Override
 	public String getCommandRequest() {
 		String text = null;
@@ -112,7 +108,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 			if (value > 1) { // diamo per scontato che la prima fase è la numero 1
 				// okok qui completo il metodo
 				// aggiungo al puntatore un link che accederà a questa fase
-				Parameter p_link = pointerCommand.addParam(phase.phaseName(), // forse non va bene
+				Parameter p_link = this.pointerCommand.addParam(phase.phaseName(), // forse non va bene
 						"Go to ("
 								+ j£.colors(phase.phaseName(),  TerminalColors.PHASE_COLOR)
 								+ ") phase @");
@@ -133,10 +129,11 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 				});
 			}
 			// anche se la fase è la start mi serve attribuire una descrizione
-			Parameter p_link_desc = describerCommand.addParam(phase.phaseName(),
+			Parameter p_link_desc = this.describerCommand.addParam(phase.phaseName(),
 					"This parameter describes the ("
 							+ j£.colors(phase.phaseName(),  TerminalColors.PHASE_COLOR)
 							+ ") phase @");
+			System.out.println("Parametro del comando che descrive creato @");
 			p_link_desc.setExecution(new Execution() {
 				@Override
 				public Object exec() {

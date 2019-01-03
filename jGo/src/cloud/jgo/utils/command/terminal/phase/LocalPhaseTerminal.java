@@ -252,9 +252,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 	// il costruttore lo suo per inizializzare le fasi predefinite
 	// in questo caso solo : pointerCommand
-
-	public LocalPhaseTerminal() {
+	protected LocalPhaseTerminal() {}
+	public LocalPhaseTerminal(String terminalName) {
 		// TODO Auto-generated constructor stub
+		setName(terminalName);
 		this.pointerCommand = new LocalCommand("use", "This command points to a specific phase");
 		this.describerCommand = new LocalCommand("describe", "This command describes a specific phase");
 		this.describerCommand.setExecution(new Execution() {

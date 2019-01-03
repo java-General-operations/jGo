@@ -1439,11 +1439,11 @@ public class £ {
 
 	/**
 	 * This method creates a phase terminal.
-	 * 
+	 * @param terminalName terminal name
 	 * @return the created terminal
 	 */
-	public static LocalPhaseTerminal createPhaseTerminal() {
-		return new LocalPhaseTerminal();
+	public static LocalPhaseTerminal createPhaseTerminal(String terminalName) {
+		return new LocalPhaseTerminal(terminalName);
 	}
 
 	/**

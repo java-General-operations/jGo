@@ -46,9 +46,9 @@ import cloud.jgo.utils.command.execution.Execution;
  *         This class represents the local terminal
  */
 public class LocalTerminal extends Terminal implements Iterable<Entry<String, LocalCommand>> {
-	private Map<String, LocalCommand> commands = new HashMap<String, LocalCommand>();
+	protected Map<String, LocalCommand> commands = new HashMap<String, LocalCommand>();
 	private List<LocalCommand> commandsList = null;
-	private HelpCommands helpCommands = new HelpCommands();
+	protected HelpCommands helpCommands = new HelpCommands();
 	private String generalHelpValue = "help";
 	private int countCommands = 0;
 	private String name ;
