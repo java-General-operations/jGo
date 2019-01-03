@@ -46,7 +46,7 @@ import cloud.jgo.utils.command.terminal.LocalTerminal;
 public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	protected Phase currentPhase, startPhase = null;
 	protected List<Phase> phases = new ArrayList<>();
-	protected LocalCommand pointerCommand = new LocalCommand("use", "this command points to a specific phase");
+	protected LocalCommand pointerCommand = null ;
 	protected LocalCommand resetCommand = null;
 	protected LocalCommand describerCommand = null;
 

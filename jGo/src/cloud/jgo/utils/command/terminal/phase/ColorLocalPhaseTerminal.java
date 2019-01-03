@@ -6,57 +6,57 @@ import cloud.jgo.j£;
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
+import cloud.jgo.utils.command.color.ColorLocalCommand;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.TerminalColors;
 
 public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 	
+	
+	
+	
 	public ColorLocalPhaseTerminal() {
+		// chiamo prima il super costruttore
+		// eppoi vario soltanto l'esecuzione del camando describe
+		super();
 		// TODO Auto-generated constructor stub
-		// TODO Auto-generated constructor stub
-				this.pointerCommand = new LocalCommand("use", "This command points to a specific phase");
-				this.describerCommand = new LocalCommand("describe", "This command describes a specific phase");
-				this.describerCommand.setExecution(new Execution() {
+		this.describerCommand.setExecution(new Execution() {
 
-					@Override
-					public Object exec() {
+			@Override
+			public Object exec() {
 
-						if (currentPhase != null) {
+				if (currentPhase != null) {
 
-							StringBuffer buffer = new StringBuffer();
-							buffer.append("========================================================================\n");
-							buffer.append("Description of (" + j£.colors(currentPhase.phaseName(),
-									TerminalColors.PHASE_COLOR) + ")\n");
-							buffer.append("========================================================================\n");
+					StringBuffer buffer = new StringBuffer();
+					buffer.append("========================================================================\n");
+					buffer.append("Description of (" + j£.colors(currentPhase.phaseName(),
+							TerminalColors.PHASE_COLOR) + ")\n");
+					buffer.append("========================================================================\n");
 
-							buffer.append(((DefaultPhase) currentPhase).description() + ".\n");
+					buffer.append(((DefaultPhase) currentPhase).description() + ".\n");
 
-							// qui inserisco i comandi supportati di questa fase
+					// qui inserisco i comandi supportati di questa fase
 
-							List<Command> commands = ((DefaultPhase) currentPhase).getCommands();
-							if (commands.size() > 0) {
-								buffer.append("# Supported commands :\n");
-							}
-							for (int i = 0; i < commands.size(); i++) {
-
-								buffer.append(
-										(i + 1) + ")" + commands.get(i).getCommand() + "=" + commands.get(i).getHelp() + "\n");
-							}
-
-							buffer.append("========================================================================\n");
-
-							return buffer.toString();
-						} else {
-							return null;
-						}
-
+					List<Command> commands = ((DefaultPhase) currentPhase).getCommands();
+					if (commands.size() > 0) {
+						buffer.append("# Supported commands :\n");
 					}
-				});
-				// aggiungo il comando
+					for (int i = 0; i < commands.size(); i++) {
 
-				addCommand(this.pointerCommand);
-				addCommand(this.describerCommand);
+						buffer.append(
+								(i + 1) + ")" + commands.get(i).getCommand() + "=" + commands.get(i).getHelp() + "\n");
+					}
+
+					buffer.append("========================================================================\n");
+
+					return buffer.toString();
+				} else {
+					return null;
+				}
+
+			}
+		});
 	}
 	
 	@Override

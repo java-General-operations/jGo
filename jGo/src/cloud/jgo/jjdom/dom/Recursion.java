@@ -517,7 +517,7 @@ public abstract class Recursion {
 	private static void helpForPath(Node node) {
 		path.append(node.getNodeName() + "/");
 		Node parent = node.getParentNode();
-		if (!node.getNodeName().equalsIgnoreCase("html") && !node.equals(node.getDocument().getRootElement())) { // verifico che il nodo ricevuto non sia il nodo root html
+		if (!node.equals(node.getDocument().getRootElement())) { // verifico che il nodo ricevuto non sia il nodo root
 			if (parent != null) {
 				// aggiungo al path
 				path.append(parent.getNodeName() + "/");
