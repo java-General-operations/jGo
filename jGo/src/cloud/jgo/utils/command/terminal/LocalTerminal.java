@@ -49,7 +49,7 @@ public class LocalTerminal extends Terminal implements Iterable<Entry<String, Lo
 	protected Map<String, LocalCommand> commands = new HashMap<String, LocalCommand>();
 	private List<LocalCommand> commandsList = null;
 	protected HelpCommands helpCommands = new HelpCommands();
-	private String generalHelpValue = "help";
+	protected String generalHelpValue = "help";
 	private int countCommands = 0;
 	private String name ;
 	public void setName(String name) {

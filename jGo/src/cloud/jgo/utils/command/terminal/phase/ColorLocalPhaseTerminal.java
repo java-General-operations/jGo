@@ -13,6 +13,20 @@ import cloud.jgo.utils.command.terminal.TerminalColors;
 
 public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
 	
+	@Override
+	public void useGeneralHelp() {
+		ColorLocalCommand helpCommand = new ColorLocalCommand(generalHelpValue, "Show General Help commands", new Execution() {
+
+			@Override
+			public Object exec() {
+				getHelpCommands().print();
+				return getHelpCommands();
+			}
+		});
+		// aggiungo il comando
+		addCommand(helpCommand);
+	}
+	
 	public ColorLocalPhaseTerminal() {
 		this.pointerCommand = new ColorLocalCommand("use", "This command points to a specific phase");
 		this.describerCommand = new ColorLocalCommand("describe","This command describes a specific phase");
