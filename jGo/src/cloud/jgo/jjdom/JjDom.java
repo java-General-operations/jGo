@@ -710,6 +710,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+//			htmlPreview.delete(); da controllare ...
 			htmlPreview.deleteOnExit();
 		}
 		return instance;

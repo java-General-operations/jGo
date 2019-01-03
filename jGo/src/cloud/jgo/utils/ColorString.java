@@ -24,14 +24,19 @@ public class ColorString{
 		this.buffer = new StringBuffer();
 		this.length = this.buffer.length();
 	}
-	public ColorString append(String text,Color color) {
-		this.buffer.append(j£.colors(text, color));
+	public ColorString append(String string,Color color) {
+		this.buffer.append(j£.colors(string, color));
 		// aggiorno la lunghezza
 		this.length = this.buffer.length();
 		return this ;
 	}
 	public ColorString append(char charat,Color color) {
 		this.buffer.append(j£.colors(""+charat, color));
+		this.length = this.buffer.length();
+		return this ;
+	}
+	public ColorString append(String string) {
+		this.buffer.append(string);
 		this.length = this.buffer.length();
 		return this ;
 	}

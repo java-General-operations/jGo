@@ -13,6 +13,7 @@ public static void main(String[] args) {
 	
 	ColorLocalPhaseTerminal terminal = new ColorLocalPhaseTerminal();
 	terminal.useGeneralHelp();
+	terminal.setExitCommand("ex");
 	
 	
 	// 1 fase : start 

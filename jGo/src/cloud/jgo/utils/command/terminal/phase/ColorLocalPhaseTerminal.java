@@ -2,6 +2,8 @@ package cloud.jgo.utils.command.terminal.phase;
 
 import java.util.List;
 
+import org.fusesource.jansi.AnsiConsole;
+
 import cloud.jgo.j£;
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
@@ -25,6 +27,14 @@ public void setExitCommand(String exitCommand) {
 	});
 	addCommand((LocalCommand) this.exitCommand);
 }
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		super.close();
+		// disattivo i componenti
+		AnsiConsole.systemUninstall();
+	}
 	
 	@Override
 	public void useGeneralHelp() {
@@ -41,6 +51,8 @@ public void setExitCommand(String exitCommand) {
 	}
 	
 	public ColorLocalPhaseTerminal() {
+		// installo i componenti
+		AnsiConsole.systemInstall();
 		this.pointerCommand = new ColorLocalCommand("use", "This command points to a specific phase");
 		this.describerCommand = new ColorLocalCommand("describe","This command describes a specific phase");
 		this.describerCommand.setExecution(new Execution() {
@@ -160,26 +172,29 @@ public void setExitCommand(String exitCommand) {
 					"This parameter describes the ("
 							+ j£.colors(phase.phaseName(),  TerminalColors.PHASE_COLOR)
 							+ ") phase @");
-			System.out.println("Parametro del comando che descrive creato @");
 			p_link_desc.setExecution(new Execution() {
 				@Override
 				public Object exec() {
 					StringBuffer buffer = new StringBuffer();
 					buffer.append(
-							"=================================================================================================\n");
+							"========================================================================\n");
 					buffer.append("Description of ("
 							+ j£.colors(phase.phaseName(), TerminalColors.PHASE_COLOR)
 							+ ")\n");
 					buffer.append(
-							"==================================================================================================\n");
-					buffer.append(phase.description() + ".\n");
+							"========================================================================\n");
+					buffer.append(phase.description() + ".\n\n");
 					List<Command> commands = phase.getCommands();
 					if (commands.size() > 0) {
-						buffer.append("# Supported commands :");
+						buffer.append("# Supported commands :\n");
 					}
-					buffer.append(commands + "\n");
+					for (int i = 0; i < commands.size(); i++) {
+
+						buffer.append(
+								(i + 1) + ")" + j£.colors(commands.get(i).getCommand(),TerminalColors.COMMAND_COLOR) + "=" + commands.get(i).getHelp() + "\n");
+					}
 					buffer.append(
-							"====================================================================================================\n");
+							"========================================================================\n");
 					return buffer.toString();
 				}
 			});

@@ -43,7 +43,7 @@ import cloud.jgo.utils.command.terminal.phase.Phase;
  * @author Martire91<br>
  *         This class represents a local command from a terminal
  */
-public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>, Shareable {
+public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>, Shareable, Comparable<LocalCommand>{
 	private static final long serialVersionUID = 1L;
 	private Execution execution = null;
 	protected String help = null;
@@ -1294,6 +1294,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	@Override
 	public void shareItEntirely(Parameter parameter) {
 		shareItEntirely(parameter, (SharedExecution) parameter.getExecution());
+	}
+
+	@Override
+	public int compareTo(LocalCommand o) {
+		return getCommand().compareTo(o.getCommand());
 	}
 	
 	
