@@ -117,11 +117,11 @@ public abstract class ColorRecursion {
 			if (node instanceof XMLDocument) {
 //				xmlCode.append(
 //						"<?xml version=" + £.escp(XMLDocument.XML_VERSION) + " encoding=" + £.escp(charset) + "?>\n");
-				xmlCode.append("<",DomColors.TAG_COLOR).append("xml",DomColors.NODENAME_COLOR)
-				       .append(" ",Color.DEFAULT).append("version",Color.DEFAULT).append("=",Color.DEFAULT)
+				xmlCode.append("<",DomColors.TAG_COLOR).append("xml",Color.GREEN)
+				       .append(" ",Color.DEFAULT).append("version",Color.CYAN).append("=",Color.WHITE)
 				       .append(£.escp(XMLDocument.XML_VERSION),DomColors.ATTRIBUTE_VALUE_COLOR)
-				       .append(" ", Color.DEFAULT).append("encoding=",Color.DEFAULT)
-				       .append(£.escp(charset),DomColors.ATTRIBUTE_VALUE_COLOR).append("?",Color.DEFAULT).append(">",DomColors.TAG_COLOR)
+				       .append(" ", Color.DEFAULT).append("encoding",Color.CYAN).append("=",Color.WHITE)
+				       .append(£.escp(charset),DomColors.ATTRIBUTE_VALUE_COLOR).append("?",Color.MAGENTA).append(">",DomColors.TAG_COLOR)
 				       .append("\n",Color.DEFAULT);
 			}
 			String key = null;
@@ -177,7 +177,11 @@ public abstract class ColorRecursion {
 			if (node instanceof Element) {
 				// di sicuro se il nodo non ha un tipo di riferimento
 				// chiudiamo in maniera standart : con il tag di chiusura
-				xmlCode.append(((XMLElement) node).getEndTag() + "\n",DomColors.TAG_COLOR);
+//				xmlCode.append(((XMLElement) node).getEndTag() + "\n",DomColors.TAG_COLOR);
+				
+				
+				xmlCode.append("<",DomColors.TAG_COLOR).append("/",Color.DEFAULT).append(((XMLElement)node).getEndTag().replace("</","").replace(">",""),DomColors.NODENAME_COLOR).append(">",DomColors.TAG_COLOR).append("\n",Color.DEFAULT);
+				
 			} else {
 				// qui invece significa che non è un elemento html
 				// quindi deve essere per forza un commento, almeno per il momento
