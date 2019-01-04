@@ -375,23 +375,44 @@ public final class j£ extends cloud.jgo.£ {
 	}
 
 	// version 1.0.9
+	/**
+	 * This method colors the string passed as a parameter
+	 * @param string the string
+	 * @param color the color
+	 * @return the colored string
+	 */
 	public static String colors(String string, org.fusesource.jansi.Ansi.Color color) {
-		// ansi init - version 1.0.9
 		String stringColored = ansi().fg(color).a(string).reset().toString();
 		return stringColored;
 	}
 
 	// version 1.0.9 :
+	/**
+	 * This method creates a colored string
+	 * @return the colored string
+	 */
 	public static ColorString getString() {
 		return new ColorString();
 	}
 
 	// version 1.0.9 :
+	/**
+	 * This method creates a colored string
+	 * @param string the string
+	 * @param color the color
+	 * @return the colored string
+	 */
 	public static ColorString getString(String string, org.fusesource.jansi.Ansi.Color color) {
 		return new ColorString(string, color);
 	}
 
 	// version 1.0.9:
+	/**
+	 * This method colors everything that is reported in double quotes
+	 * @param string the string
+	 * @param color the color
+	 * @return the colored string
+	 */
 	public static String colorTheStringsSyntax(String string, Color color) {
 		string = string.replaceAll("'", "\"");
 		StringBuffer buffer = new StringBuffer();

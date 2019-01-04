@@ -169,25 +169,18 @@ Version 1.0.8 - 13/12/2018
 Version 1.0.9 - in dev
 
 - I add the methods to color the strings to the main point jGo
-- Aggiungo una nuova classe: ColorString
-- Ho tolto il modificatore final dal metodi getCommandRequest del terminale
-- aggiunto un nuovo metodo al terminal:getName();
-- abbiamo ridefinito il metodo dei terminali : getCommandRequest
-- Stiamo perfezionando la classe LocalPhaseTerminal, la stiamo rendendo + flessibbile, inoltre adesso non siamo
-+ vincolati a usare il comando di richiesta comandi, di default(£), ma possiamo specificare il nome del terminale.
-- aggiunta nuova variabile statica a Parameter, LocalCommand e DefaultPhase:provvisorie
-- aggiunto nuovo metodo al terminale delle fasi:setPointerName()
-- aggiunto metodo LocalCommand, per impostare il comando vero e proprio.
-- eliminato campo welcome nella classe DefaultPhase, e quindi abbiamo aggiornato la serial version della stessa.
-- abbiamo reso la variabile currentPhase del Terminale delle fasi visibile anche alle sottoclassi
-- abbiamo aggiunto un nuovo costruttore nella classe XMLDocument per permettere di creare documenti vuoti
-- stiamo ridefinendo il metodo appendChild della classe XMLDocument
-- quindi adesso possiamo creare un xmldocument vuoto, però una volta inserito il root, gli elementi poi dbbiamo
-inserirli all'interno del root, non ha logica avere un file xml con + nodi root, non con JjDom.
-- risolto bug imprevisto e grave nel costruttore della classe XMLElement, inoltre abbiamo aggiunto anche il serial version.
-- Abbiamo aggiunto il serial version anche per XMLDocument
-- eliminata stampa imprevista nel metodo shareObject() della classe LocalCommand, quando attribuiamo un valore pari a null.
-- aggiunto il nuovo package in JjDom, per i nodi colorati a livello di sintassi.
+- New class added: ColorString
+- Added new method to the Terminal class:getName();
+- I redefined a Terminal method : getCommandRequest();
+- I have perfected the LocalPhaseTerminal class
+- New Method > LocalPhaseTerminal > setPointerName();
+- New Method > LocalCommand > setCommand();
+- We deleted the welcome field in the DefaultPhase class, and then updated the serial version.
+- New constructor for the XMLDocument class, for creating a blank document.
+- appendChild () method of the XMLDocument class: redefined
+- Serial version update
+- Eliminated unexpected printing of the shareObject () method of the LocalCommand class
+- Added new packages for colored nodes
 - aggiunta nuova classe : TerminalColors, per definire i colori del terminale.
 - aggiunto un nuovo metodo nella classe JjDom;permette di impostare il tipo del documento HTML usato con JjDom:documentTypeUsed()
 - aggiunta una nuova eccezzione in JjDom:InvalidDocumentTypeException

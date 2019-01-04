@@ -51,6 +51,10 @@ public abstract class Terminal extends Home {
 	 */
 
 	public abstract String getCommandRequest();
+	/**
+	 * This method returns the terminal name
+	 * @return the terminal name
+	 */
 	public abstract String getName();
 
 	/**
