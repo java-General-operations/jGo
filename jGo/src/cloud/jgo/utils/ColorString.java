@@ -35,7 +35,7 @@ import cloud.jgo.£;
  * This class represents a colored string
  *
  */
-public class ColorString{
+public class ColorString implements CharSequence{
 	private StringBuffer buffer ;
 	public int length ;
 	public ColorString(String string,Color color) {
@@ -105,5 +105,20 @@ public class ColorString{
 		// sostituisco l'intero valore del buffer
 		this.buffer = new StringBuffer(j£.colors(value, color));
 		this.length = this.buffer.length();
+	}
+	@Override
+	public char charAt(int index) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int length() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public CharSequence subSequence(int start, int end) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
