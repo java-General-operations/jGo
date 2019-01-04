@@ -1264,7 +1264,10 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		}
 		return sharedParams ;
 	}
-	
+	/**
+	 * This method returns the unshared parameters
+	 * @return the unshared parameters
+	 */
 	public List<Parameter>getUnSharedParameters(){
 		List<Parameter>params = sortParameters();
 		List<Parameter>unSharedParams = new ArrayList<>();

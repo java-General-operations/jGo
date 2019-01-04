@@ -1,6 +1,7 @@
 package cloud.jgo.jjdom.dom.nodes.html.color;
 
 import cloud.jgo.jjdom.dom.ColorRecursion;
+import cloud.jgo.jjdom.dom.Colorable;
 import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;

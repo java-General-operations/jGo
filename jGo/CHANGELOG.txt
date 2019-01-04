@@ -181,23 +181,17 @@ Version 1.0.9 - in dev
 - Serial version update
 - Eliminated unexpected printing of the shareObject () method of the LocalCommand class
 - Added new packages for colored nodes
-- aggiunta nuova classe : TerminalColors, per definire i colori del terminale.
-- aggiunto un nuovo metodo nella classe JjDom;permette di impostare il tipo del documento HTML usato con JjDom:documentTypeUsed()
-- aggiunta una nuova eccezzione in JjDom:InvalidDocumentTypeException
-- aggiunto nuvo metodo al punto di accesso jGo potenziato:colorTheStringsSyntax()
-- adattato diversi metodi della classe LocalCommand tenendo conto delle sotto classi
-- aggiunta una interfaccia colorable che viene implementata da tutti i nodi colorabili
-- segnalare che quando si lavora con i nodi colorati, bisogna tenere presente che bisogna installare jansi con il metodo e didistallare quando il nostro software viene spento
-- risolto bug webcam in j£
-- Abbiamo ridefinito i metodi webcam di j£
-- Creati due nuovi metodi nell'interfaccia Shareable
-- aggiunto metodo alla classe Parameter:shared()
-- aggiunto metodo alla classe LocalCommand:getUnSharedParameters()
-- aggiunta l'interfaccia Sharer:per ora vuota, indica solo che gli elementi che impl questa interfaccia, possono condividere risorse
-- Command estende questa interfaccia, per il momento
-- aggiunta nuova interfaccia SharedExecution, sarà l'esecuzione condivisa, per comandi la cui esecuzione è uguale
-- aggiunti nuovi metodi all'interfaccia Shareable :per condividere parametri interamente
-- aggiunto nuovo metodo statico nell'interfaccia HTMLElement: createNewElement()
-- adesso vogliamo dare all'utente la possibilità di ampliare la lista di tipi elementi predefiniti
-- abbiamo trasformato i tipi predefiniti di elementi html, da array in lista per una questione di comodità. cosi da poter aggiungere
-all'occorrenza nuovi tipi predefiniti di elementi html.
+- Added new class : TerminalColors
+- Added new method in the JjDom class:documentTypeUsed()
+- New exception in JjDom:InvalidDocumentTypeException()
+- New jGo method:colorTheStringsSyntax()
+- I have adapted different methods of the LocalCommand class, taking into account the subclasses
+- New interface:Colorable
+- fixed webcam bugs in the jGo enhanced access point
+- Created two new methods in the Shareable interface
+- New method > shared() > Parameter
+- New method > getUnSharedParameters() > LocalCommand
+- New Interface > Sharer
+- New Interface > SharedExecution
+- Added new static method in the HTMLElement interface:createNewElement()
+- Now you can create new predefined types of html elements

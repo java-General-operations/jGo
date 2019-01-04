@@ -53,11 +53,29 @@ public interface Shareable {
 	public abstract <T> void shareObject(T sharedObject);
 	
 	// version 1.0.9
+	/**
+	 * This method shares a parameter
+	 * @param parameter the parameter
+	 * @return the shared parameter
+	 */
 	public abstract Parameter shareParameter(Parameter parameter);
+	/**
+	 * This method returns the shared parameters
+	 * @return the shared parameters
+	 */
 	public abstract List<Parameter> getSharedParameters();
+	/**
+	 * This method fully shares a parameter
+	 * @param parameter the parameter
+	 * @param execution the shared execution
+	 */
 	public abstract void shareItEntirely(Parameter parameter,SharedExecution execution);
 	// in questo metodo si da per scontato che il parametro abbia già una esecuzione
 	// condividibile
+	/**
+	 * This method fully shares a parameter
+	 * @param parameter the parameter
+	 */
 	public abstract void shareItEntirely(Parameter parameter);
 	
 }

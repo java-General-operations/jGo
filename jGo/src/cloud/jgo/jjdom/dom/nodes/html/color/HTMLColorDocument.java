@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.ColorRecursion;
+import cloud.jgo.jjdom.dom.Colorable;
 import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.NodeList;

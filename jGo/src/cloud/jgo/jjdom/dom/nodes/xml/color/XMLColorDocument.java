@@ -2,10 +2,10 @@ package cloud.jgo.jjdom.dom.nodes.xml.color;
 
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.dom.ColorRecursion;
+import cloud.jgo.jjdom.dom.Colorable;
 import cloud.jgo.jjdom.dom.nodes.Comment;
 import cloud.jgo.jjdom.dom.nodes.Element;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
-import cloud.jgo.jjdom.dom.nodes.html.color.Colorable;
 import cloud.jgo.jjdom.dom.nodes.html.color.HTMLColorElement;
 import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 import cloud.jgo.jjdom.dom.nodes.xml.XMLElement;

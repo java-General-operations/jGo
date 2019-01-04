@@ -1,9 +1,9 @@
 package cloud.jgo.jjdom.dom.nodes.xml.color;
 
 import cloud.jgo.jjdom.dom.ColorRecursion;
+import cloud.jgo.jjdom.dom.Colorable;
 import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLComment;
-import cloud.jgo.jjdom.dom.nodes.html.color.Colorable;
 import cloud.jgo.utils.ColorString;
 
 public class XMLColorComment extends HTMLComment implements Colorable{

@@ -21,18 +21,11 @@
  * 
  */
 package cloud.jgo.jjdom.dom;
-
-import org.fusesource.jansi.Ansi.Color;
 /**
  * 
  * @author Martire91
- * This class collects the colors dom
- *
+ *	All nodes that implement this interface will have colored markup
  */
-public abstract class DomColors {
-	public static Color TAG_COLOR = Color.DEFAULT;
-	public static Color NODENAME_COLOR = Color.DEFAULT;
-	public static Color ATTRIBUTE_VALUE_COLOR = Color.DEFAULT;
-	public static Color COMMENT_COLOR = Color.DEFAULT;
-	public static Color NODEVALUE_COLOR = Color.DEFAULT;
+public interface Colorable {
+	public abstract String getColorMarkup();
 }
