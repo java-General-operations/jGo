@@ -23,6 +23,7 @@
 package cloud.jgo.utils.command;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -71,23 +72,25 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	 */
 	public static String toString(Object sharedObject) throws IllegalArgumentException, IllegalAccessException {
 		StringBuffer string = new StringBuffer();
-		string.append("------------------------------------------------------------------------\n");
+		string.append("-----------------------------------------------------------------------------------\n");
 		string.append("" + sharedObject.getClass().getSimpleName() + " - Configuration\n");
-		string.append("------------------------------------------------------------------------\n");
+		string.append("-----------------------------------------------------------------------------------\n");
 		Class<?> clazz = sharedObject.getClass();
 		Field[] fields = clazz.getDeclaredFields();
 		int count = 0;
 		for (Field field : fields) {
 			field.setAccessible(true);
-			String fieldName = field.getName();
-			Object fieldValue = field.get(sharedObject);
-			if (count == 3) {
-				// si va a capo
-				count = 0;
-				string.append("\n\n");
-			} else {
-				string.append("* " + fieldName).append("=")
-						.append(fieldValue).append("  ");
+			if (!Modifier.isFinal(field.getModifiers())) {
+				String fieldName = field.getName();
+				Object fieldValue = field.get(sharedObject);
+				if (count == 3) {
+					// si va a capo
+					count = 0;
+					string.append("\n\n");
+				} else {
+					string.append("* " + fieldName).append("=")
+							.append(fieldValue).append("  ");
+				}
 			}
 			count++;
 		}

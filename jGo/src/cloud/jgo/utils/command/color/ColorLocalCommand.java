@@ -1,6 +1,7 @@
 package cloud.jgo.utils.command.color;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -17,42 +18,52 @@ import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.TerminalColors;
 
 public class ColorLocalCommand extends LocalCommand {
-	// version 1.0.9 : 
-		/**
-		 * This method prints a report of all the fields of the shared object,
-		 * then tells us which variables have been set and which are not,
-		 * all this happens through reflection.
-		 * @param sharedObject the shared object
-		 * @param fieldNameColor field name color
-		 * @param fieldValueColor field value color
-		 * @return the shared object configuration
-		 * @throws IllegalArgumentException 1 exception
-		 * @throws IllegalAccessException 2 exception
-		 */
-	public static String toString(Object sharedObject,Color fieldNameColor,Color fieldValueColor) throws IllegalArgumentException, IllegalAccessException {
+	// version 1.0.9 :
+	/**
+	 * This method prints a report of all the fields of the shared object, then
+	 * tells us which variables have been set and which are not, all this happens
+	 * through reflection.
+	 * 
+	 * @param sharedObject
+	 *            the shared object
+	 * @param fieldNameColor
+	 *            field name color
+	 * @param fieldValueColor
+	 *            field value color
+	 * @return the shared object configuration
+	 * @throws IllegalArgumentException
+	 *             1 exception
+	 * @throws IllegalAccessException
+	 *             2 exception
+	 */
+	public static String toString(Object sharedObject, Color fieldNameColor, Color fieldValueColor)
+			throws IllegalArgumentException, IllegalAccessException {
 		ColorString string = new ColorString();
-		string.append("------------------------------------------------------------------------\n");
+		string.append("-----------------------------------------------------------------------------------\n");
 		string.append("" + sharedObject.getClass().getSimpleName() + " - Configuration\n");
-		string.append("------------------------------------------------------------------------\n");
+		string.append("-----------------------------------------------------------------------------------\n");
 		Class<?> clazz = sharedObject.getClass();
 		Field[] fields = clazz.getDeclaredFields();
 		int count = 0;
 		for (Field field : fields) {
 			field.setAccessible(true);
-			String fieldName = field.getName();
-			Object fieldValue = field.get(sharedObject);
-			if (count == 3) {
-				// si va a capo
-				count = 0;
-				string.append("\n\n");
-			} else {
-				string.append("* " + fieldName,fieldNameColor).append("=", Color.WHITE)
-						.append(fieldValue + "",fieldValueColor).append("  ");
+			if (!Modifier.isFinal(field.getModifiers())) {
+				String fieldName = field.getName();
+				Object fieldValue = field.get(sharedObject);
+				if (count == 3) {
+					// si va a capo
+					count = 0;
+					string.append("\n\n");
+				} else {
+					string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+							.append(fieldValue + "", fieldValueColor).append("  ");
+				}
 			}
 			count++;
 		}
 		return string.toString() + "\n";
 	}
+
 	private ColorHelpCommand helpCommand = new ColorHelpCommand();
 
 	public ColorLocalCommand(String command, String help) {
@@ -92,7 +103,8 @@ public class ColorLocalCommand extends LocalCommand {
 			Collection<Parameter> collection = command.getStructure().values();
 			List<Parameter> orderParameters = command.sortParameters();
 			// qui ci sarà la descrizione del comando root
-			buffer.append(this.command.getHelp().toUpperCase() + "   / has input value ="+j£.colors(this.command.hasInputValueExploitable()+"",Color.GREEN)+"\n\n");
+			buffer.append(this.command.getHelp().toUpperCase() + "   / has input value ="
+					+ j£.colors(this.command.hasInputValueExploitable() + "", Color.GREEN) + "\n\n");
 			if (orderParameters != null) {
 				buffer.append("* Parameters :" + orderParameters + " :\n\n");
 				if (this.command.hasParameters()) {
@@ -102,8 +114,8 @@ public class ColorLocalCommand extends LocalCommand {
 					while (iterator.hasNext()) {
 						Parameter param = iterator.next();
 						buffer.append(j£.colors(param.getParam(), TerminalColors.PARAMETER_COLOR) + "="
-								+ param.getParameterHelp() + "  / has input value =" + j£.colors(param.hasInputValueExploitable()+"",Color.GREEN)
-								+ "\n");
+								+ param.getParameterHelp() + "  / has input value ="
+								+ j£.colors(param.hasInputValueExploitable() + "", Color.GREEN) + "\n");
 					}
 				}
 			} else {
@@ -117,8 +129,8 @@ public class ColorLocalCommand extends LocalCommand {
 								.next();
 						Parameter param = entry.getValue();
 						buffer.append(j£.colors(param.getParam(), TerminalColors.PARAMETER_COLOR) + "="
-								+ param.getParameterHelp() + "  / has input value =" + j£.colors(param.hasInputValueExploitable()+"",Color.GREEN)
-								+ "\n");
+								+ param.getParameterHelp() + "  / has input value ="
+								+ j£.colors(param.hasInputValueExploitable() + "", Color.GREEN) + "\n");
 					}
 				}
 			}
