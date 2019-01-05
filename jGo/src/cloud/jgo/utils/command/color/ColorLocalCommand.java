@@ -1,5 +1,6 @@
 package cloud.jgo.utils.command.color;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import org.fusesource.jansi.Ansi.Color;
 import cloud.jgo.j£;
+import cloud.jgo.utils.ColorString;
 import cloud.jgo.utils.command.DefaultParameter;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
@@ -15,6 +17,42 @@ import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.TerminalColors;
 
 public class ColorLocalCommand extends LocalCommand {
+	// version 1.0.9 : 
+		/**
+		 * This method prints a report of all the fields of the shared object,
+		 * then tells us which variables have been set and which are not,
+		 * all this happens through reflection.
+		 * @param sharedObject the shared object
+		 * @param fieldNameColor field name color
+		 * @param fieldValueColor field value color
+		 * @return the shared object configuration
+		 * @throws IllegalArgumentException 1 exception
+		 * @throws IllegalAccessException 2 exception
+		 */
+	public static String toString(Object sharedObject,Color fieldNameColor,Color fieldValueColor) throws IllegalArgumentException, IllegalAccessException {
+		ColorString string = new ColorString();
+		string.append("------------------------------------------------------------------------\n");
+		string.append("" + sharedObject.getClass().getSimpleName() + " - Configuration\n");
+		string.append("------------------------------------------------------------------------\n");
+		Class<?> clazz = sharedObject.getClass();
+		Field[] fields = clazz.getDeclaredFields();
+		int count = 0;
+		for (Field field : fields) {
+			field.setAccessible(true);
+			String fieldName = field.getName();
+			Object fieldValue = field.get(sharedObject);
+			if (count == 3) {
+				// si va a capo
+				count = 0;
+				string.append("\n\n");
+			} else {
+				string.append("* " + fieldName,fieldNameColor).append("=", Color.WHITE)
+						.append(fieldValue + "",fieldValueColor).append("  ");
+			}
+			count++;
+		}
+		return string.toString() + "\n";
+	}
 	private ColorHelpCommand helpCommand = new ColorHelpCommand();
 
 	public ColorLocalCommand(String command, String help) {

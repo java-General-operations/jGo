@@ -198,3 +198,4 @@ Version 1.0.9 - in dev
 - sto perfezionando il metodo shareObject della classe LocalCommand, cosi da permettere all'utente di sce
 gliere il nome del parametro che stampa il to_string degli oggetti condivisi
 - Inoltre ho aggiunto alla classe Parameter il metodo setHelp, per settare l'help del parametro
+- Aggiunto il metodo statico toString alla classe ColorLocalCommand/LocalCommand

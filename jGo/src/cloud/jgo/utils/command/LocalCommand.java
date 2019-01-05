@@ -59,6 +59,40 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private Phase belongsTo = null;
 	// version 1.0.9 : da segnalare ...
 	private static String toStringParamName = "to_string"; 
+	// version 1.0.9 : 
+	/**
+	 * This method prints a report of all the fields of the shared object,
+	 * then tells us which variables have been set and which are not,
+	 * all this happens through reflection.
+	 * @param sharedObject the shared object
+	 * @return the shared object configuration
+	 * @throws IllegalArgumentException 1 exception
+	 * @throws IllegalAccessException 2 exception
+	 */
+	public static String toString(Object sharedObject) throws IllegalArgumentException, IllegalAccessException {
+		StringBuffer string = new StringBuffer();
+		string.append("------------------------------------------------------------------------\n");
+		string.append("" + sharedObject.getClass().getSimpleName() + " - Configuration\n");
+		string.append("------------------------------------------------------------------------\n");
+		Class<?> clazz = sharedObject.getClass();
+		Field[] fields = clazz.getDeclaredFields();
+		int count = 0;
+		for (Field field : fields) {
+			field.setAccessible(true);
+			String fieldName = field.getName();
+			Object fieldValue = field.get(sharedObject);
+			if (count == 3) {
+				// si va a capo
+				count = 0;
+				string.append("\n\n");
+			} else {
+				string.append("* " + fieldName).append("=")
+						.append(fieldValue).append("  ");
+			}
+			count++;
+		}
+		return string.toString() + "\n";
+	}
 
 	public LocalCommand(String command, String help) {
 		// quando inizializzo il costruttore
