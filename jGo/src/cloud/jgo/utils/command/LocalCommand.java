@@ -57,6 +57,8 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private static boolean inputHelpExploitable = false;
 	private boolean merged = false;
 	private Phase belongsTo = null;
+	// version 1.0.9 : da segnalare ...
+	private static String toStringParamName = "to_string"; 
 
 	public LocalCommand(String command, String help) {
 		// quando inizializzo il costruttore
@@ -1164,11 +1166,9 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		this.sharedObject = sharedObject;
 		if (this.sharedObject != null) {
 			// solo se il param non lo ha già lo aggiungo
-			if (!isParameter("to_string")) {
-
-				// se toString non è un param lo aggiungi
-
-				final Parameter pToString = this.addParam("to_string",
+			if (!isParameter(toStringParamName)) {
+				// se toString non è un param lo aggiungo
+				final Parameter pToString = this.addParam(toStringParamName,
 						"This parameter shows the toString method of the shared object");
 				pToString.setExecution(new Execution() {
 
@@ -1180,12 +1180,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 					}
 				});
 			} else {
-
 				// se invece to_string è un parametro senza eliminarlo
-				// mi basta sostituirne l'esecuzione
+				// mi basta sostituirne l'esecuzione e l'help
 				// quindi ottengo il param
-				Parameter param_toString = this.param("to_string");
-
+				Parameter param_toString = this.param(toStringParamName);
+				param_toString.setHelp("This parameter shows the toString method of the shared object");
 				param_toString.setExecution(new Execution() {
 
 					@Override
@@ -1198,8 +1197,8 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		} else {
 			// qui entra se l'oggetto condiviso è null
 			// cancello il parametro perchè non vi è più l'oggetto condiviso
-			if (isParameter("to_string")) {
-				removeParam("to_string");
+			if (isParameter(toStringParamName)) {
+				removeParam(toStringParamName);
 			}
 		}
 	}

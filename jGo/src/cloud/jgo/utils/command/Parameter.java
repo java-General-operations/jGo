@@ -128,6 +128,15 @@ public abstract class Parameter
 	public String getOnlyParam() {
 		return onlyParam;
 	}
+	
+	// 1.0.9
+	/**
+	 * This method sets the help
+	 * @param help the help
+	 */
+	public void setHelp(String help) {
+		this.help = help;
+	}
 
 	public Parameter(String param, String help, Execution execution) {
 		this.onlyParam = param;

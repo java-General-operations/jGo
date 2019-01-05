@@ -195,3 +195,6 @@ Version 1.0.9 - in dev
 - New Interface > SharedExecution
 - Added new static method in the HTMLElement interface:createNewElement()
 - Now you can create new predefined types of html elements
+- sto perfezionando il metodo shareObject della classe LocalCommand, cosi da permettere all'utente di sce
+gliere il nome del parametro che stampa il to_string degli oggetti condivisi
+- Inoltre ho aggiunto alla classe Parameter il metodo setHelp, per settare l'help del parametro
