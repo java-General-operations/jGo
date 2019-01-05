@@ -67,6 +67,16 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		// setto l'help
 		this.helpCommand.reload(this);
 	}
+	
+	/**
+	 * This method is used to set the name of the parameter
+	 * that will take care of printing the "toString"
+	 * method of the shared object.
+	 * @param toStringParamName parameter name
+	 */
+	public static void setToStringParamName(String toStringParamName) {
+		LocalCommand.toStringParamName = toStringParamName;
+	}
 
 	public LocalCommand(String command, String help, Execution execution) {
 		this.command = command;
