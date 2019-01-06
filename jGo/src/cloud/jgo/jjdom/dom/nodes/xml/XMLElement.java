@@ -44,6 +44,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
+import cloud.jgo.utils.command.LocalCommand;
 
 /**
  * 
@@ -94,8 +95,7 @@ public class XMLElement implements Element {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return this.nodeName ;
+		return getNodeName();
 	}
 	protected XMLElement() {}
 

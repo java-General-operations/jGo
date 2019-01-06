@@ -202,4 +202,7 @@ gliere il nome del parametro che stampa il to_string degli oggetti condivisi
 - aggiunto un overloading del metodo shareObject, quest'ultimo prende come param un comando
 che sarà il comando sul quale verrà aggiunto il parametro che stampa il toString dell'oggetto condiviso
 - aggiunto il metodo get del nome del parametro che stampa toString dell'oggetto condiviso
-- quando condividiamo un oggetto possiamo creare i parametri automatici
+- quando condividiamo un oggetto con il metodo shareObject che prende anche un comando,
+si devono creare i parametri automatici in relazione dei fields dell'oggetto condiviso
+- voglio creare delle annotazioni che si posson usare facoltativamente, per creare un oggetto tramite comando
+aggiunto nuovo packages
