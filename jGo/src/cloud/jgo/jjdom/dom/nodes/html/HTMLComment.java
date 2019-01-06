@@ -63,6 +63,16 @@ public class HTMLComment implements Comment, Home {
 			this.home = ((HTMLDocument) this.document).home();
 		}
 	}
+	public HTMLComment(Document document) {
+		// TODO Auto-generated constructor stub
+		this.startTag = "<!--";
+		this.endTag = "-->";
+		this.childNodes = new NodeList();
+		this.document = document;
+		if (this.document instanceof HTMLDocument) {
+			this.home = ((HTMLDocument) this.document).home();
+		}
+	}
 
 	// restituisce - 1 se non trova l'indice
 	@Override

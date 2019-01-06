@@ -199,3 +199,7 @@ Version 1.0.9 - in dev
 gliere il nome del parametro che stampa il to_string degli oggetti condivisi
 - Inoltre ho aggiunto alla classe Parameter il metodo setHelp, per settare l'help del parametro
 - Aggiunto il metodo statico toString alla classe ColorLocalCommand/LocalCommand
+- aggiunto un overloading del metodo shareObject, quest'ultimo prende come param un comando
+che sarà il comando sul quale verrà aggiunto il parametro che stampa il toString dell'oggetto condiviso
+- aggiunto il metodo get del nome del parametro che stampa toString dell'oggetto condiviso
+- quando condividiamo un oggetto possiamo creare i parametri automatici
