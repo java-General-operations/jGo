@@ -40,7 +40,7 @@ public class ColorLocalCommand extends LocalCommand {
 			throws IllegalArgumentException, IllegalAccessException {
 		ColorString string = new ColorString();
 		string.append("-----------------------------------------------------------------------------------\n");
-		string.append("" + sharedObject.getClass().getSimpleName() + " - Configuration\n");
+		string.append(" " + sharedObject.getClass().getSimpleName()).append(" ~ Configuration\n",Color.BLUE);
 		string.append("-----------------------------------------------------------------------------------\n");
 		Class<?> clazz = sharedObject.getClass();
 		Field[] fields = clazz.getDeclaredFields();
