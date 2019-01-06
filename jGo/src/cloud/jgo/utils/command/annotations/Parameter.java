@@ -30,12 +30,11 @@ import java.lang.annotation.Target;
 /**
  * 
  * @author Martire91
- * @see cloud.jgo.utils.command.Command
  *
  */
 @Retention(value = RetentionPolicy.RUNTIME)
-@Target(value = {ElementType.TYPE})
-public @interface Command {
+@Target(value = {ElementType.FIELD})
+public @interface Parameter {
 	
 	public String help();
 }

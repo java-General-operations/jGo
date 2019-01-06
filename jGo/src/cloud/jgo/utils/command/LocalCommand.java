@@ -38,6 +38,7 @@ import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
 import cloud.jgo.utils.command.terminal.Terminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
+import test.Person;
 
 /**
  * 
@@ -58,6 +59,19 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private static boolean inputHelpExploitable = false;
 	private boolean merged = false;
 	private Phase belongsTo = null;
+	// version 1.0.9 : da usare con le annotazioni
+	public static <A> LocalCommand getCommandByObject(Class<A>a) {
+		//1 cosa controllo che sia una classe annotata
+		cloud.jgo.utils.command.annotations.Command commandAnnotation = null ;
+		commandAnnotation = a.getDeclaredAnnotation(cloud.jgo.utils.command.annotations.Command.class);
+		if (commandAnnotation!=null) {
+			
+		}
+		else {
+			// dare una eccezzione
+		}
+		return null ;
+	}
 	// version 1.0.9 : da segnalare ...
 	private static String toStringParamName = "to_string"; 
 	// version 1.0.9 : 
@@ -1259,164 +1273,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		}
 	}
 	
-	// version 1.0.9 : segnalare a cosa serve il comando, esigenza sel software DomT4j
-	public <T> void shareObject(T sharedObject, LocalCommand command) {
-		// TODO Auto-generated method stub
-		this.sharedObject = sharedObject;
-		if (this.sharedObject != null) {
-			// creazione dei parametri del comando - fino a @
-			Class<?>clazz = this.sharedObject.getClass();
-			Field[]fields = clazz.getDeclaredFields();
-			for (Field field : fields) {
-				field.setAccessible(true);
-				if (!Modifier.isFinal(field.getModifiers())) {
-					Parameter param = command.addParam(field.getName(),field.getName()+" - configuration");
-					if (param!=null) {
-						param.setInputValueExploitable(true);
-						param.setExecution(new Execution() {
-							@Override
-							public Object exec() {
-								if (param.getInputValue()!=null) {
-									// controllo il tipo del field
-									try {
-										field.set(LocalCommand.this.sharedObject,param.getInputValue());
-										return field.getName()+"="+param.getInputValue();
-									} catch (IllegalArgumentException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (IllegalAccessException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-								}
-								return null ;
-							}
-						});	
-					}
-				}
-			}
-			// @
-			// solo se il param non lo ha già lo aggiungo
-			if (!command.isParameter(toStringParamName)) {
-				// se toString non è un param lo aggiungo
-				final Parameter pToString = command.addParam(toStringParamName,
-						"This parameter shows the toString method of the shared object");
-				pToString.setExecution(new Execution() {
-
-					@Override
-					public Object exec() {
-
-						return sharedObject.toString();
-
-					}
-				});
-			} else {
-				// se invece to_string è un parametro senza eliminarlo
-				// mi basta sostituirne l'esecuzione e l'help
-				// quindi ottengo il param
-				Parameter param_toString = command.param(toStringParamName);
-				param_toString.setHelp("This parameter shows the toString method of the shared object");
-				param_toString.setExecution(new Execution() {
-
-					@Override
-					public Object exec() {
-
-						return sharedObject.toString();
-					}
-				});
-			}
-		} else {
-			// qui entra se l'oggetto condiviso è null
-			// cancello il parametro perchè non vi è più l'oggetto condiviso
-			if (command.isParameter(toStringParamName)) {
-				command.removeParam(toStringParamName);
-			}
-		}
-	}
-	
-	// version 1.0.9 : segnalare a cosa serve il comando, esigenza sel software DomT4j
-		public <T> void shareObject(T sharedObject, LocalCommand command, String...fieldNamesToBeExcluded) {
-			// TODO Auto-generated method stub
-			this.sharedObject = sharedObject;
-			if (this.sharedObject != null) {
-				// creazione dei parametri del comando - fino a @
-				Class<?>clazz = this.sharedObject.getClass();
-				Field[]fields = clazz.getDeclaredFields();
-				boolean exclude  ;
-				for (Field field : fields) {
-					exclude = false ;
-					field.setAccessible(true);
-					for (int i = 0; i < fieldNamesToBeExcluded.length; i++) {
-						String fieldNameToBeExcluded = fieldNamesToBeExcluded[i];
-						if (field.getName().equals(fieldNameToBeExcluded)) {
-							exclude = true ;
-						}
-					}
-					if (!Modifier.isFinal(field.getModifiers())&&!exclude) {
-						Parameter param = command.addParam(field.getName(),field.getName()+" - configuration");
-						if (param!=null) {
-							param.setInputValueExploitable(true);
-							param.setExecution(new Execution() {
-								@Override
-								public Object exec() {
-									if (param.getInputValue()!=null) {
-										// controllo il tipo del field
-										try {
-											field.set(LocalCommand.this.sharedObject,param.getInputValue());
-											return field.getName()+"="+param.getInputValue();
-										} catch (IllegalArgumentException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										} catch (IllegalAccessException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
-									}
-									return null ;
-								}
-							});	
-						}
-					}
-				}
-				// @
-				// solo se il param non lo ha già lo aggiungo
-				if (!command.isParameter(toStringParamName)) {
-					// se toString non è un param lo aggiungo
-					final Parameter pToString = command.addParam(toStringParamName,
-							"This parameter shows the toString method of the shared object");
-					pToString.setExecution(new Execution() {
-
-						@Override
-						public Object exec() {
-
-							return sharedObject.toString();
-
-						}
-					});
-				} else {
-					// se invece to_string è un parametro senza eliminarlo
-					// mi basta sostituirne l'esecuzione e l'help
-					// quindi ottengo il param
-					Parameter param_toString = command.param(toStringParamName);
-					param_toString.setHelp("This parameter shows the toString method of the shared object");
-					param_toString.setExecution(new Execution() {
-
-						@Override
-						public Object exec() {
-
-							return sharedObject.toString();
-						}
-					});
-				}
-			} else {
-				// qui entra se l'oggetto condiviso è null
-				// cancello il parametro perchè non vi è più l'oggetto condiviso
-				if (command.isParameter(toStringParamName)) {
-					command.removeParam(toStringParamName);
-				}
-			}
-		}
-
 	@Override
 	public Parameter[] params() {
 		if (structure.values().toArray().length > 0) {

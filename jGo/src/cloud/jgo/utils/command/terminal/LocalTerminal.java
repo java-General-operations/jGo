@@ -58,7 +58,6 @@ public class LocalTerminal extends Terminal implements Iterable<Entry<String, Lo
 	public LocalTerminal() {
 		// private constructor
 	}
-
 	/**
 	 * This method counts the terminal commands
 	 * 

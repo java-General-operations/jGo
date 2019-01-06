@@ -17,23 +17,15 @@ public static void main(String[] args) {
 	
 	LocalCommand.setInputHelpExploitable(true);
 	
-	// okok mi creo i comandi e inoltre mi serve un oggetto da condividere 
+	// ottengo il comando tramite un metodo specifico 
+	
+	LocalCommand personCommand = LocalCommand.getCommandByObject(Person.class);
 	
 	
-	LocalCommand create = new LocalCommand("create","creates a node");
 	
-	XMLDocument document = new XMLDocument();
-	XMLElement rootElement = document.createElement("root");
-	// aggiungo l'elemento 
-	document.appendChild(rootElement);
 	
-	create.shareObject(rootElement,create);
 	
-	t.addCommand(create);
 	
-	// attivo il terminale 
-	
-	t.open();
 	
 	
 	
