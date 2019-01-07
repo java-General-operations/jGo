@@ -80,93 +80,31 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			});	
 			// qui proseguo con i campi
 			Field[]fields = a.getDeclaredFields();
-			for (Field field : fields) {
-				field.setAccessible(true);
-				// verifico se il campo è annotato
-				if (field.isAnnotationPresent(cloud.jgo.utils.command.annotations.Parameter.class)) {
-					Parameter param = objCommand.addParam(field.getName(),field.getAnnotation(cloud.jgo.utils.command.annotations.Parameter.class).help());
-					param.setInputValueExploitable(true);
-					param.setExecution(new Execution() {
-						@Override
-						public Object exec() {
-							if (param.getInputValue()!=null) {
-								
-								if (objCommand.getSharedObject()!=null) {
-									boolean setOk = false ;
-									String fieldValue = param.getInputValue();
-									// controllo il tipo del campo
+			if (commandAnnotation.involveAll()) {
+				// qui trasformiamo tutti i fields in parametri
+				// tranne le costanti ovviamente
+				for (Field field : fields) {
+					field.setAccessible(true);
+					// verifico che il campo non sia una costante
+					if (!Modifier.isFinal(field.getModifiers())) {
+						Parameter param = objCommand.addParam(field.getName(),"set "+£.escp(field.getName())+"");
+						param.setInputValueExploitable(true);
+						param.setExecution(new Execution() {
+							@Override
+							public Object exec() {
+								if (param.getInputValue()!=null) {
 									
-									if (field.getType().isPrimitive()) {
-										// is a primitive 
-										if (field.getType().getSimpleName().equals("int")) {
-											int value = Integer.parseInt(fieldValue);
-											try {
-												field.setInt(objCommand.getSharedObject(),value);
-												setOk = true ;
-											} catch (IllegalArgumentException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											} catch (IllegalAccessException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
-										}
-										else if(field.getType().getSimpleName().equals("double")) {
-											double value = Double.parseDouble(fieldValue);
-											try {
-												field.setDouble(objCommand.getSharedObject(),value);
-												setOk = true ;
-											} catch (IllegalArgumentException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											} catch (IllegalAccessException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
-										}
-										else if(field.getType().getSimpleName().equals("float")) {
-											float value = Float.parseFloat(fieldValue);
-											try {
-												field.setFloat(objCommand.getSharedObject(),value);
-												setOk = true ;
-											} catch (IllegalArgumentException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											} catch (IllegalAccessException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
-										}
-										else if(field.getType().getSimpleName().equals("long")) {
-											long value = Long.parseLong(fieldValue);
-											try {
-												field.setLong(objCommand.getSharedObject(),value);
-												setOk = true ;
-											} catch (IllegalArgumentException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											} catch (IllegalAccessException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
-										}
-										else if(field.getType().getSimpleName().equals("short")) {
-											short value = Short.parseShort(fieldValue);
-											try {
-												field.setShort(objCommand.getSharedObject(),value);
-												setOk = true ;
-											} catch (IllegalArgumentException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											} catch (IllegalAccessException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
-										}
-										else if(field.getType().getSimpleName().equals("char")) {
-											if (fieldValue.length()==1) {
+									if (objCommand.getSharedObject()!=null) {
+										boolean setOk = false ;
+										String fieldValue = param.getInputValue();
+										// controllo il tipo del campo
+										
+										if (field.getType().isPrimitive()) {
+											// is a primitive 
+											if (field.getType().getSimpleName().equals("int")) {
+												int value = Integer.parseInt(fieldValue);
 												try {
-													field.setChar(objCommand.getSharedObject(),fieldValue.charAt(0));
+													field.setInt(objCommand.getSharedObject(),value);
 													setOk = true ;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
@@ -176,121 +114,205 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													e.printStackTrace();
 												}
 											}
-											else {
-											return "The \""+field.getName()+"\" field requires a single character #";
+											else if(field.getType().getSimpleName().equals("double")) {
+												double value = Double.parseDouble(fieldValue);
+												try {
+													field.setDouble(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											else if(field.getType().getSimpleName().equals("float")) {
+												float value = Float.parseFloat(fieldValue);
+												try {
+													field.setFloat(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											else if(field.getType().getSimpleName().equals("long")) {
+												long value = Long.parseLong(fieldValue);
+												try {
+													field.setLong(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											else if(field.getType().getSimpleName().equals("short")) {
+												short value = Short.parseShort(fieldValue);
+												try {
+													field.setShort(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											else if(field.getType().getSimpleName().equals("char")) {
+												if (fieldValue.length()==1) {
+													try {
+														field.setChar(objCommand.getSharedObject(),fieldValue.charAt(0));
+														setOk = true ;
+													} catch (IllegalArgumentException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (IllegalAccessException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													}
+												}
+												else {
+												return "The \""+field.getName()+"\" field requires a single character #";
+												}
+											}
+											else if(field.getType().getSimpleName().equals("boolean")) {
+												short value = Short.parseShort(fieldValue);
+												try {
+													field.setShort(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}	
 											}
 										}
-										else if(field.getType().getSimpleName().equals("boolean")) {
-											short value = Short.parseShort(fieldValue);
-											try {
-												field.setShort(objCommand.getSharedObject(),value);
-												setOk = true ;
-											} catch (IllegalArgumentException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											} catch (IllegalAccessException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}	
-										}
-									}
-									else {
-										// is an object
-										if (!field.getType().isArray()) {
-											
-											if (field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")) {
-											try {
-												field.set(objCommand.getSharedObject(),fieldValue);
-												setOk = true ;
-											} catch (IllegalArgumentException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											} catch (IllegalAccessException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
-											}
-											else {
-												// qui faccio il controllo del tipo di oggetto
-												if (field.getType().getSimpleName().equals("Integer")) {
-													try {
-														field.set(objCommand.getSharedObject(),Integer.parseInt(fieldValue));
-														setOk = true ;
-													} catch (NumberFormatException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													} catch (IllegalArgumentException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													} catch (IllegalAccessException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													}
+										else {
+											// is an object
+											if (!field.getType().isArray()) {
+												
+												if (field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")) {
+												try {
+													field.set(objCommand.getSharedObject(),fieldValue);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
 												}
-												else if (field.getType().getSimpleName().equals("Double")) {
-													try {
-														field.set(objCommand.getSharedObject(),Double.parseDouble(fieldValue));
-														setOk = true ;
-													} catch (NumberFormatException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													} catch (IllegalArgumentException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													} catch (IllegalAccessException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													}
 												}
-												else if (field.getType().getSimpleName().equals("Float")) {
-													try {
-														field.set(objCommand.getSharedObject(),Float.parseFloat(fieldValue));
-														setOk = true ;
-													} catch (NumberFormatException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													} catch (IllegalArgumentException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													} catch (IllegalAccessException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													}
-												}
-												else if (field.getType().getSimpleName().equals("Long")) {
-													try {
-														field.set(objCommand.getSharedObject(),Long.parseLong(fieldValue));
-														setOk = true ;
-													} catch (NumberFormatException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													} catch (IllegalArgumentException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													} catch (IllegalAccessException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													}
-												}
-												else if (field.getType().getSimpleName().equals("Short")) {
-													try {
-														field.set(objCommand.getSharedObject(),Short.parseShort(fieldValue));
-														setOk = true ;
-													} catch (NumberFormatException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													} catch (IllegalArgumentException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													} catch (IllegalAccessException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													}
-												}
-												else if (field.getType().getSimpleName().equals("Character")) {
-													if (fieldValue.length()==1) {
+												else {
+													// qui faccio il controllo del tipo di oggetto
+													if (field.getType().getSimpleName().equals("Integer")) {
 														try {
-															field.set(objCommand.getSharedObject(),fieldValue);
+															field.set(objCommand.getSharedObject(),Integer.parseInt(fieldValue));
+															setOk = true ;
+														} catch (NumberFormatException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalArgumentException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalAccessException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Double")) {
+														try {
+															field.set(objCommand.getSharedObject(),Double.parseDouble(fieldValue));
+															setOk = true ;
+														} catch (NumberFormatException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalArgumentException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalAccessException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Float")) {
+														try {
+															field.set(objCommand.getSharedObject(),Float.parseFloat(fieldValue));
+															setOk = true ;
+														} catch (NumberFormatException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalArgumentException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalAccessException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Long")) {
+														try {
+															field.set(objCommand.getSharedObject(),Long.parseLong(fieldValue));
+															setOk = true ;
+														} catch (NumberFormatException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalArgumentException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalAccessException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Short")) {
+														try {
+															field.set(objCommand.getSharedObject(),Short.parseShort(fieldValue));
+															setOk = true ;
+														} catch (NumberFormatException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalArgumentException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalAccessException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Character")) {
+														if (fieldValue.length()==1) {
+															try {
+																field.set(objCommand.getSharedObject(),fieldValue);
+																setOk = true ;
+															} catch (NumberFormatException e) {
+																// TODO Auto-generated catch block
+																e.printStackTrace();
+															} catch (IllegalArgumentException e) {
+																// TODO Auto-generated catch block
+																e.printStackTrace();
+															} catch (IllegalAccessException e) {
+																// TODO Auto-generated catch block
+																e.printStackTrace();
+															}
+														}
+														else {
+															return "The \""+field.getName()+"\" field requires a single character #";
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Boolean")) {
+														try {
+															field.set(objCommand.getSharedObject(),Boolean.parseBoolean(fieldValue));
 															setOk = true ;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
@@ -304,16 +326,121 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 														}
 													}
 													else {
-														return "The \""+field.getName()+"\" field requires a single character #";
+														// qui si tratta di un altro tipo di oggetto
+														// quindi gestire ....
 													}
 												}
-												else if (field.getType().getSimpleName().equals("Boolean")) {
+											}
+										}
+										if (setOk) {
+											return "The \""+field.getName()+"\" variable is set ( OK )";
+										}
+										else {
+											// da verificare ...
+											return null ;
+										}
+									}
+									else {
+										// non esiste un oggetto condiviso
+										return "No instanced objects - use \"new\" param #";
+									}
+								}
+								return null ;
+							}
+						});
+					}
+				}
+			}
+			else {
+				// quii invece filtriamo quali field devono essere parametri
+				for (Field field : fields) {
+					field.setAccessible(true);
+					// verifico se il campo è annotato
+					if (field.isAnnotationPresent(cloud.jgo.utils.command.annotations.Parameter.class)) {
+						Parameter param = objCommand.addParam(field.getName(),field.getAnnotation(cloud.jgo.utils.command.annotations.Parameter.class).help());
+						param.setInputValueExploitable(true);
+						param.setExecution(new Execution() {
+							@Override
+							public Object exec() {
+								if (param.getInputValue()!=null) {
+									
+									if (objCommand.getSharedObject()!=null) {
+										boolean setOk = false ;
+										String fieldValue = param.getInputValue();
+										// controllo il tipo del campo
+										
+										if (field.getType().isPrimitive()) {
+											// is a primitive 
+											if (field.getType().getSimpleName().equals("int")) {
+												int value = Integer.parseInt(fieldValue);
+												try {
+													field.setInt(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											else if(field.getType().getSimpleName().equals("double")) {
+												double value = Double.parseDouble(fieldValue);
+												try {
+													field.setDouble(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											else if(field.getType().getSimpleName().equals("float")) {
+												float value = Float.parseFloat(fieldValue);
+												try {
+													field.setFloat(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											else if(field.getType().getSimpleName().equals("long")) {
+												long value = Long.parseLong(fieldValue);
+												try {
+													field.setLong(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											else if(field.getType().getSimpleName().equals("short")) {
+												short value = Short.parseShort(fieldValue);
+												try {
+													field.setShort(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											else if(field.getType().getSimpleName().equals("char")) {
+												if (fieldValue.length()==1) {
 													try {
-														field.set(objCommand.getSharedObject(),Boolean.parseBoolean(fieldValue));
+														field.setChar(objCommand.getSharedObject(),fieldValue.charAt(0));
 														setOk = true ;
-													} catch (NumberFormatException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
 													} catch (IllegalArgumentException e) {
 														// TODO Auto-generated catch block
 														e.printStackTrace();
@@ -323,28 +450,175 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													}
 												}
 												else {
-													// qui si tratta di un altro tipo di oggetto
-													// quindi gestire ....
+												return "The \""+field.getName()+"\" field requires a single character #";
+												}
+											}
+											else if(field.getType().getSimpleName().equals("boolean")) {
+												short value = Short.parseShort(fieldValue);
+												try {
+													field.setShort(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}	
+											}
+										}
+										else {
+											// is an object
+											if (!field.getType().isArray()) {
+												
+												if (field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")) {
+												try {
+													field.set(objCommand.getSharedObject(),fieldValue);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+												}
+												else {
+													// qui faccio il controllo del tipo di oggetto
+													if (field.getType().getSimpleName().equals("Integer")) {
+														try {
+															field.set(objCommand.getSharedObject(),Integer.parseInt(fieldValue));
+															setOk = true ;
+														} catch (NumberFormatException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalArgumentException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalAccessException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Double")) {
+														try {
+															field.set(objCommand.getSharedObject(),Double.parseDouble(fieldValue));
+															setOk = true ;
+														} catch (NumberFormatException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalArgumentException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalAccessException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Float")) {
+														try {
+															field.set(objCommand.getSharedObject(),Float.parseFloat(fieldValue));
+															setOk = true ;
+														} catch (NumberFormatException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalArgumentException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalAccessException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Long")) {
+														try {
+															field.set(objCommand.getSharedObject(),Long.parseLong(fieldValue));
+															setOk = true ;
+														} catch (NumberFormatException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalArgumentException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalAccessException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Short")) {
+														try {
+															field.set(objCommand.getSharedObject(),Short.parseShort(fieldValue));
+															setOk = true ;
+														} catch (NumberFormatException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalArgumentException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalAccessException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Character")) {
+														if (fieldValue.length()==1) {
+															try {
+																field.set(objCommand.getSharedObject(),fieldValue);
+																setOk = true ;
+															} catch (NumberFormatException e) {
+																// TODO Auto-generated catch block
+																e.printStackTrace();
+															} catch (IllegalArgumentException e) {
+																// TODO Auto-generated catch block
+																e.printStackTrace();
+															} catch (IllegalAccessException e) {
+																// TODO Auto-generated catch block
+																e.printStackTrace();
+															}
+														}
+														else {
+															return "The \""+field.getName()+"\" field requires a single character #";
+														}
+													}
+													else if (field.getType().getSimpleName().equals("Boolean")) {
+														try {
+															field.set(objCommand.getSharedObject(),Boolean.parseBoolean(fieldValue));
+															setOk = true ;
+														} catch (NumberFormatException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalArgumentException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														} catch (IllegalAccessException e) {
+															// TODO Auto-generated catch block
+															e.printStackTrace();
+														}
+													}
+													else {
+														// qui si tratta di un altro tipo di oggetto
+														// quindi gestire ....
+													}
 												}
 											}
 										}
-									}
-									if (setOk) {
-										return "The \""+field.getName()+"\" variable is set ( OK )";
+										if (setOk) {
+											return "The \""+field.getName()+"\" variable is set ( OK )";
+										}
+										else {
+											// da verificare ...
+											return null ;
+										}
 									}
 									else {
-										// da verificare ...
-										return null ;
+										// non esiste un oggetto condiviso
+										return "No instanced objects - use \"new\" param #";
 									}
 								}
-								else {
-									// non esiste un oggetto condiviso
-									return "No instanced objects - use \"new\" param #";
-								}
+								return null ;
 							}
-							return null ;
-						}
-					});
+						});
+					}
 				}
 			}
 			// ottengo il risultato
@@ -352,7 +626,12 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		}
 		else {
 			// dare una eccezzione
-			System.out.println("Questa classe non ha l'annotazione apposita");
+			try {
+				throw new InvalidClassException();
+			} catch (InvalidClassException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return result ;
 	}
@@ -377,21 +656,43 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			Class<?> clazz = sharedObject.getClass();
 			Field[] fields = clazz.getDeclaredFields();
 			int count = 0;
-			for (Field field : fields) {
-				field.setAccessible(true);
-				if (field.isAnnotationPresent(cloud.jgo.utils.command.annotations.Parameter.class)) {
-					System.out.println("Ecco:"+field.getName());
-					String fieldName = field.getName();
-					Object fieldValue = field.get(sharedObject);
-					if (count == 3) {
-						// si va a capo
-						count = 0;
-						string.append("\n\n");
-					} 
-						string.append("* " + fieldName).append("=")
-								.append(fieldValue).append("  ");
+			// here
+			if (((cloud.jgo.utils.command.annotations.Command) sharedObject.getClass()
+					.getAnnotation(cloud.jgo.utils.command.annotations.Command.class)).involveAll()) {
+				// qui vengono coinvolti tutti i parametri
+				for (Field field : fields) {
+					field.setAccessible(true);
+					if (!Modifier.isFinal(field.getModifiers())) {
+						String fieldName = field.getName();
+						Object fieldValue = field.get(sharedObject);
+						if (count == 3) {
+							// si va a capo
+							count = 0;
+							string.append("\n\n");
+						} 
+							string.append("* " + fieldName).append("=")
+									.append(fieldValue).append("  ");
+					}
+					count++;
 				}
-				count++;
+			}
+			else {
+				// qui vengono filtrati tramite l'annotazione @Parameter
+				for (Field field : fields) {
+					field.setAccessible(true);
+					if (field.isAnnotationPresent(cloud.jgo.utils.command.annotations.Parameter.class)) {
+						String fieldName = field.getName();
+						Object fieldValue = field.get(sharedObject);
+						if (count == 3) {
+							// si va a capo
+							count = 0;
+							string.append("\n\n");
+						} 
+							string.append("* " + fieldName).append("=")
+									.append(fieldValue).append("  ");
+					}
+					count++;
+				}
 			}
 			return string.toString() + "\n";
 		}

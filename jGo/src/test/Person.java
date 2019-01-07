@@ -4,16 +4,12 @@ import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.annotations.Command;
 import cloud.jgo.utils.command.annotations.Parameter;
 
-@Command(help = "Creates a Person")
+@Command(help = "Creates a Person",involveAll=true)
 public class Person {
 
-	@Parameter(help = "sets person name")
 	private String nome ;
-	@Parameter(help = "sets person surname")
 	private String cognome ;
-	@Parameter(help = "sets person age")
 	private int età ;
-	@Parameter(help = "sets person stipendio")
 	private Double stipendio ;
 	public String getNome() {
 		return nome;

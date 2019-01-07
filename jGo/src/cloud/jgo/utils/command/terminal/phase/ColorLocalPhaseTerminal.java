@@ -1,8 +1,11 @@
 package cloud.jgo.utils.command.terminal.phase;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 import java.util.List;
 
 import org.fusesource.jansi.AnsiConsole;
+import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.j£;
 import cloud.jgo.utils.command.Command;
@@ -14,6 +17,24 @@ import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.TerminalColors;
 
 public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
+	// version 1.0.9
+	static String error(String msg) {
+		return ansi().fg(Color.RED).a(msg + " #").reset().toString();
+	}
+	// version 1.0.9
+	static String setOk(String var) {
+		return ansi().fg(Color.WHITE).a("The " + var + " is set (" + ansi().fg(Color.CYAN).a("OK").reset() + ")")
+				.reset().toString();
+	}
+	// version 1.0.9
+	static String setOk2(String var) {
+		return ansi().fg(Color.WHITE).a("The " + var + " are set (" + ansi().fg(Color.CYAN).a("OK").reset() + ")")
+				.reset().toString();
+	}
+	// version 1.0.9
+	static String positiveMsg(String msg) {
+		return ansi().fg(Color.WHITE).a(msg + " (" + ansi().fg(Color.CYAN).a("OK").reset() + ")").reset().toString();
+	}
 	
 @Override
 public void setExitCommand(String exitCommand) {
