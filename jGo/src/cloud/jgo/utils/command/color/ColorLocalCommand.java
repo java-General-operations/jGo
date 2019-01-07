@@ -41,6 +41,7 @@ import cloud.jgo.utils.command.annotations.InvalidClassException;
 import cloud.jgo.utils.command.LocalCommand.HelpCommand;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.TerminalColors;
+import cloud.jgo.utils.command.terminal.phase.ColorLocalPhaseTerminal;
 import test.Person;
 
 public class ColorLocalCommand extends LocalCommand {
@@ -73,12 +74,12 @@ public class ColorLocalCommand extends LocalCommand {
 			Field[] fields = clazz.getDeclaredFields();
 			int count = 0;
 			// here
-			if (((cloud.jgo.utils.command.annotations.Command) sharedObject.getClass()
+			if (((cloud.jgo.utils.command.annotations.Command) clazz
 					.getAnnotation(cloud.jgo.utils.command.annotations.Command.class)).involveAll()) {
 				// qui vengono coinvolti tutti i parametri
 				for (Field field : fields) {
 					field.setAccessible(true);
-					if (Modifier.isFinal(field.getModifiers())) {
+					if (!Modifier.isFinal(field.getModifiers())) {
 						String fieldName = field.getName();
 						Object fieldValue = field.get(sharedObject);
 						if (count == 3) {
@@ -134,7 +135,7 @@ public class ColorLocalCommand extends LocalCommand {
 				public Object exec() {
 					Person person = new Person();
 					objCommand.shareObject(person);
-					return "Instantiated object ( OK )";
+					return ColorLocalPhaseTerminal.positiveMsg("Instantiated object");
 				}
 			});	
 			// qui proseguo con i campi
@@ -239,7 +240,7 @@ public class ColorLocalCommand extends LocalCommand {
 													}
 												}
 												else {
-												return "The \""+field.getName()+"\" field requires a single character #";
+												return ColorLocalPhaseTerminal.error("The \""+field.getName()+"\" field requires a single character #");
 												}
 											}
 											else if(field.getType().getSimpleName().equals("boolean")) {
@@ -366,7 +367,7 @@ public class ColorLocalCommand extends LocalCommand {
 															}
 														}
 														else {
-															return "The \""+field.getName()+"\" field requires a single character #";
+															return ColorLocalPhaseTerminal.error("The \""+field.getName()+"\" field requires a single character #");
 														}
 													}
 													else if (field.getType().getSimpleName().equals("Boolean")) {
@@ -392,7 +393,7 @@ public class ColorLocalCommand extends LocalCommand {
 											}
 										}
 										if (setOk) {
-											return "The \""+field.getName()+"\" variable is set ( OK )";
+											return ColorLocalPhaseTerminal.setOk(field.getName());
 										}
 										else {
 											// da verificare ...
@@ -401,7 +402,7 @@ public class ColorLocalCommand extends LocalCommand {
 									}
 									else {
 										// non esiste un oggetto condiviso
-										return "No instanced objects - use \"new\" param #";
+										return ColorLocalPhaseTerminal.error("No instanced objects")+" - use \""+j£.colors("new",TerminalColors.PARAMETER_COLOR)+"\" param #";
 									}
 								}
 								return null ;

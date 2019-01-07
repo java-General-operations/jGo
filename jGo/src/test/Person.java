@@ -1,15 +1,18 @@
 package test;
 
+import org.fusesource.jansi.Ansi.Color;
+
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.annotations.Command;
 import cloud.jgo.utils.command.annotations.Parameter;
+import cloud.jgo.utils.command.color.ColorLocalCommand;
 
 @Command(help = "Creates a Person",involveAll=true)
 public class Person {
 
 	private String nome ;
 	private String cognome ;
-	private int età ;
+	private int eta ;
 	private Double stipendio ;
 	public String getNome() {
 		return nome;
@@ -33,26 +36,27 @@ public class Person {
 		super();
 		this.nome = null ;
 		this.cognome = null ;
-		this.età = 0 ;
+		this.eta = 0 ;
 		this.stipendio = new Double(0);
 	}
 	public Person(String nome, String cognome, int età) {
 		this.nome = nome;
 		this.cognome = cognome;
-		this.età = età;
+		this.eta = età;
+		this.stipendio = new Double(0);
 	}
 	public int getEtà() {
-		return età;
+		return eta;
 	}
 	public void setEtà(int età) {
-		this.età = età;
+		this.eta = età;
 	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		String result = null ;
 		try {
-			result =  LocalCommand.toString(this);
+			result =  ColorLocalCommand.toString(this, Color.DEFAULT, Color.GREEN);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

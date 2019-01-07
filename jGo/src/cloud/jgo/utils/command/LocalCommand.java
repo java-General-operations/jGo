@@ -657,7 +657,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			Field[] fields = clazz.getDeclaredFields();
 			int count = 0;
 			// here
-			if (((cloud.jgo.utils.command.annotations.Command) sharedObject.getClass()
+			if (((cloud.jgo.utils.command.annotations.Command) clazz
 					.getAnnotation(cloud.jgo.utils.command.annotations.Command.class)).involveAll()) {
 				// qui vengono coinvolti tutti i parametri
 				for (Field field : fields) {

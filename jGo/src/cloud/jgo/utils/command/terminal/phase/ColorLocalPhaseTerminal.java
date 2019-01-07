@@ -16,38 +16,70 @@ import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.TerminalColors;
 
-public class ColorLocalPhaseTerminal extends LocalPhaseTerminal{
+public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	// version 1.0.9
-	static String error(String msg) {
+	/**
+	 * Simple error message
+	 * 
+	 * @param msg
+	 *            the message
+	 * @return error message
+	 */
+	public static String error(String msg) {
 		return ansi().fg(Color.RED).a(msg + " #").reset().toString();
 	}
+
 	// version 1.0.9
-	static String setOk(String var) {
+	/**
+	 * In practice it prints the successful setting of the variable taken as an
+	 * argument
+	 * 
+	 * @param var
+	 *            the variable name
+	 * @return the message
+	 */
+	public static String setOk(String var) {
 		return ansi().fg(Color.WHITE).a("The " + var + " is set (" + ansi().fg(Color.CYAN).a("OK").reset() + ")")
 				.reset().toString();
 	}
+
 	// version 1.0.9
-	static String setOk2(String var) {
+	/**
+	 * In practice it prints the successful setting of the variable taken as an
+	 * argument
+	 * 
+	 * @param var
+	 *            the variable name
+	 * @return the message
+	 */
+	public static String setOk2(String var) {
 		return ansi().fg(Color.WHITE).a("The " + var + " are set (" + ansi().fg(Color.CYAN).a("OK").reset() + ")")
 				.reset().toString();
 	}
+
 	// version 1.0.9
-	static String positiveMsg(String msg) {
+	/**
+	 * Print a positive message
+	 * 
+	 * @param msg the message
+	 * @return the positive message
+	 */
+	public static String positiveMsg(String msg) {
 		return ansi().fg(Color.WHITE).a(msg + " (" + ansi().fg(Color.CYAN).a("OK").reset() + ")").reset().toString();
 	}
-	
-@Override
-public void setExitCommand(String exitCommand) {
-	this.exitCommand = new ColorLocalCommand(exitCommand, "Closes the program and uninstall the components");
-	((ColorLocalCommand) this.exitCommand).setExecution(new Execution() {
-		@Override
-		public Object exec() {
-			close();
-			return null;
-		}
-	});
-	addCommand((LocalCommand) this.exitCommand);
-}
+
+	@Override
+	public void setExitCommand(String exitCommand) {
+		this.exitCommand = new ColorLocalCommand(exitCommand, "Closes the program and uninstall the components");
+		((ColorLocalCommand) this.exitCommand).setExecution(new Execution() {
+			@Override
+			public Object exec() {
+				close();
+				return null;
+			}
+		});
+		addCommand((LocalCommand) this.exitCommand);
+	}
 
 	@Override
 	public void close() {
@@ -56,26 +88,27 @@ public void setExitCommand(String exitCommand) {
 		// disattivo i componenti
 		AnsiConsole.systemUninstall();
 	}
-	
+
 	@Override
 	public void useGeneralHelp() {
-		ColorLocalCommand helpCommand = new ColorLocalCommand(generalHelpValue, "Show General Help commands", new Execution() {
+		ColorLocalCommand helpCommand = new ColorLocalCommand(generalHelpValue, "Show General Help commands",
+				new Execution() {
 
-			@Override
-			public Object exec() {
-				getHelpCommands().print();
-				return getHelpCommands();
-			}
-		});
+					@Override
+					public Object exec() {
+						getHelpCommands().print();
+						return getHelpCommands();
+					}
+				});
 		// aggiungo il comando
 		addCommand(helpCommand);
 	}
-	
+
 	public ColorLocalPhaseTerminal() {
 		// installo i componenti
 		AnsiConsole.systemInstall();
 		this.pointerCommand = new ColorLocalCommand("use", "This command points to a specific phase");
-		this.describerCommand = new ColorLocalCommand("describe","This command describes a specific phase");
+		this.describerCommand = new ColorLocalCommand("describe", "This command describes a specific phase");
 		this.describerCommand.setExecution(new Execution() {
 			@Override
 			public Object exec() {
@@ -84,8 +117,8 @@ public void setExitCommand(String exitCommand) {
 
 					StringBuffer buffer = new StringBuffer();
 					buffer.append("========================================================================\n");
-					buffer.append("Description of (" + j£.colors(currentPhase.phaseName(),
-							TerminalColors.PHASE_COLOR) + ")\n");
+					buffer.append("Description of (" + j£.colors(currentPhase.phaseName(), TerminalColors.PHASE_COLOR)
+							+ ")\n");
 					buffer.append("========================================================================\n");
 
 					buffer.append(((DefaultPhase) currentPhase).description() + ".\n\n");
@@ -99,7 +132,8 @@ public void setExitCommand(String exitCommand) {
 					for (int i = 0; i < commands.size(); i++) {
 
 						buffer.append(
-								(i + 1) + ")" + j£.colors(commands.get(i).getCommand(),TerminalColors.COMMAND_COLOR) + "=" + commands.get(i).getHelp() + "\n");
+								(i + 1) + ")" + j£.colors(commands.get(i).getCommand(), TerminalColors.COMMAND_COLOR)
+										+ "=" + commands.get(i).getHelp() + "\n");
 					}
 
 					buffer.append("========================================================================\n");
@@ -121,22 +155,18 @@ public void setExitCommand(String exitCommand) {
 		if (getName() == null) {
 			if (currentPhase != null) {
 
-				text = "£_("
-						+ j£.colors(currentPhase.phaseName(), TerminalColors.PHASE_COLOR)
-						+ ")_:";
+				text = "£_(" + j£.colors(currentPhase.phaseName(), TerminalColors.PHASE_COLOR) + ")_:";
 
 			}
 		} else {
 			if (currentPhase != null) {
 
-				text = getName() + "_("
-						+ j£.colors(currentPhase.phaseName(), TerminalColors.PHASE_COLOR)
-						+ ")_:";
+				text = getName() + "_(" + j£.colors(currentPhase.phaseName(), TerminalColors.PHASE_COLOR) + ")_:";
 			}
 		}
 		return text;
 	}
-	
+
 	public Phase createPhase(final int value, String phaseName, String phaseDescription, Command... commands) {
 
 		// verifico che non sia nessun phase con questo valore
@@ -169,9 +199,7 @@ public void setExitCommand(String exitCommand) {
 				// okok qui completo il metodo
 				// aggiungo al puntatore un link che accederà a questa fase
 				Parameter p_link = this.pointerCommand.addParam(phase.phaseName(), // forse non va bene
-						"Go to ("
-								+ j£.colors(phase.phaseName(),  TerminalColors.PHASE_COLOR)
-								+ ") phase @");
+						"Go to (" + j£.colors(phase.phaseName(), TerminalColors.PHASE_COLOR) + ") phase @");
 				// senza valore da input
 
 				// aggiungo l'esecuzione
@@ -189,21 +217,16 @@ public void setExitCommand(String exitCommand) {
 				});
 			}
 			// anche se la fase è la start mi serve attribuire una descrizione
-			Parameter p_link_desc = this.describerCommand.addParam(phase.phaseName(),
-					"This parameter describes the ("
-							+ j£.colors(phase.phaseName(),  TerminalColors.PHASE_COLOR)
-							+ ") phase @");
+			Parameter p_link_desc = this.describerCommand.addParam(phase.phaseName(), "This parameter describes the ("
+					+ j£.colors(phase.phaseName(), TerminalColors.PHASE_COLOR) + ") phase @");
 			p_link_desc.setExecution(new Execution() {
 				@Override
 				public Object exec() {
 					StringBuffer buffer = new StringBuffer();
+					buffer.append("========================================================================\n");
 					buffer.append(
-							"========================================================================\n");
-					buffer.append("Description of ("
-							+ j£.colors(phase.phaseName(), TerminalColors.PHASE_COLOR)
-							+ ")\n");
-					buffer.append(
-							"========================================================================\n");
+							"Description of (" + j£.colors(phase.phaseName(), TerminalColors.PHASE_COLOR) + ")\n");
+					buffer.append("========================================================================\n");
 					buffer.append(phase.description() + ".\n\n");
 					List<Command> commands = phase.getCommands();
 					if (commands.size() > 0) {
@@ -212,10 +235,10 @@ public void setExitCommand(String exitCommand) {
 					for (int i = 0; i < commands.size(); i++) {
 
 						buffer.append(
-								(i + 1) + ")" + j£.colors(commands.get(i).getCommand(),TerminalColors.COMMAND_COLOR) + "=" + commands.get(i).getHelp() + "\n");
+								(i + 1) + ")" + j£.colors(commands.get(i).getCommand(), TerminalColors.COMMAND_COLOR)
+										+ "=" + commands.get(i).getHelp() + "\n");
 					}
-					buffer.append(
-							"========================================================================\n");
+					buffer.append("========================================================================\n");
 					return buffer.toString();
 				}
 			});
