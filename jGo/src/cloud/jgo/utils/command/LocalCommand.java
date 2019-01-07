@@ -60,13 +60,20 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private boolean merged = false;
 	private Phase belongsTo = null;
 	// version 1.0.9 : da usare con le annotazioni
+	// variabile usata internamente
+	private static LocalCommand objCommand = null ;
 	public static <A> LocalCommand getCommandByObject(Class<A>a) {
 		LocalCommand result = null ;
 		//1 cosa controllo che sia una classe annotata
 		cloud.jgo.utils.command.annotations.Command commandAnnotation = null ;
 		if (a.isAnnotationPresent(cloud.jgo.utils.command.annotations.Command.class)) {
 			commandAnnotation = a.getDeclaredAnnotation(cloud.jgo.utils.command.annotations.Command.class);
-			final LocalCommand objCommand = new LocalCommand(commandAnnotation.command(),commandAnnotation.help());
+			if (commandAnnotation.command().equals("default")) {
+				objCommand = new LocalCommand(a.getSimpleName().toLowerCase(),commandAnnotation.help());
+			}
+			else {
+				objCommand = new LocalCommand(commandAnnotation.command(),commandAnnotation.help());	
+			}
 			//  parametro new : condivide l'oggetto
 			Parameter parameter = objCommand.addParam("new","This parameter instantiates the object");
 			parameter.setExecution(new Execution() {
@@ -631,6 +638,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			}
 			// ottengo il risultato
 			result = objCommand ;
+			objCommand = null ;
 		}
 		else {
 			// dare una eccezzione

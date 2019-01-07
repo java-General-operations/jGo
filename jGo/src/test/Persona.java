@@ -1,14 +1,16 @@
 package test;
 
+
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.annotations.Command;
 import cloud.jgo.utils.command.annotations.Parameter;
 import cloud.jgo.utils.command.color.ColorLocalCommand;
-
-@Command(help = "Creates a Person",involveAll=true)
-public class Person {
+@Command(help = "Creates a Person", involveAll=true)
+public class Persona {
 
 	private String nome ;
 	private String cognome ;
@@ -32,14 +34,14 @@ public class Person {
 	public void setStipendio(Double stipendio) {
 		this.stipendio = stipendio;
 	}
-	public Person() {
+	public Persona() {
 		super();
 		this.nome = null ;
 		this.cognome = null ;
 		this.eta = 0 ;
 		this.stipendio = new Double(0);
 	}
-	public Person(String nome, String cognome, int età) {
+	public Persona(String nome, String cognome, int età) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.eta = età;

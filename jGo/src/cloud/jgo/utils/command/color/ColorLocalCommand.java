@@ -118,14 +118,20 @@ public class ColorLocalCommand extends LocalCommand {
 			return null;
 		}
 	}
-	
+	// variabile usata internamente
+	private static ColorLocalCommand objCommand = null ;
 	public static <A> ColorLocalCommand getCommandByObject(Class<A>a) {
 		ColorLocalCommand result = null ;
 		//1 cosa controllo che sia una classe annotata
 		cloud.jgo.utils.command.annotations.Command commandAnnotation = null ;
 		if (a.isAnnotationPresent(cloud.jgo.utils.command.annotations.Command.class)) {
 			commandAnnotation = a.getDeclaredAnnotation(cloud.jgo.utils.command.annotations.Command.class);
-			final ColorLocalCommand objCommand = new ColorLocalCommand(commandAnnotation.command(),commandAnnotation.help());
+			if (commandAnnotation.command().equals("default")) {
+				objCommand =  new ColorLocalCommand(a.getSimpleName().toLowerCase(),commandAnnotation.help());
+			}
+			else {
+				objCommand  = new ColorLocalCommand(commandAnnotation.command(),commandAnnotation.help());
+			}
 			//  parametro new : condivide l'oggetto
 			Parameter parameter = objCommand.addParam("new","This parameter instantiates the object");
 			parameter.setExecution(new Execution() {
@@ -690,6 +696,7 @@ public class ColorLocalCommand extends LocalCommand {
 			}
 			// ottengo il risultato
 			result = objCommand ;
+			objCommand = null ;
 		}
 		else {
 			try {

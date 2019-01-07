@@ -11,8 +11,11 @@ import cloud.jgo.utils.command.terminal.TerminalColors;
 import cloud.jgo.utils.command.terminal.phase.ColorLocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
 
-public class LocalTerminalTest {
+public class ColorLocalPhaseTerminalTest {
 	public static void main(String[] args) {
+		
+		// risolvere errore : è presente da quando 
+		// abbiamo reso la variabile objCommand esterna e statica al metodo getCommandByObject
 		
 		TerminalColors.PARAMETER_COLOR = Color.YELLOW;
 		TerminalColors.COMMAND_COLOR = Color.CYAN;
@@ -35,7 +38,7 @@ public class LocalTerminalTest {
 		
 		// ottengo il comando 
 		
-		ColorLocalCommand personCmd = ColorLocalCommand.getCommandByObject(Person.class);
+		ColorLocalCommand personCmd = ColorLocalCommand.getCommandByObject(Persona.class);
 		
 		// aggiungo il comando al terminale 
 		
