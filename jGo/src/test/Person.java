@@ -1,5 +1,6 @@
 package test;
 
+import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.annotations.Command;
 import cloud.jgo.utils.command.annotations.Parameter;
 
@@ -12,6 +13,8 @@ public class Person {
 	private String cognome ;
 	@Parameter(help = "sets person age")
 	private int età ;
+	@Parameter(help = "sets person stipendio")
+	private Double stipendio ;
 	public String getNome() {
 		return nome;
 	}
@@ -24,11 +27,20 @@ public class Person {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
+	public Double getStipendio() {
+		return stipendio;
+	}
+	public void setStipendio(Double stipendio) {
+		this.stipendio = stipendio;
+	}
 	public Person() {
 		super();
+		this.nome = null ;
+		this.cognome = null ;
+		this.età = 0 ;
+		this.stipendio = new Double(0);
 	}
 	public Person(String nome, String cognome, int età) {
-		super();
 		this.nome = nome;
 		this.cognome = cognome;
 		this.età = età;
@@ -42,6 +54,16 @@ public class Person {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.nome+" "+this.cognome+" "+this.età;
+		String result = null ;
+		try {
+			result =  LocalCommand.toString(this);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result ;
 	}
 }

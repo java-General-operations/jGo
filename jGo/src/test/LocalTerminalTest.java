@@ -9,6 +9,8 @@ public class LocalTerminalTest {
 public static void main(String[] args) {
 	
 	
+	
+	
 	LocalTerminal t = new LocalTerminal();
 	
 	t.setName("mio terminale");
@@ -16,6 +18,8 @@ public static void main(String[] args) {
 	t.useGeneralHelp();
 	
 	LocalCommand.setInputHelpExploitable(true);
+	
+	LocalCommand.setToStringParamName("c");
 	
 	// ottengo il comando tramite un metodo specifico 
 	

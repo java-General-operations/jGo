@@ -35,6 +35,8 @@ import cloud.jgo.utils.ColorString;
 import cloud.jgo.utils.command.DefaultParameter;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
+import cloud.jgo.utils.command.annotations.Command;
+import cloud.jgo.utils.command.annotations.InvalidClassException;
 import cloud.jgo.utils.command.LocalCommand.HelpCommand;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.TerminalColors;
@@ -60,30 +62,40 @@ public class ColorLocalCommand extends LocalCommand {
 	 */
 	public static String toString(Object sharedObject, Color fieldNameColor, Color fieldValueColor)
 			throws IllegalArgumentException, IllegalAccessException {
-		ColorString string = new ColorString();
-		string.append("-----------------------------------------------------------------------------------\n");
-		string.append(" " + sharedObject.getClass().getSimpleName()).append(" ~ Configuration\n",Color.BLUE);
-		string.append("-----------------------------------------------------------------------------------\n");
-		Class<?> clazz = sharedObject.getClass();
-		Field[] fields = clazz.getDeclaredFields();
-		int count = 0;
-		for (Field field : fields) {
-			field.setAccessible(true);
-			if (!Modifier.isFinal(field.getModifiers())) {
-				String fieldName = field.getName();
-				Object fieldValue = field.get(sharedObject);
-				if (count == 3) {
-					// si va a capo
-					count = 0;
-					string.append("\n\n");
-				} else {
+		if (sharedObject.getClass().isAnnotationPresent(Command.class)) {
+			ColorString string = new ColorString();
+			string.append("-----------------------------------------------------------------------------------\n");
+			string.append(" " + sharedObject.getClass().getSimpleName()).append(" ~ Configuration\n",Color.BLUE);
+			string.append("-----------------------------------------------------------------------------------\n");
+			Class<?> clazz = sharedObject.getClass();
+			Field[] fields = clazz.getDeclaredFields();
+			int count = 0;
+			for (Field field : fields) {
+				field.setAccessible(true);
+				if (field.isAnnotationPresent(cloud.jgo.utils.command.annotations.Parameter.class)) {
+					String fieldName = field.getName();
+					Object fieldValue = field.get(sharedObject);
+					if (count == 3) {
+						// si va a capo
+						count = 0;
+						string.append("\n\n");
+					}
 					string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-							.append(fieldValue + "", fieldValueColor).append("  ");
+								.append(fieldValue + "", fieldValueColor).append("  ");
 				}
+				count++;
 			}
-			count++;
+			return string.toString() + "\n";
 		}
-		return string.toString() + "\n";
+		else {
+			try {
+				throw new InvalidClassException();
+			} catch (InvalidClassException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null ;
+		}
 	}
 
 	private ColorHelpCommand helpCommand = new ColorHelpCommand();
