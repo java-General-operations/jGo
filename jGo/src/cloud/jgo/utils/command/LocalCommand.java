@@ -39,7 +39,6 @@ import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
 import cloud.jgo.utils.command.terminal.Terminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
-import test.Person;
 
 /**
  * 
@@ -73,9 +72,18 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			parameter.setExecution(new Execution() {
 				@Override
 				public Object exec() {
-					Person person = new Person();
-					objCommand.shareObject(person);
-					return "Instantiated object ( OK )";
+					Object obj=null;
+					try {
+						obj = a.newInstance();
+						objCommand.shareObject(obj);
+						return "Instantiated object ( OK )";
+					} catch (InstantiationException e) {
+						// TODO Auto-generated catch block
+						return e.getMessage();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						return e.getMessage();
+					}
 				}
 			});	
 			// qui proseguo con i campi

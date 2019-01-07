@@ -21,7 +21,6 @@
  * 
  */
 package cloud.jgo.utils.command.color;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
@@ -42,7 +41,6 @@ import cloud.jgo.utils.command.LocalCommand.HelpCommand;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.TerminalColors;
 import cloud.jgo.utils.command.terminal.phase.ColorLocalPhaseTerminal;
-import test.Person;
 
 public class ColorLocalCommand extends LocalCommand {
 	// version 1.0.9 :
@@ -133,9 +131,18 @@ public class ColorLocalCommand extends LocalCommand {
 			parameter.setExecution(new Execution() {
 				@Override
 				public Object exec() {
-					Person person = new Person();
-					objCommand.shareObject(person);
-					return ColorLocalPhaseTerminal.positiveMsg("Instantiated object");
+					Object obj=null;
+					try {
+						obj = a.newInstance();
+						objCommand.shareObject(obj);
+						return ColorLocalPhaseTerminal.positiveMsg("Instantiated object");
+					} catch (InstantiationException e) {
+						// TODO Auto-generated catch block
+						return e.getMessage();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						return e.getMessage();
+					}
 				}
 			});	
 			// qui proseguo con i campi
