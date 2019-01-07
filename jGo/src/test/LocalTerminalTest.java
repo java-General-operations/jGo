@@ -22,7 +22,11 @@ public static void main(String[] args) {
 	LocalCommand personCommand = LocalCommand.getCommandByObject(Person.class);
 	
 	
+	// aggiungo il comando al terminale 
 	
+	t.addCommand(personCommand);
+	
+	t.open();
 	
 	
 	

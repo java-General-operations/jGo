@@ -61,16 +61,181 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private Phase belongsTo = null;
 	// version 1.0.9 : da usare con le annotazioni
 	public static <A> LocalCommand getCommandByObject(Class<A>a) {
+		LocalCommand result = null ;
 		//1 cosa controllo che sia una classe annotata
 		cloud.jgo.utils.command.annotations.Command commandAnnotation = null ;
-		commandAnnotation = a.getDeclaredAnnotation(cloud.jgo.utils.command.annotations.Command.class);
-		if (commandAnnotation!=null) {
-			
+		if (a.isAnnotationPresent(cloud.jgo.utils.command.annotations.Command.class)) {
+			commandAnnotation = a.getDeclaredAnnotation(cloud.jgo.utils.command.annotations.Command.class);
+			final LocalCommand objCommand = new LocalCommand(a.getSimpleName().toLowerCase(),commandAnnotation.help());
+			//  parametro new : condivide l'oggetto
+			Parameter parameter = objCommand.addParam("new","This parameter instantiates the object");
+			parameter.setExecution(new Execution() {
+				@Override
+				public Object exec() {
+					Person person = new Person();
+					objCommand.shareObject(person);
+					return "Instantiated object ( OK )";
+				}
+			});	
+			// qui proseguo con i campi
+			Field[]fields = a.getDeclaredFields();
+			for (Field field : fields) {
+				field.setAccessible(true);
+				// verifico se il campo è annotato
+				if (field.isAnnotationPresent(cloud.jgo.utils.command.annotations.Parameter.class)) {
+					Parameter param = objCommand.addParam(field.getName(),field.getAnnotation(cloud.jgo.utils.command.annotations.Parameter.class).help());
+					param.setInputValueExploitable(true);
+					param.setExecution(new Execution() {
+						@Override
+						public Object exec() {
+							if (param.getInputValue()!=null) {
+								
+								if (objCommand.getSharedObject()!=null) {
+									boolean setOk = false ;
+									String fieldValue = param.getInputValue();
+									// controllo il tipo del campo
+									
+									if (field.getType().isPrimitive()) {
+										// is a primitive 
+										if (field.getType().getSimpleName().equals("int")) {
+											int value = Integer.parseInt(fieldValue);
+											try {
+												field.setInt(objCommand.getSharedObject(),value);
+												setOk = true ;
+											} catch (IllegalArgumentException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IllegalAccessException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+										else if(field.getType().getSimpleName().equals("double")) {
+											double value = Double.parseDouble(fieldValue);
+											try {
+												field.setDouble(objCommand.getSharedObject(),value);
+												setOk = true ;
+											} catch (IllegalArgumentException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IllegalAccessException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+										else if(field.getType().getSimpleName().equals("float")) {
+											float value = Float.parseFloat(fieldValue);
+											try {
+												field.setFloat(objCommand.getSharedObject(),value);
+												setOk = true ;
+											} catch (IllegalArgumentException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IllegalAccessException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+										else if(field.getType().getSimpleName().equals("long")) {
+											long value = Long.parseLong(fieldValue);
+											try {
+												field.setLong(objCommand.getSharedObject(),value);
+												setOk = true ;
+											} catch (IllegalArgumentException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IllegalAccessException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+										else if(field.getType().getSimpleName().equals("short")) {
+											short value = Short.parseShort(fieldValue);
+											try {
+												field.setShort(objCommand.getSharedObject(),value);
+												setOk = true ;
+											} catch (IllegalArgumentException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IllegalAccessException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+										else if(field.getType().getSimpleName().equals("char")) {
+											if (fieldValue.length()==1) {
+												char value = fieldValue.charAt(0);
+												try {
+													field.setFloat(objCommand.getSharedObject(),value);
+													setOk = true ;
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											else {
+											return "The \""+field.getName()+"\" field requires a single character #";
+											}
+										}
+										else if(field.getType().getSimpleName().equals("boolean")) {
+											short value = Short.parseShort(fieldValue);
+											try {
+												field.setShort(objCommand.getSharedObject(),value);
+												setOk = true ;
+											} catch (IllegalArgumentException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IllegalAccessException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}	
+										}
+									}
+									else {
+										// is an object
+										if (!field.getType().isArray()) {
+											
+											try {
+												field.set(objCommand.getSharedObject(),fieldValue);
+												setOk = true ;
+											} catch (IllegalArgumentException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IllegalAccessException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+									}
+									if (setOk) {
+										return "The \""+field.getName()+"\" variable is set ( OK )";
+									}
+									else {
+										// da verificare ...
+										return null ;
+									}
+								}
+								else {
+									// non esiste un oggetto condiviso
+									return "No instanced objects - use \"new\" param #";
+								}
+							}
+							return null ;
+						}
+					});
+				}
+			}
+			// ottengo il risultato
+			result = objCommand ;
 		}
 		else {
 			// dare una eccezzione
+			System.out.println("Questa classe non ha l'annotazione apposita");
 		}
-		return null ;
+		return result ;
 	}
 	// version 1.0.9 : da segnalare ...
 	private static String toStringParamName = "to_string"; 
