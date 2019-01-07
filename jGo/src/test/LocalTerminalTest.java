@@ -13,10 +13,6 @@ import cloud.jgo.utils.command.terminal.phase.Phase;
 
 public class LocalTerminalTest {
 	public static void main(String[] args) {
-
-		
-		// 1 l'età della persona non viene settata
-		// 2 non viene stampato il metodo toString del ColorLocalCommand
 		
 		TerminalColors.PARAMETER_COLOR = Color.YELLOW;
 		TerminalColors.COMMAND_COLOR = Color.CYAN;
