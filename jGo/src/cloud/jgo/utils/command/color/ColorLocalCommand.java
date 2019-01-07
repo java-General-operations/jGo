@@ -125,7 +125,7 @@ public class ColorLocalCommand extends LocalCommand {
 		cloud.jgo.utils.command.annotations.Command commandAnnotation = null ;
 		if (a.isAnnotationPresent(cloud.jgo.utils.command.annotations.Command.class)) {
 			commandAnnotation = a.getDeclaredAnnotation(cloud.jgo.utils.command.annotations.Command.class);
-			final ColorLocalCommand objCommand = new ColorLocalCommand(a.getSimpleName().toLowerCase(),commandAnnotation.help());
+			final ColorLocalCommand objCommand = new ColorLocalCommand(commandAnnotation.command(),commandAnnotation.help());
 			//  parametro new : condivide l'oggetto
 			Parameter parameter = objCommand.addParam("new","This parameter instantiates the object");
 			parameter.setExecution(new Execution() {
@@ -692,7 +692,6 @@ public class ColorLocalCommand extends LocalCommand {
 			result = objCommand ;
 		}
 		else {
-			// dare una eccezzione
 			try {
 				throw new InvalidClassException();
 			} catch (InvalidClassException e) {

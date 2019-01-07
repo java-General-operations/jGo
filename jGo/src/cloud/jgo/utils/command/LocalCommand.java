@@ -66,7 +66,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		cloud.jgo.utils.command.annotations.Command commandAnnotation = null ;
 		if (a.isAnnotationPresent(cloud.jgo.utils.command.annotations.Command.class)) {
 			commandAnnotation = a.getDeclaredAnnotation(cloud.jgo.utils.command.annotations.Command.class);
-			final LocalCommand objCommand = new LocalCommand(a.getSimpleName().toLowerCase(),commandAnnotation.help());
+			final LocalCommand objCommand = new LocalCommand(commandAnnotation.command(),commandAnnotation.help());
 			//  parametro new : condivide l'oggetto
 			Parameter parameter = objCommand.addParam("new","This parameter instantiates the object");
 			parameter.setExecution(new Execution() {
