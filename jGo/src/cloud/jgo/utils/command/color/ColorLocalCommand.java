@@ -92,23 +92,8 @@ public class ColorLocalCommand extends LocalCommand {
 							count = 0;
 							string.append("\n\n");
 						}
-						// qui faccio il controllo dell'oggetto per una corretta stampa dello stesso
-						if (field.getType().isPrimitive()||field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")
-							||field.getType().getSimpleName().equals("Integer")||field.getType().getSimpleName().equals("Double")
-							||field.getType().getSimpleName().equals("Long")||field.getType().getSimpleName().equals("float")
-							||field.getType().getSimpleName().equals("Short")||field.getType().getSimpleName().equals("Character")
-							||field.getType().getSimpleName().equals("Boolean")||field.getType().getSimpleName().equals("Byte")
-							||field.getType().isArray()||field.getType().isAssignableFrom(Map.class)||field.getType().isAssignableFrom(List.class)) {
-							string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-							.append(fieldValue + "", fieldValueColor).append("  ");
-						}
-						else {
-							// quindi qui si tratta di un oggetto, che non sia un array e diverso da tutti i tipi
-							// annunciati sopra, quindi facciamo un altro controllo a livello di altri tipi di oggetti
-							// che è importante stampare in un certo modo
-							string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-							.append(fieldValue.getClass().getSimpleName() + "", fieldValueColor).append("  ");
-						}
+						string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+						.append(fieldValue + "", fieldValueColor).append("  ");
 //					}
 					count++;
 				}
@@ -123,23 +108,8 @@ public class ColorLocalCommand extends LocalCommand {
 							count = 0;
 							string.append("\n\n");
 						}
-						// qui faccio il controllo dell'oggetto per una corretta stampa dello stesso
-						if (field.getType().isPrimitive()||field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")
-							||field.getType().getSimpleName().equals("Integer")||field.getType().getSimpleName().equals("Double")
-							||field.getType().getSimpleName().equals("Long")||field.getType().getSimpleName().equals("float")
-							||field.getType().getSimpleName().equals("Short")||field.getType().getSimpleName().equals("Character")
-							||field.getType().getSimpleName().equals("Boolean")||field.getType().getSimpleName().equals("Byte")
-							||field.getType().isArray()||field.getType().isAssignableFrom(Map.class)||field.getType().isAssignableFrom(List.class)) {
-							string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-							.append(fieldValue + "", fieldValueColor).append("  ");
-						}
-						else {
-							// quindi qui si tratta di un oggetto, che non sia un array e diverso da tutti i tipi
-							// annunciati sopra
-							// quindi stampo la classe
-							string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-							.append(fieldValue.getClass().getSimpleName() + "", fieldValueColor).append("  ");
-						}
+						string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+						.append(fieldValue + "", fieldValueColor).append("  ");
 					}
 					count++;
 				}
@@ -175,23 +145,8 @@ public class ColorLocalCommand extends LocalCommand {
 									count = 0;
 									string.append("\n\n");
 								}
-								// qui faccio il controllo dell'oggetto per una corretta stampa dello stesso
-								if (field.getType().isPrimitive()||field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")
-									||field.getType().getSimpleName().equals("Integer")||field.getType().getSimpleName().equals("Double")
-									||field.getType().getSimpleName().equals("Long")||field.getType().getSimpleName().equals("float")
-									||field.getType().getSimpleName().equals("Short")||field.getType().getSimpleName().equals("Character")
-									||field.getType().getSimpleName().equals("Boolean")||field.getType().getSimpleName().equals("Byte")
-									||field.getType().isArray()||field.getType().isAssignableFrom(Map.class)||field.getType().isAssignableFrom(List.class)) {
-									string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-									.append(fieldValue + "", fieldValueColor).append("  ");
-								}
-								else {
-									// quindi qui si tratta di un oggetto, che non sia un array e diverso da tutti i tipi
-									// annunciati sopra
-									// quindi stampo la classe
-									string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-									.append(fieldValue.getClass().getSimpleName() + "", fieldValueColor).append("  ");
-								}
+								string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+								.append(fieldValue + "", fieldValueColor).append("  ");
 //							}
 							count++;
 						}
@@ -206,23 +161,8 @@ public class ColorLocalCommand extends LocalCommand {
 									count = 0;
 									string.append("\n\n");
 								}
-								// qui faccio il controllo dell'oggetto per una corretta stampa dello stesso
-								if (field.getType().isPrimitive()||field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")
-									||field.getType().getSimpleName().equals("Integer")||field.getType().getSimpleName().equals("Double")
-									||field.getType().getSimpleName().equals("Long")||field.getType().getSimpleName().equals("float")
-									||field.getType().getSimpleName().equals("Short")||field.getType().getSimpleName().equals("Character")
-									||field.getType().getSimpleName().equals("Boolean")||field.getType().getSimpleName().equals("Byte")
-									||field.getType().isArray()||field.getType().isAssignableFrom(Map.class)||field.getType().isAssignableFrom(List.class)) {
-									string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-									.append(fieldValue + "", fieldValueColor).append("  ");
-								}
-								else {
-									// quindi qui si tratta di un oggetto, che non sia un array e diverso da tutti i tipi
-									// annunciati sopra
-									// quindi stampo la classe
-									string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-									.append(fieldValue.getClass().getSimpleName() + "", fieldValueColor).append("  ");
-								}
+								string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+								.append(fieldValue + "", fieldValueColor).append("  ");
 							}
 							count++;
 						}
