@@ -54,7 +54,7 @@ import cloud.jgo.utils.command.annotations.£Command;
  * @see Manipulable This class represents the concept of XML element
  *
  */
-@£Command(command="xml-element", help = "This command creates an xml element", involveAll=true)
+@£Command(command="XMLElement", help = "This command creates an xml element", involveAll=true)
 public class XMLElement implements Element {
 	/**
 	 * 

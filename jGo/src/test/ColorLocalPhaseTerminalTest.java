@@ -1,5 +1,8 @@
 package test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
@@ -15,40 +18,40 @@ public class ColorLocalPhaseTerminalTest {
 	public static void main(String[] args) {
 		
 		// ora devo copiare il metodo toString colorato nella classe LocalCommand
-		// ora devo fare lo stesso procedimento delle annotazioni sui nodi colorati del dom
-		// risolvere errore : è presente da quando 
-		// abbiamo reso la variabile objCommand esterna e statica al metodo getCommandByObject
-		
-		TerminalColors.PARAMETER_COLOR = Color.YELLOW;
-		TerminalColors.COMMAND_COLOR = Color.CYAN;
-		TerminalColors.PHASE_COLOR = Color.MAGENTA;
-		
-		// provare il character se funziona
+				// ora devo fare lo stesso procedimento delle annotazioni sui nodi colorati del dom
+				// risolvere errore : è presente da quando 
+				// abbiamo reso la variabile objCommand esterna e statica al metodo getCommandByObject
+				
+				TerminalColors.PARAMETER_COLOR = Color.YELLOW;
+				TerminalColors.COMMAND_COLOR = Color.CYAN;
+				TerminalColors.PHASE_COLOR = Color.MAGENTA;
+				
+				// provare il character se funziona
 
-		ColorLocalPhaseTerminal t = new ColorLocalPhaseTerminal();
-		
-		// unica fase 
-		
-		Phase phase = t.createPhase(1, "Unica", "Unica fase esistente", null);
-		
-		t.setName("mio terminale");
+				ColorLocalPhaseTerminal t = new ColorLocalPhaseTerminal();
+				
+				// unica fase 
+				
+				Phase phase = t.createPhase(1, "Unica", "Unica fase esistente", null);
+				
+				t.setName("mio terminale");
 
-		t.useGeneralHelp();
+				t.useGeneralHelp();
 
-		ColorLocalCommand.setInputHelpExploitable(true);
-		ColorLocalCommand.setToStringParamName("c");
-		
-		// ottengo il comando 
-		
-		ColorLocalCommand personCmd = ColorLocalCommand.getCommandByObject(Persona.class);
-		
-		// aggiungo il comando al terminale 
-		
-		t.addCommand(personCmd);
-		
-		// avvio il terminale 
-		
-		t.open();		
+				ColorLocalCommand.setInputHelpExploitable(true);
+				ColorLocalCommand.setToStringParamName("c");
+				
+				// ottengo il comando 
+				
+				ColorLocalCommand personCmd = ColorLocalCommand.getCommandByObject(Persona.class);
+				
+				// aggiungo il comando al terminale 
+				
+				t.addCommand(personCmd);
+				
+				// avvio il terminale 
+				
+				t.open();
 		
 	}
 }

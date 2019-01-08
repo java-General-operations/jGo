@@ -67,7 +67,13 @@ public class ColorLocalCommand extends LocalCommand {
 		ColorString string = new ColorString();
 		if (sharedObject.getClass().isAnnotationPresent(£Command.class)) {
 			string.append("-----------------------------------------------------------------------------------\n");
-			string.append(" " + sharedObject.getClass().getSimpleName()).append(" ~ Configuration\n", Color.BLUE);
+			if (((£Command)sharedObject.getClass().getDeclaredAnnotation(£Command.class)).command().equals("default")) {
+				string.append(" " + sharedObject.getClass().getSimpleName()).append(" ~ Configuration\n", Color.BLUE);	
+			}
+			else {
+				//sharedObject.getClass().getSimpleName()
+				string.append(" " + ((£Command)sharedObject.getClass().getDeclaredAnnotation(£Command.class)).command()).append(" ~ Configuration\n", Color.BLUE);
+			}
 			string.append("-----------------------------------------------------------------------------------\n");
 			Class<?> clazz = sharedObject.getClass();
 			Field[] fields = clazz.getDeclaredFields();
@@ -78,7 +84,7 @@ public class ColorLocalCommand extends LocalCommand {
 				// qui vengono coinvolti tutti i parametri
 				for (Field field : fields) {
 					field.setAccessible(true);
-					if (!Modifier.isFinal(field.getModifiers())) {
+//					if (!Modifier.isFinal(field.getModifiers())) {
 						String fieldName = field.getName();
 						Object fieldValue = field.get(sharedObject);
 						if (count == 3) {
@@ -86,9 +92,24 @@ public class ColorLocalCommand extends LocalCommand {
 							count = 0;
 							string.append("\n\n");
 						}
-						string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-								.append(fieldValue + "", fieldValueColor).append("  ");
-					}
+						// qui faccio il controllo dell'oggetto per una corretta stampa dello stesso
+						if (field.getType().isPrimitive()||field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")
+							||field.getType().getSimpleName().equals("Integer")||field.getType().getSimpleName().equals("Double")
+							||field.getType().getSimpleName().equals("Long")||field.getType().getSimpleName().equals("float")
+							||field.getType().getSimpleName().equals("Short")||field.getType().getSimpleName().equals("Character")
+							||field.getType().getSimpleName().equals("Boolean")||field.getType().getSimpleName().equals("Byte")
+							||field.getType().isArray()||field.getType().isAssignableFrom(Map.class)||field.getType().isAssignableFrom(List.class)) {
+							string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+							.append(fieldValue + "", fieldValueColor).append("  ");
+						}
+						else {
+							// quindi qui si tratta di un oggetto, che non sia un array e diverso da tutti i tipi
+							// annunciati sopra, quindi facciamo un altro controllo a livello di altri tipi di oggetti
+							// che è importante stampare in un certo modo
+							string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+							.append(fieldValue.getClass().getSimpleName() + "", fieldValueColor).append("  ");
+						}
+//					}
 					count++;
 				}
 			} else {
@@ -102,8 +123,23 @@ public class ColorLocalCommand extends LocalCommand {
 							count = 0;
 							string.append("\n\n");
 						}
-						string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-								.append(fieldValue + "", fieldValueColor).append("  ");
+						// qui faccio il controllo dell'oggetto per una corretta stampa dello stesso
+						if (field.getType().isPrimitive()||field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")
+							||field.getType().getSimpleName().equals("Integer")||field.getType().getSimpleName().equals("Double")
+							||field.getType().getSimpleName().equals("Long")||field.getType().getSimpleName().equals("float")
+							||field.getType().getSimpleName().equals("Short")||field.getType().getSimpleName().equals("Character")
+							||field.getType().getSimpleName().equals("Boolean")||field.getType().getSimpleName().equals("Byte")
+							||field.getType().isArray()||field.getType().isAssignableFrom(Map.class)||field.getType().isAssignableFrom(List.class)) {
+							string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+							.append(fieldValue + "", fieldValueColor).append("  ");
+						}
+						else {
+							// quindi qui si tratta di un oggetto, che non sia un array e diverso da tutti i tipi
+							// annunciati sopra
+							// quindi stampo la classe
+							string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+							.append(fieldValue.getClass().getSimpleName() + "", fieldValueColor).append("  ");
+						}
 					}
 					count++;
 				}
@@ -114,7 +150,13 @@ public class ColorLocalCommand extends LocalCommand {
 			if (superClass!=null) {
 				if (superClass.isAnnotationPresent(£Command.class)) {
 					string.append("-----------------------------------------------------------------------------------\n");
-					string.append(" " + superClass.getSimpleName()).append(" ~ Configuration\n", Color.BLUE);
+					if (((£Command)superClass.getDeclaredAnnotation(£Command.class)).command().equals("default")) {
+						string.append(" " + superClass.getSimpleName()).append(" ~ Configuration\n", Color.BLUE);	
+					}
+					else {
+						//sharedObject.getClass().getSimpleName()
+						string.append(" " + ((£Command)superClass.getDeclaredAnnotation(£Command.class)).command()).append(" ~ Configuration\n", Color.BLUE);
+					}
 					string.append("-----------------------------------------------------------------------------------\n");
 					Class<?> clazz = superClass;
 					Field[] fields = clazz.getDeclaredFields();
@@ -125,7 +167,7 @@ public class ColorLocalCommand extends LocalCommand {
 						// qui vengono coinvolti tutti i parametri
 						for (Field field : fields) {
 							field.setAccessible(true);
-							if (!Modifier.isFinal(field.getModifiers())) {
+//							if (!Modifier.isFinal(field.getModifiers())) {
 								String fieldName = field.getName();
 								Object fieldValue = field.get(sharedObject);
 								if (count == 3) {
@@ -133,9 +175,24 @@ public class ColorLocalCommand extends LocalCommand {
 									count = 0;
 									string.append("\n\n");
 								}
-								string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-										.append(fieldValue + "", fieldValueColor).append("  ");
-							}
+								// qui faccio il controllo dell'oggetto per una corretta stampa dello stesso
+								if (field.getType().isPrimitive()||field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")
+									||field.getType().getSimpleName().equals("Integer")||field.getType().getSimpleName().equals("Double")
+									||field.getType().getSimpleName().equals("Long")||field.getType().getSimpleName().equals("float")
+									||field.getType().getSimpleName().equals("Short")||field.getType().getSimpleName().equals("Character")
+									||field.getType().getSimpleName().equals("Boolean")||field.getType().getSimpleName().equals("Byte")
+									||field.getType().isArray()||field.getType().isAssignableFrom(Map.class)||field.getType().isAssignableFrom(List.class)) {
+									string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+									.append(fieldValue + "", fieldValueColor).append("  ");
+								}
+								else {
+									// quindi qui si tratta di un oggetto, che non sia un array e diverso da tutti i tipi
+									// annunciati sopra
+									// quindi stampo la classe
+									string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+									.append(fieldValue.getClass().getSimpleName() + "", fieldValueColor).append("  ");
+								}
+//							}
 							count++;
 						}
 					} else {
@@ -149,8 +206,23 @@ public class ColorLocalCommand extends LocalCommand {
 									count = 0;
 									string.append("\n\n");
 								}
-								string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
-										.append(fieldValue + "", fieldValueColor).append("  ");
+								// qui faccio il controllo dell'oggetto per una corretta stampa dello stesso
+								if (field.getType().isPrimitive()||field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")
+									||field.getType().getSimpleName().equals("Integer")||field.getType().getSimpleName().equals("Double")
+									||field.getType().getSimpleName().equals("Long")||field.getType().getSimpleName().equals("float")
+									||field.getType().getSimpleName().equals("Short")||field.getType().getSimpleName().equals("Character")
+									||field.getType().getSimpleName().equals("Boolean")||field.getType().getSimpleName().equals("Byte")
+									||field.getType().isArray()||field.getType().isAssignableFrom(Map.class)||field.getType().isAssignableFrom(List.class)) {
+									string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+									.append(fieldValue + "", fieldValueColor).append("  ");
+								}
+								else {
+									// quindi qui si tratta di un oggetto, che non sia un array e diverso da tutti i tipi
+									// annunciati sopra
+									// quindi stampo la classe
+									string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+									.append(fieldValue.getClass().getSimpleName() + "", fieldValueColor).append("  ");
+								}
 							}
 							count++;
 						}

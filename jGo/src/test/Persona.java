@@ -11,6 +11,8 @@ import cloud.jgo.utils.command.color.ColorLocalCommand;
 @£Command(help = "Creates a Person", involveAll=true)
 public class Persona {
 
+	final String PERSON_="person"
+			+ "";
 	private String nome ;
 	private String cognome ;
 	private int eta ;

@@ -165,5 +165,4 @@ public class NodeList implements Serializable {
 	public Node setNode(int index, Node node) {
 		return this.nodeList.set(index, node);
 	}
-
 }
