@@ -228,7 +228,7 @@ public class HTMLDefaultDocument implements HTMLDocument {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return getMarkup();
+		return getNodeName();
 	}
 
 	@Override

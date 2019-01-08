@@ -3788,12 +3788,6 @@ public final class JjDom implements jQuerySupport, Serializable {
 		}
 
 	}
-
-	@Override
-	public String toString() {
-		return elements().toString();
-	}
-
 	/**
 	 * I risultati jquery e dom possono non compaciare
 	 */

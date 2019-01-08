@@ -196,6 +196,12 @@ public class HTMLComment implements Comment, Home {
 		// TODO Auto-generated method stub
 		return "comment";
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getNodeName();
+	}
 
 	@Override
 	public String getBaseURI() {

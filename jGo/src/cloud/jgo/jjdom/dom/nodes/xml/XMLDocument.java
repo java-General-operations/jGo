@@ -75,6 +75,12 @@ public class XMLDocument implements Document {
 		((XMLElement) rootElement).setParentNode(this);
 		appendChild(rootElement);
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getNodeName();
+	}
 
 	// version 1.0.9
 	public XMLDocument() {
