@@ -31,14 +31,14 @@ import cloud.jgo.jjdom.dom.nodes.Document;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.NodeList;
 import cloud.jgo.jjdom.dom.nodes.Node.NodeType;
-import cloud.jgo.utils.command.annotations.Command;
+import cloud.jgo.utils.command.annotations.£Command;
 
 /**
  * 
  * @author Martire91<br>
  *         This class represente the html comment
  */
-@Command(command="html-comment", help = "This command creates an html comment",involveAll=true)
+@£Command(command="html-comment", help = "This command creates an html comment",involveAll=true)
 public class HTMLComment implements Comment, Home {
 	/**
 	 * 

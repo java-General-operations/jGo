@@ -208,3 +208,4 @@ si devono creare i parametri automatici in relazione dei fields dell'oggetto con
 aggiunto nuovo packages
 - aggiunti tutti i metodi che si trovavano in DomT4j, alla classe ColorLocalPhaseTerminal
 - abbiamo completato provvisoriamente i metodi : toString e getCommandByObject della classe LocalCommand e sotto classe.
+- non ho commentato i nodi specifici colorati javadoc

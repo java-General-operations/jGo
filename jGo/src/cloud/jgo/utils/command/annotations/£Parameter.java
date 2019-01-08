@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
  */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD})
-public @interface Parameter {
+public @interface £Parameter {
 	
 	public String help();
 }

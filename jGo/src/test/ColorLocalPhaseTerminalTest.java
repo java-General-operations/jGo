@@ -14,6 +14,8 @@ import cloud.jgo.utils.command.terminal.phase.Phase;
 public class ColorLocalPhaseTerminalTest {
 	public static void main(String[] args) {
 		
+		// ora devo copiare il metodo toString colorato nella classe LocalCommand
+		// ora devo fare lo stesso procedimento delle annotazioni sui nodi colorati del dom
 		// risolvere errore : è presente da quando 
 		// abbiamo reso la variabile objCommand esterna e statica al metodo getCommandByObject
 		

@@ -6,10 +6,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.utils.command.LocalCommand;
-import cloud.jgo.utils.command.annotations.Command;
-import cloud.jgo.utils.command.annotations.Parameter;
+import cloud.jgo.utils.command.annotations.£Command;
 import cloud.jgo.utils.command.color.ColorLocalCommand;
-@Command(help = "Creates a Person", involveAll=true)
+@£Command(help = "Creates a Person", involveAll=true)
 public class Persona {
 
 	private String nome ;

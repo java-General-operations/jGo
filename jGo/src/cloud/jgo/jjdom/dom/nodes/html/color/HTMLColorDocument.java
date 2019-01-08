@@ -1,4 +1,5 @@
 package cloud.jgo.jjdom.dom.nodes.html.color;
+
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -15,20 +16,21 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
 import cloud.jgo.utils.ColorString;
-public class HTMLColorDocument extends HTMLDefaultDocument implements Colorable{
+
+public class HTMLColorDocument extends HTMLDefaultDocument implements Colorable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	public HTMLColorDocument(String charsetName, JjDom home) {
 		super(charsetName, home);
-		// mi creo il nodo root 
+		// mi creo il nodo root
 		this.rootElement = createColorElement(HTMLElement.HTMLElementType.HTML);
-		((HTMLColorElement)this.rootElement).setParentNode(this);
+		((HTMLColorElement) this.rootElement).setParentNode(this);
 		appendChild(this.rootElement);
 	}
 
-	
 	@Override
 	public String getColorMarkup() {
 		ColorString htmlCode = new ColorString();
@@ -36,13 +38,13 @@ public class HTMLColorDocument extends HTMLDefaultDocument implements Colorable{
 		String result = htmlCode.toString();
 		return result;
 	}
-	
+
 	@Override
 	public HTMLColorElement getRootElement() {
 		// TODO Auto-generated method stub
-		return (HTMLColorElement) this.rootElement ;
+		return (HTMLColorElement) this.rootElement;
 	}
-	
+
 	public HTMLColorElement createColorElement(HTMLElementType type) {
 		HTMLColorElement element = null;
 		for (int i = 0; i < HTMLElementType.availableTypes.size(); i++) {
@@ -54,10 +56,10 @@ public class HTMLColorDocument extends HTMLDefaultDocument implements Colorable{
 		}
 		return element;
 	}
-	
+
 	public HTMLColorElement createColorElement(String elementName) {
 		HTMLElementType type = null;
-		List<HTMLElement.HTMLElementType>types = HTMLElementType.availableTypes;
+		List<HTMLElement.HTMLElementType> types = HTMLElementType.availableTypes;
 		for (HTMLElementType htmlElementType : types) {
 			if (htmlElementType.toString().equals(elementName)) {
 				type = htmlElementType;

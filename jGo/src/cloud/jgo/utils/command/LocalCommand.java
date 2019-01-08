@@ -35,6 +35,8 @@ import java.util.Map.Entry;
 import cloud.jgo.j£;
 import cloud.jgo.£;
 import cloud.jgo.utils.command.annotations.InvalidClassException;
+import cloud.jgo.utils.command.annotations.£Command;
+import cloud.jgo.utils.command.annotations.£Parameter;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
 import cloud.jgo.utils.command.terminal.Terminal;
@@ -64,9 +66,9 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private static LocalCommand objCommand = null ;
 	public static <A> LocalCommand getCommandByObject(Class<A>a) {
 		//1 cosa controllo che sia una classe annotata
-		cloud.jgo.utils.command.annotations.Command commandAnnotation = null ;
-		if (a.isAnnotationPresent(cloud.jgo.utils.command.annotations.Command.class)) {
-			commandAnnotation = a.getDeclaredAnnotation(cloud.jgo.utils.command.annotations.Command.class);
+		£Command commandAnnotation = null ;
+		if (a.isAnnotationPresent(£Command.class)) {
+			commandAnnotation = a.getDeclaredAnnotation(£Command.class);
 			if (commandAnnotation.command().equals("default")) {
 				objCommand = new LocalCommand(a.getSimpleName().toLowerCase(),commandAnnotation.help());
 			}
@@ -370,8 +372,8 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 				for (Field field : fields) {
 					field.setAccessible(true);
 					// verifico se il campo è annotato
-					if (field.isAnnotationPresent(cloud.jgo.utils.command.annotations.Parameter.class)) {
-						Parameter param = objCommand.addParam(field.getName(),field.getAnnotation(cloud.jgo.utils.command.annotations.Parameter.class).help());
+					if (field.isAnnotationPresent(£Parameter.class)) {
+						Parameter param = objCommand.addParam(field.getName(),field.getAnnotation(£Parameter.class).help());
 						param.setInputValueExploitable(true);
 						param.setExecution(new Execution() {
 							@Override
@@ -660,7 +662,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	 * @throws IllegalAccessException 2 exception
 	 */
 	public static String toString(Object sharedObject) throws IllegalArgumentException, IllegalAccessException {
-		if (sharedObject.getClass().isAnnotationPresent(cloud.jgo.utils.command.annotations.Command.class)) {
+		if (sharedObject.getClass().isAnnotationPresent(£Command.class)) {
 			StringBuffer string = new StringBuffer();
 			string.append("-----------------------------------------------------------------------------------\n");
 			string.append("" + sharedObject.getClass().getSimpleName() + " - Configuration\n");
@@ -669,8 +671,8 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			Field[] fields = clazz.getDeclaredFields();
 			int count = 0;
 			// here
-			if (((cloud.jgo.utils.command.annotations.Command) clazz
-					.getAnnotation(cloud.jgo.utils.command.annotations.Command.class)).involveAll()) {
+			if (((£Command) clazz
+					.getAnnotation(£Command.class)).involveAll()) {
 				// qui vengono coinvolti tutti i parametri
 				for (Field field : fields) {
 					field.setAccessible(true);
@@ -692,7 +694,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 				// qui vengono filtrati tramite l'annotazione @Parameter
 				for (Field field : fields) {
 					field.setAccessible(true);
-					if (field.isAnnotationPresent(cloud.jgo.utils.command.annotations.Parameter.class)) {
+					if (field.isAnnotationPresent(£Parameter.class)) {
 						String fieldName = field.getName();
 						Object fieldValue = field.get(sharedObject);
 						if (count == 3) {

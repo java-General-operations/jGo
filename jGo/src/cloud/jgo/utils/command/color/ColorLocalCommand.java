@@ -35,8 +35,9 @@ import cloud.jgo.utils.ColorString;
 import cloud.jgo.utils.command.DefaultParameter;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
-import cloud.jgo.utils.command.annotations.Command;
 import cloud.jgo.utils.command.annotations.InvalidClassException;
+import cloud.jgo.utils.command.annotations.£Command;
+import cloud.jgo.utils.command.annotations.£Parameter;
 import cloud.jgo.utils.command.LocalCommand.HelpCommand;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.TerminalColors;
@@ -63,8 +64,8 @@ public class ColorLocalCommand extends LocalCommand {
 	 */
 	public static String toString(Object sharedObject, Color fieldNameColor, Color fieldValueColor)
 			throws IllegalArgumentException, IllegalAccessException {
-		if (sharedObject.getClass().isAnnotationPresent(Command.class)) {
-			ColorString string = new ColorString();
+		ColorString string = new ColorString();
+		if (sharedObject.getClass().isAnnotationPresent(£Command.class)) {
 			string.append("-----------------------------------------------------------------------------------\n");
 			string.append(" " + sharedObject.getClass().getSimpleName()).append(" ~ Configuration\n", Color.BLUE);
 			string.append("-----------------------------------------------------------------------------------\n");
@@ -72,8 +73,8 @@ public class ColorLocalCommand extends LocalCommand {
 			Field[] fields = clazz.getDeclaredFields();
 			int count = 0;
 			// here
-			if (((cloud.jgo.utils.command.annotations.Command) clazz
-					.getAnnotation(cloud.jgo.utils.command.annotations.Command.class)).involveAll()) {
+			if (((£Command) clazz
+					.getAnnotation(£Command.class)).involveAll()) {
 				// qui vengono coinvolti tutti i parametri
 				for (Field field : fields) {
 					field.setAccessible(true);
@@ -93,7 +94,7 @@ public class ColorLocalCommand extends LocalCommand {
 			} else {
 				for (Field field : fields) {
 					field.setAccessible(true);
-					if (field.isAnnotationPresent(cloud.jgo.utils.command.annotations.Parameter.class)) {
+					if (field.isAnnotationPresent(£Parameter.class)) {
 						String fieldName = field.getName();
 						Object fieldValue = field.get(sharedObject);
 						if (count == 3) {
@@ -109,22 +110,82 @@ public class ColorLocalCommand extends LocalCommand {
 			}
 			return string.toString() + "\n";
 		} else {
-			try {
-				throw new InvalidClassException(sharedObject.getClass());
-			} catch (InvalidClassException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			Class<?extends Object>superClass = sharedObject.getClass().getSuperclass();
+			if (superClass!=null) {
+				if (superClass.isAnnotationPresent(£Command.class)) {
+					string.append("-----------------------------------------------------------------------------------\n");
+					string.append(" " + superClass.getSimpleName()).append(" ~ Configuration\n", Color.BLUE);
+					string.append("-----------------------------------------------------------------------------------\n");
+					Class<?> clazz = superClass;
+					Field[] fields = clazz.getDeclaredFields();
+					int count = 0;
+					// here
+					if (((£Command) superClass
+							.getAnnotation(£Command.class)).involveAll()) {
+						// qui vengono coinvolti tutti i parametri
+						for (Field field : fields) {
+							field.setAccessible(true);
+							if (!Modifier.isFinal(field.getModifiers())) {
+								String fieldName = field.getName();
+								Object fieldValue = field.get(sharedObject);
+								if (count == 3) {
+									// si va a capo
+									count = 0;
+									string.append("\n\n");
+								}
+								string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+										.append(fieldValue + "", fieldValueColor).append("  ");
+							}
+							count++;
+						}
+					} else {
+						for (Field field : fields) {
+							field.setAccessible(true);
+							if (field.isAnnotationPresent(£Parameter.class)) {
+								String fieldName = field.getName();
+								Object fieldValue = field.get(sharedObject);
+								if (count == 3) {
+									// si va a capo
+									count = 0;
+									string.append("\n\n");
+								}
+								string.append("* " + fieldName, fieldNameColor).append("=", Color.WHITE)
+										.append(fieldValue + "", fieldValueColor).append("  ");
+							}
+							count++;
+						}
+					}
+				}
+				else {
+					string = null ;
+					try {
+						throw new InvalidClassException(sharedObject.getClass());
+					} catch (InvalidClassException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
-			return null;
+			else {
+				string = null ;
+				try {
+					throw new InvalidClassException(sharedObject.getClass());
+				} catch (InvalidClassException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
+		if (string!=null) return string.toString() + "\n";
+		else return null ;
 	}
 	// variabile usata internamente
 	private static ColorLocalCommand objCommand = null ;
 	public static <A> ColorLocalCommand getCommandByObject(Class<A>a) {
 		//1 cosa controllo che sia una classe annotata
-		cloud.jgo.utils.command.annotations.Command commandAnnotation = null ;
-		if (a.isAnnotationPresent(cloud.jgo.utils.command.annotations.Command.class)) {
-			commandAnnotation = a.getDeclaredAnnotation(cloud.jgo.utils.command.annotations.Command.class);
+		£Command commandAnnotation = null ;
+		if (a.isAnnotationPresent(£Command.class)) {
+			commandAnnotation = a.getDeclaredAnnotation(£Command.class);
 			if (commandAnnotation.command().equals("default")) {
 				objCommand =  new ColorLocalCommand(a.getSimpleName().toLowerCase(),commandAnnotation.help());
 			}
@@ -428,8 +489,8 @@ public class ColorLocalCommand extends LocalCommand {
 				for (Field field : fields) {
 					field.setAccessible(true);
 					// verifico se il campo è annotato
-					if (field.isAnnotationPresent(cloud.jgo.utils.command.annotations.Parameter.class)) {
-						Parameter param = objCommand.addParam(field.getName(),field.getAnnotation(cloud.jgo.utils.command.annotations.Parameter.class).help());
+					if (field.isAnnotationPresent(£Parameter.class)) {
+						Parameter param = objCommand.addParam(field.getName(),field.getAnnotation(£Parameter.class).help());
 						param.setInputValueExploitable(true);
 						param.setExecution(new Execution() {
 							@Override

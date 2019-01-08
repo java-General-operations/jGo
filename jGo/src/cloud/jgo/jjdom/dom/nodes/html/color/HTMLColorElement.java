@@ -7,7 +7,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.utils.ColorString;
 
-public class HTMLColorElement extends HTMLDefaultElement implements Colorable{
+public class HTMLColorElement extends HTMLDefaultElement implements Colorable {
 	/**
 	 * 
 	 */
@@ -17,15 +17,17 @@ public class HTMLColorElement extends HTMLDefaultElement implements Colorable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public HTMLColorElement(String elementName, HTMLDocument document) {
 		super(elementName, document);
 		// TODO Auto-generated constructor stub
 	}
-	// mi ridefinisco soltanto i metodi per il markup 
+
+	// mi ridefinisco soltanto i metodi per il markup
 	@Override
 	public String getColorMarkup() {
 		ColorString htmlCode = new ColorString();
-		ColorRecursion.examines_html(this,htmlCode); // provvisorio, poi gli dobbiamo passare il document
+		ColorRecursion.examines_html(this, htmlCode); // provvisorio, poi gli dobbiamo passare il document
 		String result = htmlCode.toString();
 		return result;
 	}

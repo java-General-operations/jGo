@@ -35,7 +35,7 @@ import java.lang.annotation.Target;
  */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.TYPE})
-public @interface Command {
+public @interface £Command {
 	String command()default "default"; // className
 	String help();
 	boolean involveAll()default false;
