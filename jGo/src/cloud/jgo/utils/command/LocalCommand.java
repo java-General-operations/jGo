@@ -662,10 +662,16 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	 * @throws IllegalAccessException 2 exception
 	 */
 	public static String toString(Object sharedObject) throws IllegalArgumentException, IllegalAccessException {
+		StringBuffer string = new StringBuffer();
 		if (sharedObject.getClass().isAnnotationPresent(£Command.class)) {
-			StringBuffer string = new StringBuffer();
 			string.append("-----------------------------------------------------------------------------------\n");
-			string.append("" + sharedObject.getClass().getSimpleName() + " - Configuration\n");
+			if (((£Command)sharedObject.getClass().getDeclaredAnnotation(£Command.class)).command().equals("default")) {
+				string.append(" " + sharedObject.getClass().getSimpleName()).append(" ~ Configuration\n");	
+			}
+			else {
+				//sharedObject.getClass().getSimpleName()
+				string.append(" " + ((£Command)sharedObject.getClass().getDeclaredAnnotation(£Command.class)).command()).append(" ~ Configuration\n");
+			}
 			string.append("-----------------------------------------------------------------------------------\n");
 			Class<?> clazz = sharedObject.getClass();
 			Field[] fields = clazz.getDeclaredFields();
@@ -676,22 +682,20 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 				// qui vengono coinvolti tutti i parametri
 				for (Field field : fields) {
 					field.setAccessible(true);
-					if (!Modifier.isFinal(field.getModifiers())) {
+//					if (!Modifier.isFinal(field.getModifiers())) {
 						String fieldName = field.getName();
 						Object fieldValue = field.get(sharedObject);
 						if (count == 3) {
 							// si va a capo
 							count = 0;
 							string.append("\n\n");
-						} 
-							string.append("* " + fieldName).append("=")
-									.append(fieldValue).append("  ");
-					}
+						}
+						string.append("* " + fieldName).append("=")
+						.append(fieldValue + "").append("  ");
+//					}
 					count++;
 				}
-			}
-			else {
-				// qui vengono filtrati tramite l'annotazione @Parameter
+			} else {
 				for (Field field : fields) {
 					field.setAccessible(true);
 					if (field.isAnnotationPresent(£Parameter.class)) {
@@ -701,24 +705,89 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 							// si va a capo
 							count = 0;
 							string.append("\n\n");
-						} 
-							string.append("* " + fieldName).append("=")
-									.append(fieldValue).append("  ");
+						}
+						string.append("* " + fieldName).append("=")
+						.append(fieldValue + "").append("  ");
 					}
 					count++;
 				}
 			}
 			return string.toString() + "\n";
-		}
-		else {
-			try {
-				throw new InvalidClassException(sharedObject.getClass());
-			} catch (InvalidClassException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		} else {
+			Class<?extends Object>superClass = sharedObject.getClass().getSuperclass();
+			if (superClass!=null) {
+				if (superClass.isAnnotationPresent(£Command.class)) {
+					string.append("-----------------------------------------------------------------------------------\n");
+					if (((£Command)superClass.getDeclaredAnnotation(£Command.class)).command().equals("default")) {
+						string.append(" " + superClass.getSimpleName()).append(" ~ Configuration\n");	
+					}
+					else {
+						//sharedObject.getClass().getSimpleName()
+						string.append(" " + ((£Command)superClass.getDeclaredAnnotation(£Command.class)).command()).append(" ~ Configuration\n");
+					}
+					string.append("-----------------------------------------------------------------------------------\n");
+					Class<?> clazz = superClass;
+					Field[] fields = clazz.getDeclaredFields();
+					int count = 0;
+					// here
+					if (((£Command) superClass
+							.getAnnotation(£Command.class)).involveAll()) {
+						// qui vengono coinvolti tutti i parametri
+						for (Field field : fields) {
+							field.setAccessible(true);
+//							if (!Modifier.isFinal(field.getModifiers())) {
+								String fieldName = field.getName();
+								Object fieldValue = field.get(sharedObject);
+								if (count == 3) {
+									// si va a capo
+									count = 0;
+									string.append("\n\n");
+								}
+								string.append("* " + fieldName).append("=")
+								.append(fieldValue + "").append("  ");
+//							}
+							count++;
+						}
+					} else {
+						for (Field field : fields) {
+							field.setAccessible(true);
+							if (field.isAnnotationPresent(£Parameter.class)) {
+								String fieldName = field.getName();
+								Object fieldValue = field.get(sharedObject);
+								if (count == 3) {
+									// si va a capo
+									count = 0;
+									string.append("\n\n");
+								}
+								string.append("* " + fieldName).append("=")
+								.append(fieldValue + "").append("  ");
+							}
+							count++;
+						}
+					}
+				}
+				else {
+					string = null ;
+					try {
+						throw new InvalidClassException(sharedObject.getClass());
+					} catch (InvalidClassException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
-			return null ;
+			else {
+				string = null ;
+				try {
+					throw new InvalidClassException(sharedObject.getClass());
+				} catch (InvalidClassException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
+		if (string!=null) return string.toString() + "\n";
+		else return null ;
 	}
 
 	public LocalCommand(String command, String help) {
