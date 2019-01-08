@@ -1,9 +1,9 @@
 package cloud.jgo.utils.command.annotations;
 
 public class InvalidClassException extends Exception {
-	public InvalidClassException() {
+	public InvalidClassException(Class<?>clazz) {
 		// TODO Auto-generated constructor stub
-		super(" - Invalid class");
+		super("\n - Invalid class > "+clazz.getName());
 	}
 
 	@Override

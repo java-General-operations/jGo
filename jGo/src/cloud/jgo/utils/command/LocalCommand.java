@@ -639,7 +639,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		else {
 			// dare una eccezzione
 			try {
-				throw new InvalidClassException();
+				throw new InvalidClassException(a);
 			} catch (InvalidClassException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -710,7 +710,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		}
 		else {
 			try {
-				throw new InvalidClassException();
+				throw new InvalidClassException(sharedObject.getClass());
 			} catch (InvalidClassException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

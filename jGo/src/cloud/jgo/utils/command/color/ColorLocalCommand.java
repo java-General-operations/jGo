@@ -110,7 +110,7 @@ public class ColorLocalCommand extends LocalCommand {
 			return string.toString() + "\n";
 		} else {
 			try {
-				throw new InvalidClassException();
+				throw new InvalidClassException(sharedObject.getClass());
 			} catch (InvalidClassException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -696,7 +696,7 @@ public class ColorLocalCommand extends LocalCommand {
 		}
 		else {
 			try {
-				throw new InvalidClassException();
+				throw new InvalidClassException(a);
 			} catch (InvalidClassException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
