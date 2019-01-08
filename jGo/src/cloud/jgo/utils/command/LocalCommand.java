@@ -63,7 +63,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	// variabile usata internamente
 	private static LocalCommand objCommand = null ;
 	public static <A> LocalCommand getCommandByObject(Class<A>a) {
-		LocalCommand result = null ;
 		//1 cosa controllo che sia una classe annotata
 		cloud.jgo.utils.command.annotations.Command commandAnnotation = null ;
 		if (a.isAnnotationPresent(cloud.jgo.utils.command.annotations.Command.class)) {
@@ -636,9 +635,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 					}
 				}
 			}
-			// ottengo il risultato
-			result = objCommand ;
-			objCommand = null ;
 		}
 		else {
 			// dare una eccezzione
@@ -649,7 +645,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 				e.printStackTrace();
 			}
 		}
-		return result ;
+		return objCommand ;
 	}
 	// version 1.0.9 : da segnalare ...
 	private static String toStringParamName = "to_string"; 

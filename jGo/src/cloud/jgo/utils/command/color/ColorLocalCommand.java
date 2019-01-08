@@ -121,7 +121,6 @@ public class ColorLocalCommand extends LocalCommand {
 	// variabile usata internamente
 	private static ColorLocalCommand objCommand = null ;
 	public static <A> ColorLocalCommand getCommandByObject(Class<A>a) {
-		ColorLocalCommand result = null ;
 		//1 cosa controllo che sia una classe annotata
 		cloud.jgo.utils.command.annotations.Command commandAnnotation = null ;
 		if (a.isAnnotationPresent(cloud.jgo.utils.command.annotations.Command.class)) {
@@ -694,9 +693,6 @@ public class ColorLocalCommand extends LocalCommand {
 					}
 				}
 			}
-			// ottengo il risultato
-			result = objCommand ;
-			objCommand = null ;
 		}
 		else {
 			try {
@@ -706,7 +702,7 @@ public class ColorLocalCommand extends LocalCommand {
 				e.printStackTrace();
 			}
 		}
-		return result ;
+		return objCommand;
 	}
 
 	private ColorHelpCommand helpCommand = new ColorHelpCommand();
