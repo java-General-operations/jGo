@@ -43,7 +43,7 @@ import cloud.jgo.utils.command.annotations.Command;
  * @author Martire91<br>
  * @see HTMLElement This class represents the html default element
  */
-@Command(help = "Creates a HTML element",involveAll=true)
+@Command(command="html-element", help = "This command creates an html element", involveAll=true)
 public class HTMLDefaultElement implements HTMLElement {
 	private static final long serialVersionUID = 12L;
 	// il node value e il text content, rappresentano la stessa variabile, poichè
@@ -74,8 +74,8 @@ public class HTMLDefaultElement implements HTMLElement {
 		this.attributes = new HashMap<>();
 		this.document = document;
 	}
-	// version 1.0.6
-	protected HTMLDefaultElement() {
+	// version 1.0.6:tmp
+	public HTMLDefaultElement() {
 	}
 	/**
 	 * This method returns the start tag

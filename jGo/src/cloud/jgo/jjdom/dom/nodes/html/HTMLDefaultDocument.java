@@ -51,7 +51,7 @@ import cloud.jgo.jjdom.dom.Recursion;
  * @author Martire91<br>
  * @see HTMLDocument This class represents the default html document
  */
-@Command(help = "Creates a HTML document",involveAll=true)
+@Command(command="html-document", help = "This command creates an html document",involveAll=true)
 public class HTMLDefaultDocument implements HTMLDocument {
 	@Override
 	public String getPath() {
