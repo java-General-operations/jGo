@@ -20,13 +20,14 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo;
+package cloud.jgo.utils.swing;
 
 import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 
+import cloud.jgo.£;
 import cloud.jgo.£.Effect;
 
 public class SlideToggle implements Runnable {

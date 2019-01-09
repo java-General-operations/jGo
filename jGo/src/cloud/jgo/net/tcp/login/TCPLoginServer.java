@@ -27,7 +27,6 @@ import java.security.Key;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import cloud.jgo.Encrypts;
 import cloud.jgo.£;
 import cloud.jgo.net.ServerType;
 import cloud.jgo.net.config.Configuration;
@@ -37,6 +36,7 @@ import cloud.jgo.net.tcp.NotSupportedModelException;
 import cloud.jgo.net.tcp.TCPServer;
 import cloud.jgo.net.tcp.TCPServerConfiguration;
 import cloud.jgo.net.tcp.TCPServerTypes;
+import cloud.jgo.utils.Encrypts;
 
 /**
  * 

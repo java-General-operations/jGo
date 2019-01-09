@@ -1,4 +1,4 @@
-package cloud.jgo.registry;
+package cloud.jgo.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

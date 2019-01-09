@@ -9,7 +9,7 @@
  * URL Software : https://www.jgo.cloud/
  * URL Documentation : https://www.jgo.cloud/docs/
  *
- * Copyright © 2018 - Marco Martire (www.jgo.cloud)
+ * Copyright © 2018-2019  Marco Martire (www.jgo.cloud)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the MIT License.
@@ -136,11 +136,9 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.xml.bind.JAXBException;
-import cloud.jgo.SMTPHosts.SMTPEntry;
+
 import cloud.jgo.downloads.Download;
 import cloud.jgo.downloads.DownloadWorker;
-import cloud.jgo.file_manager.JFileManager;
-import cloud.jgo.file_manager.JFileView;
 import cloud.jgo.io.jon.JON;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.jjdom.function;
@@ -156,15 +154,25 @@ import cloud.jgo.net.tcp.TCPServerTypes;
 import cloud.jgo.net.tcp.http.HTTPServer;
 import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
 import cloud.jgo.net.tcp.http.headers.Header;
-import cloud.jgo.net.tcp.http.jor.JOR;
 import cloud.jgo.net.tcp.http.jor.JORServer;
+import cloud.jgo.net.tcp.http.jor.annotations.JOR;
 import cloud.jgo.net.tcp.login.TCPLoginServer;
-import cloud.jgo.registry.WinRegistry;
 import cloud.jgo.utils.ColorString;
+import cloud.jgo.utils.Compressor;
+import cloud.jgo.utils.Encrypts;
+import cloud.jgo.utils.SMTPHosts;
+import cloud.jgo.utils.WinRegistry;
+import cloud.jgo.utils.XMLConverter;
+import cloud.jgo.utils.SMTPHosts.SMTPEntry;
 import cloud.jgo.utils.command.terminal.LinuxTerminal;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.WinTerminal;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
+import cloud.jgo.utils.swing.JFileManager;
+import cloud.jgo.utils.swing.JFileView;
+import cloud.jgo.utils.swing.MoveFrame;
+import cloud.jgo.utils.swing.NotSupportedEffectException;
+import cloud.jgo.utils.swing.SlideToggle;
 
 /**
  * @author Martire91

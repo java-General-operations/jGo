@@ -21,7 +21,7 @@
  * 
  */
 // version 1.0.5
-package cloud.jgo;
+package cloud.jgo.utils;
 
 import java.util.Hashtable;
 import java.util.Map;

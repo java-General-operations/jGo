@@ -20,7 +20,7 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo;
+package cloud.jgo.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -42,6 +42,8 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import javax.imageio.ImageIO;
+
+import cloud.jgo.£;
 
 @Deprecated
 public class Encrypts {
@@ -245,9 +247,7 @@ public class Encrypts {
 		String nameFile = file.getName();
 		if (this.key != null) {
 			// va bene
-
-			WorkWithByte work = new WorkWithByte();
-			byte[] byteFile = work.convertFileInByte(file);
+			byte[] byteFile = £.getByteFrom(file);
 
 			// ho ottenuto i byte ora li crypto
 
@@ -290,9 +290,7 @@ public class Encrypts {
 		String nameFile = file.getName();
 		if (this.key != null) {
 			// va bene
-
-			WorkWithByte work = new WorkWithByte();
-			byte[] byteFile = work.convertFileInByte(file);
+			byte[] byteFile = £.getByteFrom(file);
 
 			// ho ottenuto i byte ora li crypto
 

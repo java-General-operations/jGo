@@ -38,6 +38,5 @@ import cloud.jgo.utils.command.Parameter;
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.FIELD})
 public @interface ParameterField {
-	String param()default"default"; // default for parameter = field.name
 	String help();
 }

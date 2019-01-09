@@ -20,7 +20,7 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo;
+package cloud.jgo.utils;
 
 import java.io.BufferedInputStream;
 import java.io.File;

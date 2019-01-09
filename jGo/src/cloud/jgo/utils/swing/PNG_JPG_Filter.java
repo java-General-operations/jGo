@@ -20,24 +20,30 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.file_manager;
+package cloud.jgo.utils.swing;
 
 import java.io.File;
 
-import javax.swing.Icon;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.filechooser.FileView;
+import javax.swing.filechooser.FileFilter;
 
-/**
- * 
- * @author Martire91
- *
- */
-public class JFileView extends FileView {
+public class PNG_JPG_Filter extends FileFilter {
 
 	@Override
-	public Icon getIcon(File f) {
-		// TODO Auto-generated method stub
-		return FileSystemView.getFileSystemView().getSystemIcon(f);
+	public boolean accept(File f) {
+		boolean corrected = false;
+		if (f.getName().toLowerCase().endsWith("png")) {
+			corrected = true;
+		} else if (f.getName().toLowerCase().endsWith("jpg")) {
+			corrected = true;
+		}
+		return corrected;
+
 	}
+
+	@Override
+	public String getDescription() {
+
+		return "Images(.png,.jpg)";
+	}
+
 }

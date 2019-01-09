@@ -51,6 +51,7 @@ import cloud.jgo.net.tcp.http.ResponseCode;
 import cloud.jgo.net.tcp.http.Transport;
 import cloud.jgo.net.tcp.http.headers.Header;
 import cloud.jgo.net.tcp.http.headers.MimeHeader;
+import cloud.jgo.net.tcp.http.jor.annotations.JOR;
 import cloud.jgo.net.tcp.http.mime.MimeTypeFactory;
 
 /**

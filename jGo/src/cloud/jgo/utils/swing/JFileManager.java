@@ -20,7 +20,7 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.file_manager;
+package cloud.jgo.utils.swing;
 
 import java.awt.Component;
 import java.io.File;

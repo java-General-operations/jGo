@@ -61,14 +61,15 @@ import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import com.google.gson.Gson;
 
-import cloud.jgo.SMTPHosts.SMTPEntry;
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.net.Server;
 import cloud.jgo.net.tcp.TCPServer;
 import cloud.jgo.net.tcp.http.HTTPServer;
-import cloud.jgo.net.tcp.http.jor.JOR;
 import cloud.jgo.net.tcp.http.jor.JORServer;
+import cloud.jgo.net.tcp.http.jor.annotations.JOR;
 import cloud.jgo.utils.ColorString;
+import cloud.jgo.utils.SMTPHosts;
+import cloud.jgo.utils.SMTPHosts.SMTPEntry;
 
 /**
  * @author Martire91

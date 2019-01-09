@@ -1,12 +1,16 @@
-package cloud.jgo.net.tcp.http.jor;
+package cloud.jgo.net.tcp.http.jor.annotations;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import cloud.jgo.net.tcp.http.jor.ResponseType;
+
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = { ElementType.TYPE })
+@Documented
 /**
  * @author Martire91<br>
  *         This annotation allows the definition of the URL of the object

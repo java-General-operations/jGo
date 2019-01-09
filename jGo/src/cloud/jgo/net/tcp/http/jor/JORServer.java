@@ -31,6 +31,7 @@ import java.util.List;
 
 import cloud.jgo.net.tcp.http.HTTPServer;
 import cloud.jgo.net.tcp.http.HTTPServerConfiguration;
+import cloud.jgo.net.tcp.http.jor.annotations.JOR;
 
 /**
  * @author Martire91
