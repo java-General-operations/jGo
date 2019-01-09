@@ -1,6 +1,7 @@
 package test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.fusesource.jansi.Ansi.Color;
@@ -72,10 +73,21 @@ public class ColorLocalPhaseTerminalTest {
 				
 				t.addCommandsToPhase(phase, connect,migrate,download,update);
 				
-				// a questo punto posso aprire il terminale 
+				String toString = Arrays.toString(LocalPhaseTerminal.phasesExecutorCommand.params());
+				System.out.println(toString);
 				
-				t.open();
+				// elimino la fase
 				
-		
+				boolean result = t.removePhase(1);
+				
+				System.out.println(result);
+				System.out.println(Arrays.toString(LocalPhaseTerminal.phasesExecutorCommand.params()));
+				
+				t.createPhase(1, "ciao", "ciao",null);
+				
+				System.out.println(Arrays.toString(LocalPhaseTerminal.phasesExecutorCommand.params()));
+				
+				
+				
 	}
 }

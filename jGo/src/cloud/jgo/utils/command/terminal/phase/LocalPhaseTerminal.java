@@ -46,11 +46,13 @@ import cloud.jgo.utils.command.terminal.LocalTerminal;
 public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	protected Phase currentPhase, startPhase = null;
 	protected List<Phase> phases = new ArrayList<>();
-	protected LocalCommand pointerCommand = null ;
+	protected LocalCommand pointerCommand = null;
 	protected LocalCommand resetCommand = null;
 	protected LocalCommand describerCommand = null;
 	// version 1.0.9 : esegue solo le esecuzioni dei comandi, ma non dei parametri
-	protected static LocalCommand phasesExecutorCommand = new LocalCommand("phases-executor","This command executes a phase");
+	public static LocalCommand phasesExecutorCommand = new LocalCommand("phases-executor",
+			"This command executes a phase");
+
 	/**
 	 * This method returns the current phase
 	 * 
@@ -121,34 +123,35 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				startPhase = phase;
 			}
 			phases.add(phase);
-			
+
 			// qui costruisco il parametro per eseguire questa fase fino a ]
-			
-			Parameter phaseExecutionParam = phasesExecutorCommand.addParam(phase.phaseName(),"executes the "+£.escp(phase.phaseName())+" phase");
-			
+
+			Parameter phaseExecutionParam = phasesExecutorCommand.addParam(phase.phaseName(),
+					"executes the " + £.escp(phase.phaseName()) + " phase");
+
 			// se ci sono i comandi mi creo l'esecuzione del parametro che esegue la fase
 			// altrimenti abbiamo solo il parametro aggiunto al comando, ma senza esecuzione
-			
-			if (commands!=null) {
+
+			if (commands != null) {
 				phaseExecutionParam.setExecution(new Execution() {
-					
+
 					@Override
 					public Object exec() {
-						
-						List<Command>phaseCommands = phase.getCommands();
+
+						List<Command> phaseCommands = phase.getCommands();
 
 						for (Command command : commands) {
-							
+
 							System.out.println(command.execute());
-							
+
 						}
-						return null ;
+						return null;
 					}
-				});	
+				});
 			}
-			
+
 			// ]
-		
+
 			// qui solo se non è la fase start, perchè non ci serve avere un riferimento a
 			// tale fase
 			// eseguiamo il codice dell'aggiungimento link param. Tutto questo perchè
@@ -203,6 +206,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			return null;
 		}
 	}
+
 	/**
 	 * This method adds commands into the phase
 	 * 
@@ -218,37 +222,36 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			// adesso controllo se questa fase ha il corrispondente parametro
 			// sul comando executor, altimenti lo aggiungo
 			String phaseName = phase.phaseName();
-			Parameter exist = null ;
-			for(Parameter param:phasesExecutorCommand.params()) {
+			Parameter exist = null;
+			for (Parameter param : phasesExecutorCommand.params()) {
 				if (param.getOnlyParam().equals(phaseName)) {
-					exist = param ;
+					exist = param;
 					break;
 				}
 			}
-			if(exist!=null) {
+			if (exist != null) {
 				// aggiorno l'esecuzione dei comandi aggiunti
 				exist.setExecution(new Execution() {
 
 					@Override
 					public Object exec() {
-						List<Command>phaseCommands = phase.getCommands();
-						
+						List<Command> phaseCommands = phase.getCommands();
+
 						for (Command command : commands) {
-							
+
 							System.out.println(command.execute());
-							
+
 						}
-						return null ;
+						return null;
 					}
 				});
-			}
-			else {
+			} else {
 				// vediamo piano piano se ci arriva qui ...
 				System.out.println("C'è arrivato ###");
 			}
 		}
 	}
-	
+
 	@Override
 	public final void implOpen() {
 		// do il comando da input
@@ -302,7 +305,9 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 	// il costruttore lo suo per inizializzare le fasi predefinite
 	// in questo caso solo : pointerCommand
-	protected LocalPhaseTerminal() {}
+	protected LocalPhaseTerminal() {
+	}
+
 	public LocalPhaseTerminal(String terminalName) {
 		// TODO Auto-generated constructor stub
 		setName(terminalName);
@@ -622,10 +627,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					}
 				}
 			}
-			
+
 			// controllo se c'è un parametro associato a questa fase per il comando executor
-			
-			for (Parameter param:phasesExecutorCommand.params()) {
+
+			for (Parameter param : phasesExecutorCommand.params()) {
 				if (param.getOnlyParam().equals(phase.phaseName())) {
 					phasesExecutorCommand.removeParam(param.getOnlyParam());
 					break;
