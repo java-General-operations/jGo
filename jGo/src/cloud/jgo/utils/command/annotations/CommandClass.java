@@ -20,14 +20,23 @@
  * To collaborate on this project, you need to do it from the software site.
  * 
  */
-package cloud.jgo.io.jon;
+package cloud.jgo.utils.command.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * 
+ * @author Martire91
+ * @see cloud.jgo.utils.command.Command
+ *
+ */
 @Retention(value = RetentionPolicy.RUNTIME)
-@Target(value = { ElementType.FIELD })
-public @interface JONField {
+@Target(value = {ElementType.TYPE})
+public @interface CommandClass {
+	String command()default "default"; // className
+	String help();
+	boolean involveAll()default false;
 }

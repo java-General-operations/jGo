@@ -38,6 +38,9 @@ import java.util.Arrays;
 import cloud.jgo.Home;
 import cloud.jgo.£;
 import cloud.jgo.io.File;
+import cloud.jgo.io.jon.annotations.JONClass;
+import cloud.jgo.io.jon.annotations.JONComment;
+import cloud.jgo.io.jon.annotations.JONField;
 
 /**
  * 

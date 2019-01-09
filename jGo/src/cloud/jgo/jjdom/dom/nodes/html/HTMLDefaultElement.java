@@ -36,14 +36,14 @@ import cloud.jgo.jjdom.dom.Recursion;
 import cloud.jgo.jjdom.dom.nodes.Elements;
 import cloud.jgo.jjdom.dom.nodes.Node;
 import cloud.jgo.jjdom.dom.nodes.NodeList;
-import cloud.jgo.utils.command.annotations.£Command;
+import cloud.jgo.utils.command.annotations.CommandClass;
 
 /**
  * 
  * @author Martire91<br>
  * @see HTMLElement This class represents the html default element
  */
-@£Command(command="HTMLElement", help = "This command creates an html element", involveAll=true)
+@CommandClass(command="HTMLElement", help = "This command creates an html element", involveAll=true)
 public class HTMLDefaultElement implements HTMLElement {
 	private static final long serialVersionUID = 12L;
 	// il node value e il text content, rappresentano la stessa variabile, poichè

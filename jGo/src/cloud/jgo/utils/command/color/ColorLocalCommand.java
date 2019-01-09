@@ -36,8 +36,8 @@ import cloud.jgo.utils.command.DefaultParameter;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
 import cloud.jgo.utils.command.annotations.InvalidClassException;
-import cloud.jgo.utils.command.annotations.£Command;
-import cloud.jgo.utils.command.annotations.£Parameter;
+import cloud.jgo.utils.command.annotations.CommandClass;
+import cloud.jgo.utils.command.annotations.ParameterField;
 import cloud.jgo.utils.command.LocalCommand.HelpCommand;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.TerminalColors;
@@ -65,22 +65,22 @@ public class ColorLocalCommand extends LocalCommand {
 	public static String toString(Object sharedObject, Color fieldNameColor, Color fieldValueColor)
 			throws IllegalArgumentException, IllegalAccessException {
 		ColorString string = new ColorString();
-		if (sharedObject.getClass().isAnnotationPresent(£Command.class)) {
+		if (sharedObject.getClass().isAnnotationPresent(CommandClass.class)) {
 			string.append("-----------------------------------------------------------------------------------\n");
-			if (((£Command)sharedObject.getClass().getDeclaredAnnotation(£Command.class)).command().equals("default")) {
+			if (((CommandClass)sharedObject.getClass().getDeclaredAnnotation(CommandClass.class)).command().equals("default")) {
 				string.append(" " + sharedObject.getClass().getSimpleName()).append(" ~ Configuration\n", Color.BLUE);	
 			}
 			else {
 				//sharedObject.getClass().getSimpleName()
-				string.append(" " + ((£Command)sharedObject.getClass().getDeclaredAnnotation(£Command.class)).command()).append(" ~ Configuration\n", Color.BLUE);
+				string.append(" " + ((CommandClass)sharedObject.getClass().getDeclaredAnnotation(CommandClass.class)).command()).append(" ~ Configuration\n", Color.BLUE);
 			}
 			string.append("-----------------------------------------------------------------------------------\n");
 			Class<?> clazz = sharedObject.getClass();
 			Field[] fields = clazz.getDeclaredFields();
 			int count = 0;
 			// here
-			if (((£Command) clazz
-					.getAnnotation(£Command.class)).involveAll()) {
+			if (((CommandClass) clazz
+					.getAnnotation(CommandClass.class)).involveAll()) {
 				// qui vengono coinvolti tutti i parametri
 				for (Field field : fields) {
 					field.setAccessible(true);
@@ -100,7 +100,7 @@ public class ColorLocalCommand extends LocalCommand {
 			} else {
 				for (Field field : fields) {
 					field.setAccessible(true);
-					if (field.isAnnotationPresent(£Parameter.class)) {
+					if (field.isAnnotationPresent(ParameterField.class)) {
 						String fieldName = field.getName();
 						Object fieldValue = field.get(sharedObject);
 						if (count == 3) {
@@ -118,22 +118,22 @@ public class ColorLocalCommand extends LocalCommand {
 		} else {
 			Class<?extends Object>superClass = sharedObject.getClass().getSuperclass();
 			if (superClass!=null) {
-				if (superClass.isAnnotationPresent(£Command.class)) {
+				if (superClass.isAnnotationPresent(CommandClass.class)) {
 					string.append("-----------------------------------------------------------------------------------\n");
-					if (((£Command)superClass.getDeclaredAnnotation(£Command.class)).command().equals("default")) {
+					if (((CommandClass)superClass.getDeclaredAnnotation(CommandClass.class)).command().equals("default")) {
 						string.append(" " + superClass.getSimpleName()).append(" ~ Configuration\n", Color.BLUE);	
 					}
 					else {
 						//sharedObject.getClass().getSimpleName()
-						string.append(" " + ((£Command)superClass.getDeclaredAnnotation(£Command.class)).command()).append(" ~ Configuration\n", Color.BLUE);
+						string.append(" " + ((CommandClass)superClass.getDeclaredAnnotation(CommandClass.class)).command()).append(" ~ Configuration\n", Color.BLUE);
 					}
 					string.append("-----------------------------------------------------------------------------------\n");
 					Class<?> clazz = superClass;
 					Field[] fields = clazz.getDeclaredFields();
 					int count = 0;
 					// here
-					if (((£Command) superClass
-							.getAnnotation(£Command.class)).involveAll()) {
+					if (((CommandClass) superClass
+							.getAnnotation(CommandClass.class)).involveAll()) {
 						// qui vengono coinvolti tutti i parametri
 						for (Field field : fields) {
 							field.setAccessible(true);
@@ -153,7 +153,7 @@ public class ColorLocalCommand extends LocalCommand {
 					} else {
 						for (Field field : fields) {
 							field.setAccessible(true);
-							if (field.isAnnotationPresent(£Parameter.class)) {
+							if (field.isAnnotationPresent(ParameterField.class)) {
 								String fieldName = field.getName();
 								Object fieldValue = field.get(sharedObject);
 								if (count == 3) {
@@ -195,9 +195,9 @@ public class ColorLocalCommand extends LocalCommand {
 	private static ColorLocalCommand objCommand = null ;
 	public static <A> ColorLocalCommand getCommandByObject(Class<A>a) {
 		//1 cosa controllo che sia una classe annotata
-		£Command commandAnnotation = null ;
-		if (a.isAnnotationPresent(£Command.class)) {
-			commandAnnotation = a.getDeclaredAnnotation(£Command.class);
+		CommandClass commandAnnotation = null ;
+		if (a.isAnnotationPresent(CommandClass.class)) {
+			commandAnnotation = a.getDeclaredAnnotation(CommandClass.class);
 			if (commandAnnotation.command().equals("default")) {
 				objCommand =  new ColorLocalCommand(a.getSimpleName().toLowerCase(),commandAnnotation.help());
 			}
@@ -501,8 +501,8 @@ public class ColorLocalCommand extends LocalCommand {
 				for (Field field : fields) {
 					field.setAccessible(true);
 					// verifico se il campo è annotato
-					if (field.isAnnotationPresent(£Parameter.class)) {
-						Parameter param = objCommand.addParam(field.getName(),field.getAnnotation(£Parameter.class).help());
+					if (field.isAnnotationPresent(ParameterField.class)) {
+						Parameter param = objCommand.addParam(field.getName(),field.getAnnotation(ParameterField.class).help());
 						param.setInputValueExploitable(true);
 						param.setExecution(new Execution() {
 							@Override

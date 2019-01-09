@@ -45,7 +45,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement.HTMLElementType;
 import cloud.jgo.utils.command.LocalCommand;
-import cloud.jgo.utils.command.annotations.£Command;
+import cloud.jgo.utils.command.annotations.CommandClass;
 
 /**
  * 
@@ -54,7 +54,7 @@ import cloud.jgo.utils.command.annotations.£Command;
  * @see Manipulable This class represents the concept of XML element
  *
  */
-@£Command(command="XMLElement", help = "This command creates an xml element", involveAll=true)
+@CommandClass(command = "XMLElement", help = "This command creates an xml element", involveAll = true)
 public class XMLElement implements Element {
 	/**
 	 * 
@@ -94,12 +94,14 @@ public class XMLElement implements Element {
 	public String getEndTag() {
 		return this.endTag;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getNodeName();
 	}
-	protected XMLElement() {}
+
+	protected XMLElement() {
+	}
 
 	/**
 	 * This method sets the parent node
