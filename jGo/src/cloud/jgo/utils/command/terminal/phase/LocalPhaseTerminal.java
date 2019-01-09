@@ -320,18 +320,11 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 						if (phasesExecutorCommand.getInputValue()!=null) {
 							boolean executed = false ;
 							for(Phase current:phases) {
-								
 								if (phasesExecutorCommand.getInputValue().equals(current.phaseName())) {
-									
-									List<Command> phaseCommands = current.getCommands();
-
-									for (Command command : phaseCommands) {
-
-										System.out.println(command.execute());
-
-									}
+									current.execute(); // eseguiamo cosi l'esecuzione della fase
+									// in quanto, sappiamo che ogni restituzione di esecuzione di
+									// comando viene stampato nella Output di default per cui
 								}
-								
 							}
 						}
 						else {

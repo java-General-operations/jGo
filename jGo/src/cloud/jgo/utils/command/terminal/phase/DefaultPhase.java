@@ -57,6 +57,20 @@ public class DefaultPhase implements Phase {
 	public DefaultPhase(String phaseType, int value) {
 		this.phaseName = phaseType;
 		this.value = value;
+		// nel momento in cui si crea una fase
+		// ecco che gli viene attribuita una 
+		// esecuzione di default, che non potrà 
+		// + variare
+		this.execution = new Execution() {
+			
+			@Override
+			public Object exec() {
+				for(Command phaseCommand:commands) {
+					System.out.println(phaseCommand.execute());
+				}
+				return null ;
+			}
+		};
 	}
 
 	private List<Command> commands = new ArrayList<>();
@@ -186,20 +200,18 @@ public class DefaultPhase implements Phase {
 	}
 
 	@Override
-	public void setExecution(Execution execution) {
-		// TODO Auto-generated method stub
-		this.execution = execution ;
-	}
-
-	@Override
 	public Object execute() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.execution.exec();
 	}
 
 	@Override
 	public boolean hasAnExecution() {
-		// TODO Auto-generated method stub
-		return false;
+		if (this.execution!=null) return true;
+		else return false ;
+	}
+	
+	public Execution getExecution() {
+		return this.execution;
 	}
 }

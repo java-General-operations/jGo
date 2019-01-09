@@ -30,11 +30,6 @@ import java.io.Serializable;
  */
 public interface Executable extends Serializable{
 	/**
-	 * Thsi method sets the execution
-	 * @param execution the execution
-	 */
-	public abstract void setExecution(Execution execution); // esegue il comando in questione
-	/**
 	 * This method calls the method exec of the execution
 	 * @return the object returned from execution
 	 */

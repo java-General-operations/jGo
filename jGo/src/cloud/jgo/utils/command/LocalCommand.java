@@ -1110,12 +1110,9 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		}
 
 	}
-
-	@Override
 	public void setExecution(Execution execution) {
 		this.execution = execution;
 	}
-
 	@Override
 	public Object execute() {
 		Object execute = null;
@@ -1142,7 +1139,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	@Override
-
 	public Execution getExecution() {
 		return this.execution;
 	}
