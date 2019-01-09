@@ -151,6 +151,8 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 		});
 		addCommand(this.pointerCommand);
 		addCommand(this.describerCommand);
+		// aggiungo il comando executor 
+		addCommand(phasesExecutorCommand);
 	}
 
 	@Override
@@ -207,7 +209,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 									
 									List<Command>phaseCommands = phase.getCommands();
 									
-									for (Command command : commands) {
+									for (Command command : phaseCommands) {
 										
 										System.out.println(command.execute());
 										

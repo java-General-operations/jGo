@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
+import cloud.jgo.utils.command.execution.Execution;
 /**
  * 
  * @author Martire91<br>
@@ -59,6 +60,8 @@ public class DefaultPhase implements Phase {
 	}
 
 	private List<Command> commands = new ArrayList<>();
+	// version 1.0.9
+	private Execution execution=null;
 
 	/**
 	 * This method adds a command into the phase
@@ -180,5 +183,23 @@ public class DefaultPhase implements Phase {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public void setExecution(Execution execution) {
+		// TODO Auto-generated method stub
+		this.execution = execution ;
+	}
+
+	@Override
+	public Object execute() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasAnExecution() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

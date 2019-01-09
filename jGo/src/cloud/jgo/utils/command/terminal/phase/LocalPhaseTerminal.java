@@ -140,7 +140,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 						List<Command> phaseCommands = phase.getCommands();
 
-						for (Command command : commands) {
+						for (Command command : phaseCommands) {
 
 							System.out.println(command.execute());
 
@@ -237,7 +237,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					public Object exec() {
 						List<Command> phaseCommands = phase.getCommands();
 
-						for (Command command : commands) {
+						for (Command command : phaseCommands) {
 
 							System.out.println(command.execute());
 
@@ -311,6 +311,35 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	public LocalPhaseTerminal(String terminalName) {
 		// TODO Auto-generated constructor stub
 		setName(terminalName);
+		// qui imposto l'esecuzione del comando che esegue le fasi 
+				phasesExecutorCommand.setInputValueExploitable(true);
+				phasesExecutorCommand.setExecution(new Execution() {
+					
+					@Override
+					public Object exec() {
+						if (phasesExecutorCommand.getInputValue()!=null) {
+							boolean executed = false ;
+							for(Phase current:phases) {
+								
+								if (phasesExecutorCommand.getInputValue().equals(current.phaseName())) {
+									
+									List<Command> phaseCommands = current.getCommands();
+
+									for (Command command : phaseCommands) {
+
+										System.out.println(command.execute());
+
+									}
+								}
+								
+							}
+						}
+						else {
+							// da definire ...
+						}
+						return null ;
+					}
+				});
 		this.pointerCommand = new LocalCommand("use", "This command points to a specific phase");
 		this.describerCommand = new LocalCommand("describe", "This command describes a specific phase");
 		this.describerCommand.setExecution(new Execution() {
@@ -352,7 +381,6 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			}
 		});
 		// aggiungo il comando
-
 		addCommand(this.pointerCommand);
 		addCommand(this.describerCommand);
 		// aggiungo il comando statico che esegue le fasi

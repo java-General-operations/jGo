@@ -26,6 +26,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import cloud.jgo.utils.command.Command;
+import cloud.jgo.utils.command.execution.Executable;
 
 // this is a product
 /**
@@ -33,7 +34,7 @@ import cloud.jgo.utils.command.Command;
  * @author Martire91<br>
  *         This interface represents a phase
  */
-public interface Phase extends Serializable {
+public interface Phase extends Serializable, Executable{
 	/**
 	 * This method returns the phase name
 	 * 
