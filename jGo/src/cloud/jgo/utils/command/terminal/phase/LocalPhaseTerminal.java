@@ -138,14 +138,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					@Override
 					public Object exec() {
 
-						List<Command> phaseCommands = phase.getCommands();
-
-						for (Command command : phaseCommands) {
-
-							System.out.println(command.execute());
-
-						}
-						return null;
+						return phase.execute();
+						
 					}
 				});
 			}
@@ -317,20 +311,19 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					
 					@Override
 					public Object exec() {
+						Object obj = null ;
 						if (phasesExecutorCommand.getInputValue()!=null) {
 							boolean executed = false ;
 							for(Phase current:phases) {
 								if (phasesExecutorCommand.getInputValue().equals(current.phaseName())) {
-									current.execute(); // eseguiamo cosi l'esecuzione della fase
-									// in quanto, sappiamo che ogni restituzione di esecuzione di
-									// comando viene stampato nella Output di default per cui
+									obj = current.execute(); 
 								}
 							}
 						}
 						else {
 							// da definire ...
 						}
-						return null ;
+						return obj ;
 					}
 				});
 		this.pointerCommand = new LocalCommand("use", "This command points to a specific phase");
