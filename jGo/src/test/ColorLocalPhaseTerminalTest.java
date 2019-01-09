@@ -12,25 +12,21 @@ import cloud.jgo.utils.command.color.ColorLocalCommand;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.TerminalColors;
 import cloud.jgo.utils.command.terminal.phase.ColorLocalPhaseTerminal;
+import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
 
 public class ColorLocalPhaseTerminalTest {
 	public static void main(String[] args) {
 		
-		
-		
-		// ora devo copiare il metodo toString colorato nella classe LocalCommand
-				// ora devo fare lo stesso procedimento delle annotazioni sui nodi colorati del dom
-				// risolvere errore : è presente da quando 
-				// abbiamo reso la variabile objCommand esterna e statica al metodo getCommandByObject
+
 				
-				TerminalColors.PARAMETER_COLOR = Color.YELLOW;
-				TerminalColors.COMMAND_COLOR = Color.CYAN;
-				TerminalColors.PHASE_COLOR = Color.MAGENTA;
+//				TerminalColors.PARAMETER_COLOR = Color.YELLOW;
+//				TerminalColors.COMMAND_COLOR = Color.CYAN;
+//				TerminalColors.PHASE_COLOR = Color.MAGENTA;
 				
 				// provare il character se funziona
 
-				ColorLocalPhaseTerminal t = new ColorLocalPhaseTerminal();
+				LocalPhaseTerminal t = new LocalPhaseTerminal("mio terminal");
 				
 				// unica fase 
 				
@@ -45,7 +41,7 @@ public class ColorLocalPhaseTerminalTest {
 				
 				// ottengo il comando 
 				
-				ColorLocalCommand personCmd = ColorLocalCommand.getCommandByObject(Persona.class);
+				LocalCommand personCmd = LocalCommand.getCommandByObject(Persona.class);
 				
 				// aggiungo il comando al terminale 
 				

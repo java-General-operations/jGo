@@ -454,7 +454,55 @@ public final class JjDom implements jQuerySupport, Serializable {
 		}
 		return inst;
 	}
-
+	
+	// version 1.0.9
+	/**
+	 * This method connects to the server, using an ftp:
+	 * <a href='http://www.sauronsoftware.it/projects/ftp4j/?lang=it'>ftp4j</a>
+	 * client.
+	 * 
+	 * @param ftpHost
+	 *            the ftp host - example: ftp.website.com
+	 * @param ftpPort
+	 * 			  the ftp port - example: 21
+	 * @param ftpUser
+	 *            the ftp username
+	 * @param ftpPassw
+	 *            the ftp password
+	 * @return the JjDom instance
+	 */
+	public static JjDom connect(String ftpHost,int ftpPort,String ftpUser, String ftpPassw) {
+		// per prima cosa mi connetto
+		JjDom inst = null;
+		try {
+			String[] response = ftp_client.connect(ftpHost,ftpPort);
+			for (String reply : response) {
+				System.out.println(reply);
+			}
+			System.out.println("Wait for...");
+			// controllo se sn connesso
+			if (ftp_client.isConnected()) {
+				ftp_client.login(ftpUser, ftpPassw);
+				if (ftp_client.isAuthenticated()) {
+					// okok siamo connessi
+					inst = instance;
+				}
+			}
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FTPIllegalReplyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FTPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return inst;
+	}
 	// agisce sul documento di JjDom
 	/**
 	 * This method migrates the JjDom html document, associating a correct URL in

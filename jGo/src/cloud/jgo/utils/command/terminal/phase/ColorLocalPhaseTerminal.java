@@ -39,7 +39,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	 * @return the message
 	 */
 	public static String setOk(String var) {
-		return ansi().fg(Color.WHITE).a("The " + var + " is set (" + ansi().fg(Color.CYAN).a("OK").reset() + ")")
+		return ansi().fg(Color.WHITE).a("The " + var + " is set (" + ansi().fg(Color.CYAN).a(" OK ").reset() + ")")
 				.reset().toString();
 	}
 
@@ -53,7 +53,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	 * @return the message
 	 */
 	public static String setOk2(String var) {
-		return ansi().fg(Color.WHITE).a("The " + var + " are set (" + ansi().fg(Color.CYAN).a("OK").reset() + ")")
+		return ansi().fg(Color.WHITE).a("The " + var + " are set (" + ansi().fg(Color.CYAN).a(" OK ").reset() + ")")
 				.reset().toString();
 	}
 
@@ -65,7 +65,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	 * @return the positive message
 	 */
 	public static String positiveMsg(String msg) {
-		return ansi().fg(Color.WHITE).a(msg + " (" + ansi().fg(Color.CYAN).a("OK").reset() + ")").reset().toString();
+		return ansi().fg(Color.WHITE).a(msg + " (" + ansi().fg(Color.CYAN).a(" OK ").reset() + ")").reset().toString();
 	}
 
 	@Override
