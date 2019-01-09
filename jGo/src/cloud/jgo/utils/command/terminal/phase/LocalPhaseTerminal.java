@@ -49,7 +49,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	protected LocalCommand pointerCommand = null ;
 	protected LocalCommand resetCommand = null;
 	protected LocalCommand describerCommand = null;
-
+	// version 1.0.9
+	protected static LocalCommand phasesExecutorCommand = new LocalCommand("phases-executor","This command executes a phase");
 	/**
 	 * This method returns the current phase
 	 * 
@@ -120,7 +121,28 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				startPhase = phase;
 			}
 			phases.add(phase);
-
+			
+			// qui costruisco il parametro per eseguire questa fase fino a ]
+			
+			Parameter phaseExecutionParam = phasesExecutorCommand.addParam(phase.phaseName(),"executes the "+£.escp(phase.phaseName())+" phase");
+			
+			phaseExecutionParam.setExecution(new Execution() {
+				
+				@Override
+				public Object exec() {
+					
+					List<Command>phaseCommands = phase.getCommands();
+					
+					for (Command command : commands) {
+						
+						command.execute();
+						
+					}
+					return null ;
+				}
+			});
+			// ]
+		
 			// qui solo se non è la fase start, perchè non ci serve avere un riferimento a
 			// tale fase
 			// eseguiamo il codice dell'aggiungimento link param. Tutto questo perchè
@@ -300,6 +322,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 		addCommand(this.pointerCommand);
 		addCommand(this.describerCommand);
+		// aggiungo il comando statico che esegue le fasi
+		addCommand(phasesExecutorCommand);
 	}
 
 	// questo metodo non va chiamato esplicitamente

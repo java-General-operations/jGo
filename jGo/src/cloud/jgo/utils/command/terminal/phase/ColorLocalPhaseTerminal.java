@@ -8,6 +8,7 @@ import org.fusesource.jansi.AnsiConsole;
 import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.j£;
+import cloud.jgo.£;
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
@@ -17,6 +18,7 @@ import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.TerminalColors;
 
 public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
+
 	// version 1.0.9
 	/**
 	 * Simple error message
@@ -61,7 +63,8 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	/**
 	 * Print a positive message
 	 * 
-	 * @param msg the message
+	 * @param msg
+	 *            the message
 	 * @return the positive message
 	 */
 	public static String positiveMsg(String msg) {
@@ -105,6 +108,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	}
 
 	public ColorLocalPhaseTerminal() {
+		phasesExecutorCommand = new ColorLocalCommand("phases-executor", "This command executes a phase");
 		// installo i componenti
 		AnsiConsole.systemInstall();
 		this.pointerCommand = new ColorLocalCommand("use", "This command points to a specific phase");
@@ -189,6 +193,27 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 				startPhase = phase;
 			}
 			phases.add(phase);
+			
+			// qui costruisco il parametro per eseguire questa fase fino a ]
+			
+						Parameter phaseExecutionParam = phasesExecutorCommand.addParam(phase.phaseName(),"executes the "+£.escp(phase.phaseName())+" phase");
+						
+						phaseExecutionParam.setExecution(new Execution() {
+							
+							@Override
+							public Object exec() {
+								
+								List<Command>phaseCommands = phase.getCommands();
+								
+								for (Command command : commands) {
+									
+									command.execute();
+									
+								}
+								return null ;
+							}
+						});
+						// ]
 
 			// qui solo se non è la fase start, perchè non ci serve avere un riferimento a
 			// tale fase
