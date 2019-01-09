@@ -136,10 +136,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					public Object exec() {
 						
 						List<Command>phaseCommands = phase.getCommands();
-						
+
 						for (Command command : commands) {
 							
-							return command.execute();
+							System.out.println(command.execute());
 							
 						}
 						return null ;
@@ -226,10 +226,9 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				}
 			}
 			if(exist!=null) {
-				System.out.println("Il parametro della fase esiste nel comando che esegue le fasi");
 				// aggiorno l'esecuzione dei comandi aggiunti
 				exist.setExecution(new Execution() {
-					
+
 					@Override
 					public Object exec() {
 						List<Command>phaseCommands = phase.getCommands();
@@ -610,7 +609,6 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 	@Override
 	public boolean removePhase(int value) {
-
 		Phase phase = phase(value);
 
 		if (phase != null) {
@@ -622,6 +620,15 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					if (getCommands().get(i).getBelongsTo().equals(phase)) {
 						getCommands().get(i).setBelongsTo(null);
 					}
+				}
+			}
+			
+			// controllo se c'è un parametro associato a questa fase per il comando executor
+			
+			for (Parameter param:phasesExecutorCommand.params()) {
+				if (param.getOnlyParam().equals(phase.phaseName())) {
+					phasesExecutorCommand.removeParam(param.getOnlyParam());
+					break;
 				}
 			}
 			return phases.remove(phase);

@@ -209,7 +209,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 									
 									for (Command command : commands) {
 										
-										command.execute();
+										System.out.println(command.execute());
 										
 									}
 									return null ;
