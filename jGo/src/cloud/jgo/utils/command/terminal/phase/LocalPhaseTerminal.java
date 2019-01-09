@@ -49,7 +49,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	protected LocalCommand pointerCommand = null ;
 	protected LocalCommand resetCommand = null;
 	protected LocalCommand describerCommand = null;
-	// version 1.0.9
+	// version 1.0.9 : esegue solo le esecuzioni dei comandi, ma non dei parametri
 	protected static LocalCommand phasesExecutorCommand = new LocalCommand("phases-executor","This command executes a phase");
 	/**
 	 * This method returns the current phase
@@ -139,7 +139,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 						
 						for (Command command : commands) {
 							
-							command.execute();
+							return command.execute();
 							
 						}
 						return null ;
@@ -226,6 +226,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				}
 			}
 			if(exist!=null) {
+				System.out.println("Il parametro della fase esiste nel comando che esegue le fasi");
 				// aggiorno l'esecuzione dei comandi aggiunti
 				exist.setExecution(new Execution() {
 					
@@ -235,7 +236,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 						
 						for (Command command : commands) {
 							
-							command.execute();
+							System.out.println(command.execute());
 							
 						}
 						return null ;
