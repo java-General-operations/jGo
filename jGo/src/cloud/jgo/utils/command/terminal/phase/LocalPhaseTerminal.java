@@ -126,21 +126,27 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			
 			Parameter phaseExecutionParam = phasesExecutorCommand.addParam(phase.phaseName(),"executes the "+£.escp(phase.phaseName())+" phase");
 			
-			phaseExecutionParam.setExecution(new Execution() {
-				
-				@Override
-				public Object exec() {
+			// se ci sono i comandi mi creo l'esecuzione del parametro che esegue la fase
+			// altrimenti abbiamo solo il parametro aggiunto al comando, ma senza esecuzione
+			
+			if (commands!=null) {
+				phaseExecutionParam.setExecution(new Execution() {
 					
-					List<Command>phaseCommands = phase.getCommands();
-					
-					for (Command command : commands) {
+					@Override
+					public Object exec() {
 						
-						command.execute();
+						List<Command>phaseCommands = phase.getCommands();
 						
+						for (Command command : commands) {
+							
+							command.execute();
+							
+						}
+						return null ;
 					}
-					return null ;
-				}
-			});
+				});	
+			}
+			
 			// ]
 		
 			// qui solo se non è la fase start, perchè non ci serve avere un riferimento a
@@ -197,7 +203,6 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			return null;
 		}
 	}
-
 	/**
 	 * This method adds commands into the phase
 	 * 
@@ -207,20 +212,43 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	 *            the commands
 	 */
 	public void addCommandsToPhase(Phase phase, Command... commands) {
-
 		if (commands != null) {
 			((DefaultPhase) phase).addCommands(commands);
-		}
-
-		// aggiungo i comandi alla lista di comandi
-		// questa lo commentata perchè è più giusto che i comandi che si aggiungono ad
-		// una fase non si aggiungano anche ai comandi del terminale
-		if (commands != null) {
 			addCommands(commands);
+			// adesso controllo se questa fase ha il corrispondente parametro
+			// sul comando executor, altimenti lo aggiungo
+			String phaseName = phase.phaseName();
+			Parameter exist = null ;
+			for(Parameter param:phasesExecutorCommand.params()) {
+				if (param.getOnlyParam().equals(phaseName)) {
+					exist = param ;
+					break;
+				}
+			}
+			if(exist!=null) {
+				// aggiorno l'esecuzione dei comandi aggiunti
+				exist.setExecution(new Execution() {
+					
+					@Override
+					public Object exec() {
+						List<Command>phaseCommands = phase.getCommands();
+						
+						for (Command command : commands) {
+							
+							command.execute();
+							
+						}
+						return null ;
+					}
+				});
+			}
+			else {
+				// vediamo piano piano se ci arriva qui ...
+				System.out.println("C'è arrivato ###");
+			}
 		}
 	}
-	// implemento e adatto il metodo implOpen
-
+	
 	@Override
 	public final void implOpen() {
 		// do il comando da input

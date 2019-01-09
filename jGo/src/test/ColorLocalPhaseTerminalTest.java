@@ -7,6 +7,7 @@ import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 import cloud.jgo.jjdom.dom.nodes.xml.XMLElement;
+import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.color.ColorLocalCommand;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
@@ -24,32 +25,15 @@ public class ColorLocalPhaseTerminalTest {
 //				TerminalColors.COMMAND_COLOR = Color.CYAN;
 //				TerminalColors.PHASE_COLOR = Color.MAGENTA;
 				
-				// provare il character se funziona
+				
 
 				LocalPhaseTerminal t = new LocalPhaseTerminal("mio terminal");
 				
-				// unica fase 
+				// mi creo la prima fase 
 				
-				Phase phase = t.createPhase(1, "Unica", "Unica fase esistente", null);
+				Phase phase = t.createPhase(1, "connection", "connection",new Command[] {});
 				
-				t.setName("mio terminale");
-
-				t.useGeneralHelp();
-
-				ColorLocalCommand.setInputHelpExploitable(true);
-				ColorLocalCommand.setToStringParamName("c");
 				
-				// ottengo il comando 
-				
-				LocalCommand personCmd = LocalCommand.getCommandByObject(Persona.class);
-				
-				// aggiungo il comando al terminale 
-				
-				t.addCommand(personCmd);
-				
-				// avvio il terminale 
-				
-				t.open();
 		
 	}
 }

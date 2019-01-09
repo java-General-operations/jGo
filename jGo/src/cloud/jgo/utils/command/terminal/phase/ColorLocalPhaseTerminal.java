@@ -171,6 +171,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 		return text;
 	}
 
+	@Override
 	public Phase createPhase(final int value, String phaseName, String phaseDescription, Command... commands) {
 
 		// verifico che non sia nessun phase con questo valore
@@ -197,22 +198,24 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 			// qui costruisco il parametro per eseguire questa fase fino a ]
 			
 						Parameter phaseExecutionParam = phasesExecutorCommand.addParam(phase.phaseName(),"executes the "+£.escp(phase.phaseName())+" phase");
-						
-						phaseExecutionParam.setExecution(new Execution() {
-							
-							@Override
-							public Object exec() {
+						if (commands!=null) {
+
+							phaseExecutionParam.setExecution(new Execution() {
 								
-								List<Command>phaseCommands = phase.getCommands();
-								
-								for (Command command : commands) {
+								@Override
+								public Object exec() {
 									
-									command.execute();
+									List<Command>phaseCommands = phase.getCommands();
 									
+									for (Command command : commands) {
+										
+										command.execute();
+										
+									}
+									return null ;
 								}
-								return null ;
-							}
-						});
+							});
+						}
 						// ]
 
 			// qui solo se non è la fase start, perchè non ci serve avere un riferimento a
