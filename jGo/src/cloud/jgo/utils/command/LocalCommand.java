@@ -830,7 +830,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	@Override
-
 	public Phase getBelongsTo() {
 		return this.belongsTo;
 	}
