@@ -23,20 +23,38 @@
 package cloud.jgo.utils.command.execution;
 
 import java.io.Serializable;
+
 /**
  * 
  * @author Martire91<br>
- * This interface makes executable
+ *         This interface makes executable
  */
-public interface Executable extends Serializable{
+public interface Executable extends Serializable {
 	/**
 	 * This method calls the method exec of the execution
+	 * 
 	 * @return the object returned from execution
 	 */
 	public abstract Object execute(); // questo comando deve eseguire l'esecuzione
-    /**
-     * This method returns true if there is an execution present
-     * @return the flag
-     */
+
+	/**
+	 * This method returns true if there is an execution present
+	 * 
+	 * @return the flag
+	 */
 	public abstract boolean hasAnExecution();
+
+	// version 1.0.9
+	public abstract When getHypothesis();
+
+	public abstract void validExecution(When w);
+
+	/**
+	 * 
+	 * @author Martire91
+	 *
+	 */
+	public static enum When {
+		ALWAYS, NEVER, IF_SATISFIED, IF_ACCESSIBLE
+	}
 }

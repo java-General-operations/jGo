@@ -112,10 +112,4 @@ public interface Phase extends Serializable, Executable{
 	 * @return the accessibility Rule
 	 */
 	public Rule getAccessibilityRule();
-	// version 1.0.9
-	public When getHypothesis();
-	public void validExecution(When w);
-	public static enum When{
-		ALWAYS,NEVER,IF_SATISFIED,IF_ACCESSIBLE
-	}
 }

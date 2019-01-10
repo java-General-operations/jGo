@@ -23,6 +23,7 @@
 package cloud.jgo.utils.command;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
+import cloud.jgo.utils.command.execution.Executable.When;
 
 /**
  * 
@@ -35,6 +36,7 @@ public abstract class Parameter
 	private Execution execution = null;
 	private Command parent = null;
 	public static final String SEPARATOR = "-";
+	private When when=When.ALWAYS;
 	private String param;
 	private String help;
 	private String onlyParam;
@@ -163,7 +165,11 @@ public abstract class Parameter
 						if (getExecution()instanceof SharedExecution) {
 							((SharedExecution)getExecution()).setCurrentSharer(Parameter.this);
 						}
-						getExecution().exec();
+						switch (when) {
+						case ALWAYS:getExecution().exec();
+						break; // poi qui aggiornare, quando ci saranno nuovi "quando"
+						}
+						;
 					}
 				}).start();
 			}
@@ -223,5 +229,16 @@ public abstract class Parameter
 	public Type getSharerType() {
 		// TODO Auto-generated method stub
 		return Type.PARAMETER ;
+	}
+	@Override
+	public When getHypothesis() {
+		// TODO Auto-generated method stub
+		return this.when ;
+	}
+
+	@Override
+	public void validExecution(When w) {
+		// TODO Auto-generated method stub
+		this.when = w ;
 	}
 }

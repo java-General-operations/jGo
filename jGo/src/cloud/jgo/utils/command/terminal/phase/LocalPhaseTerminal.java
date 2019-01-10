@@ -914,8 +914,18 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 		@Override
 		public Object execute() {
-			// TODO Auto-generated method stub
-			return this.execution.exec();
+			// okok qui devo verificare se a questa fase
+			// corrisponde un parametro sul comando esecutore
+			// in tal caso aggiorno l'esecuzione del parametro
+			if (hasAnExecution()) {
+				switch (w) {
+				case ALWAYS:return this.execution.exec();
+				case NEVER:return null ;
+				case IF_ACCESSIBLE:if (isAccessible())return this.execution.exec();
+				case IF_SATISFIED:if(isSatisfied())return this.execution.exec();
+				}return null ;
+			}
+			else return null ;
 		}
 
 		@Override

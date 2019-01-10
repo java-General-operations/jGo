@@ -842,6 +842,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	}
 
 	public boolean useThread = false;
+	private When when = When.ALWAYS;
 
 	// version 1.0.9
 	public void setCommand(String command) {
@@ -1123,6 +1124,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						if (getExecution()instanceof SharedExecution) {
 							((SharedExecution)getExecution()).setCurrentSharer(LocalCommand.this);
 						}
+						// 	qui forse ci manca una istruzione:dubbio
 					}
 				}).start();
 			} else {
@@ -2045,6 +2047,17 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	@Override
 	public int compareTo(LocalCommand o) {
 		return getCommand().compareTo(o.getCommand());
+	}
+
+	@Override
+	public When getHypothesis() {
+		// TODO Auto-generated method stub
+		return this.when  ;
+	}
+
+	@Override
+	public void validExecution(When w) {
+		this.when = w ;
 	}
 	
 	

@@ -70,6 +70,7 @@ import cloud.jgo.net.tcp.http.jor.annotations.JOR;
 import cloud.jgo.utils.ColorString;
 import cloud.jgo.utils.SMTPHosts;
 import cloud.jgo.utils.SMTPHosts.SMTPEntry;
+import cloud.jgo.utils.command.terminal.phase.ColorLocalPhaseTerminal;
 
 /**
  * @author Martire91
@@ -1261,5 +1262,9 @@ public final class j£ extends cloud.jgo.£ {
 			e.printStackTrace();
 		}
 		return inst;
+	}
+	// version 1.0.9 : crea un terminale colorato:locale
+	public static ColorLocalPhaseTerminal createColorPhaseTerminal() {
+		return new ColorLocalPhaseTerminal();
 	}
 }

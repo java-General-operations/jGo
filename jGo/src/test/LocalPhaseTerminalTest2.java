@@ -3,65 +3,30 @@ package test;
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Sharer;
+import cloud.jgo.utils.command.execution.Executable.When;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
-import cloud.jgo.utils.command.terminal.phase.Phase.When;
 
 
 public class LocalPhaseTerminalTest2 {
 public static void main(String[] args) {
 	
 	
-	LocalPhaseTerminal terminal = new LocalPhaseTerminal("mio");
+	// 1 fare l'esecuzione del comando executor senza input value, quindi esegue la fase corrente
+	// 2 creare un nuovo comando:status che fa un resoconto sulla fase attuale, e ci da quindi una serie di info utili
+	// fine
 	
-	terminal.useGeneralHelp(); // > help
 	
-	LocalCommand.setInputHelpExploitable(true); // > command help
-			
-	// creo una fase di test
 	
-	Phase phase = terminal.createPhase(1, "connection", "connection");
+	LocalPhaseTerminal t = new LocalPhaseTerminal("mio term");
 	
-	//adesso mettiamo il caso che vogliamo eseguire la fase solo in base a un certo criterio :
-	// in pratica abbiamo impostato che solo se la fase è soddisfatta si può eseguire 
-	phase.validExecution(When.IF_SATISFIED);
-	// mi creo i comandi di questa fase
+	t.useGeneralHelp();
 	
-	LocalCommand connect,migrate,download,update ;
+	LocalCommand.setInputHelpExploitable(true);
 	
-	connect = new LocalCommand("connect", "connect");
-	migrate = new LocalCommand("migrate", "migrate");
-	download = new LocalCommand("download", "download");
-	update = new LocalCommand("update", "update");
-	
-	SharedExecution execution = new SharedExecution() {
-		
-		@Override
-		protected Object sharedExec(Sharer sharer) {
-			
-			if (sharer.getSharerType()==Sharer.Type.COMMAND) {
-				
-				Command source = (Command) sharer;
-				
-				return source.getCommand()+" successfully (OK)";							
-			}
-			else return null ;
-		}
-	};
-	
-	connect.setExecution(execution);
-	migrate.setExecution(execution);
-	download.setExecution(execution);
-	update.setExecution(execution);
-	
-	// okok aggiungo i comandi alla fase
-	
-	terminal.addCommandsToPhase(phase, connect,migrate,download,update);
-	
-	terminal.open();
-	
+	// imposto
 		
 	
 }

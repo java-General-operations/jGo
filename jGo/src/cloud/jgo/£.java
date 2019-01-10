@@ -1453,7 +1453,6 @@ public class £ {
 	public static LocalPhaseTerminal createPhaseTerminal(String terminalName) {
 		return new LocalPhaseTerminal(terminalName);
 	}
-
 	/**
 	 * this method creates a server that can be accessed with the login
 	 * 
