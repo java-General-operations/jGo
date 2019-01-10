@@ -3903,6 +3903,29 @@ public class £ {
 		}
 		return instance;
 	}
+	// version 1.0.9
+	public static £ execConnectingOutputChannel(String cmd_command) {
+		 if (System.getProperty("os.name").contains("Windows")) {
+			 try {
+					new ProcessBuilder("cmd", "/c",cmd_command).inheritIO().start().waitFor();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		else {
+			try {
+				Runtime.getRuntime().exec(cmd_command);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }
+		 return instance ;
+	}
 
 	/**
 	 * This method creates an object
