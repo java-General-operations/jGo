@@ -409,7 +409,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			public Object exec() {
 				if (currentPhase!=null) {
 					StringBuffer string = new StringBuffer();
-					string.append("\n\t\t|Current Phase > ").append(currentPhase.phaseName().toUpperCase())
+					string.append("\n\t\t|Current Phase > ").append(currentPhase.phaseName().toUpperCase()).append("\n")
 						  .append("\t\t|Level = ").append(currentPhase.getValue()+"").append("\n")
 						  .append("\t\t|Accessible = ").append(currentPhase.isAccessible()+"").append("\n")
 						  .append("\t\t|Satisfied = ").append(currentPhase.isSatisfied()+"").append("\n")
