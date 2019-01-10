@@ -29,11 +29,13 @@ import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.j£;
 import cloud.jgo.£;
+import cloud.jgo.utils.ColorString;
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
+import cloud.jgo.utils.command.terminal.TerminalColors;
 
 // se si estende questa classe, vuol dire che si vuole ridefinire il metodo useResponseObjectData
 // che ci permette di ottenere la risposta oggetto di ogni comando dato
@@ -50,9 +52,12 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	protected LocalCommand resetCommand = null;
 	protected LocalCommand describerCommand = null;
 	// version 1.0.9 : esegue solo le esecuzioni dei comandi, ma non dei parametri
-	public static LocalCommand phasesExecutorCommand = new LocalCommand("phases-executor",
+	protected static LocalCommand phasesExecutorCommand = new LocalCommand("phases-executor",
 			"This command executes a phase");
-
+	protected static LocalCommand statusCommand = new LocalCommand("status","View the report of the current phase");
+	public static LocalCommand getStatusCommand() {
+		return statusCommand;
+	}
 	/**
 	 * This method returns the current phase
 	 * 
@@ -393,12 +398,34 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 	// il costruttore lo suo per inizializzare le fasi predefinite
 	// in questo caso solo : pointerCommand
-	protected LocalPhaseTerminal() {
-	}
+	protected LocalPhaseTerminal() {}
 
 	public LocalPhaseTerminal(String terminalName) {
 		// TODO Auto-generated constructor stub
 		setName(terminalName);
+		// imposto il comando status
+		statusCommand.setExecution(new Execution() {
+			@Override
+			public Object exec() {
+				if (currentPhase!=null) {
+					StringBuffer string = new StringBuffer();
+					string.append("\n\t\t|Current Phase > ").append(currentPhase.phaseName().toUpperCase())
+						  .append("\t\t|Level = ").append(currentPhase.getValue()+"").append("\n")
+						  .append("\t\t|Accessible = ").append(currentPhase.isAccessible()+"").append("\n")
+						  .append("\t\t|Satisfied = ").append(currentPhase.isSatisfied()+"").append("\n")
+						  .append("\t\t|Supported commands = ").append(currentPhase.getCommands()+"");
+					if ((currentPhase).getAccessibilityRule()!=null) {
+						string.append("\n\t\t|Access-Rule = ").append((currentPhase).getAccessibilityRule().ruleExplanation());
+					}
+					if ((currentPhase).getSatisfiabilityRule()!=null) {
+						string.append("\n\t\t|Satisfaction-Rule = ").append((currentPhase).getSatisfiabilityRule().ruleExplanation());
+					}
+					string.append("\n");
+					return string.toString() ;	   
+				}
+				else return "NO current phase !!";
+			}
+		});
 		// qui imposto l'esecuzione del comando che esegue le fasi
 		phasesExecutorCommand.setInputValueExploitable(true);
 		phasesExecutorCommand.setExecution(new Execution() {
@@ -462,11 +489,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 			}
 		});
-		// aggiungo il comando
-		addCommand(this.pointerCommand);
-		addCommand(this.describerCommand);
-		// aggiungo il comando statico che esegue le fasi
-		addCommand(phasesExecutorCommand);
+		addCommands(this.pointerCommand,this.describerCommand,phasesExecutorCommand,statusCommand);
 	}
 
 	// questo metodo non va chiamato esplicitamente

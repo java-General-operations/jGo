@@ -16,10 +16,10 @@ import cloud.jgo.utils.command.terminal.phase.Rule;
 public class LocalPhaseTerminal3 {
 public static void main(String[] args) {
 	
-	// controllo di esecuzione sulla fase :
-	// adesso vogliamo provare a bloccare l'esecuzione
-	// di un comando e tutti i suoi parametri, fin quando
-	// la fase non risulta soddisfatta
+	// okok ultima cosa da fare pomeriggio eppoi ci possiamo
+	// dedicare a DomT4j : sviluppare il comando status per conoscere
+	// informazioni riguardo la fase attuale/corrente
+	
 	
 	LocalPhaseTerminal t = new LocalPhaseTerminal("test-trm");
 	

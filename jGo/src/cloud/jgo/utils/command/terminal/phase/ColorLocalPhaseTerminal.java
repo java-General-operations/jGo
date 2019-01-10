@@ -9,6 +9,7 @@ import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.j£;
 import cloud.jgo.£;
+import cloud.jgo.utils.ColorString;
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
@@ -110,6 +111,29 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	public ColorLocalPhaseTerminal() {
 		// installo i componenti
 		AnsiConsole.systemInstall();
+		statusCommand = new ColorLocalCommand("status","View the report of the current phase");
+		statusCommand.setExecution(new Execution() {
+			@Override
+			public Object exec() {
+				ColorString string = new ColorString();
+				if (currentPhase!=null) {
+					string.append("\n\t\t|Current Phase > ").append(currentPhase.phaseName().toUpperCase(),TerminalColors.PHASE_COLOR).append("\n")
+					  .append("\t\t|Level = ").append(currentPhase.getValue()+"",Color.DEFAULT).append("\n")
+					  .append("\t\t|Accessible = ").append(currentPhase.isAccessible()+"",Color.DEFAULT).append("\n")
+					  .append("\t\t|Satisfied = ").append(currentPhase.isSatisfied()+"",Color.DEFAULT).append("\n")
+					  .append("\t\t|Supported commands = ").append(currentPhase.getCommands()+"",Color.DEFAULT);
+				if ((currentPhase).getAccessibilityRule()!=null) {
+					string.append("\n\t\t|Access-Rule = ").append((currentPhase).getAccessibilityRule().ruleExplanation());
+				}
+				if ((currentPhase).getSatisfiabilityRule()!=null) {
+					string.append("\n\t\t|Satisfaction-Rule = ").append((currentPhase).getSatisfiabilityRule().ruleExplanation());
+				}
+				string.append("\n");
+				return string.toString() ;	
+				}
+				else return error("NO current phase");
+			}
+		});
 		phasesExecutorCommand = new ColorLocalCommand("phases-executor", "This command executes a phase");
 		phasesExecutorCommand.setInputValueExploitable(true);
 		phasesExecutorCommand.setExecution(new Execution() {
@@ -170,10 +194,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 
 			}
 		});
-		addCommand(this.pointerCommand);
-		addCommand(this.describerCommand);
-		// aggiungo il comando executor
-		addCommand(phasesExecutorCommand);
+		addCommands(this.pointerCommand,this.describerCommand,phasesExecutorCommand,statusCommand);
 	}
 
 	@Override
