@@ -169,7 +169,6 @@ public abstract class Parameter
 						case ALWAYS:getExecution().exec();
 						break; // poi qui aggiornare, quando ci saranno nuovi "quando"
 						}
-						;
 					}
 				}).start();
 			}

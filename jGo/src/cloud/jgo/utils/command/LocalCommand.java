@@ -1124,7 +1124,10 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						if (getExecution()instanceof SharedExecution) {
 							((SharedExecution)getExecution()).setCurrentSharer(LocalCommand.this);
 						}
-						// 	qui forse ci manca una istruzione:dubbio
+						switch (when) {
+						case ALWAYS:getExecution().exec();
+						break; // poi qui aggiornare, quando ci saranno nuovi "quando"
+						}
 					}
 				}).start();
 			} else {
