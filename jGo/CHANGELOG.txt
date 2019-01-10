@@ -215,3 +215,4 @@ Inoltre se in una fase a ci sono i comandi ac,ac2,ac3 e voglio creare un altra f
 - aggiunto nuovo metodo createPhase nella classe LocalPhaseTerminal e sotto classe
 - aggiunta nuova enum nell'interfaccia executable
 - comandi, fasi e parametri possono decidere di eseguirsi solo in determinate circostanze
+- abbiamo aggiunto un altra feature:possiamo bloccare l'esecuzione di un comando o parametro finchè la fase associata non è soddisfatta o accessibile

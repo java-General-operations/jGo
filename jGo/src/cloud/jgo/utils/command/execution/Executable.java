@@ -55,9 +55,9 @@ public interface Executable extends Serializable {
 	 *
 	 */
 	public static enum When {
-		ALWAYS, //Command,Parameter,Phase
-		NEVER,  //Command,Parameter,Phase
-		IF_SATISFIED,//Phase
-		IF_ACCESSIBLE//Phase
+		ALWAYS,
+		NEVER,
+		IF_SATISFIED,
+		IF_ACCESSIBLE
 	}
 }

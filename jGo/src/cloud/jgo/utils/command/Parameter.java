@@ -167,7 +167,21 @@ public abstract class Parameter
 						}
 						switch (when) {
 						case ALWAYS:getExecution().exec();
-						break; // poi qui aggiornare, quando ci saranno nuovi "quando"
+						break; 
+						case IF_ACCESSIBLE:
+							if (getParent().getBelongsTo()!=null) {
+								if (getParent().getBelongsTo().isAccessible()) {
+									getExecution().exec();
+								}
+							}
+							break;
+						case IF_SATISFIED:
+							if (getParent().getBelongsTo()!=null) {
+								if (getParent().getBelongsTo().isSatisfied()) {
+									getExecution().exec();
+								}
+							}
+							break;// poi qui aggiornare, quando ci saranno nuovi "quando"
 						}
 					}
 				}).start();
@@ -178,7 +192,21 @@ public abstract class Parameter
 				}
 				switch (when) {
 				case ALWAYS:execute = getExecution().exec();
-				break; // poi qui aggiornare, quando ci saranno nuovi "quando"
+				break;
+				case IF_ACCESSIBLE:
+					if (getParent().getBelongsTo()!=null) {
+						if (getParent().getBelongsTo().isAccessible()) {
+							execute = getExecution().exec();
+						}
+					}
+					break;// poi qui aggiornare, quando ci saranno nuovi "quando"
+				case IF_SATISFIED:
+					if (getParent().getBelongsTo()!=null) {
+						if (getParent().getBelongsTo().isSatisfied()) {
+							execute = getExecution().exec();
+						}
+					}
+					break;// poi qui aggiornare, quando ci saranno nuovi "quando"
 				}
 			}
 		} 
