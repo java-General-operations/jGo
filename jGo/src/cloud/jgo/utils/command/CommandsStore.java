@@ -48,7 +48,7 @@ public class CommandsStore implements Serializable {
 																														// un
 																														// oggetto
 																														// condiviso
-
+	private CommandsStore() {}
 	private static String commandPositive = "Command|Parameter # ( OK ) @";
 	private static String commandNegative = "Unrecognized command #";
 	private static String commandNegativeAbsenceObject = "No Object set #";
@@ -71,6 +71,32 @@ public class CommandsStore implements Serializable {
 		 * @author Martire91 init params command - open
 		 */
 
+		OPEN_COMMAND.setExecution(new Execution() {
+			
+			@Override
+			public Object exec() {
+				return "This command requires the parameter - use 'open help'";
+			}
+		});
+		
+		FILE_COMMAND.setExecution(new Execution() {
+			
+			@Override
+			public Object exec() {
+				// TODO Auto-generated method stub
+				return "This command requires the parameter - use 'file help'";
+			}
+		});
+		
+		ALERT_COMMAND.setExecution(new Execution() {
+			
+			@Override
+			public Object exec() {
+				// TODO Auto-generated method stub
+				return "This command requires the parameter - use 'alert help'";
+			}
+		});
+		
 		// creo i params
 		terminalParam = OPEN_COMMAND.addParam("terminal", "This param open the windows cmd");
 		notepadParam = OPEN_COMMAND.addParam("notepad", "This param open the windows notepad");

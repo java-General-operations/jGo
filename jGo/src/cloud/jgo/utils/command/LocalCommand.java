@@ -1126,7 +1126,23 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						}
 						switch (when) {
 						case ALWAYS:getExecution().exec();
-						break; // poi qui aggiornare, quando ci saranno nuovi "quando"
+						break; 
+						case IF_ACCESSIBLE:
+							// verifico che il comando abbia una fase
+							if (getBelongsTo()!=null) {
+								if (getBelongsTo().isAccessible()) {
+									getExecution().exec();
+								}
+							}
+							break;
+						case IF_SATISFIED:
+							if (getBelongsTo()!=null) {
+								if (getBelongsTo().isSatisfied()) {
+									getExecution().exec();
+								}
+							}
+							break;
+							// poi qui aggiornare, quando ci saranno nuovi "quando"
 						}
 					}
 				}).start();
@@ -1134,7 +1150,25 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 				if (getExecution()instanceof SharedExecution) {
 					((SharedExecution)getExecution()).setCurrentSharer(this);
 				}
-				execute = getExecution().exec();
+				switch (when) {
+				case ALWAYS:execute = getExecution().exec();
+				break; 
+				case IF_ACCESSIBLE:
+					if (getBelongsTo()!=null) {
+						if (getBelongsTo().isAccessible()) {
+							execute = getExecution().exec();
+						}
+					}
+					break;
+				case IF_SATISFIED:
+					if (getBelongsTo()!=null) {
+						if (getBelongsTo().isSatisfied()) {
+							execute = getExecution().exec();
+						}
+					}
+					break;
+					// poi qui aggiornare, quando ci saranno nuovi "quando"
+				}
 			}
 			return execute;
 		} else {

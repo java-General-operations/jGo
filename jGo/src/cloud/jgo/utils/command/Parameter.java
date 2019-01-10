@@ -176,7 +176,10 @@ public abstract class Parameter
 				if (getExecution()instanceof SharedExecution) {
 					((SharedExecution)getExecution()).setCurrentSharer(this);
 				}
-			execute = getExecution().exec();
+				switch (when) {
+				case ALWAYS:execute = getExecution().exec();
+				break; // poi qui aggiornare, quando ci saranno nuovi "quando"
+				}
 			}
 		} 
 		return execute ;
