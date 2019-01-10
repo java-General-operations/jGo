@@ -407,16 +407,12 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			public Object exec() {
 				Object obj = null;
 				if (phasesExecutorCommand.getInputValue() != null) {
-					boolean executed = false;
 					for (Phase current : phases) {
 						if (phasesExecutorCommand.getInputValue().equals(current.phaseName())) {
 							obj = current.execute();
 						}
 					}
-				} else {
-					// da definire ...
-				}
-				return obj;
+				}return obj;
 			}
 		});
 		this.pointerCommand = new LocalCommand("use", "This command points to a specific phase");

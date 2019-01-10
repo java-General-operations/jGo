@@ -2,6 +2,7 @@ package test;
 
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
+import cloud.jgo.utils.command.terminal.phase.Phase;
 
 public class LocalPhaseTerminalTest2 {
 public static void main(String[] args) {
@@ -20,6 +21,10 @@ public static void main(String[] args) {
 	LocalCommand.setInputHelpExploitable(true); // > command help
 			
 	// mi creo una fase tramite la factory
+	
+	
+	// adesso vediamo come posso creare una fase 
+	
 	
 	
 	

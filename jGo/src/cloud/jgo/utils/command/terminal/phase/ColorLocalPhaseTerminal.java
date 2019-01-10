@@ -111,6 +111,21 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 		// installo i componenti
 		AnsiConsole.systemInstall();
 		phasesExecutorCommand = new ColorLocalCommand("phases-executor", "This command executes a phase");
+		phasesExecutorCommand.setInputValueExploitable(true);
+		phasesExecutorCommand.setExecution(new Execution() {
+
+			@Override
+			public Object exec() {
+				Object obj = null;
+				if (phasesExecutorCommand.getInputValue() != null) {
+					for (Phase current : phases) {
+						if (phasesExecutorCommand.getInputValue().equals(current.phaseName())) {
+							obj = current.execute();
+						}
+					}
+				} return obj;
+			}
+		});
 		this.pointerCommand = new ColorLocalCommand("use", "This command points to a specific phase");
 		this.describerCommand = new ColorLocalCommand("describe", "This command describes a specific phase");
 		this.describerCommand.setExecution(new Execution() {
