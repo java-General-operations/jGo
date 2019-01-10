@@ -432,7 +432,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					buffer.append(
 							"==============================================================================================================================================================\n");
 
-					buffer.append(((LocalPhase) currentPhase).description() + ".\n");
+					buffer.append(((LocalPhase) currentPhase).description() + ".\n\n");
 
 					// qui inserisco i comandi supportati di questa fase
 
