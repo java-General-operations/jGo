@@ -293,5 +293,28 @@ public class LocalTerminal extends Terminal implements Iterable<Entry<String, Lo
 		// TODO Auto-generated method stub
 		return this.name ;
 	}
+	
+	// version 1.0.9
+	public void cleanTerminal() {
+		if (System.getProperty("os.name").contains("Windows")) {
+			 try {
+				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			try {
+				Runtime.getRuntime().exec("clear");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 }

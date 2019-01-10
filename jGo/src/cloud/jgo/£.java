@@ -3879,17 +3879,28 @@ public class £ {
 	 * @return the home instance
 	 */
 	public static £ exec(String cmd_command) {
-
-		try {
-			CMD.command(cmd_command);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (System.getProperty("os.name").contains("Windows")) {
+			try {
+				CMD.command(cmd_command);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-
+		else {
+			try {
+				SHELL.command(cmd_command);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return instance;
 	}
 

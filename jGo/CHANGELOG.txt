@@ -218,3 +218,4 @@ Inoltre se in una fase a ci sono i comandi ac,ac2,ac3 e voglio creare un altra f
 - abbiamo aggiunto un altra feature:possiamo bloccare l'esecuzione di un comando o parametro finchè la fase associata non è soddisfatta o accessibile
 - perfetto adesso sia un comando/parametro che fase possono eseguirsi in base dei criteri specifici
 - creato un nuovo comando nel terminale delle fasi, si tratta di "status".
+- creato il metodo cleanTerminal() per pulire il terminale
