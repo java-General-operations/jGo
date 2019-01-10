@@ -22,7 +22,7 @@ import cloud.jgo.utils.command.terminal.phase.Phase;
 public class ColorLocalPhaseTerminalTest {
 	public static void main(String[] args) {
 		
-
+		
 				
 //				TerminalColors.PARAMETER_COLOR = Color.YELLOW;
 //				TerminalColors.COMMAND_COLOR = Color.CYAN;
@@ -38,7 +38,7 @@ public class ColorLocalPhaseTerminalTest {
 				
 				// mi creo la prima fase 
 				
-				Phase phase = t.createPhase(1, "connection", "connection",null);
+				Phase phase = t.createPhase(1, "connection", "connection");
 				
 				// mi creo i comandi di questa fase
 				
@@ -73,21 +73,7 @@ public class ColorLocalPhaseTerminalTest {
 				
 				t.addCommandsToPhase(phase, connect,migrate,download,update);
 				
-				String toString = Arrays.toString(LocalPhaseTerminal.phasesExecutorCommand.params());
-				System.out.println(toString);
-				
-				// elimino la fase
-				
-				boolean result = t.removePhase(1);
-				
-				System.out.println(result);
-				System.out.println(Arrays.toString(LocalPhaseTerminal.phasesExecutorCommand.params()));
-				
-				t.createPhase(1, "ciao", "ciao",null);
-				
-				System.out.println(Arrays.toString(LocalPhaseTerminal.phasesExecutorCommand.params()));
-				
-				
+				t.open();
 				
 	}
 }

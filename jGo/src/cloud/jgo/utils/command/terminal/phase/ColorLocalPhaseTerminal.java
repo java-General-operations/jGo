@@ -151,7 +151,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 		});
 		addCommand(this.pointerCommand);
 		addCommand(this.describerCommand);
-		// aggiungo il comando executor 
+		// aggiungo il comando executor
 		addCommand(phasesExecutorCommand);
 	}
 
@@ -184,41 +184,36 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 
 			if (commands != null) {
 				((DefaultPhase) phase).addCommands(commands);
-			}
-
-			// aggiungo i comandi alla lista di comandi
-			// questa lo commentata perchè è più giusto che i comandi che si aggiungono ad
-			// una fase non si aggiungano anche ai comandi del terminale
-			if (commands != null) {
 				addCommands(commands);
 			}
 			if (value == 1) {
 				startPhase = phase;
 			}
 			phases.add(phase);
-			
-			// qui costruisco il parametro per eseguire questa fase fino a ]
-			
-						Parameter phaseExecutionParam = phasesExecutorCommand.addParam(phase.phaseName(),"executes the "+£.escp(phase.phaseName())+" phase");
-						if (commands!=null) {
 
-							phaseExecutionParam.setExecution(new Execution() {
-								
-								@Override
-								public Object exec() {
-									
-									List<Command>phaseCommands = phase.getCommands();
-									
-									for (Command command : phaseCommands) {
-										
-										System.out.println(command.execute());
-										
-									}
-									return null ;
-								}
-							});
+			// qui costruisco il parametro per eseguire questa fase fino a ]
+
+			Parameter phaseExecutionParam = phasesExecutorCommand.addParam(phase.phaseName(),
+					"executes the " + £.escp(phase.phaseName()) + " phase");
+			if (commands != null) {
+
+				phaseExecutionParam.setExecution(new Execution() {
+
+					@Override
+					public Object exec() {
+
+						List<Command> phaseCommands = phase.getCommands();
+
+						for (Command command : phaseCommands) {
+
+							System.out.println(command.execute());
+
 						}
-						// ]
+						return null;
+					}
+				});
+			}
+			// ]
 
 			// qui solo se non è la fase start, perchè non ci serve avere un riferimento a
 			// tale fase
