@@ -174,10 +174,10 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	}
 
 	@Override
-	public Phase createPhase(int value, String phaseName, String phaseDescription) {
+	public LocalPhase createPhase(int value, String phaseName, String phaseDescription) {
 		// verifico che non sia nessun phase con questo valore
 		if (phase(value) == null && phase(phaseName) == null) {
-			Phase phase = PhasesFactory.create(phaseName, value);
+			LocalPhase phase = new LocalPhase(phaseName, value);
 
 			((LocalPhase) phase).setDescription(phaseDescription);
 
@@ -269,10 +269,10 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	}
 
 	@Override
-	public Phase createPhase(final int value, String phaseName, String phaseDescription, Command... commands) {
+	public LocalPhase createPhase(final int value, String phaseName, String phaseDescription, Command... commands) {
 		// verifico che non sia nessun phase con questo valore
 		if (phase(value) == null && phase(phaseName) == null) {
-			Phase phase = PhasesFactory.create(phaseName, value);
+			LocalPhase phase = new LocalPhase(phaseName, value);
 
 			((LocalPhase) phase).setDescription(phaseDescription);
 

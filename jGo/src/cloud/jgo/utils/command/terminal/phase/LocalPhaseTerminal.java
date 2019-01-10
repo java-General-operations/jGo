@@ -101,12 +101,11 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	 *            the commands
 	 * @return the phase
 	 */
-	public Phase createPhase(final int value, String phaseName, String phaseDescription, Command... commands) {
+	public LocalPhase createPhase(final int value, String phaseName, String phaseDescription, Command... commands) {
 
 		// verifico che non sia nessun phase con questo valore
 		if (phase(value) == null && phase(phaseName) == null) {
-			Phase phase = PhasesFactory.create(phaseName, value);
-
+			LocalPhase phase = new LocalPhase(phaseName, value);
 			((LocalPhase) phase).setDescription(phaseDescription);
 
 			if (commands != null) {
@@ -207,11 +206,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	 *            the phase description
 	 * @return the phase
 	 */
-	public Phase createPhase(final int value, String phaseName, String phaseDescription) {
-
+	public LocalPhase createPhase(final int value, String phaseName, String phaseDescription) {
 		// verifico che non sia nessun phase con questo valore
 		if (phase(value) == null && phase(phaseName) == null) {
-			Phase phase = PhasesFactory.create(phaseName, value);
+			LocalPhase phase = new LocalPhase(phaseName, value);
 
 			((LocalPhase) phase).setDescription(phaseDescription);
 
@@ -751,12 +749,13 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			return false;
 		}
 	}
+
 	/**
 	 * 
 	 * @author Martire91<br>
 	 *         This class represents a concrete phase
 	 */
-	static class LocalPhase implements Phase{
+	static class LocalPhase implements Phase {
 
 		/**
 		 * this is a concrete product
@@ -779,28 +778,28 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			return this.satisfiabilityRule;
 		}
 
-		public LocalPhase(String phaseType, int value) {
-			this.phaseName = phaseType;
+		public LocalPhase(String phaseName, int value) {
+			this.phaseName = phaseName;
 			this.value = value;
 			// nel momento in cui si crea una fase
-			// ecco che gli viene attribuita una 
-			// esecuzione di default, che non potrà 
+			// ecco che gli viene attribuita una
+			// esecuzione di default, che non potrà
 			// + variare
 			this.execution = new Execution() {
-				
+
 				@Override
 				public Object exec() {
-					for(Command phaseCommand:commands) {
+					for (Command phaseCommand : commands) {
 						System.out.println(phaseCommand.execute());
 					}
-					return null ;
+					return null;
 				}
 			};
 		}
 
 		private List<Command> commands = new ArrayList<>();
 		// version 1.0.9
-		private Execution execution=null;
+		private Execution execution = null;
 
 		/**
 		 * This method adds a command into the phase
@@ -813,6 +812,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			((LocalCommand) command).getHelpCommand().reload(((LocalCommand) command)); // aggiorno l'help del comando
 			this.commands.add(command);
 		}
+
 		/**
 		 * This method adds the commands into the phase
 		 * 
@@ -929,12 +929,14 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 		@Override
 		public boolean hasAnExecution() {
-			if (this.execution!=null) return true;
-			else return false ;
+			if (this.execution != null)
+				return true;
+			else
+				return false;
 		}
-		
+
 		public Execution getExecution() {
 			return this.execution;
-		}	
-	} 
+		}
+	}
 }
