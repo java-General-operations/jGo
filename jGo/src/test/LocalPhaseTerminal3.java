@@ -9,6 +9,7 @@ import cloud.jgo.utils.command.Sharer;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
 import cloud.jgo.utils.command.execution.Executable.When;
+import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
 import cloud.jgo.utils.command.terminal.phase.Rule;
@@ -16,87 +17,73 @@ import cloud.jgo.utils.command.terminal.phase.Rule;
 public class LocalPhaseTerminal3 {
 public static void main(String[] args) {
 	
-	// okok ultima cosa da fare pomeriggio eppoi ci possiamo
-	// dedicare a DomT4j : sviluppare il comando status per conoscere
-	// informazioni riguardo la fase attuale/corrente
+	// Ultimo test per oggi
 	
+	LocalTerminal terminal = new LocalTerminal();
 	
-	LocalPhaseTerminal t = new LocalPhaseTerminal("test-trm");
+	terminal.setName("frx");
 	
-	t.useGeneralHelp();
+	terminal.useGeneralHelp();
 	
 	LocalCommand.setInputHelpExploitable(true);
 	
-	// mi creo i comandi:
 	
-		LocalCommand objCommand = LocalCommand.getCommandByObject(Persona.class);
-		LocalCommand blocked = new LocalCommand("blocked","blocked help");
-		// qui imposto che questo comando deve essere eseguito solo
-		// quando la fase a cui è associato è soddisfatta
-		blocked.validExecution(When.IF_SATISFIED);
-		blocked.setExecution(new Execution() {
-			
-			@Override
-			public Object exec() {
-				// TODO Auto-generated method stub
-				return "blocked execution";
-			}
-		});
-		// mi creo qualche parametro di blocked
-		Parameter p,p2 ;
-		p = blocked.addParam("a","a help");
-		p2 = blocked.addParam("b","b help");
-		p.validExecution(When.IF_SATISFIED);
-		p2.validExecution(When.IF_SATISFIED);
-		
-		p.setExecution(new Execution() {
-			
-			@Override
-			public Object exec() {
-				// TODO Auto-generated method stub
-				return "a execution";
-			}
-		});
-		
-		p2.setExecution(new Execution() {
-			
-			@Override
-			public Object exec() {
-				// TODO Auto-generated method stub
-				return "b execution";
-			}
-		});
+	// adesso mi creo solo un comando
 	
-	// mi creo la prima fase
+	LocalCommand personCmd = new LocalCommand("persona","Crea una persona");
 	
-	Phase phase = t.createPhase(1, "creation", "creation phase");
-	phase.satisfiableThrough(new Rule() {
+	Parameter newParam,nomeParam,cognomeParam,etaParam ;
+	
+	newParam = personCmd.addParam("new","crea una instanza");
+	nomeParam = personCmd.addParam("nome","Imposta il nome");
+	cognomeParam = personCmd.addParam("cognome","Imposta il cognome");
+	etaParam = personCmd.addParam("eta","Imposta l'età");
+	
+	nomeParam.setInputValueExploitable(true);cognomeParam.setInputValueExploitable(true);etaParam.setInputValueExploitable(true);
+	
+	// okok creo una esecuzione condivisa per quadagnare codice
+	
+	SharedExecution execution = new SharedExecution() {
 		
 		@Override
-		public boolean verification() {
-			if (objCommand.getSharedObject()!=null) {
-				Persona persona = objCommand.getSharedObject();
-				if (persona.getNome()!=null&&persona.getCognome()!=null&&persona.getEtà()>18)return true ;
-				else return false ;
+		protected Object sharedExec(Sharer sharer) {
+			if (sharer.getSharerType()==Sharer.Type.PARAMETER) {
+				Parameter source = (Parameter) sharer;
+				switch(source.getOnlyParam()) {
+				case "new":
+				Persona persona = new Persona();
+				// condivido l'oggetto
+				personCmd.shareObject(persona);
+				return "Instanza creata @";
+				case "nome":
+				Persona persona2 = personCmd.getSharedObject();
+				persona2.setNome(nomeParam.getInputValue());
+				return "Nome settato";
+				case "cognome":
+					Persona persona3 = personCmd.getSharedObject();
+					persona3.setCognome(cognomeParam.getInputValue());
+					return "Cognome settato";
+				case "eta":
+					Persona persona4 = personCmd.getSharedObject();
+					persona4.setEtà(Integer.parseInt(etaParam.getInputValue()));
+					return "Età settata";
+				}
 			}
-			else return false ;
+			return null ;
 		}
-		
-		@Override
-		public String ruleExplanation() {
-			// TODO Auto-generated method stub
-			return "Se la persona è stata configurata correttamente";
-		}
-	});
+	};
 	
-	// aggiungo i comandi alla fase
-	
-	t.addCommandsToPhase(phase, objCommand,blocked);
+	newParam.setExecution(execution);
+	nomeParam.setExecution(execution);
+	cognomeParam.setExecution(execution);
+	etaParam.setExecution(execution);
 	
 	
-	t.open();
+	// aggiungo i comandi al terminale 
 	
+	terminal.addCommands(personCmd);
 	
+	terminal.open();
 	
 	
 }
