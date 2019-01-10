@@ -9,9 +9,10 @@ public class LocalPhaseTerminalTest2 {
 public static void main(String[] args) {
 	
 	
-	// poi devo vedere cosa succede se creo una fase senza passare dal terminale, quindi tramite factory esterna
 	
-	// 1 se creiamo una fase tramite la factory, eppoi l'aggiungiamo al terminale in un qualche modo che succede
+	// Primissima cosa, tutti i metodi della classe LocalPhaseTerminal che restituiscono una fase localPhase deve restituire
+	// una Phase generica, altrimenti subentrano problemi di visibilità
+	// 1 se creiamo una fase tramite la factory, eppoi l'aggiungiamo al terminale in un qualche modo che succede ?
 	// 2 vogliamo determinare se le fasi possono essere eseguite sempre oppure
 	
 	

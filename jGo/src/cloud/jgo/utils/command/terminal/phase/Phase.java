@@ -99,4 +99,18 @@ public interface Phase extends Serializable, Executable{
 	 * @return the phase description
 	 */
 	public abstract String description();
+	
+	/**
+	 * This method returns the satisfiability Rule
+	 * 
+	 * @return the satisfiability Rule
+	 */
+	public Rule getSatisfiabilityRule();
+	/**
+	 * This method returns the accessibility Rule
+	 * 
+	 * @return the accessibility Rule
+	 */
+	public Rule getAccessibilityRule();
+	
 }

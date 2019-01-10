@@ -44,7 +44,7 @@ import cloud.jgo.utils.command.terminal.LocalTerminal;
  *         This class represents the phases terminal
  */
 public class LocalPhaseTerminal extends LocalTerminal implements Structure {
-	protected LocalPhase currentPhase, startPhase = null;
+	protected Phase currentPhase, startPhase = null;
 	protected List<Phase> phases = new ArrayList<>();
 	protected LocalCommand pointerCommand = null;
 	protected LocalCommand resetCommand = null;
@@ -58,7 +58,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	 * 
 	 * @return the current phase
 	 */
-	public LocalPhase getCurrentPhase() {
+	public Phase getCurrentPhase() {
 		return this.currentPhase;
 	}
 
@@ -67,8 +67,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	 * 
 	 * @return the start phase
 	 */
-	public LocalPhase getStartPhase() {
-		return startPhase;
+	public Phase getStartPhase() {
+		return this.startPhase;
 	}
 
 	// version 1.0.9
@@ -478,7 +478,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	}
 
 	@Override
-	public LocalPhase nextPhase() {
+	public Phase nextPhase() {
 		// quindi qui in tanto andiamo ad individuare il valore numerico della fase
 		// corrente
 		if (currentPhase.isSatisfied()) {
@@ -498,7 +498,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				// qui verifico se la fase successiva è accessibile
 
 				if (found.isAccessible()) {
-					return currentPhase = (LocalPhase) found;
+					return currentPhase =  found;
 				} else {
 					System.out.println(((LocalPhase) found).getAccessibilityRule().ruleExplanation());
 					return null;
@@ -519,7 +519,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	 * 
 	 * @return the previous phase
 	 */
-	public LocalPhase forceToPreviousPhase() {
+	public Phase forceToPreviousPhase() {
 		int currentValuePhase = currentPhase.getValue();
 		currentValuePhase = currentValuePhase - 1;
 		// vado alla ricerca di una fase che abbia quel valore
@@ -534,7 +534,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		if (found != null) {
 
 			if (found.isAccessible()) {
-				return currentPhase = (LocalPhase) found;
+				return currentPhase = found;
 			} else {
 				System.out.println(((LocalPhase) found).getAccessibilityRule().ruleExplanation());
 
@@ -546,7 +546,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	}
 
 	@Override
-	public LocalPhase previousPhase() {
+	public Phase previousPhase() {
 		if (currentPhase.isSatisfied()) {
 			// quindi qui in tanto andiamo ad individuare il valore numerico della fase
 			// corrente
@@ -693,7 +693,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	}
 
 	@Override
-	public LocalPhase changePhase(Phase phase) {
+	public Phase changePhase(Phase phase) {
 
 		// qui si deve permettere l'esecuzione di un metodo boolean
 		// che può essere implementato
@@ -766,13 +766,14 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		private boolean satisfied = true;
 		private String description = null;
 
-		/**
-		 * This method returns the satisfiability Rule
-		 * 
-		 * @return the satisfiability Rule
-		 */
+		@Override
 		public Rule getSatisfiabilityRule() {
 			return this.satisfiabilityRule;
+		}
+		
+		@Override
+		public Rule getAccessibilityRule() {
+			return this.accessibilityRule;
 		}
 
 		public LocalPhase(String phaseName, int value) {
@@ -844,15 +845,6 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		public int getValue() {
 			// TODO Auto-generated method stub
 			return this.value;
-		}
-
-		/**
-		 * This method returns the accessibility Rule
-		 * 
-		 * @return the accessibility Rule
-		 */
-		public Rule getAccessibilityRule() {
-			return this.accessibilityRule;
 		}
 
 		@Override
