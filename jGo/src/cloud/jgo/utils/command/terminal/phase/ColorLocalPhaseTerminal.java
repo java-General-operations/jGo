@@ -123,7 +123,13 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 							obj = current.execute();
 						}
 					}
-				} return obj;
+				} 
+				else{
+					if (currentPhase!=null) {
+						obj = currentPhase.execute();
+					}
+				}
+				return obj;
 			}
 		});
 		this.pointerCommand = new ColorLocalCommand("use", "This command points to a specific phase");

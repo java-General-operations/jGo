@@ -413,6 +413,12 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 						}
 					}
 				}
+				else {
+					// qui verifico se c'è una fase corrente
+					if (currentPhase!=null) {
+						obj = currentPhase.execute();
+					}
+				}
 				return obj;
 			}
 		});
