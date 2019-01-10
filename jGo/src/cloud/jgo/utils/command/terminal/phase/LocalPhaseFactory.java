@@ -22,12 +22,14 @@
  */
 package cloud.jgo.utils.command.terminal.phase;
 
+import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal.LocalPhase;
+
 // this is a concrete creator
-public class DefaultPhaseFactory implements PhaseFactory {
+public class LocalPhaseFactory implements PhaseFactory {
 
 	@Override
-	public Phase newInstance(final String phaseName, final int value) {
-		return new DefaultPhase(phaseName, value);
+	public LocalPhase newInstance(final String phaseName, final int value) {
+		return new LocalPhaseTerminal.LocalPhase(phaseName, value);
 	}
 
 }

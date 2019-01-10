@@ -19,17 +19,10 @@ import cloud.jgo.utils.command.terminal.phase.ColorLocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
 
-public class ColorLocalPhaseTerminalTest {
+public class LocalPhaseTerminalTest {
 	public static void main(String[] args) {
 		
 		
-				
-//				TerminalColors.PARAMETER_COLOR = Color.YELLOW;
-//				TerminalColors.COMMAND_COLOR = Color.CYAN;
-//				TerminalColors.PHASE_COLOR = Color.MAGENTA;
-				
-				
-
 				LocalPhaseTerminal t = new LocalPhaseTerminal("mio terminal");
 				
 				t.useGeneralHelp();

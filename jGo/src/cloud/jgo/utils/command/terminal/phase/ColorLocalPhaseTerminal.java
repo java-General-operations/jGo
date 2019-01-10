@@ -125,11 +125,11 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 							+ ")\n");
 					buffer.append("========================================================================\n");
 
-					buffer.append(((DefaultPhase) currentPhase).description() + ".\n\n");
+					buffer.append(((LocalPhase) currentPhase).description() + ".\n\n");
 
 					// qui inserisco i comandi supportati di questa fase
 
-					List<Command> commands = ((DefaultPhase) currentPhase).getCommands();
+					List<Command> commands = ((LocalPhase) currentPhase).getCommands();
 					if (commands.size() > 0) {
 						buffer.append("# Supported commands :\n");
 					}
@@ -179,7 +179,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 		if (phase(value) == null && phase(phaseName) == null) {
 			Phase phase = PhasesFactory.create(phaseName, value);
 
-			((DefaultPhase) phase).setDescription(phaseDescription);
+			((LocalPhase) phase).setDescription(phaseDescription);
 
 			if (value == 1) {
 				startPhase = phase;
@@ -270,15 +270,14 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 
 	@Override
 	public Phase createPhase(final int value, String phaseName, String phaseDescription, Command... commands) {
-
 		// verifico che non sia nessun phase con questo valore
 		if (phase(value) == null && phase(phaseName) == null) {
 			Phase phase = PhasesFactory.create(phaseName, value);
 
-			((DefaultPhase) phase).setDescription(phaseDescription);
+			((LocalPhase) phase).setDescription(phaseDescription);
 
 			if (commands != null) {
-				((DefaultPhase) phase).addCommands(commands);
+				((LocalPhase) phase).addCommands(commands);
 				addCommands(commands);
 			}
 			if (value == 1) {

@@ -107,10 +107,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		if (phase(value) == null && phase(phaseName) == null) {
 			Phase phase = PhasesFactory.create(phaseName, value);
 
-			((DefaultPhase) phase).setDescription(phaseDescription);
+			((LocalPhase) phase).setDescription(phaseDescription);
 
 			if (commands != null) {
-				((DefaultPhase) phase).addCommands(commands);
+				((LocalPhase) phase).addCommands(commands);
 				addCommands(commands);
 			}
 			if (value == 1) {
@@ -213,7 +213,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		if (phase(value) == null && phase(phaseName) == null) {
 			Phase phase = PhasesFactory.create(phaseName, value);
 
-			((DefaultPhase) phase).setDescription(phaseDescription);
+			((LocalPhase) phase).setDescription(phaseDescription);
 
 			if (value == 1) {
 				startPhase = phase;
@@ -307,7 +307,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	 */
 	public void addCommandsToPhase(Phase phase, Command... commands) {
 		if (commands != null) {
-			((DefaultPhase) phase).addCommands(commands);
+			((LocalPhase) phase).addCommands(commands);
 			addCommands(commands);
 			// adesso controllo se questa fase ha il corrispondente parametro
 			// sul comando executor, altimenti lo aggiungo
@@ -437,11 +437,11 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					buffer.append(
 							"==============================================================================================================================================================\n");
 
-					buffer.append(((DefaultPhase) currentPhase).description() + ".\n");
+					buffer.append(((LocalPhase) currentPhase).description() + ".\n");
 
 					// qui inserisco i comandi supportati di questa fase
 
-					List<Command> commands = ((DefaultPhase) currentPhase).getCommands();
+					List<Command> commands = ((LocalPhase) currentPhase).getCommands();
 					if (commands.size() > 0) {
 						buffer.append("# Supported commands :\n");
 					}
@@ -505,7 +505,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				if (found.isAccessible()) {
 					return currentPhase = found;
 				} else {
-					System.out.println(((DefaultPhase) found).getAccessibilityRule().ruleExplanation());
+					System.out.println(((LocalPhase) found).getAccessibilityRule().ruleExplanation());
 					return null;
 				}
 
@@ -514,7 +514,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			}
 		} else {
 			// non è soddisfatta la corrente fase
-			System.out.println(((DefaultPhase) currentPhase).getSatisfiabilityRule().ruleExplanation());
+			System.out.println(((LocalPhase) currentPhase).getSatisfiabilityRule().ruleExplanation());
 			return null;
 		}
 	}
@@ -541,7 +541,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			if (found.isAccessible()) {
 				return currentPhase = found;
 			} else {
-				System.out.println(((DefaultPhase) found).getAccessibilityRule().ruleExplanation());
+				System.out.println(((LocalPhase) found).getAccessibilityRule().ruleExplanation());
 
 				return null;
 			}
@@ -571,7 +571,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				if (found.isAccessible()) {
 					return currentPhase = found;
 				} else {
-					System.out.println(((DefaultPhase) found).getAccessibilityRule().ruleExplanation());
+					System.out.println(((LocalPhase) found).getAccessibilityRule().ruleExplanation());
 
 					return null;
 				}
@@ -580,7 +580,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			}
 		} else {
 
-			System.out.println(((DefaultPhase) currentPhase).getSatisfiabilityRule().ruleExplanation());
+			System.out.println(((LocalPhase) currentPhase).getSatisfiabilityRule().ruleExplanation());
 
 			return null;
 		}
@@ -594,12 +594,12 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				if (phase.isAccessible() && currentPhase.isSatisfied()) {
 					currentPhase = phase;
 				} else {
-					if (((DefaultPhase) phase).getAccessibilityRule() != null) {
+					if (((LocalPhase) phase).getAccessibilityRule() != null) {
 						// scopriamo il perchè non è accessibile
-						System.out.println(((DefaultPhase) phase).getAccessibilityRule().ruleExplanation());
+						System.out.println(((LocalPhase) phase).getAccessibilityRule().ruleExplanation());
 					}
-					if (((DefaultPhase) currentPhase).getSatisfiabilityRule() != null) {
-						System.out.println(((DefaultPhase) currentPhase).getSatisfiabilityRule().ruleExplanation());
+					if (((LocalPhase) currentPhase).getSatisfiabilityRule() != null) {
+						System.out.println(((LocalPhase) currentPhase).getSatisfiabilityRule().ruleExplanation());
 					}
 				}
 			}
@@ -615,12 +615,12 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				if (phase.isAccessible() && currentPhase.isSatisfied()) {
 					currentPhase = phase;
 				} else {
-					if (((DefaultPhase) phase).getAccessibilityRule() != null) {
+					if (((LocalPhase) phase).getAccessibilityRule() != null) {
 						// scopriamo il perchè non è accessibile
-						System.out.println(((DefaultPhase) phase).getAccessibilityRule().ruleExplanation());
+						System.out.println(((LocalPhase) phase).getAccessibilityRule().ruleExplanation());
 					}
-					if (((DefaultPhase) currentPhase).getSatisfiabilityRule() != null) {
-						System.out.println(((DefaultPhase) currentPhase).getSatisfiabilityRule().ruleExplanation());
+					if (((LocalPhase) currentPhase).getSatisfiabilityRule() != null) {
+						System.out.println(((LocalPhase) currentPhase).getSatisfiabilityRule().ruleExplanation());
 					}
 				}
 			}
@@ -708,12 +708,12 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				if (phase.isAccessible() && currentPhase.isSatisfied()) {
 					currentPhase = phase;
 				} else {
-					if (((DefaultPhase) phase).getAccessibilityRule() != null) {
+					if (((LocalPhase) phase).getAccessibilityRule() != null) {
 						// scopriamo il perchè non è accessibile
-						System.out.println(((DefaultPhase) phase).getAccessibilityRule().ruleExplanation());
+						System.out.println(((LocalPhase) phase).getAccessibilityRule().ruleExplanation());
 					}
-					if (((DefaultPhase) currentPhase).getSatisfiabilityRule() != null) {
-						System.out.println(((DefaultPhase) currentPhase).getSatisfiabilityRule().ruleExplanation());
+					if (((LocalPhase) currentPhase).getSatisfiabilityRule() != null) {
+						System.out.println(((LocalPhase) currentPhase).getSatisfiabilityRule().ruleExplanation());
 					}
 				}
 			}
@@ -751,4 +751,190 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			return false;
 		}
 	}
+	/**
+	 * 
+	 * @author Martire91<br>
+	 *         This class represents a concrete phase
+	 */
+	static class LocalPhase implements Phase{
+
+		/**
+		 * this is a concrete product
+		 */
+		private static final long serialVersionUID = 12L;
+		private Rule accessibilityRule = null;
+		private Rule satisfiabilityRule = null;
+		private String phaseName = null;
+		private int value;
+		private boolean accessible = true;
+		private boolean satisfied = true;
+		private String description = null;
+
+		/**
+		 * This method returns the satisfiability Rule
+		 * 
+		 * @return the satisfiability Rule
+		 */
+		public Rule getSatisfiabilityRule() {
+			return this.satisfiabilityRule;
+		}
+
+		public LocalPhase(String phaseType, int value) {
+			this.phaseName = phaseType;
+			this.value = value;
+			// nel momento in cui si crea una fase
+			// ecco che gli viene attribuita una 
+			// esecuzione di default, che non potrà 
+			// + variare
+			this.execution = new Execution() {
+				
+				@Override
+				public Object exec() {
+					for(Command phaseCommand:commands) {
+						System.out.println(phaseCommand.execute());
+					}
+					return null ;
+				}
+			};
+		}
+
+		private List<Command> commands = new ArrayList<>();
+		// version 1.0.9
+		private Execution execution=null;
+
+		/**
+		 * This method adds a command into the phase
+		 * 
+		 * @param command
+		 *            the command
+		 */
+		public void addCommand(Command command) {
+			((LocalCommand) command).setBelongsTo(this);
+			((LocalCommand) command).getHelpCommand().reload(((LocalCommand) command)); // aggiorno l'help del comando
+			this.commands.add(command);
+		}
+		/**
+		 * This method adds the commands into the phase
+		 * 
+		 * @param commands
+		 *            the commands
+		 */
+		public void addCommands(Command... commands) {
+			// TODO Auto-generated method stub
+			for (int i = 0; i < commands.length; i++) {
+				addCommand(commands[i]);
+			}
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			LocalPhase phase = (LocalPhase) obj;
+			if (getValue() == phase.getValue() && phaseName().equalsIgnoreCase(phase.phaseName())) {
+				return true;
+
+			} else {
+				return false;
+			}
+		}
+
+		@Override
+		public String phaseName() {
+			// TODO Auto-generated method stub
+			return this.phaseName;
+		}
+
+		@Override
+		public int getValue() {
+			// TODO Auto-generated method stub
+			return this.value;
+		}
+
+		/**
+		 * This method returns the accessibility Rule
+		 * 
+		 * @return the accessibility Rule
+		 */
+		public Rule getAccessibilityRule() {
+			return this.accessibilityRule;
+		}
+
+		@Override
+		public int getCountCommands() {
+			// TODO Auto-generated method stub
+			return this.commands.size();
+		}
+
+		@Override
+		public String toString() {
+			// TODO Auto-generated method stub
+			return this.phaseName + "/" + this.value;
+		}
+
+		@Override
+		public boolean isAccessible() {
+			if (this.accessibilityRule != null) {
+				return this.accessible = this.accessibilityRule.verification(); // qui chiamo il metodo
+			} else {
+				return this.accessible;
+			}
+		}
+
+		@Override
+		public void accessibleThrough(Rule rule) {
+			this.accessibilityRule = rule;
+		}
+
+		@Override
+		public List<Command> getCommands() {
+			// TODO Auto-generated method stub
+			return this.commands;
+		}
+
+		@Override
+		public boolean isSatisfied() {
+			if (this.satisfiabilityRule != null) {
+				return this.satisfied = this.satisfiabilityRule.verification(); // qui chiamo il metodo
+			} else {
+				return this.satisfied;
+			}
+		}
+
+		@Override
+		public void satisfiableThrough(Rule rule) {
+			// TODO Auto-generated method stub
+			this.satisfiabilityRule = rule;
+		}
+
+		@Override
+		public String description() {
+			// TODO Auto-generated method stub
+			return this.description;
+		}
+
+		/**
+		 * This method sets the phase description
+		 * 
+		 * @param description
+		 *            the description
+		 */
+		public void setDescription(String description) {
+			this.description = description;
+		}
+
+		@Override
+		public Object execute() {
+			// TODO Auto-generated method stub
+			return this.execution.exec();
+		}
+
+		@Override
+		public boolean hasAnExecution() {
+			if (this.execution!=null) return true;
+			else return false ;
+		}
+		
+		public Execution getExecution() {
+			return this.execution;
+		}	
+	} 
 }

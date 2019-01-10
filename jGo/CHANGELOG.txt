@@ -212,3 +212,4 @@ aggiunto nuovo packages
 deve significare che tutti i comandi contenuti al suo interno vengono eseguiti, nell'ordine in cui sono stati inseriti nella fase.
 Inoltre se in una fase a ci sono i comandi ac,ac2,ac3 e voglio creare un altra fase b, che contenga i comandi di a, lo devo poter fare
 - Ho creato il comando statico phasesExecutorCommand, da documentare ...
+- aggiunto nuovo metodo createPhase nella classe LocalPhaseTerminal e sotto classe

@@ -34,7 +34,8 @@ public class PhasesFactory {
 	 * @return the phase
 	 */
 	public static Phase create(final String phaseName,final int value){
+		// ora l'unico tipo che restituisco è un localPhase
 		
-		return new DefaultPhaseFactory().newInstance(phaseName, value);
+		return new LocalPhaseFactory().newInstance(phaseName, value);
 	}
 }
