@@ -174,6 +174,101 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	}
 
 	@Override
+	public Phase createPhase(int value, String phaseName, String phaseDescription) {
+		// verifico che non sia nessun phase con questo valore
+		if (phase(value) == null && phase(phaseName) == null) {
+			Phase phase = PhasesFactory.create(phaseName, value);
+
+			((DefaultPhase) phase).setDescription(phaseDescription);
+
+			if (value == 1) {
+				startPhase = phase;
+			}
+			phases.add(phase);
+
+			// qui costruisco il parametro per eseguire questa fase fino a ]
+
+			Parameter phaseExecutionParam = phasesExecutorCommand.addParam(phase.phaseName(),
+					"executes the " + £.escp(phase.phaseName()) + " phase");
+			if (commands != null) {
+
+				phaseExecutionParam.setExecution(new Execution() {
+
+					@Override
+					public Object exec() {
+
+						List<Command> phaseCommands = phase.getCommands();
+
+						for (Command command : phaseCommands) {
+
+							System.out.println(command.execute());
+
+						}
+						return null;
+					}
+				});
+			}
+			// ]
+
+			// qui solo se non è la fase start, perchè non ci serve avere un riferimento a
+			// tale fase
+			// eseguiamo il codice dell'aggiungimento link param. Tutto questo perchè
+			// abbiamo il metodo reset
+			// e il comando che si occupa di resettare alla prima fase la struttura
+			if (value > 1) { // diamo per scontato che la prima fase è la numero 1
+				// okok qui completo il metodo
+				// aggiungo al puntatore un link che accederà a questa fase
+				Parameter p_link = this.pointerCommand.addParam(phase.phaseName(), // forse non va bene
+						"Go to (" + j£.colors(phase.phaseName(), TerminalColors.PHASE_COLOR) + ") phase @");
+				// senza valore da input
+
+				// aggiungo l'esecuzione
+				p_link.setExecution(new Execution() {
+
+					@Override
+					public Object exec() {
+
+						// permetti l'accesso a questa fase appena impostata solo se
+
+						changePhase(phase);
+
+						return null;
+					}
+				});
+			}
+			// anche se la fase è la start mi serve attribuire una descrizione
+			Parameter p_link_desc = this.describerCommand.addParam(phase.phaseName(), "This parameter describes the ("
+					+ j£.colors(phase.phaseName(), TerminalColors.PHASE_COLOR) + ") phase @");
+			p_link_desc.setExecution(new Execution() {
+				@Override
+				public Object exec() {
+					StringBuffer buffer = new StringBuffer();
+					buffer.append("========================================================================\n");
+					buffer.append(
+							"Description of (" + j£.colors(phase.phaseName(), TerminalColors.PHASE_COLOR) + ")\n");
+					buffer.append("========================================================================\n");
+					buffer.append(phase.description() + ".\n\n");
+					List<Command> commands = phase.getCommands();
+					if (commands.size() > 0) {
+						buffer.append("# Supported commands :\n");
+					}
+					for (int i = 0; i < commands.size(); i++) {
+
+						buffer.append(
+								(i + 1) + ")" + j£.colors(commands.get(i).getCommand(), TerminalColors.COMMAND_COLOR)
+										+ "=" + commands.get(i).getHelp() + "\n");
+					}
+					buffer.append("========================================================================\n");
+					return buffer.toString();
+				}
+			});
+			return phase;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
 	public Phase createPhase(final int value, String phaseName, String phaseDescription, Command... commands) {
 
 		// verifico che non sia nessun phase con questo valore
