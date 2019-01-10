@@ -498,7 +498,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				// qui verifico se la fase successiva è accessibile
 
 				if (found.isAccessible()) {
-					return currentPhase =  found;
+					return currentPhase = found;
 				} else {
 					System.out.println(((LocalPhase) found).getAccessibilityRule().ruleExplanation());
 					return null;
@@ -760,6 +760,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		private static final long serialVersionUID = 12L;
 		private Rule accessibilityRule = null;
 		private Rule satisfiabilityRule = null;
+		// version 1.0.9
+		private When w = When.ALWAYS; // default value
 		private String phaseName = null;
 		private int value;
 		private boolean accessible = true;
@@ -770,7 +772,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		public Rule getSatisfiabilityRule() {
 			return this.satisfiabilityRule;
 		}
-		
+
 		@Override
 		public Rule getAccessibilityRule() {
 			return this.accessibilityRule;
@@ -926,6 +928,18 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 		public Execution getExecution() {
 			return this.execution;
+		}
+
+		@Override
+		public void validExecution(When when) {
+			// TODO Auto-generated method stub
+			this.w = when;
+		}
+
+		@Override
+		public When getHypothesis() {
+			// TODO Auto-generated method stub
+			return this.w;
 		}
 	}
 }
