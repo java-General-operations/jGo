@@ -7,12 +7,10 @@ import org.fusesource.jansi.Ansi.Color;
 
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.annotations.CommandClass;
+import cloud.jgo.utils.command.annotations.Configurable;
 import cloud.jgo.utils.command.color.ColorLocalCommand;
 @CommandClass(help = "Creates a Person", involveAll=true)
-public class Persona {
-
-	final String PERSON_="person"
-			+ "";
+public class Persona implements Configurable{
 	private String nome ;
 	private String cognome ;
 	private int eta ;
@@ -69,4 +67,24 @@ public class Persona {
 		}
 		return result ;
 	}
+	@Override
+	public String getTarget() {
+		// TODO Auto-generated method stub
+		return "persona";
+	}
+	@Override
+	public Class<? extends Configurable> getTargetType() {
+		// TODO Auto-generated method stub
+		return getClass();
+	}
+	@Override
+	public boolean isCompleted() {
+		if (this.nome!=null&&this.cognome!=null&&this.eta>0) {
+			return true ;
+		}
+		else {
+			return false ;
+		}
+	}
+	
 }

@@ -22,6 +22,8 @@
  */
 package cloud.jgo.utils.command.color;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Iterator;
@@ -37,6 +39,7 @@ import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
 import cloud.jgo.utils.command.annotations.InvalidClassException;
 import cloud.jgo.utils.command.annotations.CommandClass;
+import cloud.jgo.utils.command.annotations.Configurable;
 import cloud.jgo.utils.command.annotations.ParameterField;
 import cloud.jgo.utils.command.LocalCommand.HelpCommand;
 import cloud.jgo.utils.command.execution.Execution;
@@ -114,6 +117,31 @@ public class ColorLocalCommand extends LocalCommand {
 					count++;
 				}
 			}
+			// okok qui controllo se l'oggetto è una instanza di configurable
+						if (Configurable.class.isInstance(sharedObject)) {
+							// qui devo individuare i 3 metodi
+							Method[]methods = sharedObject.getClass().getDeclaredMethods();
+							for (Method method : methods) {
+								method.setAccessible(true);
+								if (method.getName().equals("isCompleted")) {
+									try {
+										boolean result = (boolean) method.invoke(sharedObject,new Object[] {});
+										if (!string.toString().endsWith("\n\n")) {
+											string.append("\n\n").append("* " + method.getName(), fieldNameColor).append("=", Color.WHITE)
+											.append(result + "", fieldValueColor).append("  ");
+										}
+										else {
+											string.append("* " + method.getName(), fieldNameColor).append("=", Color.WHITE)
+											.append(result + "", fieldValueColor).append("  ");
+										}
+									} catch (InvocationTargetException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+								// continuare da qui con gli altri due metodi di configurable ...
+							}
+						}
 			return string.toString() + "\n";
 		} else {
 			Class<?extends Object>superClass = sharedObject.getClass().getSuperclass();

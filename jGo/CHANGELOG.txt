@@ -220,3 +220,4 @@ Inoltre se in una fase a ci sono i comandi ac,ac2,ac3 e voglio creare un altra f
 - creato un nuovo comando nel terminale delle fasi, si tratta di "status".
 - creato il metodo cleanTerminal() per pulire il terminale
 - aggiunto nuovo metodo al punto di accesso jGo:execConnectingOutputChannel() - ottimo metodo
+- aggiunta nuova classe nel package delle annotazioni per i comandi:Configurable

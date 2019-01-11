@@ -23,6 +23,8 @@
 package cloud.jgo.utils.command;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,6 +38,7 @@ import cloud.jgo.j£;
 import cloud.jgo.£;
 import cloud.jgo.utils.command.annotations.InvalidClassException;
 import cloud.jgo.utils.command.annotations.CommandClass;
+import cloud.jgo.utils.command.annotations.Configurable;
 import cloud.jgo.utils.command.annotations.ParameterField;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
@@ -655,7 +658,10 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	/**
 	 * This method prints a report of all the fields of the shared object,
 	 * then tells us which variables have been set and which are not,
-	 * all this happens through reflection.
+	 * all this happens through reflection. Assuming that the class is noted, 
+	 * this method also checks if the class implements Configurable.
+	 * However, this is checked only if the class is noted, and not some super class.
+	 * @see Configurable
 	 * @param sharedObject the shared object
 	 * @return the shared object configuration
 	 * @throws IllegalArgumentException 1 exception
@@ -710,6 +716,25 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						.append(fieldValue + "").append("  ");
 					}
 					count++;
+				}
+			}
+			// okok qui controllo se l'oggetto è una instanza di configurable
+			if (Configurable.class.isInstance(sharedObject)) {
+				// qui devo individuare i 3 metodi
+				Method[]methods = sharedObject.getClass().getDeclaredMethods();
+				for (Method method : methods) {
+					method.setAccessible(true);
+					if (method.getName().equals("isCompleted")) {
+						try {
+							boolean result = (boolean) method.invoke(sharedObject,new Object[] {});
+							if (!string.toString().endsWith("\n\n")) string.append("\n\n").append("* "+method.getName()).append("=").append(result);
+							else string.append("* "+method.getName()).append("=").append(result);
+						} catch (InvocationTargetException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					// continuare da qui con gli altri due metodi di configurable ...
 				}
 			}
 			return string.toString() + "\n";
