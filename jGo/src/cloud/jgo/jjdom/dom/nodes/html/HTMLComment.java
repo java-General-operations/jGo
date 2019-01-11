@@ -38,7 +38,7 @@ import cloud.jgo.utils.command.annotations.CommandClass;
  * @author Martire91<br>
  *         This class represente the html comment
  */
-@CommandClass(command="HTMLComment", help = "This command creates an html comment",involveAll=true)
+@CommandClass(command="HTMLComment", help = "This command creates an html comment",involveAllFields=true)
 public class HTMLComment implements Comment, Home {
 	/**
 	 * 

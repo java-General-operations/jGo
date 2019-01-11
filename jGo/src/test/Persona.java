@@ -5,16 +5,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.fusesource.jansi.Ansi.Color;
 
+import cloud.jgo.£;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.annotations.CommandClass;
 import cloud.jgo.utils.command.annotations.Configurable;
+import cloud.jgo.utils.command.annotations.ParameterMethod;
 import cloud.jgo.utils.command.color.ColorLocalCommand;
-@CommandClass(help = "Creates a Person", involveAll=true)
+@CommandClass(help = "Creates a Person", involveAllFields=true)
 public class Persona implements Configurable{
 	private String nome ;
 	private String cognome ;
 	private int eta ;
 	private Double stipendio ;
+	
+	@ParameterMethod(help = "stampa la persona con un alert")
+	public void stampa() {
+		£.alert(this.nome+" "+this.cognome);
+	}
+	
+	@ParameterMethod(help = "stampa il nome della persona")
 	public String getNome() {
 		return nome;
 	}
@@ -85,6 +94,5 @@ public class Persona implements Configurable{
 		else {
 			return false ;
 		}
-	}
-	
+	}	
 }

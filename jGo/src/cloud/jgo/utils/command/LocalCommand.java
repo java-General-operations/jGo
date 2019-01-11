@@ -21,6 +21,7 @@
  * 
  */
 package cloud.jgo.utils.command;
+
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -40,6 +41,7 @@ import cloud.jgo.utils.command.annotations.InvalidClassException;
 import cloud.jgo.utils.command.annotations.CommandClass;
 import cloud.jgo.utils.command.annotations.Configurable;
 import cloud.jgo.utils.command.annotations.ParameterField;
+import cloud.jgo.utils.command.annotations.ParameterMethod;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
 import cloud.jgo.utils.command.terminal.Terminal;
@@ -50,7 +52,7 @@ import cloud.jgo.utils.command.terminal.phase.Phase;
  * @author Martire91<br>
  *         This class represents a local command from a terminal
  */
-public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>, Shareable, Comparable<LocalCommand>{
+public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>, Shareable, Comparable<LocalCommand> {
 	private static final long serialVersionUID = 1L;
 	private Execution execution = null;
 	protected String help = null;
@@ -66,24 +68,24 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	private Phase belongsTo = null;
 	// version 1.0.9 : da usare con le annotazioni
 	// variabile usata internamente
-	private static LocalCommand objCommand = null ;
-	public static <A> LocalCommand getCommandByObject(Class<A>a) {
-		//1 cosa controllo che sia una classe annotata
-		CommandClass commandAnnotation = null ;
+	private static LocalCommand objCommand = null;
+
+	public static <A> LocalCommand getCommandByObject(Class<?> a) {
+		// 1 cosa controllo che sia una classe annotata
+		CommandClass commandAnnotation = null;
 		if (a.isAnnotationPresent(CommandClass.class)) {
 			commandAnnotation = a.getDeclaredAnnotation(CommandClass.class);
 			if (commandAnnotation.command().equals("default")) {
-				objCommand = new LocalCommand(a.getSimpleName().toLowerCase(),commandAnnotation.help());
+				objCommand = new LocalCommand(a.getSimpleName().toLowerCase(), commandAnnotation.help());
+			} else {
+				objCommand = new LocalCommand(commandAnnotation.command(), commandAnnotation.help());
 			}
-			else {
-				objCommand = new LocalCommand(commandAnnotation.command(),commandAnnotation.help());	
-			}
-			//  parametro new : condivide l'oggetto
-			Parameter parameter = objCommand.addParam("new","This parameter instantiates the object");
+			// parametro new : condivide l'oggetto
+			Parameter parameter = objCommand.addParam("new", "This parameter instantiates the object");
 			parameter.setExecution(new Execution() {
 				@Override
 				public Object exec() {
-					Object obj=null;
+					Object obj = null;
 					try {
 						obj = a.newInstance();
 						objCommand.shareObject(obj);
@@ -96,35 +98,35 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						return e.getMessage();
 					}
 				}
-			});	
+			});
 			// qui proseguo con i campi
-			Field[]fields = a.getDeclaredFields();
-			if (commandAnnotation.involveAll()) {
+			Field[] fields = a.getDeclaredFields();
+			if (commandAnnotation.involveAllFields()) {
 				// qui trasformiamo tutti i fields in parametri
 				// tranne le costanti ovviamente
 				for (Field field : fields) {
 					field.setAccessible(true);
 					// verifico che il campo non sia una costante
 					if (!Modifier.isFinal(field.getModifiers())) {
-						Parameter param = objCommand.addParam(field.getName(),"set "+£.escp(field.getName())+"");
+						Parameter param = objCommand.addParam(field.getName(), "set " + £.escp(field.getName()) + "");
 						param.setInputValueExploitable(true);
 						param.setExecution(new Execution() {
 							@Override
 							public Object exec() {
-								if (param.getInputValue()!=null) {
-									
-									if (objCommand.getSharedObject()!=null) {
-										boolean setOk = false ;
+								if (param.getInputValue() != null) {
+
+									if (objCommand.getSharedObject() != null) {
+										boolean setOk = false;
 										String fieldValue = param.getInputValue();
 										// controllo il tipo del campo
-										
+
 										if (field.getType().isPrimitive()) {
-											// is a primitive 
+											// is a primitive
 											if (field.getType().getSimpleName().equals("int")) {
 												int value = Integer.parseInt(fieldValue);
 												try {
-													field.setInt(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setInt(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
@@ -132,12 +134,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
-											}
-											else if(field.getType().getSimpleName().equals("double")) {
+											} else if (field.getType().getSimpleName().equals("double")) {
 												double value = Double.parseDouble(fieldValue);
 												try {
-													field.setDouble(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setDouble(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
@@ -145,12 +146,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
-											}
-											else if(field.getType().getSimpleName().equals("float")) {
+											} else if (field.getType().getSimpleName().equals("float")) {
 												float value = Float.parseFloat(fieldValue);
 												try {
-													field.setFloat(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setFloat(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
@@ -158,12 +158,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
-											}
-											else if(field.getType().getSimpleName().equals("long")) {
+											} else if (field.getType().getSimpleName().equals("long")) {
 												long value = Long.parseLong(fieldValue);
 												try {
-													field.setLong(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setLong(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
@@ -171,12 +170,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
-											}
-											else if(field.getType().getSimpleName().equals("short")) {
+											} else if (field.getType().getSimpleName().equals("short")) {
 												short value = Short.parseShort(fieldValue);
 												try {
-													field.setShort(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setShort(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
@@ -184,12 +182,12 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
-											}
-											else if(field.getType().getSimpleName().equals("char")) {
-												if (fieldValue.length()==1) {
+											} else if (field.getType().getSimpleName().equals("char")) {
+												if (fieldValue.length() == 1) {
 													try {
-														field.setChar(objCommand.getSharedObject(),fieldValue.charAt(0));
-														setOk = true ;
+														field.setChar(objCommand.getSharedObject(),
+																fieldValue.charAt(0));
+														setOk = true;
 													} catch (IllegalArgumentException e) {
 														// TODO Auto-generated catch block
 														e.printStackTrace();
@@ -197,47 +195,46 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 														// TODO Auto-generated catch block
 														e.printStackTrace();
 													}
+												} else {
+													return "The \"" + field.getName()
+															+ "\" field requires a single character #";
 												}
-												else {
-												return "The \""+field.getName()+"\" field requires a single character #";
-												}
-											}
-											else if(field.getType().getSimpleName().equals("boolean")) {
+											} else if (field.getType().getSimpleName().equals("boolean")) {
 												short value = Short.parseShort(fieldValue);
 												try {
-													field.setShort(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setShort(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												} catch (IllegalAccessException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
-												}	
+												}
 											}
-										}
-										else {
+										} else {
 											// is an object
 											if (!field.getType().isArray()) {
-												
-												if (field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")) {
-												try {
-													field.set(objCommand.getSharedObject(),fieldValue);
-													setOk = true ;
-												} catch (IllegalArgumentException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
-												} catch (IllegalAccessException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
-												}
-												}
-												else {
+
+												if (field.getType().getSimpleName().equals("String")
+														|| field.getType().getSimpleName().equals("StringBuffer")) {
+													try {
+														field.set(objCommand.getSharedObject(), fieldValue);
+														setOk = true;
+													} catch (IllegalArgumentException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (IllegalAccessException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													}
+												} else {
 													// qui faccio il controllo del tipo di oggetto
 													if (field.getType().getSimpleName().equals("Integer")) {
 														try {
-															field.set(objCommand.getSharedObject(),Integer.parseInt(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Integer.parseInt(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -248,11 +245,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else if (field.getType().getSimpleName().equals("Double")) {
+													} else if (field.getType().getSimpleName().equals("Double")) {
 														try {
-															field.set(objCommand.getSharedObject(),Double.parseDouble(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Double.parseDouble(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -263,11 +260,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else if (field.getType().getSimpleName().equals("Float")) {
+													} else if (field.getType().getSimpleName().equals("Float")) {
 														try {
-															field.set(objCommand.getSharedObject(),Float.parseFloat(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Float.parseFloat(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -278,11 +275,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else if (field.getType().getSimpleName().equals("Long")) {
+													} else if (field.getType().getSimpleName().equals("Long")) {
 														try {
-															field.set(objCommand.getSharedObject(),Long.parseLong(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Long.parseLong(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -293,11 +290,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else if (field.getType().getSimpleName().equals("Short")) {
+													} else if (field.getType().getSimpleName().equals("Short")) {
 														try {
-															field.set(objCommand.getSharedObject(),Short.parseShort(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Short.parseShort(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -308,12 +305,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else if (field.getType().getSimpleName().equals("Character")) {
-														if (fieldValue.length()==1) {
+													} else if (field.getType().getSimpleName().equals("Character")) {
+														if (fieldValue.length() == 1) {
 															try {
-																field.set(objCommand.getSharedObject(),fieldValue);
-																setOk = true ;
+																field.set(objCommand.getSharedObject(), fieldValue);
+																setOk = true;
 															} catch (NumberFormatException e) {
 																// TODO Auto-generated catch block
 																e.printStackTrace();
@@ -324,15 +320,15 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 																// TODO Auto-generated catch block
 																e.printStackTrace();
 															}
+														} else {
+															return "The \"" + field.getName()
+																	+ "\" field requires a single character #";
 														}
-														else {
-															return "The \""+field.getName()+"\" field requires a single character #";
-														}
-													}
-													else if (field.getType().getSimpleName().equals("Boolean")) {
+													} else if (field.getType().getSimpleName().equals("Boolean")) {
 														try {
-															field.set(objCommand.getSharedObject(),Boolean.parseBoolean(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Boolean.parseBoolean(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -343,8 +339,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else {
+													} else {
 														// qui si tratta di un altro tipo di oggetto
 														// quindi gestire ....
 													}
@@ -353,12 +348,13 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 										}
 										if (setOk) {
 											// qui sappiamo che il settaggio è avvenuto, per cui posso controllare
-											boolean completed = false ;
-											if (a.isAssignableFrom(Configurable.class)) {
+											boolean completed = false;
+											if (Configurable.class.isAssignableFrom(a)) {
 												try {
-													Method method = a.getDeclaredMethod("isCompleted",null);
+													Method method = a.getDeclaredMethod("isCompleted", null);
 													try {
-														completed = (boolean) method.invoke(objCommand.sharedObject,new Object[]{});
+														completed = (boolean) method.invoke(objCommand.sharedObject,
+																new Object[] {});
 													} catch (IllegalAccessException e) {
 														// TODO Auto-generated catch block
 														e.printStackTrace();
@@ -377,50 +373,89 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													e.printStackTrace();
 												}
 											}
-											if (completed) return "The \""+field.getName()+"\" variable is set ( OK )\nObject config:completed";
-											else return "The \""+field.getName()+"\" variable is set ( OK )";	
-										}
-										else {
+											if (completed)
+												return "The \"" + field.getName() + "\" variable is set ( OK )\n"
+														+ "\t\t***************** Object config:completed *****************";
+											else
+												return "The \"" + field.getName() + "\" variable is set ( OK )";
+										} else {
 											// da verificare ...
-											return null ;
+											return null;
 										}
-									}
-									else {
+									} else {
 										// non esiste un oggetto condiviso
 										return "No instanced objects - use \"new\" param #";
 									}
 								}
-								return null ;
+								return null;
 							}
 						});
 					}
 				}
-			}
-			else {
+				// qui ... :
+				// prendo i metodi della classe : i metodi li filtro con l'annotazione
+				Method[] methods = a.getDeclaredMethods();
+				for (Method method : methods) {
+					method.setAccessible(true);
+					// controllo se è annotato questo metodo
+					if (method.isAnnotationPresent(ParameterMethod.class)) {
+						String help = method.getDeclaredAnnotation(ParameterMethod.class).help();
+						// creo il parametro
+						Parameter paraMethod = objCommand.addParam(method.getName(), help);
+						paraMethod.setExecution(new Execution() {
+
+							@Override
+							public Object exec() {
+
+								if (objCommand.getSharedObject() != null) {
+									Object return_ = null;
+									try {
+										return_ = method.invoke(objCommand.getSharedObject(), new Object[] {});
+									} catch (IllegalAccessException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IllegalArgumentException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (InvocationTargetException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+
+									return return_;
+								} else {
+									return "non-existent object #";
+								}
+							}
+						});
+					}
+				}
+			} else {
 				// quii invece filtriamo quali field devono essere parametri
 				for (Field field : fields) {
 					field.setAccessible(true);
 					// verifico se il campo è annotato
 					if (field.isAnnotationPresent(ParameterField.class)) {
-						Parameter param = objCommand.addParam(field.getName(),field.getAnnotation(ParameterField.class).help());
+						Parameter param = objCommand.addParam(field.getName(),
+								field.getAnnotation(ParameterField.class).help());
 						param.setInputValueExploitable(true);
 						param.setExecution(new Execution() {
 							@Override
 							public Object exec() {
-								if (param.getInputValue()!=null) {
-									
-									if (objCommand.getSharedObject()!=null) {
-										boolean setOk = false ;
+								if (param.getInputValue() != null) {
+
+									if (objCommand.getSharedObject() != null) {
+										boolean setOk = false;
 										String fieldValue = param.getInputValue();
 										// controllo il tipo del campo
-										
+
 										if (field.getType().isPrimitive()) {
-											// is a primitive 
+											// is a primitive
 											if (field.getType().getSimpleName().equals("int")) {
 												int value = Integer.parseInt(fieldValue);
 												try {
-													field.setInt(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setInt(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
@@ -428,12 +463,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
-											}
-											else if(field.getType().getSimpleName().equals("double")) {
+											} else if (field.getType().getSimpleName().equals("double")) {
 												double value = Double.parseDouble(fieldValue);
 												try {
-													field.setDouble(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setDouble(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
@@ -441,12 +475,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
-											}
-											else if(field.getType().getSimpleName().equals("float")) {
+											} else if (field.getType().getSimpleName().equals("float")) {
 												float value = Float.parseFloat(fieldValue);
 												try {
-													field.setFloat(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setFloat(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
@@ -454,12 +487,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
-											}
-											else if(field.getType().getSimpleName().equals("long")) {
+											} else if (field.getType().getSimpleName().equals("long")) {
 												long value = Long.parseLong(fieldValue);
 												try {
-													field.setLong(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setLong(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
@@ -467,12 +499,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
-											}
-											else if(field.getType().getSimpleName().equals("short")) {
+											} else if (field.getType().getSimpleName().equals("short")) {
 												short value = Short.parseShort(fieldValue);
 												try {
-													field.setShort(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setShort(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
@@ -480,12 +511,12 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
-											}
-											else if(field.getType().getSimpleName().equals("char")) {
-												if (fieldValue.length()==1) {
+											} else if (field.getType().getSimpleName().equals("char")) {
+												if (fieldValue.length() == 1) {
 													try {
-														field.setChar(objCommand.getSharedObject(),fieldValue.charAt(0));
-														setOk = true ;
+														field.setChar(objCommand.getSharedObject(),
+																fieldValue.charAt(0));
+														setOk = true;
 													} catch (IllegalArgumentException e) {
 														// TODO Auto-generated catch block
 														e.printStackTrace();
@@ -493,47 +524,46 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 														// TODO Auto-generated catch block
 														e.printStackTrace();
 													}
+												} else {
+													return "The \"" + field.getName()
+															+ "\" field requires a single character #";
 												}
-												else {
-												return "The \""+field.getName()+"\" field requires a single character #";
-												}
-											}
-											else if(field.getType().getSimpleName().equals("boolean")) {
+											} else if (field.getType().getSimpleName().equals("boolean")) {
 												short value = Short.parseShort(fieldValue);
 												try {
-													field.setShort(objCommand.getSharedObject(),value);
-													setOk = true ;
+													field.setShort(objCommand.getSharedObject(), value);
+													setOk = true;
 												} catch (IllegalArgumentException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												} catch (IllegalAccessException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
-												}	
+												}
 											}
-										}
-										else {
+										} else {
 											// is an object
 											if (!field.getType().isArray()) {
-												
-												if (field.getType().getSimpleName().equals("String")||field.getType().getSimpleName().equals("StringBuffer")) {
-												try {
-													field.set(objCommand.getSharedObject(),fieldValue);
-													setOk = true ;
-												} catch (IllegalArgumentException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
-												} catch (IllegalAccessException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
-												}
-												}
-												else {
+
+												if (field.getType().getSimpleName().equals("String")
+														|| field.getType().getSimpleName().equals("StringBuffer")) {
+													try {
+														field.set(objCommand.getSharedObject(), fieldValue);
+														setOk = true;
+													} catch (IllegalArgumentException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (IllegalAccessException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													}
+												} else {
 													// qui faccio il controllo del tipo di oggetto
 													if (field.getType().getSimpleName().equals("Integer")) {
 														try {
-															field.set(objCommand.getSharedObject(),Integer.parseInt(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Integer.parseInt(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -544,11 +574,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else if (field.getType().getSimpleName().equals("Double")) {
+													} else if (field.getType().getSimpleName().equals("Double")) {
 														try {
-															field.set(objCommand.getSharedObject(),Double.parseDouble(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Double.parseDouble(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -559,11 +589,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else if (field.getType().getSimpleName().equals("Float")) {
+													} else if (field.getType().getSimpleName().equals("Float")) {
 														try {
-															field.set(objCommand.getSharedObject(),Float.parseFloat(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Float.parseFloat(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -574,11 +604,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else if (field.getType().getSimpleName().equals("Long")) {
+													} else if (field.getType().getSimpleName().equals("Long")) {
 														try {
-															field.set(objCommand.getSharedObject(),Long.parseLong(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Long.parseLong(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -589,11 +619,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else if (field.getType().getSimpleName().equals("Short")) {
+													} else if (field.getType().getSimpleName().equals("Short")) {
 														try {
-															field.set(objCommand.getSharedObject(),Short.parseShort(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Short.parseShort(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -604,12 +634,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else if (field.getType().getSimpleName().equals("Character")) {
-														if (fieldValue.length()==1) {
+													} else if (field.getType().getSimpleName().equals("Character")) {
+														if (fieldValue.length() == 1) {
 															try {
-																field.set(objCommand.getSharedObject(),fieldValue);
-																setOk = true ;
+																field.set(objCommand.getSharedObject(), fieldValue);
+																setOk = true;
 															} catch (NumberFormatException e) {
 																// TODO Auto-generated catch block
 																e.printStackTrace();
@@ -620,15 +649,15 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 																// TODO Auto-generated catch block
 																e.printStackTrace();
 															}
+														} else {
+															return "The \"" + field.getName()
+																	+ "\" field requires a single character #";
 														}
-														else {
-															return "The \""+field.getName()+"\" field requires a single character #";
-														}
-													}
-													else if (field.getType().getSimpleName().equals("Boolean")) {
+													} else if (field.getType().getSimpleName().equals("Boolean")) {
 														try {
-															field.set(objCommand.getSharedObject(),Boolean.parseBoolean(fieldValue));
-															setOk = true ;
+															field.set(objCommand.getSharedObject(),
+																	Boolean.parseBoolean(fieldValue));
+															setOk = true;
 														} catch (NumberFormatException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
@@ -639,8 +668,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
-													}
-													else {
+													} else {
 														// qui si tratta di un altro tipo di oggetto
 														// quindi gestire ....
 													}
@@ -649,12 +677,13 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 										}
 										if (setOk) {
 											// qui sappiamo che il settaggio è avvenuto, per cui posso controllare
-											boolean completed = false ;
-											if (a.isAssignableFrom(Configurable.class)) {
+											boolean completed = false;
+											if (Configurable.class.isAssignableFrom(a)) {
 												try {
-													Method method = a.getDeclaredMethod("isCompleted",null);
+													Method method = a.getDeclaredMethod("isCompleted", null);
 													try {
-														completed = (boolean) method.invoke(objCommand.sharedObject,new Object[]{});
+														completed = (boolean) method.invoke(objCommand.sharedObject,
+																new Object[] {});
 													} catch (IllegalAccessException e) {
 														// TODO Auto-generated catch block
 														e.printStackTrace();
@@ -673,27 +702,63 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													e.printStackTrace();
 												}
 											}
-											if (completed) return "The \""+field.getName()+"\" variable is set ( OK )\nObject config:completed";
-											else return "The \""+field.getName()+"\" variable is set ( OK )";
-										}
-										else {
+											if (completed)
+												return "The \"" + field.getName() + "\" variable is set ( OK )\n"
+														+ "\t\t***************** Object config:completed *****************";
+											else
+												return "The \"" + field.getName() + "\" variable is set ( OK )";
+										} else {
 											// da verificare ...
-											return null ;
+											return null;
 										}
-									}
-									else {
+									} else {
 										// non esiste un oggetto condiviso
 										return "No instanced objects - use \"new\" param #";
 									}
 								}
-								return null ;
+								return null;
+							}
+						});
+					}
+				}
+				// qui ... :
+				// prendo i metodi della classe : i metodi li filtro con l'annotazione
+				Method[] methods = a.getDeclaredMethods();
+				for (Method method : methods) {
+					method.setAccessible(true);
+					// controllo se è annotato questo metodo
+					if (method.isAnnotationPresent(ParameterMethod.class)) {
+						String help = method.getDeclaredAnnotation(ParameterMethod.class).help();
+						// creo il parametro
+						Parameter paraMethod = objCommand.addParam(method.getName(), help);
+						paraMethod.setExecution(new Execution() {
+							@Override
+							public Object exec() {
+								if (objCommand.getSharedObject() != null) {
+									Object return_ = null;
+									try {
+										return_ = method.invoke(objCommand.getSharedObject(), new Object[] {});
+									} catch (IllegalAccessException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IllegalArgumentException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (InvocationTargetException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+
+									return return_;
+								} else {
+									return "non-existent object #";
+								}
 							}
 						});
 					}
 				}
 			}
-		}
-		else {
+		} else {
 			// dare una eccezzione
 			try {
 				throw new InvalidClassException(a);
@@ -702,55 +767,61 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 				e.printStackTrace();
 			}
 		}
-		return objCommand ;
+		return objCommand;
 	}
+
 	// version 1.0.9 : da segnalare ...
-	private static String toStringParamName = "to_string"; 
-	// version 1.0.9 : 
+	private static String toStringParamName = "to_string";
+
+	// version 1.0.9 :
 	/**
-	 * This method prints a report of all the fields of the shared object,
-	 * then tells us which variables have been set and which are not,
-	 * all this happens through reflection. Assuming that the class is noted, 
-	 * this method also checks if the class implements Configurable.
-	 * However, this is checked only if the class is noted, and not some super class.
+	 * This method prints a report of all the fields of the shared object, then
+	 * tells us which variables have been set and which are not, all this happens
+	 * through reflection. Assuming that the class is noted, this method also checks
+	 * if the class implements Configurable. However, this is checked only if the
+	 * class is noted, and not some super class.
+	 * 
 	 * @see Configurable
-	 * @param sharedObject the shared object
+	 * @param sharedObject
+	 *            the shared object
 	 * @return the shared object configuration
-	 * @throws IllegalArgumentException 1 exception
-	 * @throws IllegalAccessException 2 exception
+	 * @throws IllegalArgumentException
+	 *             1 exception
+	 * @throws IllegalAccessException
+	 *             2 exception
 	 */
 	public static String toString(Object sharedObject) throws IllegalArgumentException, IllegalAccessException {
 		StringBuffer string = new StringBuffer();
 		if (sharedObject.getClass().isAnnotationPresent(CommandClass.class)) {
 			string.append("-----------------------------------------------------------------------------------\n");
-			if (((CommandClass)sharedObject.getClass().getDeclaredAnnotation(CommandClass.class)).command().equals("default")) {
-				string.append(" " + sharedObject.getClass().getSimpleName()).append(" ~ Configuration\n");	
-			}
-			else {
-				//sharedObject.getClass().getSimpleName()
-				string.append(" " + ((CommandClass)sharedObject.getClass().getDeclaredAnnotation(CommandClass.class)).command()).append(" ~ Configuration\n");
+			if (((CommandClass) sharedObject.getClass().getDeclaredAnnotation(CommandClass.class)).command()
+					.equals("default")) {
+				string.append(" " + sharedObject.getClass().getSimpleName()).append(" ~ Configuration\n");
+			} else {
+				// sharedObject.getClass().getSimpleName()
+				string.append(" "
+						+ ((CommandClass) sharedObject.getClass().getDeclaredAnnotation(CommandClass.class)).command())
+						.append(" ~ Configuration\n");
 			}
 			string.append("-----------------------------------------------------------------------------------\n");
 			Class<?> clazz = sharedObject.getClass();
 			Field[] fields = clazz.getDeclaredFields();
 			int count = 0;
 			// here
-			if (((CommandClass) clazz
-					.getAnnotation(CommandClass.class)).involveAll()) {
+			if (((CommandClass) clazz.getAnnotation(CommandClass.class)).involveAllFields()) {
 				// qui vengono coinvolti tutti i parametri
 				for (Field field : fields) {
 					field.setAccessible(true);
-//					if (!Modifier.isFinal(field.getModifiers())) {
-						String fieldName = field.getName();
-						Object fieldValue = field.get(sharedObject);
-						if (count == 3) {
-							// si va a capo
-							count = 0;
-							string.append("\n\n");
-						}
-						string.append("* " + fieldName).append("=")
-						.append(fieldValue + "").append("  ");
-//					}
+					// if (!Modifier.isFinal(field.getModifiers())) {
+					String fieldName = field.getName();
+					Object fieldValue = field.get(sharedObject);
+					if (count == 3) {
+						// si va a capo
+						count = 0;
+						string.append("\n\n");
+					}
+					string.append("* " + fieldName).append("=").append(fieldValue + "").append("  ");
+					// }
 					count++;
 				}
 			} else {
@@ -764,8 +835,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 							count = 0;
 							string.append("\n\n");
 						}
-						string.append("* " + fieldName).append("=")
-						.append(fieldValue + "").append("  ");
+						string.append("* " + fieldName).append("=").append(fieldValue + "").append("  ");
 					}
 					count++;
 				}
@@ -773,14 +843,16 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			// okok qui controllo se l'oggetto è una instanza di configurable
 			if (Configurable.class.isInstance(sharedObject)) {
 				// qui devo individuare i 3 metodi
-				Method[]methods = sharedObject.getClass().getDeclaredMethods();
+				Method[] methods = sharedObject.getClass().getDeclaredMethods();
 				for (Method method : methods) {
 					method.setAccessible(true);
 					if (method.getName().equals("isCompleted")) {
 						try {
-							boolean result = (boolean) method.invoke(sharedObject,new Object[] {});
-							if (!string.toString().endsWith("\n\n")) string.append("\n\n").append("* "+method.getName()).append("=").append(result);
-							else string.append("* "+method.getName()).append("=").append(result);
+							boolean result = (boolean) method.invoke(sharedObject, new Object[] {});
+							if (!string.toString().endsWith("\n\n"))
+								string.append("\n\n").append("* " + method.getName()).append("=").append(result);
+							else
+								string.append("* " + method.getName()).append("=").append(result);
 						} catch (InvocationTargetException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -791,38 +863,40 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			}
 			return string.toString() + "\n";
 		} else {
-			Class<?extends Object>superClass = sharedObject.getClass().getSuperclass();
-			if (superClass!=null) {
+			Class<? extends Object> superClass = sharedObject.getClass().getSuperclass();
+			if (superClass != null) {
 				if (superClass.isAnnotationPresent(CommandClass.class)) {
-					string.append("-----------------------------------------------------------------------------------\n");
-					if (((CommandClass)superClass.getDeclaredAnnotation(CommandClass.class)).command().equals("default")) {
-						string.append(" " + superClass.getSimpleName()).append(" ~ Configuration\n");	
+					string.append(
+							"-----------------------------------------------------------------------------------\n");
+					if (((CommandClass) superClass.getDeclaredAnnotation(CommandClass.class)).command()
+							.equals("default")) {
+						string.append(" " + superClass.getSimpleName()).append(" ~ Configuration\n");
+					} else {
+						// sharedObject.getClass().getSimpleName()
+						string.append(
+								" " + ((CommandClass) superClass.getDeclaredAnnotation(CommandClass.class)).command())
+								.append(" ~ Configuration\n");
 					}
-					else {
-						//sharedObject.getClass().getSimpleName()
-						string.append(" " + ((CommandClass)superClass.getDeclaredAnnotation(CommandClass.class)).command()).append(" ~ Configuration\n");
-					}
-					string.append("-----------------------------------------------------------------------------------\n");
+					string.append(
+							"-----------------------------------------------------------------------------------\n");
 					Class<?> clazz = superClass;
 					Field[] fields = clazz.getDeclaredFields();
 					int count = 0;
 					// here
-					if (((CommandClass) superClass
-							.getAnnotation(CommandClass.class)).involveAll()) {
+					if (((CommandClass) superClass.getAnnotation(CommandClass.class)).involveAllFields()) {
 						// qui vengono coinvolti tutti i parametri
 						for (Field field : fields) {
 							field.setAccessible(true);
-//							if (!Modifier.isFinal(field.getModifiers())) {
-								String fieldName = field.getName();
-								Object fieldValue = field.get(sharedObject);
-								if (count == 3) {
-									// si va a capo
-									count = 0;
-									string.append("\n\n");
-								}
-								string.append("* " + fieldName).append("=")
-								.append(fieldValue + "").append("  ");
-//							}
+							// if (!Modifier.isFinal(field.getModifiers())) {
+							String fieldName = field.getName();
+							Object fieldValue = field.get(sharedObject);
+							if (count == 3) {
+								// si va a capo
+								count = 0;
+								string.append("\n\n");
+							}
+							string.append("* " + fieldName).append("=").append(fieldValue + "").append("  ");
+							// }
 							count++;
 						}
 					} else {
@@ -836,15 +910,13 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 									count = 0;
 									string.append("\n\n");
 								}
-								string.append("* " + fieldName).append("=")
-								.append(fieldValue + "").append("  ");
+								string.append("* " + fieldName).append("=").append(fieldValue + "").append("  ");
 							}
 							count++;
 						}
 					}
-				}
-				else {
-					string = null ;
+				} else {
+					string = null;
 					try {
 						throw new InvalidClassException(sharedObject.getClass());
 					} catch (InvalidClassException e) {
@@ -852,9 +924,8 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						e.printStackTrace();
 					}
 				}
-			}
-			else {
-				string = null ;
+			} else {
+				string = null;
 				try {
 					throw new InvalidClassException(sharedObject.getClass());
 				} catch (InvalidClassException e) {
@@ -863,8 +934,10 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 				}
 			}
 		}
-		if (string!=null) return string.toString() + "\n";
-		else return null ;
+		if (string != null)
+			return string.toString() + "\n";
+		else
+			return null;
 	}
 
 	public LocalCommand(String command, String help) {
@@ -874,21 +947,22 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		// setto l'help
 		this.helpCommand.reload(this);
 	}
-	
+
 	/**
-	 * This method is used to set the name of the parameter
-	 * that will take care of printing the "toString"
-	 * method of the shared object.
-	 * @param toStringParamName parameter name
+	 * This method is used to set the name of the parameter that will take care of
+	 * printing the "toString" method of the shared object.
+	 * 
+	 * @param toStringParamName
+	 *            parameter name
 	 */
 	public static void setToStringParamName(String toStringParamName) {
 		LocalCommand.toStringParamName = toStringParamName;
 	}
 
 	/**
-	 * This method is used to get the name of the parameter
- 	   that will take care of printing the "toString"
- 	   method of the shared object.
+	 * This method is used to get the name of the parameter that will take care of
+	 * printing the "toString" method of the shared object.
+	 * 
 	 * @return parameter name
 	 */
 	public static String getToStringParamName() {
@@ -1139,38 +1213,36 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		public void reload(LocalCommand command) {
 			this.command = command;
 			this.buffer = new StringBuffer();
-			buffer.append(
-					"===================================================================================\n");
+			buffer.append("===================================================================================\n");
 			buffer.append("HELP Of " + "\"" + this.command.command + "\" - Phase :"
 					+ ((LocalCommand) this.command).getBelongsTo() + "\n");
-			buffer.append(
-					"===================================================================================\n");
+			buffer.append("===================================================================================\n");
 
 			// qui devo prendere tutti i parameters
 			Collection<Parameter> collection = command.structure.values();
-			List<Parameter>orderParameters = command.sortParameters();
+			List<Parameter> orderParameters = command.sortParameters();
 			// qui ci sarà la descrizione del comando root
-			buffer.append(this.command.getHelp().toUpperCase() + "   / has input value ="+this.command.hasInputValueExploitable()+"\n\n");
-			if (orderParameters!=null) {
+			buffer.append(this.command.getHelp().toUpperCase() + "   / has input value ="
+					+ this.command.hasInputValueExploitable() + "\n\n");
+			if (orderParameters != null) {
 				buffer.append("* Parameters :" + orderParameters + " :\n\n");
 				if (this.command.hasParameters()) {
 					// ci sono parametri
 					// quindi qui devo prendere i params
-					Iterator<Parameter> iterator =orderParameters.iterator();
+					Iterator<Parameter> iterator = orderParameters.iterator();
 					while (iterator.hasNext()) {
 						Parameter param = iterator.next();
 						buffer.append(param.getParam() + "=" + param.getParameterHelp() + "  / has input value ="
 								+ param.hasInputValueExploitable() + "\n");
 					}
 				}
-			}
-			else {
+			} else {
 				buffer.append("* Parameters :" + collection + " :\n\n");
 				if (this.command.hasParameters()) {
 					// ci sono parametri
 					// quindi qui devo prendere i params
-					Iterator<Entry<String, Parameter>> iterator =command.iterator();
-					
+					Iterator<Entry<String, Parameter>> iterator = command.iterator();
+
 					while (iterator.hasNext()) {
 						Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter> entry = (Map.Entry<java.lang.String, cloud.jgo.utils.command.Parameter>) iterator
 								.next();
@@ -1178,18 +1250,21 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						buffer.append(param.getParam() + "=" + param.getParameterHelp() + "  / has input value ="
 								+ param.hasInputValueExploitable() + "\n");
 					}
-				}	
+				}
 			}
 		}
+
 		@Override
 		public int compareTo(HelpCommand arg0) {
 			return this.command.command.compareTo(arg0.command.command);
 		}
 
 	}
+
 	public void setExecution(Execution execution) {
 		this.execution = execution;
 	}
+
 	@Override
 	public Object execute() {
 		Object execute = null;
@@ -1198,53 +1273,55 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
-						if (getExecution()instanceof SharedExecution) {
-							((SharedExecution)getExecution()).setCurrentSharer(LocalCommand.this);
+						if (getExecution() instanceof SharedExecution) {
+							((SharedExecution) getExecution()).setCurrentSharer(LocalCommand.this);
 						}
 						switch (when) {
-						case ALWAYS:getExecution().exec();
-						break; 
+						case ALWAYS:
+							getExecution().exec();
+							break;
 						case IF_ACCESSIBLE:
 							// verifico che il comando abbia una fase
-							if (getBelongsTo()!=null) {
+							if (getBelongsTo() != null) {
 								if (getBelongsTo().isAccessible()) {
 									getExecution().exec();
 								}
 							}
 							break;
 						case IF_SATISFIED:
-							if (getBelongsTo()!=null) {
+							if (getBelongsTo() != null) {
 								if (getBelongsTo().isSatisfied()) {
 									getExecution().exec();
 								}
 							}
 							break;
-							// poi qui aggiornare, quando ci saranno nuovi "quando"
+						// poi qui aggiornare, quando ci saranno nuovi "quando"
 						}
 					}
 				}).start();
 			} else {
-				if (getExecution()instanceof SharedExecution) {
-					((SharedExecution)getExecution()).setCurrentSharer(this);
+				if (getExecution() instanceof SharedExecution) {
+					((SharedExecution) getExecution()).setCurrentSharer(this);
 				}
 				switch (when) {
-				case ALWAYS:execute = getExecution().exec();
-				break; 
+				case ALWAYS:
+					execute = getExecution().exec();
+					break;
 				case IF_ACCESSIBLE:
-					if (getBelongsTo()!=null) {
+					if (getBelongsTo() != null) {
 						if (getBelongsTo().isAccessible()) {
 							execute = getExecution().exec();
 						}
 					}
 					break;
 				case IF_SATISFIED:
-					if (getBelongsTo()!=null) {
+					if (getBelongsTo() != null) {
 						if (getBelongsTo().isSatisfied()) {
 							execute = getExecution().exec();
 						}
 					}
 					break;
-					// poi qui aggiornare, quando ci saranno nuovi "quando"
+				// poi qui aggiornare, quando ci saranno nuovi "quando"
 				}
 			}
 			return execute;
@@ -1581,8 +1658,8 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						if (getCommand.hasInputValueExploitable()) {
 							// controllo se di fatto c'è un valore da input
 							getCommand.setInputValue(rest);
-								// eseguo il comando
-								objectReturn = getCommand.execute();
+							// eseguo il comando
+							objectReturn = getCommand.execute();
 							if (objectReturn != null) {
 								commandReturnList.add(objectReturn);
 								objectReturn = commandReturnList;
@@ -2062,7 +2139,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			}
 		}
 	}
-	
+
 	@Override
 	public Parameter[] params() {
 		if (structure.values().toArray().length > 0) {
@@ -2102,40 +2179,41 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 		getHelpCommand().reload(this);
 	}
 
-	
 	@Override
 	public Parameter shareParameter(Parameter parameter) {
-		Parameter p = addParam(parameter.getOnlyParam(),parameter.getParameterHelp());
+		Parameter p = addParam(parameter.getOnlyParam(), parameter.getParameterHelp());
 		// adesso vado a prendere le info + importanti del parametro che ho ricevuto
 		p.setInputValueExploitable(parameter.hasInputValueExploitable());
-		p.shared = true ;
-		return p ;
+		p.shared = true;
+		return p;
 	}
 
 	@Override
 	public List<Parameter> getSharedParameters() {
-		List<Parameter>params = sortParameters();
-		List<Parameter>sharedParams = new ArrayList<>();
+		List<Parameter> params = sortParameters();
+		List<Parameter> sharedParams = new ArrayList<>();
 		for (int i = 0; i < params.size(); i++) {
 			if (params.get(i).shared) {
 				sharedParams.add(params.get(i));
 			}
 		}
-		return sharedParams ;
+		return sharedParams;
 	}
+
 	/**
 	 * This method returns the unshared parameters
+	 * 
 	 * @return the unshared parameters
 	 */
-	public List<Parameter>getUnSharedParameters(){
-		List<Parameter>params = sortParameters();
-		List<Parameter>unSharedParams = new ArrayList<>();
+	public List<Parameter> getUnSharedParameters() {
+		List<Parameter> params = sortParameters();
+		List<Parameter> unSharedParams = new ArrayList<>();
 		for (int i = 0; i < params.size(); i++) {
 			if (!params.get(i).shared) {
 				unSharedParams.add(params.get(i));
 			}
 		}
-		return unSharedParams ;
+		return unSharedParams;
 	}
 
 	@Override
@@ -2146,11 +2224,11 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 
 	@Override
 	public void shareItEntirely(Parameter parameter, SharedExecution execution) {
-		Parameter p = addParam(parameter.getOnlyParam(),parameter.getParameterHelp());
+		Parameter p = addParam(parameter.getOnlyParam(), parameter.getParameterHelp());
 		// adesso vado a prendere le info + importanti del parametro che ho ricevuto
 		p.setInputValueExploitable(parameter.hasInputValueExploitable());
 		p.setExecution(execution);
-		p.shared = true ;
+		p.shared = true;
 	}
 
 	@Override
@@ -2166,13 +2244,12 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	@Override
 	public When getHypothesis() {
 		// TODO Auto-generated method stub
-		return this.when  ;
+		return this.when;
 	}
 
 	@Override
 	public void validExecution(When w) {
-		this.when = w ;
+		this.when = w;
 	}
-	
-	
+
 }

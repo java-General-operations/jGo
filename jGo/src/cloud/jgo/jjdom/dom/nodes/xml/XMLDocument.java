@@ -45,7 +45,7 @@ import cloud.jgo.utils.command.annotations.CommandClass;
  * @author Martire91<br>
  *         This class represents an XML document
  */
-@CommandClass(command="XMLDocument", help = "This command creates an xml document", involveAll=true)
+@CommandClass(command="XMLDocument", help = "This command creates an xml document", involveAllFields=true)
 public class XMLDocument implements Document {
 	/**
 	 * 

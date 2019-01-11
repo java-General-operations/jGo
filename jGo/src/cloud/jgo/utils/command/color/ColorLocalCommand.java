@@ -83,7 +83,7 @@ public class ColorLocalCommand extends LocalCommand {
 			int count = 0;
 			// here
 			if (((CommandClass) clazz
-					.getAnnotation(CommandClass.class)).involveAll()) {
+					.getAnnotation(CommandClass.class)).involveAllFields()) {
 				// qui vengono coinvolti tutti i parametri
 				for (Field field : fields) {
 					field.setAccessible(true);
@@ -161,7 +161,7 @@ public class ColorLocalCommand extends LocalCommand {
 					int count = 0;
 					// here
 					if (((CommandClass) superClass
-							.getAnnotation(CommandClass.class)).involveAll()) {
+							.getAnnotation(CommandClass.class)).involveAllFields()) {
 						// qui vengono coinvolti tutti i parametri
 						for (Field field : fields) {
 							field.setAccessible(true);
@@ -221,7 +221,7 @@ public class ColorLocalCommand extends LocalCommand {
 	}
 	// variabile usata internamente
 	private static ColorLocalCommand objCommand = null ;
-	public static <A> ColorLocalCommand getCommandByObject(Class<A>a) {
+	public static <A> ColorLocalCommand getCommandByObject(Class<?>a) {
 		//1 cosa controllo che sia una classe annotata
 		CommandClass commandAnnotation = null ;
 		if (a.isAnnotationPresent(CommandClass.class)) {
@@ -253,7 +253,7 @@ public class ColorLocalCommand extends LocalCommand {
 			});	
 			// qui proseguo con i campi
 			Field[]fields = a.getDeclaredFields();
-			if (commandAnnotation.involveAll()) {
+			if (commandAnnotation.involveAllFields()) {
 				// qui trasformiamo tutti i fields in parametri
 				// tranne le costanti ovviamente
 				for (Field field : fields) {
@@ -506,7 +506,34 @@ public class ColorLocalCommand extends LocalCommand {
 											}
 										}
 										if (setOk) {
-											return ColorLocalPhaseTerminal.setOk(field.getName());
+											 // qui sappiamo che il settaggio è avvenuto, per cui posso controllare
+											boolean completed = false ;
+											if (Configurable.class.isAssignableFrom(a)) {
+												try {
+													Method method = a.getDeclaredMethod("isCompleted",null);
+													try {
+														completed = (boolean) method.invoke(objCommand.getSharedObject(),new Object[]{});
+													} catch (IllegalAccessException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (IllegalArgumentException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (InvocationTargetException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													}
+												} catch (NoSuchMethodException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (SecurityException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											if (completed) return ColorLocalPhaseTerminal.setOk(field.getName())+"\n"
+													+ j£.colors("\t\t***************** Object config:",Color.DEFAULT)+j£.colors("completed",Color.GREEN)+j£.colors(" *****************",Color.DEFAULT);
+											else return ColorLocalPhaseTerminal.setOk(field.getName());	
 										}
 										else {
 											// da verificare ...
@@ -776,7 +803,34 @@ public class ColorLocalCommand extends LocalCommand {
 											}
 										}
 										if (setOk) {
-											return "The \""+field.getName()+"\" variable is set ( OK )";
+											// qui sappiamo che il settaggio è avvenuto, per cui posso controllare
+											boolean completed = false ;
+											if (Configurable.class.isAssignableFrom(a)) {
+												try {
+													Method method = a.getDeclaredMethod("isCompleted",null);
+													try {
+														completed = (boolean) method.invoke(objCommand.getSharedObject(),new Object[]{});
+													} catch (IllegalAccessException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (IllegalArgumentException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (InvocationTargetException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													}
+												} catch (NoSuchMethodException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (SecurityException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											if (completed) return ColorLocalPhaseTerminal.setOk(field.getName())+"\n"
+													+ j£.colors("\t\t***************** Object config:",Color.DEFAULT)+j£.colors("completed",Color.GREEN)+j£.colors(" *****************",Color.DEFAULT);
+											else return ColorLocalPhaseTerminal.setOk(field.getName());	
 										}
 										else {
 											// da verificare ...
