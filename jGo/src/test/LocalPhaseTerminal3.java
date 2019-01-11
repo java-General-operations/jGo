@@ -17,7 +17,13 @@ import cloud.jgo.utils.command.terminal.phase.Rule;
 public class LocalPhaseTerminal3 {
 public static void main(String[] args) {
 	
-	// Ultimo test per oggi
+	// In pratica ci deve essere una classe che facilita questa cosa
+	
+	// per esempio una ConfObject - > oggetto configurazione che mette a disposizione i due metodi
+	
+	// 1 target : l'obbiettivo della configurazione sottoforma di stringa, quindi cosa si sta configurando
+	
+	// 2 isCompleted : indica se a la conf dell'oggetto è configurata o meno
 	
 	LocalTerminal terminal = new LocalTerminal();
 	
