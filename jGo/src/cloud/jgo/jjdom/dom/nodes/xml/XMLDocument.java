@@ -39,6 +39,7 @@ import cloud.jgo.jjdom.dom.nodes.html.HTMLDefaultElement;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
 import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
 import cloud.jgo.utils.command.annotations.CommandClass;
+import cloud.jgo.utils.command.annotations.ParameterMethod;
 
 /**
  * 
@@ -124,6 +125,7 @@ public class XMLDocument implements Document {
 		return this;
 	}
 
+	@ParameterMethod(help = "shows the document markup")
 	@Override
 	public String getMarkup() {
 		Recursion.examines_xml(this, xmlCode, this.charset);
@@ -138,6 +140,7 @@ public class XMLDocument implements Document {
 		return this;
 	}
 
+	@ParameterMethod(help = "shows the document path")
 	@Override
 	public String getPath() {
 		// TODO Auto-generated method stub

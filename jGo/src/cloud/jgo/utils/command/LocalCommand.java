@@ -402,32 +402,12 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						String help = method.getDeclaredAnnotation(ParameterMethod.class).help();
 						// creo il parametro
 						Parameter paraMethod = objCommand.addParam(method.getName(), help);
-						paraMethod.setExecution(new Execution() {
-
-							@Override
-							public Object exec() {
-
-								if (objCommand.getSharedObject() != null) {
-									Object return_ = null;
-									try {
-										return_ = method.invoke(objCommand.getSharedObject(), new Object[] {});
-									} catch (IllegalAccessException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (IllegalArgumentException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (InvocationTargetException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-
-									return return_;
-								} else {
-									return "non-existent object #";
-								}
-							}
-						});
+						// a questo punto devo verificare se il metodo ha parametri
+						if (method.getParameterCount()>0) {
+							// bene setto l'input sfruttabile
+							paraMethod.setInputValueExploitable(true);
+							// continuare da qui ...
+						}
 					}
 				}
 			} else {
