@@ -352,7 +352,33 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 											}
 										}
 										if (setOk) {
-											return "The \""+field.getName()+"\" variable is set ( OK )";
+											// qui sappiamo che il settaggio è avvenuto, per cui posso controllare
+											boolean completed = false ;
+											if (a.isAssignableFrom(Configurable.class)) {
+												try {
+													Method method = a.getDeclaredMethod("isCompleted",null);
+													try {
+														completed = (boolean) method.invoke(objCommand.sharedObject,new Object[]{});
+													} catch (IllegalAccessException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (IllegalArgumentException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (InvocationTargetException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													}
+												} catch (NoSuchMethodException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (SecurityException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											if (completed) return "The \""+field.getName()+"\" variable is set ( OK )\nObject config:completed";
+											else return "The \""+field.getName()+"\" variable is set ( OK )";	
 										}
 										else {
 											// da verificare ...
@@ -622,7 +648,33 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 											}
 										}
 										if (setOk) {
-											return "The \""+field.getName()+"\" variable is set ( OK )";
+											// qui sappiamo che il settaggio è avvenuto, per cui posso controllare
+											boolean completed = false ;
+											if (a.isAssignableFrom(Configurable.class)) {
+												try {
+													Method method = a.getDeclaredMethod("isCompleted",null);
+													try {
+														completed = (boolean) method.invoke(objCommand.sharedObject,new Object[]{});
+													} catch (IllegalAccessException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (IllegalArgumentException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (InvocationTargetException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													}
+												} catch (NoSuchMethodException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (SecurityException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											}
+											if (completed) return "The \""+field.getName()+"\" variable is set ( OK )\nObject config:completed";
+											else return "The \""+field.getName()+"\" variable is set ( OK )";
 										}
 										else {
 											// da verificare ...

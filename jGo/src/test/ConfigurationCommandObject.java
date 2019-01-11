@@ -24,10 +24,6 @@ public static void main(String[] args) {
 	terminal.addCommand(personCmd);
 	
 	terminal.open();
-	
-	
-	
-	
-	
+		
 }
 }
