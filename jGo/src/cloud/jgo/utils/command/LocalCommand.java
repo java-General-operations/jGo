@@ -35,6 +35,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.swing.JOptionPane;
+
 import cloud.jgo.j£;
 import cloud.jgo.£;
 import cloud.jgo.utils.command.annotations.InvalidClassException;
@@ -426,66 +429,69 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 							paraMethod.setExecution(new Execution() {
 								@Override
 								public Object exec() {
-									if (paraMethod.getInputValue()!=null) {
-										// quindi nell'input value ci devono essere
-										// paramsCount elementi
-										String[]split = paraMethod.getInputValue().split(" ");
-										if (split.length==paramsCount) {
-											// bene i parametri sono stati forniti correttamente
-											// adesso devo capire i tipi dei parametri
-											Class<?>[]paramTypes=method.getParameterTypes();
-											Object[]values = new Object[paramTypes.length];
-											for (int i = 0; i < paramTypes.length; i++) {
-												Class<?>type = paramTypes[i];
-												Object currentValue = null ;
-												if(type.isPrimitive()) {
-													if(type.getSimpleName().equals("int"))currentValue = Integer.parseInt(split[i]);
-													else if(type.getSimpleName().equals("double"))currentValue = Double.parseDouble(split[i]);
-													else if(type.getSimpleName().equals("float"))currentValue = Float.parseFloat(split[i]);
-													else if(type.getSimpleName().equals("short"))currentValue = Short.parseShort(split[i]);
-													else if(type.getSimpleName().equals("long"))currentValue = Long.parseLong(split[i]);
-													else if(type.getSimpleName().equals("boolean"))currentValue = Boolean.parseBoolean(split[i]);
-													else if(type.getSimpleName().equals("char"))currentValue = split[i].charAt(0);// provvisorio ...
+										if (paraMethod.getInputValue()!=null) {
+											// quindi nell'input value ci devono essere
+											// paramsCount elementi
+											String[]split = paraMethod.getInputValue().split(" ");
+											if (split.length==paramsCount) {
+												// bene i parametri sono stati forniti correttamente
+												// adesso devo capire i tipi dei parametri
+												Class<?>[]paramTypes=method.getParameterTypes();
+												Object[]values = new Object[paramTypes.length];
+												for (int i = 0; i < paramTypes.length; i++) {
+													Class<?>type = paramTypes[i];
+													Object currentValue = null ;
+													if(type.isPrimitive()) {
+														if(type.getSimpleName().equals("int"))currentValue = Integer.parseInt(split[i]);
+														else if(type.getSimpleName().equals("double"))currentValue = Double.parseDouble(split[i]);
+														else if(type.getSimpleName().equals("float"))currentValue = Float.parseFloat(split[i]);
+														else if(type.getSimpleName().equals("short"))currentValue = Short.parseShort(split[i]);
+														else if(type.getSimpleName().equals("long"))currentValue = Long.parseLong(split[i]);
+														else if(type.getSimpleName().equals("boolean"))currentValue = Boolean.parseBoolean(split[i]);
+														else if(type.getSimpleName().equals("char"))currentValue = split[i].charAt(0);// provvisorio ...
+													}
+													else if(type.isArray()) {
+														// da definire ...
+													}
+													else {
+														// is a object
+														if (type.getSimpleName().equals("String"))currentValue = split[i];
+														else if(type.getSimpleName().equals("StringBuffer"))currentValue = split[i];
+														else if(type.getSimpleName().equals("Integer"))currentValue = Integer.parseInt(split[i]);
+														else if(type.getSimpleName().equals("Double"))currentValue = Double.parseDouble(split[i]);
+														else if(type.getSimpleName().equals("Float"))currentValue = Float.parseFloat(split[i]);
+														else if(type.getSimpleName().equals("Short"))currentValue = Short.parseShort(split[i]);
+														else if(type.getSimpleName().equals("Long"))currentValue = Long.parseLong(split[i]);
+														else if(type.getSimpleName().equals("Boolean"))currentValue = Boolean.parseBoolean(split[i]);
+														else if(type.getSimpleName().equals("Character"))currentValue = split[i].charAt(0);// provvisorio ...
+													}
+													if (currentValue!=null) {
+														values[i] = currentValue;
+													}
 												}
-												else if(type.isArray()) {
-													// da definire ...
-												}
-												else {
-													// is a object
-													if (type.getSimpleName().equals("String"))currentValue = split[i];
-													else if(type.getSimpleName().equals("StringBuffer"))currentValue = split[i];
-													else if(type.getSimpleName().equals("Integer"))currentValue = Integer.parseInt(split[i]);
-													else if(type.getSimpleName().equals("Double"))currentValue = Double.parseDouble(split[i]);
-													else if(type.getSimpleName().equals("Float"))currentValue = Float.parseFloat(split[i]);
-													else if(type.getSimpleName().equals("Short"))currentValue = Short.parseShort(split[i]);
-													else if(type.getSimpleName().equals("Long"))currentValue = Long.parseLong(split[i]);
-													else if(type.getSimpleName().equals("Boolean"))currentValue = Boolean.parseBoolean(split[i]);
-													else if(type.getSimpleName().equals("Character"))currentValue = split[i].charAt(0);// provvisorio ...
-												}
-												if (currentValue!=null) {
-													values[i] = currentValue;
+												// okok qui abbiamo finito l'elaborazione, adesso possiamo eseguire il metodo
+												try {
+													return method.invoke(objCommand.getSharedObject(),values);
+												} catch (IllegalAccessException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IllegalArgumentException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (InvocationTargetException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
 												}
 											}
-											// okok qui abbiamo finito l'elaborazione, adesso possiamo eseguire il metodo
-											try {
-												return method.invoke(objCommand.getSharedObject(),values);
-											} catch (IllegalAccessException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											} catch (IllegalArgumentException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											} catch (InvocationTargetException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
+											else {
+												// qui invece i parametri non si trovano
+												// quindi o sn di più o di meno
+												return "Wrong number of parameters #";
 											}
 										}
 										else {
-											// qui invece i parametri non si trovano
-											// quindi o sn di più o di meno
-											return "Wrong number of parameters #";
+											JOptionPane.showMessageDialog(null,"Ci arriva");
 										}
-									}
 									return null ;
 								}
 							});
@@ -1938,7 +1944,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 
 													try {
 														field = obj.getClass().getDeclaredField(onlyParam);
-														field.setAccessible(true);
 													} catch (NoSuchFieldException e) {
 														// TODO Auto-generated catch block
 														e.printStackTrace();
@@ -1948,7 +1953,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													}
 
 													if (field != null) {
-
+														field.setAccessible(true);
 														// okok si è trovato
 														// questa variabile
 														// ora dobbiamo controllare se ha un valore

@@ -13,14 +13,11 @@ import cloud.jgo.utils.command.annotations.ParameterField;
 import cloud.jgo.utils.command.annotations.ParameterMethod;
 import cloud.jgo.utils.command.color.ColorLocalCommand;
 
-@CommandClass(help = "Creates a Person")
+@CommandClass(help = "Creates a Person",involveAllFields=true)
 public class Persona implements Configurable {
 	
-	@ParameterField(help = "nome")
 	private String nome;
-	@ParameterField(help = "cognome")
 	private String cognome;
-	@ParameterField(help = "età")
 	private int eta;
 	private Double stipendio;
 
