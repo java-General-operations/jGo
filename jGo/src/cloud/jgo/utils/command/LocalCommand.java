@@ -2013,12 +2013,14 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 														}
 														if (isMethod)
 														{
-															
-															// lavorare qui ...
-															
-															JOptionPane.showMessageDialog(null,"Arriva @");
-															
-															
+															m.setAccessible(true);
+															// per una questione di coerenza
+															// controlliamo se il metodo ha degli argomenti
+															if (m.getParameterCount()>0) {
+																objectReturn = "This parameter requires a value";
+																commandReturnList.add(objectReturn);
+																objectReturn = commandReturnList ;
+															}
 														}
 													}
 												} else {
