@@ -80,7 +80,10 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	 * {@link CommandClass}, moreover, the configurable interface can also be implemented,
 	 * which indicates when the configuration of a certain type of object is completed.
 	 * The parameters of the command, will be the fields and methods of the class,
-	 * obviously annotating everything with {@link ParameterField} and {@link ParameterMethod}
+	 * obviously annotating everything with {@link ParameterField} and {@link ParameterMethod}.
+	 * The symbol "£" acts as a space for the arguments (String) of a method, so to give as an
+	 * argument for example "Hello World", we will do: -methodName hello £ world £ !!
+	 * The final string will be: hello world !!
 	 * @see Configurable
 	 * @see CommandClass
 	 * @see ParameterField
@@ -455,8 +458,8 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													}
 													else {
 														// is a object
-														if (type.getSimpleName().equals("String"))currentValue = split[i];
-														else if(type.getSimpleName().equals("StringBuffer"))currentValue = split[i];
+														if (type.getSimpleName().equals("String"))currentValue = split[i].replaceAll("£"," ");
+														else if(type.getSimpleName().equals("StringBuffer"))currentValue = split[i].replaceAll("£"," ");
 														else if(type.getSimpleName().equals("Integer"))currentValue = Integer.parseInt(split[i]);
 														else if(type.getSimpleName().equals("Double"))currentValue = Double.parseDouble(split[i]);
 														else if(type.getSimpleName().equals("Float"))currentValue = Float.parseFloat(split[i]);
@@ -489,9 +492,6 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 												return "Wrong number of parameters #";
 											}
 										}
-										else {
-											JOptionPane.showMessageDialog(null,"Ci arriva");
-										}
 									return null ;
 								}
 							});
@@ -505,17 +505,22 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 								public Object exec() {
 									// TODO Auto-generated method stub
 									Object return_ = null ;
-									try {
-										return_ = method.invoke(objCommand.getSharedObject(),new Object[] {});
-									} catch (IllegalAccessException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (IllegalArgumentException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (InvocationTargetException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+									if (objCommand.getSharedObject()!=null) {
+										try {
+											return_ = method.invoke(objCommand.getSharedObject(),new Object[] {});
+										} catch (IllegalAccessException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (IllegalArgumentException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (InvocationTargetException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									}
+									else {
+										return_ = "non-existent object #";
 									}
 									return return_ ;
 								}

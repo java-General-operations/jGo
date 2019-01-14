@@ -11,7 +11,7 @@ import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 public class ConfigurationCommandObject {
 public static void main(String[] args) {
 	
-	// adesso voglio poter dare l'input ai metodi tramite parametro
+	
 		
 	LocalTerminal terminal = new LocalTerminal();
 
