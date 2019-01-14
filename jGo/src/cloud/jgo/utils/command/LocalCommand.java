@@ -70,7 +70,22 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	// variabile usata internamente
 	private static LocalCommand objCommand = null;
 
-	public static <A> LocalCommand getCommandByObject(Class<?> a) {
+	/**
+	 * This method is very useful.
+	 * Create a command to create a given type of object, 
+	 * so the command is the name of the class, appropriately annotated with
+	 * {@link CommandClass}, moreover, the configurable interface can also be implemented,
+	 * which indicates when the configuration of a certain type of object is completed.
+	 * The parameters of the command, will be the fields and methods of the class,
+	 * obviously annotating everything with {@link ParameterField} and {@link ParameterMethod}
+	 * @see Configurable
+	 * @see CommandClass
+	 * @see ParameterField
+	 * @see ParameterMethod
+	 * @param a The class you want to convert into command
+	 * @return the command
+	 */
+	public static <A> LocalCommand getCommandByType(Class<?> a) {
 		// 1 cosa controllo che sia una classe annotata
 		CommandClass commandAnnotation = null;
 		if (a.isAnnotationPresent(CommandClass.class)) {
@@ -801,8 +816,80 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 					// controllo se è annotato questo metodo
 					if (method.isAnnotationPresent(ParameterMethod.class)) {
 						String help = method.getDeclaredAnnotation(ParameterMethod.class).help();
+						int paramsCount = method.getParameterCount();
 						// creo il parametro
 						Parameter paraMethod = objCommand.addParam(method.getName(), help);
+						if (paramsCount>0) {
+							// il metodo ha dei parametri, quindi setto l'input value sfruttabile
+							paraMethod.setInputValueExploitable(true);
+							paraMethod.setExecution(new Execution() {
+								@Override
+								public Object exec() {
+									if (paraMethod.getInputValue()!=null) {
+										// quindi nell'input value ci devono essere
+										// paramsCount elementi
+										String[]split = paraMethod.getInputValue().split(" ");
+										if (split.length==paramsCount) {
+											// bene i parametri sono stati forniti correttamente
+											// adesso devo capire i tipi dei parametri
+											Class<?>[]paramTypes=method.getParameterTypes();
+											Object[]values = new Object[paramTypes.length];
+											for (int i = 0; i < paramTypes.length; i++) {
+												Class<?>type = paramTypes[i];
+												Object currentValue = null ;
+												if(type.isPrimitive()) {
+													if(type.getSimpleName().equals("int"))currentValue = Integer.parseInt(split[i]);
+													else if(type.getSimpleName().equals("double"))currentValue = Double.parseDouble(split[i]);
+													else if(type.getSimpleName().equals("float"))currentValue = Float.parseFloat(split[i]);
+													else if(type.getSimpleName().equals("short"))currentValue = Short.parseShort(split[i]);
+													else if(type.getSimpleName().equals("long"))currentValue = Long.parseLong(split[i]);
+													else if(type.getSimpleName().equals("boolean"))currentValue = Boolean.parseBoolean(split[i]);
+													else if(type.getSimpleName().equals("char"))currentValue = split[i].charAt(0);// provvisorio ...
+												}
+												else if(type.isArray()) {
+													// da definire ...
+												}
+												else {
+													// is a object
+													if (type.getSimpleName().equals("String"))currentValue = split[i];
+													else if(type.getSimpleName().equals("StringBuffer"))currentValue = split[i];
+													else if(type.getSimpleName().equals("Integer"))currentValue = Integer.parseInt(split[i]);
+													else if(type.getSimpleName().equals("Double"))currentValue = Double.parseDouble(split[i]);
+													else if(type.getSimpleName().equals("Float"))currentValue = Float.parseFloat(split[i]);
+													else if(type.getSimpleName().equals("Short"))currentValue = Short.parseShort(split[i]);
+													else if(type.getSimpleName().equals("Long"))currentValue = Long.parseLong(split[i]);
+													else if(type.getSimpleName().equals("Boolean"))currentValue = Boolean.parseBoolean(split[i]);
+													else if(type.getSimpleName().equals("Character"))currentValue = split[i].charAt(0);// provvisorio ...
+												}
+												if (currentValue!=null) {
+													values[i] = currentValue;
+												}
+											}
+											// okok qui abbiamo finito l'elaborazione, adesso possiamo eseguire il metodo
+											try {
+												return method.invoke(objCommand.getSharedObject(),values);
+											} catch (IllegalAccessException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IllegalArgumentException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (InvocationTargetException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+										else {
+											// qui invece i parametri non si trovano
+											// quindi o sn di più o di meno
+											return "Wrong number of parameters #";
+										}
+									}
+									return null ;
+								}
+							});
+						}
+						else {
 						paraMethod.setExecution(new Execution() {
 							@Override
 							public Object exec() {
@@ -827,6 +914,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 								}
 							}
 						});
+						}
 					}
 				}
 			}

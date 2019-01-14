@@ -21,7 +21,7 @@ public static void main(String[] args) {
 	
 	// okok mi creo i comandi :
 	
-	LocalCommand personCmd = LocalCommand.getCommandByObject(Persona.class);
+	LocalCommand personCmd = LocalCommand.getCommandByType(Persona.class);
 //	LocalCommand documentCmd = LocalCommand.getCommandByObject(XMLDocument.class);
 	
 	

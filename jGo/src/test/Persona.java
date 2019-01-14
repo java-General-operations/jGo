@@ -9,17 +9,22 @@ import cloud.jgo.£;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.annotations.CommandClass;
 import cloud.jgo.utils.command.annotations.Configurable;
+import cloud.jgo.utils.command.annotations.ParameterField;
 import cloud.jgo.utils.command.annotations.ParameterMethod;
 import cloud.jgo.utils.command.color.ColorLocalCommand;
 
-@CommandClass(help = "Creates a Person", involveAllFields = true)
+@CommandClass(help = "Creates a Person")
 public class Persona implements Configurable {
+	
+	@ParameterField(help = "nome")
 	private String nome;
+	@ParameterField(help = "cognome")
 	private String cognome;
+	@ParameterField(help = "età")
 	private int eta;
 	private Double stipendio;
 
-	@ParameterMethod(help = "stampa la persona con un alert")
+	@ParameterMethod(help = "stampa la persona con un alert - args=times,alertTitle")
 	public void stampa(int times, String alertTitle) {
 		for (int i = 0; i < times; i++) {
 			£.alert(this.nome + " " + this.cognome, alertTitle, JOptionPane.INFORMATION_MESSAGE, null);
