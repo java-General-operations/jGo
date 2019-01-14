@@ -103,6 +103,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 			}
 			// parametro new : condivide l'oggetto
 			Parameter parameter = objCommand.addParam("new", "This parameter instantiates the object");
+			Parameter cancelParameter = objCommand.addParam("cancel","This parameter cancels the object currently being processed, thus making it \"null\"");
 			parameter.setExecution(new Execution() {
 				@Override
 				public Object exec() {
@@ -117,6 +118,19 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 					} catch (IllegalAccessException e) {
 						// TODO Auto-generated catch block
 						return e.getMessage();
+					}
+				}
+			});
+			cancelParameter.setExecution(new Execution() {
+				
+				@Override
+				public Object exec() {
+					if (objCommand.getSharedObject()!=null) {
+						objCommand.shareObject(null);
+						return "Cancellation of the object ( OK )";
+					}
+					else {
+						return "No objects have been processed #";
 					}
 				}
 			});
@@ -432,67 +446,73 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 							paraMethod.setExecution(new Execution() {
 								@Override
 								public Object exec() {
-										if (paraMethod.getInputValue()!=null) {
-											// quindi nell'input value ci devono essere
-											// paramsCount elementi
-											String[]split = paraMethod.getInputValue().split(" ");
-											if (split.length==paramsCount) {
-												// bene i parametri sono stati forniti correttamente
-												// adesso devo capire i tipi dei parametri
-												Class<?>[]paramTypes=method.getParameterTypes();
-												Object[]values = new Object[paramTypes.length];
-												for (int i = 0; i < paramTypes.length; i++) {
-													Class<?>type = paramTypes[i];
-													Object currentValue = null ;
-													if(type.isPrimitive()) {
-														if(type.getSimpleName().equals("int"))currentValue = Integer.parseInt(split[i]);
-														else if(type.getSimpleName().equals("double"))currentValue = Double.parseDouble(split[i]);
-														else if(type.getSimpleName().equals("float"))currentValue = Float.parseFloat(split[i]);
-														else if(type.getSimpleName().equals("short"))currentValue = Short.parseShort(split[i]);
-														else if(type.getSimpleName().equals("long"))currentValue = Long.parseLong(split[i]);
-														else if(type.getSimpleName().equals("boolean"))currentValue = Boolean.parseBoolean(split[i]);
-														else if(type.getSimpleName().equals("char"))currentValue = split[i].charAt(0);// provvisorio ...
+									Object result = null ;
+										if (objCommand.getSharedObject()!=null) {
+											if (paraMethod.getInputValue()!=null) {
+												// quindi nell'input value ci devono essere
+												// paramsCount elementi
+												String[]split = paraMethod.getInputValue().split(" ");
+												if (split.length==paramsCount) {
+													// bene i parametri sono stati forniti correttamente
+													// adesso devo capire i tipi dei parametri
+													Class<?>[]paramTypes=method.getParameterTypes();
+													Object[]values = new Object[paramTypes.length];
+													for (int i = 0; i < paramTypes.length; i++) {
+														Class<?>type = paramTypes[i];
+														Object currentValue = null ;
+														if(type.isPrimitive()) {
+															if(type.getSimpleName().equals("int"))currentValue = Integer.parseInt(split[i]);
+															else if(type.getSimpleName().equals("double"))currentValue = Double.parseDouble(split[i]);
+															else if(type.getSimpleName().equals("float"))currentValue = Float.parseFloat(split[i]);
+															else if(type.getSimpleName().equals("short"))currentValue = Short.parseShort(split[i]);
+															else if(type.getSimpleName().equals("long"))currentValue = Long.parseLong(split[i]);
+															else if(type.getSimpleName().equals("boolean"))currentValue = Boolean.parseBoolean(split[i]);
+															else if(type.getSimpleName().equals("char"))currentValue = split[i].charAt(0);// provvisorio ...
+														}
+														else if(type.isArray()) {
+															// da definire ...
+														}
+														else {
+															// is a object
+															if (type.getSimpleName().equals("String"))currentValue = split[i].replaceAll("£"," ");
+															else if(type.getSimpleName().equals("StringBuffer"))currentValue = split[i].replaceAll("£"," ");
+															else if(type.getSimpleName().equals("Integer"))currentValue = Integer.parseInt(split[i]);
+															else if(type.getSimpleName().equals("Double"))currentValue = Double.parseDouble(split[i]);
+															else if(type.getSimpleName().equals("Float"))currentValue = Float.parseFloat(split[i]);
+															else if(type.getSimpleName().equals("Short"))currentValue = Short.parseShort(split[i]);
+															else if(type.getSimpleName().equals("Long"))currentValue = Long.parseLong(split[i]);
+															else if(type.getSimpleName().equals("Boolean"))currentValue = Boolean.parseBoolean(split[i]);
+															else if(type.getSimpleName().equals("Character"))currentValue = split[i].charAt(0);// provvisorio ...
+														}
+														if (currentValue!=null) {
+															values[i] = currentValue;
+														}
 													}
-													else if(type.isArray()) {
-														// da definire ...
-													}
-													else {
-														// is a object
-														if (type.getSimpleName().equals("String"))currentValue = split[i].replaceAll("£"," ");
-														else if(type.getSimpleName().equals("StringBuffer"))currentValue = split[i].replaceAll("£"," ");
-														else if(type.getSimpleName().equals("Integer"))currentValue = Integer.parseInt(split[i]);
-														else if(type.getSimpleName().equals("Double"))currentValue = Double.parseDouble(split[i]);
-														else if(type.getSimpleName().equals("Float"))currentValue = Float.parseFloat(split[i]);
-														else if(type.getSimpleName().equals("Short"))currentValue = Short.parseShort(split[i]);
-														else if(type.getSimpleName().equals("Long"))currentValue = Long.parseLong(split[i]);
-														else if(type.getSimpleName().equals("Boolean"))currentValue = Boolean.parseBoolean(split[i]);
-														else if(type.getSimpleName().equals("Character"))currentValue = split[i].charAt(0);// provvisorio ...
-													}
-													if (currentValue!=null) {
-														values[i] = currentValue;
+													// okok qui abbiamo finito l'elaborazione, adesso possiamo eseguire il metodo
+													try {
+														result =  method.invoke(objCommand.getSharedObject(),values);
+													} catch (IllegalAccessException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (IllegalArgumentException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
+													} catch (InvocationTargetException e) {
+														// TODO Auto-generated catch block
+														e.printStackTrace();
 													}
 												}
-												// okok qui abbiamo finito l'elaborazione, adesso possiamo eseguire il metodo
-												try {
-													return method.invoke(objCommand.getSharedObject(),values);
-												} catch (IllegalAccessException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
-												} catch (IllegalArgumentException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
-												} catch (InvocationTargetException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
+												else {
+													// qui invece i parametri non si trovano
+													// quindi o sn di più o di meno
+													result = "Wrong number of parameters #";
 												}
-											}
-											else {
-												// qui invece i parametri non si trovano
-												// quindi o sn di più o di meno
-												return "Wrong number of parameters #";
 											}
 										}
-									return null ;
+										else {
+											result = "non-existent object #";
+										}
+										return result ;
 								}
 							});
 						}
