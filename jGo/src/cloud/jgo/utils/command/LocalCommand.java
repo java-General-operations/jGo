@@ -1937,59 +1937,90 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 													// prendo il nome del parametro
 
 													String onlyParam = getParameter.getOnlyParam();
-
-													// ora vado a esaminare questo oggetto condiviso
-
-													Field field = null;
-
-													try {
-														field = obj.getClass().getDeclaredField(onlyParam);
-													} catch (NoSuchFieldException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
-													} catch (SecurityException e) {
-														// TODO Auto-generated catch block
-														e.printStackTrace();
+													
+													
+													// qui devo verificare se si tratta di un metodo
+													// o di un field
+													
+													Field[]fields = obj.getClass().getDeclaredFields();
+													Method[]methods = obj.getClass().getDeclaredMethods();
+													
+													boolean isField = false ;
+													boolean isMethod = false ;
+													
+													for (int j = 0; j < fields.length; j++) {
+														fields[j].setAccessible(true);
+														if (fields[j].getName().equals(onlyParam)) {
+															isField = true ;
+															break;
+														}
 													}
-
-													if (field != null) {
-														field.setAccessible(true);
-														// okok si è trovato
-														// questa variabile
-														// ora dobbiamo controllare se ha un valore
-														Object valueObj = null;
+													if (isField) {
+														// è un field il parametro
+														Field field = null;
 														try {
-															valueObj = field.get(obj);
-														} catch (IllegalArgumentException e) {
+															field = obj.getClass().getDeclaredField(onlyParam);
+														} catch (NoSuchFieldException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
-														} catch (IllegalAccessException e) {
+														} catch (SecurityException e) {
 															// TODO Auto-generated catch block
 															e.printStackTrace();
 														}
+															field.setAccessible(true);
+															// okok si è trovato
+															// questa variabile
+															// ora dobbiamo controllare se ha un valore
+															Object valueObj = null;
+															try {
+																valueObj = field.get(obj);
+															} catch (IllegalArgumentException e) {
+																// TODO Auto-generated catch block
+																e.printStackTrace();
+															} catch (IllegalAccessException e) {
+																// TODO Auto-generated catch block
+																e.printStackTrace();
+															}
 
-														// qua sia che è null oppure che abbia un valore
-														// noi stampiamo tale valore
+															// qua sia che è null oppure che abbia un valore
+															// noi stampiamo tale valore
 
-														if (valueObj != null) {
-															objectReturn = onlyParam + " = " + valueObj;
-															// System.out.println(objectReturn);
-															commandReturnList.add(objectReturn);
-															objectReturn = commandReturnList;
-														} else {
-															// qui stampo il valore nullo del valore della var
-															// e in più la stampa che ricorda che il param necessita
-															// di un valore
+															if (valueObj != null) {
+																objectReturn = onlyParam + " = " + valueObj;
+																// System.out.println(objectReturn);
+																commandReturnList.add(objectReturn);
+																objectReturn = commandReturnList;
+															} else {
+																// qui stampo il valore nullo del valore della var
+																// e in più la stampa che ricorda che il param necessita
+																// di un valore
 
-															objectReturn = onlyParam + " = " + valueObj
-																	+ "\nThis parameter requires a value";
-															// System.out.println(objectReturn);
-															commandReturnList.add(objectReturn);
-															objectReturn = commandReturnList;
-														}
-
+																objectReturn = onlyParam + " = " + valueObj
+																		+ "\nThis parameter requires a value";
+																// System.out.println(objectReturn);
+																commandReturnList.add(objectReturn);
+																objectReturn = commandReturnList;
+															}
 													}
-
+													else {
+														// potrebbe essere un metodo
+														Method m = null ;
+														for (int j = 0; j < methods.length; j++) {
+															methods[j].setAccessible(true);
+															if (methods[j].getName().equals(onlyParam)) {
+																m = methods[j];isMethod = true ;break;
+															}
+														}
+														if (isMethod)
+														{
+															
+															// lavorare qui ...
+															
+															JOptionPane.showMessageDialog(null,"Arriva @");
+															
+															
+														}
+													}
 												} else {
 													// qui vuol dire che non c'è un oggetto condiviso
 													objectReturn = "This parameter requires a value";
