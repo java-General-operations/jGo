@@ -22,12 +22,12 @@ public static void main(String[] args) {
 	// okok mi creo i comandi :
 	
 	LocalCommand personCmd = LocalCommand.getCommandByObject(Persona.class);
-	LocalCommand documentCmd = LocalCommand.getCommandByObject(XMLDocument.class);
+//	LocalCommand documentCmd = LocalCommand.getCommandByObject(XMLDocument.class);
 	
 	
 	// aggiungo i comandi al terminale 
 	
-	terminal.addCommands(personCmd,documentCmd);
+	terminal.addCommands(personCmd);
 	
 	terminal.open();
 		

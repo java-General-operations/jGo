@@ -402,11 +402,103 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 						String help = method.getDeclaredAnnotation(ParameterMethod.class).help();
 						// creo il parametro
 						Parameter paraMethod = objCommand.addParam(method.getName(), help);
+						int paramsCount = method.getParameterCount();
 						// a questo punto devo verificare se il metodo ha parametri
-						if (method.getParameterCount()>0) {
+						if (paramsCount>0) {
 							// bene setto l'input sfruttabile
 							paraMethod.setInputValueExploitable(true);
-							// continuare da qui ...
+							// mi creo l'esecuzione
+							paraMethod.setExecution(new Execution() {
+								@Override
+								public Object exec() {
+									if (paraMethod.getInputValue()!=null) {
+										// quindi nell'input value ci devono essere
+										// paramsCount elementi
+										String[]split = paraMethod.getInputValue().split(" ");
+										if (split.length==paramsCount) {
+											// bene i parametri sono stati forniti correttamente
+											// adesso devo capire i tipi dei parametri
+											Class<?>[]paramTypes=method.getParameterTypes();
+											Object[]values = new Object[paramTypes.length];
+											for (int i = 0; i < paramTypes.length; i++) {
+												Class<?>type = paramTypes[i];
+												Object currentValue = null ;
+												if(type.isPrimitive()) {
+													if(type.getSimpleName().equals("int"))currentValue = Integer.parseInt(split[i]);
+													else if(type.getSimpleName().equals("double"))currentValue = Double.parseDouble(split[i]);
+													else if(type.getSimpleName().equals("float"))currentValue = Float.parseFloat(split[i]);
+													else if(type.getSimpleName().equals("short"))currentValue = Short.parseShort(split[i]);
+													else if(type.getSimpleName().equals("long"))currentValue = Long.parseLong(split[i]);
+													else if(type.getSimpleName().equals("boolean"))currentValue = Boolean.parseBoolean(split[i]);
+													else if(type.getSimpleName().equals("char"))currentValue = split[i].charAt(0);// provvisorio ...
+												}
+												else if(type.isArray()) {
+													// da definire ...
+												}
+												else {
+													// is a object
+													if (type.getSimpleName().equals("String"))currentValue = split[i];
+													else if(type.getSimpleName().equals("StringBuffer"))currentValue = split[i];
+													else if(type.getSimpleName().equals("Integer"))currentValue = Integer.parseInt(split[i]);
+													else if(type.getSimpleName().equals("Double"))currentValue = Double.parseDouble(split[i]);
+													else if(type.getSimpleName().equals("Float"))currentValue = Float.parseFloat(split[i]);
+													else if(type.getSimpleName().equals("Short"))currentValue = Short.parseShort(split[i]);
+													else if(type.getSimpleName().equals("Long"))currentValue = Long.parseLong(split[i]);
+													else if(type.getSimpleName().equals("Boolean"))currentValue = Boolean.parseBoolean(split[i]);
+													else if(type.getSimpleName().equals("Character"))currentValue = split[i].charAt(0);// provvisorio ...
+												}
+												if (currentValue!=null) {
+													values[i] = currentValue;
+												}
+											}
+											// okok qui abbiamo finito l'elaborazione, adesso possiamo eseguire il metodo
+											try {
+												return method.invoke(objCommand.getSharedObject(),values);
+											} catch (IllegalAccessException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IllegalArgumentException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (InvocationTargetException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+										else {
+											// qui invece i parametri non si trovano
+											// quindi o sn di più o di meno
+											return "Wrong number of parameters #";
+										}
+									}
+									return null ;
+								}
+							});
+						}
+						else {
+							// non c'è valore da input
+							// qui facciamo una esecuzione semplice
+							paraMethod.setExecution(new Execution() {
+								
+								@Override
+								public Object exec() {
+									// TODO Auto-generated method stub
+									Object return_ = null ;
+									try {
+										return_ = method.invoke(objCommand.getSharedObject(),new Object[] {});
+									} catch (IllegalAccessException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IllegalArgumentException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (InvocationTargetException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									return return_ ;
+								}
+							});
 						}
 					}
 				}
