@@ -841,13 +841,16 @@ public final class JjDom implements jQuerySupport, Serializable {
 	public static HTMLDocument newDocument() {
 		if (documentTypeUsed==null) {
 			document = new HTMLDefaultDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
+			migrated = false ;
 		}
 		else {
 			if (documentTypeUsed.getSimpleName().equals("HTMLDefaultDocument")) {
 				document = new HTMLDefaultDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
+				migrated = false ;
 			}
 			else if(documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
 				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8,instance);
+				migrated = false ;
 			}
 			else {
 				// qui dare una eccezzione ...
@@ -867,13 +870,16 @@ public final class JjDom implements jQuerySupport, Serializable {
 	public static HTMLDocument newDocument(String charsetName) {
 		if (documentTypeUsed==null) {
 			document = new HTMLDefaultDocument(charsetName, null, instance);
+			migrated = false ;
 		}
 		else {
 			if (documentTypeUsed.getSimpleName().equals("HTMLDefaultDocument")) {
 				document = new HTMLDefaultDocument(charsetName, null, instance);
+				migrated = false ;
 			}
 			else if(documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
 				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8,instance);
+				migrated = false ;
 			}
 			else {
 				// qui dare una eccezzione ...
@@ -899,7 +905,9 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 * @return the html document
 	 */
 	public static HTMLDocument newVoidDocument(String charsetName) {
-		return document = HTMLDefaultDocument.newVoidDocument(charsetName, instance);
+		 document = HTMLDefaultDocument.newVoidDocument(charsetName, instance);
+		 migrated = false ;
+		 return document ;
 	}
 
 	/**
