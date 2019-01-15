@@ -52,7 +52,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	protected LocalCommand resetCommand = null;
 	protected LocalCommand describerCommand = null;
 	// version 1.0.9 : esegue solo le esecuzioni dei comandi, ma non dei parametri
-	protected static LocalCommand phasesExecutorCommand = new LocalCommand("rp",
+	protected static LocalCommand phasesExecutorCommand = new LocalCommand("phase-execute",
 			"This command executes a phase");
 	protected static LocalCommand statusCommand = new LocalCommand("status","View the report of the current phase");
 	public static LocalCommand getStatusCommand() {
@@ -506,7 +506,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				return obj; // qui restituisce sempre il risultato dell'ultima esecuzione eseguita appunto
 			}
 		});
-		this.pointerCommand = new LocalCommand("to", "This command points to a specific phase");
+		this.pointerCommand = new LocalCommand("phase-goto", "This command points to a specific phase");
 		this.describerCommand = new LocalCommand("describe", "This command describes a specific phase");
 		this.describerCommand.setExecution(new Execution() {
 

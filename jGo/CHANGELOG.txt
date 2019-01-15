@@ -226,3 +226,4 @@ Inoltre se in una fase a ci sono i comandi ac,ac2,ac3 e voglio creare un altra f
 lo spazio tra le stringhe.
 - bene quando eseguiamo una fase, possiamo eseguire le fasi precedenti a ques'ultima
 - nuovo metodo in JjDom - isMigrated()
+- nuovo metodo in JjDom - isDownloaded()

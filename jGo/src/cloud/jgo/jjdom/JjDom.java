@@ -349,6 +349,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 	public static List<jQuerySelector> availableSelectors = new ArrayList<jQuerySelector>();
 	// version 1.0.9
 	private static boolean migrated=false;
+	private static boolean downloaded = false ;
 	static {
 		// init-list
 		availableSelectors.add(jQuerySelector.VISIBLE);
@@ -515,7 +516,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 * @return the JjDom instance
 	 */
 	public static JjDom migrate(String urlResource) {
-		return migrate(urlResource, JjDom.document);
+		return migrate(urlResource, JjDom.document, true);
 	}
 
 	/**
@@ -526,9 +527,10 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 *            document URL
 	 * @param document
 	 *            the document
+	 * @param log notify if the upload has occurred
 	 * @return the JjDom instance
 	 */
-	public static JjDom migrate(String urlResource, Document document) {
+	public static JjDom migrate(String urlResource, Document document, boolean log) {
 		JjDom inst = null;
 		String dirUrl = null;
 		if (isConnected() && isAuthenticated()) {
@@ -565,8 +567,11 @@ public final class JjDom implements jQuerySupport, Serializable {
 			try {
 				ftp_client.upload(docFile);
 				ftp_client.upload(docFileSer);
-				System.out.println("Uploads completed successfully !!");
+				if (log) {
+					System.out.println("Uploads completed successfully !!");
+				}
 				migrated = true ;
+				downloaded = false ; // diciamo che se il documento è stato uplodato, non può risultare già scaricato
 				JjDom.documentURL = urlResource;
 				inst = instance;
 			} catch (IllegalStateException e) {
@@ -630,6 +635,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 				java.io.File serFile = new java.io.File("tmp.dat");
 				ftp_client.download(urlResource, serFile);
 				inst = JjDom.deserializes(serFile.getPath());
+				downloaded = true ;
 				if (inst instanceof HTMLDocument) {
 					JjDom.document = (HTMLDocument) inst;
 				}
@@ -695,6 +701,9 @@ public final class JjDom implements jQuerySupport, Serializable {
 	// version 1.0.9
 		public static boolean isMigrated() {
 			return migrated ;
+		}
+		public static boolean isDownloaded() {
+			return downloaded ;
 		}
 
 	/**
@@ -842,15 +851,18 @@ public final class JjDom implements jQuerySupport, Serializable {
 		if (documentTypeUsed==null) {
 			document = new HTMLDefaultDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
 			migrated = false ;
+			downloaded = false ;
 		}
 		else {
 			if (documentTypeUsed.getSimpleName().equals("HTMLDefaultDocument")) {
 				document = new HTMLDefaultDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
 				migrated = false ;
+				downloaded = false ;
 			}
 			else if(documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
 				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8,instance);
 				migrated = false ;
+				downloaded = false ;
 			}
 			else {
 				// qui dare una eccezzione ...
@@ -871,15 +883,18 @@ public final class JjDom implements jQuerySupport, Serializable {
 		if (documentTypeUsed==null) {
 			document = new HTMLDefaultDocument(charsetName, null, instance);
 			migrated = false ;
+			downloaded = false ;
 		}
 		else {
 			if (documentTypeUsed.getSimpleName().equals("HTMLDefaultDocument")) {
 				document = new HTMLDefaultDocument(charsetName, null, instance);
 				migrated = false ;
+				downloaded = false ;
 			}
 			else if(documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
 				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8,instance);
 				migrated = false ;
+				downloaded = false ;
 			}
 			else {
 				// qui dare una eccezzione ...
@@ -907,6 +922,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 	public static HTMLDocument newVoidDocument(String charsetName) {
 		 document = HTMLDefaultDocument.newVoidDocument(charsetName, instance);
 		 migrated = false ;
+		 downloaded = false ;
 		 return document ;
 	}
 
@@ -4023,7 +4039,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 * @return the JjDom instance
 	 */
 	public static JjDom update(Document document) {
-		return migrate(JjDom.documentURL, document);
+		return migrate(JjDom.documentURL, document, false);
 	}
 
 	// agisce sul documento di JjDom

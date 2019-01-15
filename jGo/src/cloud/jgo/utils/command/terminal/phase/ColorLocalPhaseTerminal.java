@@ -139,7 +139,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 					return error("NO current phase");
 			}
 		});
-		phasesExecutorCommand = new ColorLocalCommand("rp", "This command executes a phase");
+		phasesExecutorCommand = new ColorLocalCommand("phase-execute", "This command executes a phase");
 		phasesExecutorCommand.setInputValueExploitable(true);
 		phasesExecutorCommand.setExecution(new Execution() {
 
@@ -187,7 +187,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 				return obj;
 			}
 		});
-		this.pointerCommand = new ColorLocalCommand("to", "This command points to a specific phase");
+		this.pointerCommand = new ColorLocalCommand("phase-goto", "This command points to a specific phase");
 		this.describerCommand = new ColorLocalCommand("describe", "This command describes a specific phase");
 		this.describerCommand.setExecution(new Execution() {
 			@Override
