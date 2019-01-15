@@ -111,27 +111,32 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	public ColorLocalPhaseTerminal() {
 		// installo i componenti
 		AnsiConsole.systemInstall();
-		statusCommand = new ColorLocalCommand("status","View the report of the current phase");
+		statusCommand = new ColorLocalCommand("status", "View the report of the current phase");
 		statusCommand.setExecution(new Execution() {
 			@Override
 			public Object exec() {
 				ColorString string = new ColorString();
-				if (currentPhase!=null) {
-					string.append("\n\t\t|Current Phase > ").append(currentPhase.phaseName().toUpperCase(),TerminalColors.PHASE_COLOR).append("\n")
-					  .append("\t\t|Level = ").append(currentPhase.getValue()+"",Color.DEFAULT).append("\n")
-					  .append("\t\t|Accessible = ").append(currentPhase.isAccessible()+"",Color.DEFAULT).append("\n")
-					  .append("\t\t|Satisfied = ").append(currentPhase.isSatisfied()+"",Color.DEFAULT).append("\n")
-					  .append("\t\t|Supported commands = ").append(currentPhase.getCommands()+"",Color.DEFAULT);
-				if ((currentPhase).getAccessibilityRule()!=null) {
-					string.append("\n\t\t|Access-Rule = ").append((currentPhase).getAccessibilityRule().ruleExplanation());
-				}
-				if ((currentPhase).getSatisfiabilityRule()!=null) {
-					string.append("\n\t\t|Satisfaction-Rule = ").append((currentPhase).getSatisfiabilityRule().ruleExplanation());
-				}
-				string.append("\n");
-				return string.toString() ;	
-				}
-				else return error("NO current phase");
+				if (currentPhase != null) {
+					string.append("\n\t\t|Current Phase > ")
+							.append(currentPhase.phaseName().toUpperCase(), TerminalColors.PHASE_COLOR).append("\n")
+							.append("\t\t|Level = ").append(currentPhase.getValue() + "", Color.DEFAULT).append("\n")
+							.append("\t\t|Accessible = ").append(currentPhase.isAccessible() + "", Color.DEFAULT)
+							.append("\n").append("\t\t|Satisfied = ")
+							.append(currentPhase.isSatisfied() + "", Color.DEFAULT).append("\n")
+							.append("\t\t|Supported commands = ")
+							.append(currentPhase.getCommands() + "", Color.DEFAULT);
+					if ((currentPhase).getAccessibilityRule() != null) {
+						string.append("\n\t\t|Access-Rule = ")
+								.append((currentPhase).getAccessibilityRule().ruleExplanation());
+					}
+					if ((currentPhase).getSatisfiabilityRule() != null) {
+						string.append("\n\t\t|Satisfaction-Rule = ")
+								.append((currentPhase).getSatisfiabilityRule().ruleExplanation());
+					}
+					string.append("\n");
+					return string.toString();
+				} else
+					return error("NO current phase");
 			}
 		});
 		phasesExecutorCommand = new ColorLocalCommand("phases-executor", "This command executes a phase");
@@ -144,13 +149,39 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 				if (phasesExecutorCommand.getInputValue() != null) {
 					for (Phase current : phases) {
 						if (phasesExecutorCommand.getInputValue().equals(current.phaseName())) {
-							obj = current.execute();
+							int index = -1;
+							for (int i = 0; i < phases.size(); i++) {
+								if (phases.get(i).phaseName().equals(current.phaseName())
+										&& phases.get(i).getValue() == current.getValue()) {
+									index = i;
+									break;
+								}
+							}
+							if (index > -1) {
+								for (int j = 0; j <= index; j++) {
+									Phase p = phases.get(j);
+									obj = p.execute();
+								}
+							}
+							break;
 						}
 					}
-				} 
-				else{
-					if (currentPhase!=null) {
-						obj = currentPhase.execute();
+				} else {
+					if (currentPhase != null) {
+						int index = -1;
+						for (int i = 0; i < phases.size(); i++) {
+							if (phases.get(i).phaseName().equals(currentPhase.phaseName())
+									&& phases.get(i).getValue() == currentPhase.getValue()) {
+								index = i;
+								break;
+							}
+						}
+						if (index > -1) {
+							for (int j = 0; j <= index; j++) {
+								Phase p = phases.get(j);
+								obj = p.execute();
+							}
+						}
 					}
 				}
 				return obj;
@@ -194,7 +225,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 
 			}
 		});
-		addCommands(this.pointerCommand,this.describerCommand,phasesExecutorCommand,statusCommand);
+		addCommands(this.pointerCommand, this.describerCommand, phasesExecutorCommand, statusCommand);
 	}
 
 	@Override
@@ -232,24 +263,28 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 
 			Parameter phaseExecutionParam = phasesExecutorCommand.addParam(phase.phaseName(),
 					"executes the " + £.escp(phase.phaseName()) + " phase");
-			if (commands != null) {
+			phaseExecutionParam.setExecution(new Execution() {
 
-				phaseExecutionParam.setExecution(new Execution() {
-
-					@Override
-					public Object exec() {
-
-						List<Command> phaseCommands = phase.getCommands();
-
-						for (Command command : phaseCommands) {
-
-							System.out.println(command.execute());
-
+				@Override
+				public Object exec() {
+					Object obj = null;
+					int index = -1;
+					for (int i = 0; i < phases.size(); i++) {
+						if (phases.get(i).phaseName().equals(phase.phaseName())
+								&& phases.get(i).getValue() == phase.getValue()) {
+							index = i;
+							break;
 						}
-						return null;
 					}
-				});
-			}
+					if (index > -1) {
+						for (int j = 0; j <= index; j++) {
+							Phase p = phases.get(j);
+							obj = p.execute();
+						}
+					}
+					return obj;
+				}
+			});
 			// ]
 
 			// qui solo se non è la fase start, perchè non ci serve avere un riferimento a
@@ -331,24 +366,29 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 
 			Parameter phaseExecutionParam = phasesExecutorCommand.addParam(phase.phaseName(),
 					"executes the " + £.escp(phase.phaseName()) + " phase");
-			if (commands != null) {
 
-				phaseExecutionParam.setExecution(new Execution() {
+			phaseExecutionParam.setExecution(new Execution() {
 
-					@Override
-					public Object exec() {
-
-						List<Command> phaseCommands = phase.getCommands();
-
-						for (Command command : phaseCommands) {
-
-							System.out.println(command.execute());
-
+				@Override
+				public Object exec() {
+					Object obj = null;
+					int index = -1;
+					for (int i = 0; i < phases.size(); i++) {
+						if (phases.get(i).phaseName().equals(phase.phaseName())
+								&& phases.get(i).getValue() == phase.getValue()) {
+							index = i;
+							break;
 						}
-						return null;
 					}
-				});
-			}
+					if (index > -1) {
+						for (int j = 0; j <= index; j++) {
+							Phase p = phases.get(j);
+							obj = p.execute();
+						}
+					}
+					return obj;
+				}
+			});
 			// ]
 
 			// qui solo se non è la fase start, perchè non ci serve avere un riferimento a

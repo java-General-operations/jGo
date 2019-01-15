@@ -241,33 +241,28 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 			// se ci sono i comandi mi creo l'esecuzione del parametro che esegue la fase
 			// altrimenti abbiamo solo il parametro aggiunto al comando, ma senza esecuzione
-
-			if (commands != null) {
 				phaseExecutionParam.setExecution(new Execution() {
 
 					@Override
 					public Object exec() {
-						Object obj = null ;
-						int index = -1 ;
-						for (int i = 0; i < phases.size(); i++) {
-							if (phases.get(i).phaseName().equals(phase.phaseName())&&
-								phases.get(i).getValue()==phase.getValue())
-							{
-								index = i ;
-								break;
-							}
+					Object obj = null;
+					int index = -1;
+					for (int i = 0; i < phases.size(); i++) {
+						if (phases.get(i).phaseName().equals(phase.phaseName())
+								&& phases.get(i).getValue() == phase.getValue()) {
+							index = i;
+							break;
 						}
-						if (index>-1) {
-							for (int j = 0; j <= index; j++) {
-								Phase p = phases.get(j);
-								obj = p.execute();
-							}
+					}
+					if (index > -1) {
+						for (int j = 0; j <= index; j++) {
+							Phase p = phases.get(j);
+							obj = p.execute();
 						}
-						return obj ;
+					}
+					return obj;
 					}
 				});
-			}
-
 			// ]
 
 			// qui solo se non è la fase start, perchè non ci serve avere un riferimento a
