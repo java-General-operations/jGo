@@ -1,15 +1,21 @@
 package test;
 
+import org.fusesource.jansi.Ansi.Color;
+
+import cloud.jgo.jjdom.dom.DomColors;
 import cloud.jgo.jjdom.dom.nodes.xml.XMLDocument;
 import cloud.jgo.jjdom.dom.nodes.xml.color.XMLColorDocument;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
 import cloud.jgo.utils.command.Sharer;
+import cloud.jgo.utils.command.color.ColorLocalCommand;
 import cloud.jgo.utils.command.execution.Executable.When;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.Terminal;
+import cloud.jgo.utils.command.terminal.TerminalColors;
+import cloud.jgo.utils.command.terminal.phase.ColorLocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
 
@@ -21,8 +27,12 @@ public class PhaseExecutionTest {
 		// Adesso verificare ancora presenza di bug
 		// e dopodichè dobbiamo aggiornare lo stesso
 		// metodo però della sotto classe: ColorLocalCommand
+		
+		TerminalColors.PARAMETER_COLOR = Color.YELLOW;
+		TerminalColors.PHASE_COLOR = Color.MAGENTA;
+		TerminalColors.COMMAND_COLOR = Color.CYAN;
 
-		LocalPhaseTerminal t = new LocalPhaseTerminal("trm");
+		ColorLocalPhaseTerminal t = new ColorLocalPhaseTerminal();
 		t.useGeneralHelp();
 		LocalCommand.setInputHelpExploitable(true);
 
@@ -33,25 +43,21 @@ public class PhaseExecutionTest {
 		start = t.createPhase(1, "start", "inizio");
 		start.validExecution(When.NEVER); // imposto che la 1 fase non vuole eseguirsi mai
 		connection = t.createPhase(2, "connection", "connessione");
-		connection.validExecution(When.ALWAYS);
 		migration = t.createPhase(3, "migration", "migrazione");
-		migration.validExecution(When.ALWAYS);
 		download = t.createPhase(4, "download", "scaricamento");
-		download.validExecution(When.ALWAYS);
 		update = t.createPhase(5, "update", "aggiornamento");
-		update.validExecution(When.ALWAYS);
 
 		// bene adesso vogliamo attribuire a ognuna di questa fasi dei comandi
 		// bene
 
 		// commands :
 
-		LocalCommand connectCommand, migrateCommand, downloadCommand, updateCommand;
+		ColorLocalCommand connectCommand, migrateCommand, downloadCommand, updateCommand;
 
-		connectCommand = new LocalCommand("connect", "si connette");
-		migrateCommand = new LocalCommand("migrate", "migra il documento");
-		downloadCommand = new LocalCommand("download", "scarica il documento");
-		updateCommand = new LocalCommand("update", "aggiorna il documento in rete");
+		connectCommand = new ColorLocalCommand("connect", "si connette");
+		migrateCommand = new ColorLocalCommand("migrate", "migra il documento");
+		downloadCommand = new ColorLocalCommand("download", "scarica il documento");
+		updateCommand = new ColorLocalCommand("update", "aggiorna il documento in rete");
 
 		SharedExecution execution = new SharedExecution() {
 
