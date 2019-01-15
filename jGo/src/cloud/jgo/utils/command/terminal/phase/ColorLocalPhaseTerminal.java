@@ -219,7 +219,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	public LocalPhase createPhase(int value, String phaseName, String phaseDescription) {
 		// verifico che non sia nessun phase con questo valore
 		if (phase(value) == null && phase(phaseName) == null) {
-			LocalPhase phase = new LocalPhase(phaseName, value);
+			LocalPhase phase = new LocalPhase(phaseName, value, this);
 
 			((LocalPhase) phase).setDescription(phaseDescription);
 
@@ -314,7 +314,7 @@ public class ColorLocalPhaseTerminal extends LocalPhaseTerminal {
 	public LocalPhase createPhase(final int value, String phaseName, String phaseDescription, Command... commands) {
 		// verifico che non sia nessun phase con questo valore
 		if (phase(value) == null && phase(phaseName) == null) {
-			LocalPhase phase = new LocalPhase(phaseName, value);
+			LocalPhase phase = new LocalPhase(phaseName, value, this);
 
 			((LocalPhase) phase).setDescription(phaseDescription);
 

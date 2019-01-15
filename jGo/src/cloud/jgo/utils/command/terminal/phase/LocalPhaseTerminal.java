@@ -110,7 +110,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 		// verifico che non sia nessun phase con questo valore
 		if (phase(value) == null && phase(phaseName) == null) {
-			LocalPhase phase = new LocalPhase(phaseName, value);
+			LocalPhase phase = new LocalPhase(phaseName, value, this);
 			((LocalPhase) phase).setDescription(phaseDescription);
 
 			if (commands != null) {
@@ -214,7 +214,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	public LocalPhase createPhase(final int value, String phaseName, String phaseDescription) {
 		// verifico che non sia nessun phase con questo valore
 		if (phase(value) == null && phase(phaseName) == null) {
-			LocalPhase phase = new LocalPhase(phaseName, value);
+			LocalPhase phase = new LocalPhase(phaseName, value, this);
 
 			((LocalPhase) phase).setDescription(phaseDescription);
 
@@ -443,10 +443,24 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				else {
 					// qui verifico se c'è una fase corrente
 					if (currentPhase!=null) {
-						obj = currentPhase.execute();
+						int index = -1 ;
+						for (int i = 0; i < phases.size(); i++) {
+							if (phases.get(i).phaseName().equals(currentPhase.phaseName())&&
+								phases.get(i).getValue()==currentPhase.getValue())
+							{
+								index = i ;
+								break;
+							}
+						}
+						if (index>-1) {
+							for (int j = 0; j <= index; j++) {
+								Phase p = phases.get(j);
+								obj = p.execute();
+							}
+						}
 					}
 				}
-				return obj;
+				return obj; // qui restituisce sempre il risultato dell'ultima esecuzione eseguita appunto
 			}
 		});
 		this.pointerCommand = new LocalCommand("use", "This command points to a specific phase");
@@ -796,6 +810,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		private boolean accessible = true;
 		private boolean satisfied = true;
 		private String description = null;
+		private LocalPhaseTerminal t=null;
 
 		@Override
 		public Rule getSatisfiabilityRule() {
@@ -807,9 +822,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			return this.accessibilityRule;
 		}
 
-		public LocalPhase(String phaseName, int value) {
+		public LocalPhase(String phaseName, int value, LocalPhaseTerminal t) {
 			this.phaseName = phaseName;
 			this.value = value;
+			this.t = t ;
 			// nel momento in cui si crea una fase
 			// ecco che gli viene attribuita una
 			// esecuzione di default, che non potrà
