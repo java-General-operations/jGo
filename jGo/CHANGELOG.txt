@@ -224,3 +224,4 @@ Inoltre se in una fase a ci sono i comandi ac,ac2,ac3 e voglio creare un altra f
 - aggunto nuova annotazione:ParameterMethod
 - Quando vogliamo specificare un argomento stringa per un parametro din un metodo, usiamo il simbolo £ per fare 
 lo spazio tra le stringhe.
+- bene quando eseguiamo una fase, possiamo eseguire le fasi precedenti a ques'ultima

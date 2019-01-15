@@ -129,18 +129,29 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 			// se ci sono i comandi mi creo l'esecuzione del parametro che esegue la fase
 			// altrimenti abbiamo solo il parametro aggiunto al comando, ma senza esecuzione
-
-			if (commands != null) {
 				phaseExecutionParam.setExecution(new Execution() {
 
 					@Override
 					public Object exec() {
-
-						return phase.execute();
-
+						Object obj = null ;
+						int index = -1 ;
+						for (int i = 0; i < phases.size(); i++) {
+							if (phases.get(i).phaseName().equals(phase.phaseName())&&
+								phases.get(i).getValue()==phase.getValue())
+							{
+								index = i ;
+								break;
+							}
+						}
+						if (index>-1) {
+							for (int j = 0; j <= index; j++) {
+								Phase p = phases.get(j);
+								obj = p.execute();
+							}
+						}
+						return obj ;
 					}
 				});
-			}
 
 			// ]
 
@@ -236,9 +247,23 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 					@Override
 					public Object exec() {
-
-						return phase.execute();
-
+						Object obj = null ;
+						int index = -1 ;
+						for (int i = 0; i < phases.size(); i++) {
+							if (phases.get(i).phaseName().equals(phase.phaseName())&&
+								phases.get(i).getValue()==phase.getValue())
+							{
+								index = i ;
+								break;
+							}
+						}
+						if (index>-1) {
+							for (int j = 0; j <= index; j++) {
+								Phase p = phases.get(j);
+								obj = p.execute();
+							}
+						}
+						return obj ;
 					}
 				});
 			}
@@ -322,25 +347,33 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					break;
 				}
 			}
-			if (exist != null) {
-				// aggiorno l'esecuzione dei comandi aggiunti
-				exist.setExecution(new Execution() {
+			if (exist==null) {
+				// il parametro non esiste
+				// allora lo creo
+				Parameter p = phasesExecutorCommand.addParam(phase.phaseName(),"executes the " + £.escp(phase.phaseName()) + " phase");
+				p.setExecution(new Execution() {
 
 					@Override
 					public Object exec() {
-						List<Command> phaseCommands = phase.getCommands();
-
-						for (Command command : phaseCommands) {
-
-							System.out.println(command.execute());
-
+						Object obj = null ;
+						int index = -1 ;
+						for (int i = 0; i < phases.size(); i++) {
+							if (phases.get(i).phaseName().equals(phase.phaseName())&&
+								phases.get(i).getValue()==phase.getValue())
+							{
+								index = i ;
+								break;
+							}
 						}
-						return null;
+						if (index>-1) {
+							for (int j = 0; j <= index; j++) {
+								Phase p = phases.get(j);
+								obj = p.execute();
+							}
+						}
+						return obj ;
 					}
 				});
-			} else {
-				// vediamo piano piano se ci arriva qui ...
-				System.out.println("C'è arrivato ###");
 			}
 		}
 	}
@@ -436,7 +469,22 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				if (phasesExecutorCommand.getInputValue() != null) {
 					for (Phase current : phases) {
 						if (phasesExecutorCommand.getInputValue().equals(current.phaseName())) {
-							obj = current.execute();
+							int index = -1 ;
+							for (int i = 0; i < phases.size(); i++) {
+								if (phases.get(i).phaseName().equals(current.phaseName())&&
+									phases.get(i).getValue()==current.getValue())
+								{
+									index = i ;
+									break;
+								}
+							}
+							if (index>-1) {
+								for (int j = 0; j <= index; j++) {
+									Phase p = phases.get(j);
+									obj = p.execute();
+								}
+							}
+							break ;
 						}
 					}
 				}
