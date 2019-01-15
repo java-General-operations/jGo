@@ -347,6 +347,8 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 * version 1.0.7
 	 */
 	public static List<jQuerySelector> availableSelectors = new ArrayList<jQuerySelector>();
+	// version 1.0.9
+	private static boolean migrated=false;
 	static {
 		// init-list
 		availableSelectors.add(jQuerySelector.VISIBLE);
@@ -563,7 +565,8 @@ public final class JjDom implements jQuerySupport, Serializable {
 			try {
 				ftp_client.upload(docFile);
 				ftp_client.upload(docFileSer);
-				System.out.println("uploads completed successfully @");
+				System.out.println("Uploads completed successfully !!");
+				migrated = true ;
 				JjDom.documentURL = urlResource;
 				inst = instance;
 			} catch (IllegalStateException e) {
@@ -689,6 +692,10 @@ public final class JjDom implements jQuerySupport, Serializable {
 	public static boolean isConnected() {
 		return ftp_client.isConnected();
 	}
+	// version 1.0.9
+		public static boolean isMigrated() {
+			return migrated ;
+		}
 
 	/**
 	 * This method checks if the document is selected
