@@ -636,6 +636,8 @@ public final class JjDom implements jQuerySupport, Serializable {
 				ftp_client.download(urlResource, serFile);
 				inst = JjDom.deserializes(serFile.getPath());
 				downloaded = true ;
+				// quando il documento viene scaricato : impostiamo il migrated a false
+				migrated = false ;
 				if (inst instanceof HTMLDocument) {
 					JjDom.document = (HTMLDocument) inst;
 				}
