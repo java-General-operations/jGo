@@ -18,6 +18,7 @@ import cloud.jgo.utils.command.terminal.TerminalColors;
 import cloud.jgo.utils.command.terminal.phase.ColorLocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
+import cloud.jgo.utils.command.terminal.phase.Phase.PhaseExecutionType;
 
 public class PhaseExecutionTest {
 	public static void main(String[] args) {
@@ -28,11 +29,9 @@ public class PhaseExecutionTest {
 		// e dopodichè dobbiamo aggiornare lo stesso
 		// metodo però della sotto classe: ColorLocalCommand
 		
-		TerminalColors.PARAMETER_COLOR = Color.YELLOW;
-		TerminalColors.PHASE_COLOR = Color.MAGENTA;
-		TerminalColors.COMMAND_COLOR = Color.CYAN;
+		
 
-		ColorLocalPhaseTerminal t = new ColorLocalPhaseTerminal();
+		LocalPhaseTerminal t = new LocalPhaseTerminal("trm");
 		t.useGeneralHelp();
 		LocalCommand.setInputHelpExploitable(true);
 
@@ -52,12 +51,12 @@ public class PhaseExecutionTest {
 
 		// commands :
 
-		ColorLocalCommand connectCommand, migrateCommand, downloadCommand, updateCommand;
+		LocalCommand connectCommand, migrateCommand, downloadCommand, updateCommand;
 
-		connectCommand = new ColorLocalCommand("connect", "si connette");
-		migrateCommand = new ColorLocalCommand("migrate", "migra il documento");
-		downloadCommand = new ColorLocalCommand("download", "scarica il documento");
-		updateCommand = new ColorLocalCommand("update", "aggiorna il documento in rete");
+		connectCommand = new LocalCommand("connect", "si connette");
+		migrateCommand = new LocalCommand("migrate", "migra il documento");
+		downloadCommand = new LocalCommand("download", "scarica il documento");
+		updateCommand = new LocalCommand("update", "aggiorna il documento in rete");
 
 		SharedExecution execution = new SharedExecution() {
 

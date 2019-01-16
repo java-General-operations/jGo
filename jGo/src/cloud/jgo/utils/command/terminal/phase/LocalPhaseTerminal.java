@@ -133,23 +133,12 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 					@Override
 					public Object exec() {
-						Object obj = null ;
-						int index = -1 ;
-						for (int i = 0; i < phases.size(); i++) {
-							if (phases.get(i).phaseName().equals(phase.phaseName())&&
-								phases.get(i).getValue()==phase.getValue())
-							{
-								index = i ;
-								break;
-							}
-						}
-						if (index>-1) {
-							for (int j = 0; j <= index; j++) {
-								Phase p = phases.get(j);
-								obj = p.execute();
-							}
-						}
-						return obj ;
+						
+						
+						// da definire ...
+						
+						return null ;
+						
 					}
 				});
 
@@ -245,22 +234,12 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 					@Override
 					public Object exec() {
-					Object obj = null;
-					int index = -1;
-					for (int i = 0; i < phases.size(); i++) {
-						if (phases.get(i).phaseName().equals(phase.phaseName())
-								&& phases.get(i).getValue() == phase.getValue()) {
-							index = i;
-							break;
-						}
-					}
-					if (index > -1) {
-						for (int j = 0; j <= index; j++) {
-							Phase p = phases.get(j);
-							obj = p.execute();
-						}
-					}
-					return obj;
+					
+						
+						// da definire ...
+						
+						return null ;
+						
 					}
 				});
 			// ]
@@ -350,23 +329,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 					@Override
 					public Object exec() {
-						Object obj = null ;
-						int index = -1 ;
-						for (int i = 0; i < phases.size(); i++) {
-							if (phases.get(i).phaseName().equals(phase.phaseName())&&
-								phases.get(i).getValue()==phase.getValue())
-							{
-								index = i ;
-								break;
-							}
-						}
-						if (index>-1) {
-							for (int j = 0; j <= index; j++) {
-								Phase p = phases.get(j);
-								obj = p.execute();
-							}
-						}
-						return obj ;
+					
+							// da definire ...
+						
+						return null ;
 					}
 				});
 			}
@@ -460,50 +426,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 			@Override
 			public Object exec() {
-				Object obj = null;
-				if (phasesExecutorCommand.getInputValue() != null) {
-					for (Phase current : phases) {
-						if (phasesExecutorCommand.getInputValue().equals(current.phaseName())) {
-							int index = -1 ;
-							for (int i = 0; i < phases.size(); i++) {
-								if (phases.get(i).phaseName().equals(current.phaseName())&&
-									phases.get(i).getValue()==current.getValue())
-								{
-									index = i ;
-									break;
-								}
-							}
-							if (index>-1) {
-								for (int j = 0; j <= index; j++) {
-									Phase p = phases.get(j);
-									obj = p.execute();
-								}
-							}
-							break ;
-						}
-					}
-				}
-				else {
-					// qui verifico se c'è una fase corrente
-					if (currentPhase!=null) {
-						int index = -1 ;
-						for (int i = 0; i < phases.size(); i++) {
-							if (phases.get(i).phaseName().equals(currentPhase.phaseName())&&
-								phases.get(i).getValue()==currentPhase.getValue())
-							{
-								index = i ;
-								break;
-							}
-						}
-						if (index>-1) {
-							for (int j = 0; j <= index; j++) {
-								Phase p = phases.get(j);
-								obj = p.execute();
-							}
-						}
-					}
-				}
-				return obj; // qui restituisce sempre il risultato dell'ultima esecuzione eseguita appunto
+				
+				// da definire ...
+				
+				return null ;
 			}
 		});
 		this.pointerCommand = new LocalCommand("phase-goto", "This command points to a specific phase");
@@ -854,6 +780,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		private boolean satisfied = true;
 		private String description = null;
 		private LocalPhaseTerminal t=null;
+		private PhaseExecutionType type = PhaseExecutionType.ALL_COMMANDS; // default value - all commands
 
 		@Override
 		public Rule getSatisfiabilityRule() {
@@ -871,20 +798,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			this.t = t ;
 			// nel momento in cui si crea una fase
 			// ecco che gli viene attribuita una
-			// esecuzione di default, che non potrà
-			// + variare
-			this.execution = new Execution() {
-				@Override
-				public Object exec() {
-					for (Command phaseCommand : commands) {
-						Object obj = phaseCommand.execute();
-						if (obj!=null) {
-							System.out.println(obj);
-						}
-					}
-					return null;
-				}
-			};
+			// esecuzione di default,
+			this.execution = null ;
 		}
 
 		private List<Command> commands = new ArrayList<>();
@@ -1040,6 +955,31 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		public When getHypothesis() {
 			// TODO Auto-generated method stub
 			return this.w;
+		}
+
+		@Override
+		public LocalPhase setExecution(PhaseExecutionType type, Execution execution) {
+			switch(type) {
+			case ALL_COMMANDS:
+				
+				break;
+			case ALL_COMMANDS_AND_PARAMETERS:
+				
+				break;
+			case ALL_PHASES_UP_TO_HERE:
+				
+				break;
+			case FROM_CURRENT_PHASE_UP_TO_HERE:
+				
+				break;
+			case CUSTOM:
+				
+				break;
+				default:
+					
+					break;
+			}
+			return this ;
 		}
 	}
 }

@@ -27,6 +27,7 @@ import java.util.List;
 
 import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.execution.Executable;
+import cloud.jgo.utils.command.execution.Execution;
 
 // this is a product
 /**
@@ -34,7 +35,7 @@ import cloud.jgo.utils.command.execution.Executable;
  * @author Martire91<br>
  *         This interface represents a phase
  */
-public interface Phase extends Serializable, Executable{
+public interface Phase extends Serializable, Executable {
 	/**
 	 * This method returns the phase name
 	 * 
@@ -99,17 +100,30 @@ public interface Phase extends Serializable, Executable{
 	 * @return the phase description
 	 */
 	public abstract String description();
-	
+
 	/**
 	 * This method returns the satisfiability Rule
 	 * 
 	 * @return the satisfiability Rule
 	 */
-	public Rule getSatisfiabilityRule();
+	public abstract Rule getSatisfiabilityRule();
+
 	/**
 	 * This method returns the accessibility Rule
 	 * 
 	 * @return the accessibility Rule
 	 */
-	public Rule getAccessibilityRule();
+	public abstract Rule getAccessibilityRule();
+
+	// version 1.0.9												// valida solo se scegliamo CUSTOM
+	public abstract Phase setExecution(final PhaseExecutionType type,Execution execution); // comando molto importante
+	// version 1.0.9
+
+	public static enum PhaseExecutionType {
+		CUSTOM,
+		ALL_COMMANDS,
+		ALL_COMMANDS_AND_PARAMETERS,
+		ALL_PHASES_UP_TO_HERE,
+		FROM_CURRENT_PHASE_UP_TO_HERE
+	};
 }

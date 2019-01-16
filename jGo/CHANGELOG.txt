@@ -227,3 +227,4 @@ lo spazio tra le stringhe.
 - bene quando eseguiamo una fase, possiamo eseguire le fasi precedenti a ques'ultima
 - nuovo metodo in JjDom - isMigrated()
 - nuovo metodo in JjDom - isDownloaded()
+- Aggiunta nuova enum nell'interfaccia phase e nuovo metodo sempre in quest'ultima, per settare l'esecuzione della fase.
