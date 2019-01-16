@@ -969,7 +969,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			// TODO Auto-generated method stub
 			return this.w;
 		}
-
+		
 		private void executesAllPhasesUpToHere() {
 			this.execution = new Execution() {
 				
@@ -987,35 +987,19 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				}
 			};
 		}
-
+		// con questo metodo
 		@Override
 		public LocalPhase setExecution(Execution execution, PhaseExecutionType... types) {
-			if (types.length == 0)
-				return null;
-			for (PhaseExecutionType phaseExecutionType : types) {
-				switch (phaseExecutionType) {
-				case ALL_COMMANDS:
-					executesAllPhasesUpToHere(); // questo metodo esegue tutti i comandi fino a questa fase
-					break;
-				case ALL_COMMANDS_AND_PARAMETERS:
-					System.out.println("all commands and params");
-					break;
-				case ALL_PHASES_UP_TO_HERE:
-					System.out.println("all phases up to here");
-					break;
-				case CUSTOM:
-					if(execution==null)return null ;
-					else this.execution = execution ;
-					break;
-				case FROM_CURRENT_PHASE_UP_TO_HERE:
-					System.out.println("dalla corrente fino a qui");
-					break;
-				default:
-					break;
+			if (types.length == 0)return null;
+			else {
+				for (PhaseExecutionType phaseExecutionType : types) {
+					if (phaseExecutionType.equals(PhaseExecutionType.CUSTOM)) {
+						if(execution==null)return null ;
+					}
 				}
 			}
-			this.types = types;
-			return this;
+			// se arriva fin qui, aggiorniamo i tipi di esecuzione per questa fase
+			this.types = types;return this;
 		}
 
 		@Override
