@@ -136,9 +136,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				@Override
 				public Object exec() {
 
-					// da definire ...
-
-					return null;
+					return phase.execute();
 
 				}
 			});
@@ -238,7 +236,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 					// da definire ...
 
-					return null;
+					return phase.execute();
 
 				}
 			});
@@ -331,9 +329,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					@Override
 					public Object exec() {
 
-						// da definire ...
-
-						return null;
+						return phase.execute();
 					}
 				});
 			}
@@ -427,12 +423,26 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		// qui imposto l'esecuzione del comando che esegue le fasi
 		phasesExecutorCommand.setInputValueExploitable(true);
 		phasesExecutorCommand.setExecution(new Execution() {
-
 			@Override
 			public Object exec() {
-
-				// da definire ...
-
+				if(phasesExecutorCommand.getInputValue()!=null) {
+					// abbiamo una fase specificata da input 
+					String phaseName = phasesExecutorCommand.getInputValue();
+					Object return_ = null ;
+					for(Phase phase:phases) {
+						if (phase.phaseName().equals(phaseName)) {
+							return_=phase.execute();
+							break;
+						}
+					}
+					return return_ ;
+				}
+				else {
+					// qui dobbiamo verificare se vi è una fase corrente
+					if (currentPhase!=null) {
+						return currentPhase.execute();
+					}
+				}// se arriva qui restituisce :
 				return null;
 			}
 		});
@@ -784,8 +794,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		private boolean satisfied = true;
 		private String description = null;
 		private LocalPhaseTerminal t = null;
-		@SuppressWarnings("static-access")
-		private PhaseExecutionType[] types = { PhaseExecutionType.ALL_COMMANDS,PhaseExecutionType.FROM_CURRENT_PHASE_UP_TO_HERE};
+		// version 1.0.9
+		private PhaseExecutionType[] types = {PhaseExecutionType.ALL_COMMANDS, PhaseExecutionType.ALL_PHASES_UP_TO_HERE};
 
 		@Override
 		public Rule getSatisfiabilityRule() {
@@ -969,10 +979,9 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			// TODO Auto-generated method stub
 			return this.w;
 		}
-		
-		private void executesAllPhasesUpToHere() {
-			this.execution = new Execution() {
-				
+
+		private Execution executesAllPhasesUpToHere() {
+			return this.execution = new Execution() {
 				@Override
 				public Object exec() {
 					Object obj = null ;
@@ -987,19 +996,72 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				}
 			};
 		}
-		// con questo metodo
+
 		@Override
 		public LocalPhase setExecution(Execution execution, PhaseExecutionType... types) {
-			if (types.length == 0)return null;
-			else {
-				for (PhaseExecutionType phaseExecutionType : types) {
-					if (phaseExecutionType.equals(PhaseExecutionType.CUSTOM)) {
-						if(execution==null)return null ;
-					}
+			if (types.length == 0)
+				return null;
+			for (PhaseExecutionType phaseExecutionType : types) {
+				switch (phaseExecutionType) {
+				case ALL_COMMANDS:
+					// coinvolgo i comandi :
+					this.execution = new Execution() {
+						// PROVVISORIA @
+						@Override
+						public Object exec() {
+							Object obj=null ;
+							for(Command command:getCommands()) {
+								obj = command.execute();
+								if (obj!=null) {
+									System.out.println(obj);
+								}
+							}
+							return null;
+						}
+					};
+					break;
+				case ALL_COMMANDS_AND_PARAMETERS:
+					// coinvolgo comandi e parametri :
+					this.execution = new Execution() {
+						
+						@Override
+						public Object exec() {
+							Object obj,obj2;
+							obj = null ;obj2 = null;
+							for(Command command:getCommands()) {
+								obj = command.execute();
+								if (obj!=null) {
+									System.out.println(obj);
+								}
+								// params execution :
+								for (Parameter param :command.params()) {
+									obj2 = param.execute();
+									if (obj2!=null) {
+										System.out.println(obj2);
+									}
+								}
+							}
+							return null ;
+						}
+					};
+					break;
+				case ALL_PHASES_UP_TO_HERE:
+					// qui va gestita, poichè se l'esecuzione è stata anche impostata
+					// su tutti i comandi per dire, qui perde il suo valore e quindi
+					// quando mediante il metodo qui sotto eseguiamo le fasi, in realtà
+					// l'esecuzione delle fasi è nulla.Gestire.
+					this.execution = executesAllPhasesUpToHere();
+					break;
+				case CUSTOM:
+					if(execution==null)return null ;
+					else this.execution = execution;
+					break;
+				default:
+					break;
 				}
 			}
-			// se arriva fin qui, aggiorniamo i tipi di esecuzione per questa fase
-			this.types = types;return this;
+			this.types = types;
+			return this;
 		}
 
 		@Override

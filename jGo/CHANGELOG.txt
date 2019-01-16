@@ -228,3 +228,4 @@ lo spazio tra le stringhe.
 - nuovo metodo in JjDom - isMigrated()
 - nuovo metodo in JjDom - isDownloaded()
 - Aggiunta nuova enum nell'interfaccia phase e nuovo metodo sempre in quest'ultima, per settare l'esecuzione della fase.
+- La localPhase adesso ha come campo, un array di tipo :PhaseExecutionType

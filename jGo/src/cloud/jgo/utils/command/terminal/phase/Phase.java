@@ -124,6 +124,5 @@ public interface Phase extends Serializable, Executable {
 		ALL_COMMANDS,
 		ALL_COMMANDS_AND_PARAMETERS,
 		ALL_PHASES_UP_TO_HERE,
-		FROM_CURRENT_PHASE_UP_TO_HERE
 	}
 }
