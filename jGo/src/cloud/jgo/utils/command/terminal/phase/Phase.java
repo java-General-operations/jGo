@@ -116,14 +116,14 @@ public interface Phase extends Serializable, Executable {
 	public abstract Rule getAccessibilityRule();
 
 	// version 1.0.9												// valida solo se scegliamo CUSTOM
-	public abstract Phase setExecution(final PhaseExecutionType type,Execution execution); // comando molto importante
-	public abstract PhaseExecutionType getExecutionType();
+	public abstract Phase setExecution(Execution execution,final PhaseExecutionType...types); // comando molto importante
+	public abstract PhaseExecutionType[]getExecutionTypes();
 
-	public static enum PhaseExecutionType {
+	public enum PhaseExecutionType {
 		CUSTOM,
 		ALL_COMMANDS,
 		ALL_COMMANDS_AND_PARAMETERS,
 		ALL_PHASES_UP_TO_HERE,
 		FROM_CURRENT_PHASE_UP_TO_HERE
-	};
+	}
 }

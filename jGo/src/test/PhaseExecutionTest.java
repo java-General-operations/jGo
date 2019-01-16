@@ -34,17 +34,12 @@ public class PhaseExecutionTest {
 		Phase start, connection, migration, download, update;
 
 		start = t.createPhase(1, "start", "inizio");
-		start.validExecution(When.NEVER); // imposto che la 1 fase non vuole eseguirsi mai
-		connection = t.createPhase(2, "connection", "connessione");
-		migration = t.createPhase(3, "migration", "migrazione");
-		download = t.createPhase(4, "download", "scaricamento");
-		update = t.createPhase(5, "update", "aggiornamento");
+		
 		
 		// gestisco i tipi di esecuzioni di fasi :
 		
 		// ottengo il tipo di esecuzione per vedere quante vale :
 		
-		PhaseExecutionType type = start.getExecutionType();
 		
 		
 

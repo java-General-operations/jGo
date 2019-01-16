@@ -54,10 +54,12 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	// version 1.0.9 : esegue solo le esecuzioni dei comandi, ma non dei parametri
 	protected static LocalCommand phasesExecutorCommand = new LocalCommand("phase-execute",
 			"This command executes a phase");
-	protected static LocalCommand statusCommand = new LocalCommand("status","View the report of the current phase");
+	protected static LocalCommand statusCommand = new LocalCommand("status", "View the report of the current phase");
+
 	public static LocalCommand getStatusCommand() {
 		return statusCommand;
 	}
+
 	/**
 	 * This method returns the current phase
 	 * 
@@ -129,18 +131,17 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 			// se ci sono i comandi mi creo l'esecuzione del parametro che esegue la fase
 			// altrimenti abbiamo solo il parametro aggiunto al comando, ma senza esecuzione
-				phaseExecutionParam.setExecution(new Execution() {
+			phaseExecutionParam.setExecution(new Execution() {
 
-					@Override
-					public Object exec() {
-						
-						
-						// da definire ...
-						
-						return null ;
-						
-					}
-				});
+				@Override
+				public Object exec() {
+
+					// da definire ...
+
+					return null;
+
+				}
+			});
 
 			// ]
 
@@ -230,18 +231,17 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 			// se ci sono i comandi mi creo l'esecuzione del parametro che esegue la fase
 			// altrimenti abbiamo solo il parametro aggiunto al comando, ma senza esecuzione
-				phaseExecutionParam.setExecution(new Execution() {
+			phaseExecutionParam.setExecution(new Execution() {
 
-					@Override
-					public Object exec() {
-					
-						
-						// da definire ...
-						
-						return null ;
-						
-					}
-				});
+				@Override
+				public Object exec() {
+
+					// da definire ...
+
+					return null;
+
+				}
+			});
 			// ]
 
 			// qui solo se non è la fase start, perchè non ci serve avere un riferimento a
@@ -321,18 +321,19 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					break;
 				}
 			}
-			if (exist==null) {
+			if (exist == null) {
 				// il parametro non esiste
 				// allora lo creo
-				Parameter p = phasesExecutorCommand.addParam(phase.phaseName(),"executes the " + £.escp(phase.phaseName()) + " phase");
+				Parameter p = phasesExecutorCommand.addParam(phase.phaseName(),
+						"executes the " + £.escp(phase.phaseName()) + " phase");
 				p.setExecution(new Execution() {
 
 					@Override
 					public Object exec() {
-					
-							// da definire ...
-						
-						return null ;
+
+						// da definire ...
+
+						return null;
 					}
 				});
 			}
@@ -392,7 +393,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 	// il costruttore lo suo per inizializzare le fasi predefinite
 	// in questo caso solo : pointerCommand
-	protected LocalPhaseTerminal() {}
+	protected LocalPhaseTerminal() {
+	}
 
 	public LocalPhaseTerminal(String terminalName) {
 		// TODO Auto-generated constructor stub
@@ -401,23 +403,25 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		statusCommand.setExecution(new Execution() {
 			@Override
 			public Object exec() {
-				if (currentPhase!=null) {
+				if (currentPhase != null) {
 					StringBuffer string = new StringBuffer();
 					string.append("\n\t\t|Current Phase > ").append(currentPhase.phaseName().toUpperCase()).append("\n")
-						  .append("\t\t|Level = ").append(currentPhase.getValue()+"").append("\n")
-						  .append("\t\t|Accessible = ").append(currentPhase.isAccessible()+"").append("\n")
-						  .append("\t\t|Satisfied = ").append(currentPhase.isSatisfied()+"").append("\n")
-						  .append("\t\t|Supported commands = ").append(currentPhase.getCommands()+"");
-					if ((currentPhase).getAccessibilityRule()!=null) {
-						string.append("\n\t\t|Access-Rule = ").append((currentPhase).getAccessibilityRule().ruleExplanation());
+							.append("\t\t|Level = ").append(currentPhase.getValue() + "").append("\n")
+							.append("\t\t|Accessible = ").append(currentPhase.isAccessible() + "").append("\n")
+							.append("\t\t|Satisfied = ").append(currentPhase.isSatisfied() + "").append("\n")
+							.append("\t\t|Supported commands = ").append(currentPhase.getCommands() + "");
+					if ((currentPhase).getAccessibilityRule() != null) {
+						string.append("\n\t\t|Access-Rule = ")
+								.append((currentPhase).getAccessibilityRule().ruleExplanation());
 					}
-					if ((currentPhase).getSatisfiabilityRule()!=null) {
-						string.append("\n\t\t|Satisfaction-Rule = ").append((currentPhase).getSatisfiabilityRule().ruleExplanation());
+					if ((currentPhase).getSatisfiabilityRule() != null) {
+						string.append("\n\t\t|Satisfaction-Rule = ")
+								.append((currentPhase).getSatisfiabilityRule().ruleExplanation());
 					}
 					string.append("\n");
-					return string.toString() ;	   
-				}
-				else return "NO current phase !!";
+					return string.toString();
+				} else
+					return "NO current phase !!";
 			}
 		});
 		// qui imposto l'esecuzione del comando che esegue le fasi
@@ -426,10 +430,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 			@Override
 			public Object exec() {
-				
+
 				// da definire ...
-				
-				return null ;
+
+				return null;
 			}
 		});
 		this.pointerCommand = new LocalCommand("phase-goto", "This command points to a specific phase");
@@ -472,7 +476,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 			}
 		});
-		addCommands(this.pointerCommand,this.describerCommand,phasesExecutorCommand,statusCommand);
+		addCommands(this.pointerCommand, this.describerCommand, phasesExecutorCommand, statusCommand);
 	}
 
 	// questo metodo non va chiamato esplicitamente
@@ -779,9 +783,9 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		private boolean accessible = true;
 		private boolean satisfied = true;
 		private String description = null;
-		private LocalPhaseTerminal t=null;
+		private LocalPhaseTerminal t = null;
 		@SuppressWarnings("static-access")
-		private PhaseExecutionType type = PhaseExecutionType.ALL_COMMANDS; // default value - all commands
+		private PhaseExecutionType[] types = { PhaseExecutionType.ALL_COMMANDS,PhaseExecutionType.FROM_CURRENT_PHASE_UP_TO_HERE};
 
 		@Override
 		public Rule getSatisfiabilityRule() {
@@ -796,19 +800,12 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		public LocalPhase(String phaseName, int value, LocalPhaseTerminal t) {
 			this.phaseName = phaseName;
 			this.value = value;
-			this.t = t ;
+			this.t = t;
 			// nel momento in cui si crea una fase
 			// ecco che gli viene attribuita una
 			// esecuzione di default, diamo per scontato che
 			// l'esecuzione è di tipo all commands e basta
-			this.execution = new Execution() {
-				
-				@Override
-				public Object exec() {
-					// TODO Auto-generated method stub
-					return null;
-				}
-			};
+			setExecution(null, this.types);
 		}
 
 		private List<Command> commands = new ArrayList<>();
@@ -933,13 +930,20 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			// in tal caso aggiorno l'esecuzione del parametro
 			if (hasAnExecution()) {
 				switch (w) {
-				case ALWAYS:return this.execution.exec();
-				case NEVER:return null ;
-				case IF_ACCESSIBLE:if (isAccessible())return this.execution.exec();
-				case IF_SATISFIED:if(isSatisfied())return this.execution.exec();
-				}return null ;
-			}
-			else return null ;
+				case ALWAYS:
+					return this.execution.exec();
+				case NEVER:
+					return null;
+				case IF_ACCESSIBLE:
+					if (isAccessible())
+						return this.execution.exec();
+				case IF_SATISFIED:
+					if (isSatisfied())
+						return this.execution.exec();
+				}
+				return null;
+			} else
+				return null;
 		}
 
 		@Override
@@ -965,37 +969,59 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			// TODO Auto-generated method stub
 			return this.w;
 		}
-		@Override
-		public LocalPhase setExecution(PhaseExecutionType type, Execution execution) {
-			switch(type) {
-			case ALL_COMMANDS:
+
+		private void executesAllPhasesUpToHere() {
+			this.execution = new Execution() {
 				
-				break;
-			case ALL_COMMANDS_AND_PARAMETERS:
-				
-				break;
-			case ALL_PHASES_UP_TO_HERE:
-				
-				break;
-			case FROM_CURRENT_PHASE_UP_TO_HERE:
-				
-				break;
-			case CUSTOM:
-				
-				break;
-				default:
-					
-					break;
-			}
-			// in qualsiasi caso :
-			this.type = type ;
-			return this ;
+				@Override
+				public Object exec() {
+					Object obj = null ;
+					int indexThis = getValue() - 1; // pos-array-level
+					for (int i = 0; i < indexThis; i++) {
+						obj =  t.phases.get(i).execute();
+						if (obj!=null) {
+							System.out.println(obj);
+						}
+					}
+					return obj ;
+				}
+			};
 		}
 
 		@Override
-		public PhaseExecutionType getExecutionType() {
+		public LocalPhase setExecution(Execution execution, PhaseExecutionType... types) {
+			if (types.length == 0)
+				return null;
+			for (PhaseExecutionType phaseExecutionType : types) {
+				switch (phaseExecutionType) {
+				case ALL_COMMANDS:
+					executesAllPhasesUpToHere(); // questo metodo esegue tutti i comandi fino a questa fase
+					break;
+				case ALL_COMMANDS_AND_PARAMETERS:
+					System.out.println("all commands and params");
+					break;
+				case ALL_PHASES_UP_TO_HERE:
+					System.out.println("all phases up to here");
+					break;
+				case CUSTOM:
+					if(execution==null)return null ;
+					else this.execution = execution ;
+					break;
+				case FROM_CURRENT_PHASE_UP_TO_HERE:
+					System.out.println("dalla corrente fino a qui");
+					break;
+				default:
+					break;
+				}
+			}
+			this.types = types;
+			return this;
+		}
+
+		@Override
+		public PhaseExecutionType[] getExecutionTypes() {
 			// TODO Auto-generated method stub
-			return this.type ;
+			return this.types;
 		}
 	}
 }
