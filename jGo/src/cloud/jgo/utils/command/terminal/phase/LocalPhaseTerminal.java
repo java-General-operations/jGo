@@ -780,6 +780,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		private boolean satisfied = true;
 		private String description = null;
 		private LocalPhaseTerminal t=null;
+		@SuppressWarnings("static-access")
 		private PhaseExecutionType type = PhaseExecutionType.ALL_COMMANDS; // default value - all commands
 
 		@Override
@@ -798,8 +799,16 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			this.t = t ;
 			// nel momento in cui si crea una fase
 			// ecco che gli viene attribuita una
-			// esecuzione di default,
-			this.execution = null ;
+			// esecuzione di default, diamo per scontato che
+			// l'esecuzione è di tipo all commands e basta
+			this.execution = new Execution() {
+				
+				@Override
+				public Object exec() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+			};
 		}
 
 		private List<Command> commands = new ArrayList<>();
@@ -956,7 +965,6 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			// TODO Auto-generated method stub
 			return this.w;
 		}
-
 		@Override
 		public LocalPhase setExecution(PhaseExecutionType type, Execution execution) {
 			switch(type) {
@@ -979,7 +987,15 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					
 					break;
 			}
+			// in qualsiasi caso :
+			this.type = type ;
 			return this ;
+		}
+
+		@Override
+		public PhaseExecutionType getExecutionType() {
+			// TODO Auto-generated method stub
+			return this.type ;
 		}
 	}
 }
