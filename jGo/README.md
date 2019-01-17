@@ -13,7 +13,7 @@
    <strong>O</strong> - <em>Operations</em><br>
    To learn more, check the <a href='https://www.jgo.cloud/'>website</a> and its <a href='https://www.jgo.cloud/docs/'>documentation</a>.
    <img src="https://www.jgo.cloud/imgs/code.png" width="600px" height="300px">
-   img src="https://www.jgo.cloud/wp-content/uploads/2018/12/S.png">
+   <img src="https://www.jgo.cloud/wp-content/uploads/2018/12/S.png">
    <hr></hr>
    <strong>1 Example</strong>  -  <em class='explanations'>Prints "Welcome in JGO", executes a screenshot with a final function and finally emits an acoustic signal </em> : <br>
    <pre>
