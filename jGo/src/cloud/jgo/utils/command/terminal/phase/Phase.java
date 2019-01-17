@@ -118,12 +118,10 @@ public interface Phase extends Serializable, Executable {
 	// version 1.0.9												// valida solo se scegliamo CUSTOM
 	public abstract Phase setExecution(Execution execution,final PhaseExecutionType...types); // comando molto importante
 	public abstract PhaseExecutionType[]getExecutionTypes();
-
+	public abstract PhaseGroup membershipGroup();
 	public enum PhaseExecutionType {
 		CUSTOM,
 		ALL_COMMANDS,
 		ALL_COMMANDS_AND_PARAMETERS,
-		ALL_ASSOCIATED_COMMANDS,
-		ALL_ASSOCIATED_COMMAND_AND_PARAMETERS
 	}
 }

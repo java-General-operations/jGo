@@ -335,7 +335,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					@Override
 					public Object exec() {
 
-						return ((LocalPhase)phase).executesFromCurrentPhaseUpTo();
+						return ((LocalPhase) phase).executesFromCurrentPhaseUpTo();
 					}
 				});
 			}
@@ -439,7 +439,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 						if (phase.phaseName().equals(phaseName)) {
 							// okok abbiamo trovato la fase che vogliamo eseguire
 							// quindi :
-							return_ = ((LocalPhase)phase).executesFromCurrentPhaseUpTo();
+							return_ = ((LocalPhase) phase).executesFromCurrentPhaseUpTo();
 							break;
 						}
 					}
@@ -448,7 +448,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					if (currentPhase != null) {
 						return_ = currentPhase.execute();
 					}
-				} return return_;
+				}
+				return return_;
 			}
 		});
 		this.pointerCommand = new LocalCommand("phase-goto", "This command points to a specific phase");
@@ -796,6 +797,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		private String phaseName = null;
 		private int value;
 		private boolean accessible = true;
+		// version 1.0.9
+		private PhaseGroup group = null ;
 		private boolean satisfied = true;
 		private String description = null;
 		private LocalPhaseTerminal t = null;
@@ -997,20 +1000,31 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			}
 			return obj;
 		}
+
 		// Esegue dalla fase corrente a quella annunciata : PROVVISORIO ...
 		// qui posso raccogliere i risultati in un arraylist.
 		// Approfondire ...
 		private Object executesFromCurrentPhaseUpTo() {
-			if (t.currentPhase==null)return null;
-				int currentPhaseIndex = t.currentPhase.getValue()-1 ;
-				int thisPhaseIndex = getValue()-1;
-			if(currentPhaseIndex<0||thisPhaseIndex<0)return null ;
-			for(int i = currentPhaseIndex;i <= thisPhaseIndex;i++) {
+			Object result = null ;
+			if (t.currentPhase == null)
+				return null;
+			int currentPhaseIndex = t.currentPhase.getValue() - 1;
+			int thisPhaseIndex = getValue() - 1;
+			if (currentPhaseIndex < 0 || thisPhaseIndex < 0)
+				return null;
+			PhaseGroup group = null ;
+			for (int i = currentPhaseIndex; i <= thisPhaseIndex; i++) {
 				Phase ph = t.phases.get(i);
-				/* Eseguo :*/Object obj = ph.execute();
-				if(obj!=null)System.out.println(obj); 
+				if(group!=null) {
+					if (ph.membershipGroup()==null)break;/* qui esco, poichè c'è un gruppo, però si è riscontrato un elemento che non ha proprio il gruppo*/
+					if (!ph.membershipGroup().equals(group))break;/* anche qui esco, in quanto il gruppo dell'elemento non compacia con quello registrato in group*/
+				}
+				if (i == currentPhaseIndex)group = ph.membershipGroup();	
+				// se gruppo non ha un valore, eseguo la fase ed esco
+				if(group==null) {result = ph.execute();break;}
+				else result = ph.execute(); 
 			}
-			return null ;
+			return result;
 		}
 
 		@Override
@@ -1025,10 +1039,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 						// PROVVISORIA @
 						@Override
 						public Object exec() {
-							Object obj=null ;
-							for(Command command:getCommands()) {
+							Object obj = null;
+							for (Command command : getCommands()) {
 								obj = command.execute();
-								if (obj!=null) {
+								if (obj != null) {
 									System.out.println(obj);
 								}
 							}
@@ -1039,41 +1053,34 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				case ALL_COMMANDS_AND_PARAMETERS:
 					// coinvolgo comandi e parametri :
 					this.execution = new Execution() {
-						
+
 						@Override
 						public Object exec() {
-							Object obj,obj2;
-							obj = null ;obj2 = null;
-							for(Command command:getCommands()) {
+							Object obj, obj2;
+							obj = null;
+							obj2 = null;
+							for (Command command : getCommands()) {
 								obj = command.execute();
-								if (obj!=null) {
+								if (obj != null) {
 									System.out.println(obj);
 								}
 								// params execution :
-								for (Parameter param :command.params()) {
+								for (Parameter param : command.params()) {
 									obj2 = param.execute();
-									if (obj2!=null) {
+									if (obj2 != null) {
 										System.out.println(obj2);
 									}
 								}
 							}
-							return null ;
+							return null;
 						}
 					};
 					break;
-				case ALL_ASSOCIATED_COMMANDS:
-					
-					// tutti i comandi associati ...
-					
-					break;
-				case ALL_ASSOCIATED_COMMAND_AND_PARAMETERS:
-					
-					// tutti i comandi associati con parametri ...
-					
-					break;
 				case CUSTOM:
-					if(execution==null)return null ;
-					else this.execution = execution;
+					if (execution == null)
+						return null;
+					else
+						this.execution = execution;
 					break;
 				default:
 					break;
@@ -1087,6 +1094,16 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		public PhaseExecutionType[] getExecutionTypes() {
 			// TODO Auto-generated method stub
 			return this.types;
+		}
+
+		@Override
+		public PhaseGroup membershipGroup() {
+			// TODO Auto-generated method stub
+			return this.group ;
+		}
+		
+		public void setMembershipGroup(PhaseGroup group){
+			this.group = group ;
 		}
 	}
 }

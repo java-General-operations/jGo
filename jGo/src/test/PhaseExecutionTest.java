@@ -21,6 +21,7 @@ import cloud.jgo.utils.command.terminal.phase.ColorLocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
 import cloud.jgo.utils.command.terminal.phase.Phase.PhaseExecutionType;
+import cloud.jgo.utils.command.terminal.phase.PhaseGroup;
 
 public class PhaseExecutionTest {
 	public static void main(String[] args) {
@@ -33,14 +34,30 @@ public class PhaseExecutionTest {
 
 		// mi creo le fasi ...
 
-		Phase start, connection, migration, download, update;
+		Phase start, connection, migration, download, update, finalPhase;
+		
 
 		start = t.createPhase(1, "start", "inizio");
-		start.validExecution(When.NEVER); // imposto che la 1 fase non vuole eseguirsi mai
+		start.setExecution(new Execution() {
+			
+			@Override
+			public Object exec() {
+				return "execution start phase";
+			}
+		},PhaseExecutionType.CUSTOM);
 		connection = t.createPhase(2, "connection", "connessione");
 		migration = t.createPhase(3, "migration", "migrazione");
 		download = t.createPhase(4, "download", "scaricamento");
 		update = t.createPhase(5, "update", "aggiornamento");
+		finalPhase = t.createPhase(6, "final", "final");
+		finalPhase.setExecution(new Execution() {
+			
+			@Override
+			public Object exec() {
+				// TODO Auto-generated method stub
+				return "execution final phase";
+			}
+		},PhaseExecutionType.CUSTOM);
 	
 		// commands :
 
@@ -84,9 +101,13 @@ public class PhaseExecutionTest {
 		t.addCommandsToPhase(download, downloadCommand);
 		t.addCommandsToPhase(update, updateCommand);
 
-		// apro il terminale
-
+		
+		// dico che queste fasi sono appartenenti a un gruppo
+		
+		new PhaseGroup("gestione-online",connection,migration,download,update);
+		
 		t.open();
+		
 
 	}
 }
