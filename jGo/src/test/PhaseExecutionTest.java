@@ -26,6 +26,7 @@ import cloud.jgo.utils.command.terminal.phase.PhaseGroup;
 public class PhaseExecutionTest {
 	public static void main(String[] args) {
 
+		// @
 		// adesso devo pensare a gestire bene l'esecuzione della fase
 
 		LocalPhaseTerminal t = new LocalPhaseTerminal("trm");
