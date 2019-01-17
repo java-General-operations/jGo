@@ -51,7 +51,13 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 	protected LocalCommand pointerCommand = null;
 	protected LocalCommand resetCommand = null;
 	protected LocalCommand describerCommand = null;
-	// version 1.0.9 : esegue solo le esecuzioni dei comandi, ma non dei parametri
+	// version 1.0.9 :
+	// questo comando se :
+	// - gli si da in pasto una fase, esegue dalla fase corrente a quella annunciata
+	// - non gli si da niente, esegue soltanto la fase corrente
+	// - poi ci saranno opportuni parametri che permetteranno di lanciare anche
+	// dalla prima fase
+	// a quella annunciata
 	protected static LocalCommand phasesExecutorCommand = new LocalCommand("phase-execute",
 			"This command executes a phase");
 	protected static LocalCommand statusCommand = new LocalCommand("status", "View the report of the current phase");
@@ -136,7 +142,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				@Override
 				public Object exec() {
 
-					return phase.execute();
+					return phase.executesFromCurrentPhaseUpTo();
 
 				}
 			});
@@ -236,7 +242,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 					// da definire ...
 
-					return phase.execute();
+					return phase.executesFromCurrentPhaseUpTo();
 
 				}
 			});
@@ -329,7 +335,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					@Override
 					public Object exec() {
 
-						return phase.execute();
+						return ((LocalPhase)phase).executesFromCurrentPhaseUpTo();
 					}
 				});
 			}
@@ -425,25 +431,24 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		phasesExecutorCommand.setExecution(new Execution() {
 			@Override
 			public Object exec() {
-				if(phasesExecutorCommand.getInputValue()!=null) {
-					// abbiamo una fase specificata da input 
+				Object return_ = null;
+				if (phasesExecutorCommand.getInputValue() != null) {
+					// abbiamo una fase specificata da input
 					String phaseName = phasesExecutorCommand.getInputValue();
-					Object return_ = null ;
-					for(Phase phase:phases) {
+					for (Phase phase : phases) {
 						if (phase.phaseName().equals(phaseName)) {
-							return_=phase.execute();
+							// okok abbiamo trovato la fase che vogliamo eseguire
+							// quindi :
+							return_ = ((LocalPhase)phase).executesFromCurrentPhaseUpTo();
 							break;
 						}
 					}
-					return return_ ;
-				}
-				else {
+				} else {
 					// qui dobbiamo verificare se vi è una fase corrente
-					if (currentPhase!=null) {
-						return currentPhase.execute();
+					if (currentPhase != null) {
+						return_ = currentPhase.execute();
 					}
-				}// se arriva qui restituisce :
-				return null;
+				} return return_;
 			}
 		});
 		this.pointerCommand = new LocalCommand("phase-goto", "This command points to a specific phase");
@@ -795,7 +800,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		private String description = null;
 		private LocalPhaseTerminal t = null;
 		// version 1.0.9
-		private PhaseExecutionType[] types = {PhaseExecutionType.ALL_COMMANDS, PhaseExecutionType.ALL_PHASES_UP_TO_HERE};
+		private PhaseExecutionType[] types = { PhaseExecutionType.ALL_COMMANDS };
 
 		@Override
 		public Rule getSatisfiabilityRule() {
@@ -980,21 +985,32 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			return this.w;
 		}
 
-		private Execution executesAllPhasesUpToHere() {
-			return this.execution = new Execution() {
-				@Override
-				public Object exec() {
-					Object obj = null ;
-					int indexThis = getValue() - 1; // pos-array-level
-					for (int i = 0; i < indexThis; i++) {
-						obj =  t.phases.get(i).execute();
-						if (obj!=null) {
-							System.out.println(obj);
-						}
-					}
-					return obj ;
+		// metodo interno usato dal comando esecutore di fasi
+		private Object executesAllPhasesUpToHere() {
+			Object obj = null;
+			int indexThis = getValue() - 1; // pos-array-level
+			for (int i = 0; i < indexThis; i++) {
+				obj = t.phases.get(i).execute();
+				if (obj != null) {
+					System.out.println(obj);
 				}
-			};
+			}
+			return obj;
+		}
+		// Esegue dalla fase corrente a quella annunciata : PROVVISORIO ...
+		// qui posso raccogliere i risultati in un arraylist.
+		// Approfondire ...
+		private Object executesFromCurrentPhaseUpTo() {
+			if (t.currentPhase==null)return null;
+				int currentPhaseIndex = t.currentPhase.getValue()-1 ;
+				int thisPhaseIndex = getValue()-1;
+			if(currentPhaseIndex<0||thisPhaseIndex<0)return null ;
+			for(int i = currentPhaseIndex;i <= thisPhaseIndex;i++) {
+				Phase ph = t.phases.get(i);
+				/* Eseguo :*/Object obj = ph.execute();
+				if(obj!=null)System.out.println(obj); 
+			}
+			return null ;
 		}
 
 		@Override
@@ -1045,12 +1061,15 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 						}
 					};
 					break;
-				case ALL_PHASES_UP_TO_HERE:
-					// qui va gestita, poichè se l'esecuzione è stata anche impostata
-					// su tutti i comandi per dire, qui perde il suo valore e quindi
-					// quando mediante il metodo qui sotto eseguiamo le fasi, in realtà
-					// l'esecuzione delle fasi è nulla.Gestire.
-					this.execution = executesAllPhasesUpToHere();
+				case ALL_ASSOCIATED_COMMANDS:
+					
+					// tutti i comandi associati ...
+					
+					break;
+				case ALL_ASSOCIATED_COMMAND_AND_PARAMETERS:
+					
+					// tutti i comandi associati con parametri ...
+					
 					break;
 				case CUSTOM:
 					if(execution==null)return null ;
