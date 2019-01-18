@@ -107,6 +107,34 @@ public class PhaseExecutionTest {
 		
 		new PhaseGroup("gestione-online",connection,migration,download,update);
 		
+		// altre fasi di test
+		
+		Phase test,test2 ;
+		test = t.createPhase(7, "test", "test");
+		test2 = t.createPhase(8, "test2", "test2");
+		
+		
+		test.setExecution(new Execution() {
+			
+			@Override
+			public Object exec() {
+				// TODO Auto-generated method stub
+				return "execution phase:test";
+			}
+		},PhaseExecutionType.CUSTOM);
+		
+		
+		test2.setExecution(new Execution() {
+			
+			@Override
+			public Object exec() {
+				// TODO Auto-generated method stub
+				return "execution phase:test2";
+			}
+		},PhaseExecutionType.CUSTOM);
+		
+		
+		new PhaseGroup("testamenti",test,test2);
 		
 		t.open();
 		

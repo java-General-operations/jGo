@@ -1041,6 +1041,9 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 							System.out.println(result);
 						}
 					}
+					else {
+						System.out.println("the \""+ph.phaseName()+"\" phase does not belong to the group: "+firstGroup);
+					}
 				}
 				else {
 					// esegui fin quando non trovi una con il gruppo
@@ -1050,7 +1053,10 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 							System.out.println(result);
 						}
 					}
-					else break;
+					else {
+						System.out.println("the \""+ph.phaseName()+"\" phase belongs to the group: "+ph.membershipGroup());
+						break;
+					}
 				}
 			}
 		}
