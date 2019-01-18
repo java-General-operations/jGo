@@ -70,5 +70,11 @@ public class PhaseGroup implements Serializable {
 		}
 		return ph ;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.type ;
+	}
 
 }

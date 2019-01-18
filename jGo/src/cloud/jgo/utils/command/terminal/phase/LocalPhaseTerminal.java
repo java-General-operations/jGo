@@ -142,8 +142,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				@Override
 				public Object exec() {
 
-					return phase.executesFromCurrentPhaseUpTo();
-
+					phase.executesFromCurrentPhaseUpTo();
+					return null ;
 				}
 			});
 
@@ -240,10 +240,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				@Override
 				public Object exec() {
 
-					// da definire ...
-
-					return phase.executesFromCurrentPhaseUpTo();
-
+					phase.executesFromCurrentPhaseUpTo();
+					return null ;
 				}
 			});
 			// ]
@@ -335,7 +333,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					@Override
 					public Object exec() {
 
-						return ((LocalPhase) phase).executesFromCurrentPhaseUpTo();
+						((LocalPhase) phase).executesFromCurrentPhaseUpTo();
+						return  null ;
 					}
 				});
 			}
@@ -441,7 +440,7 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 						if (phase.phaseName().equals(phaseName)) {
 							// okok abbiamo trovato la fase che vogliamo eseguire
 							// quindi :
-							return_ = ((LocalPhase) phase).executesFromCurrentPhaseUpTo();
+							((LocalPhase) phase).executesFromCurrentPhaseUpTo();
 							break;
 						}
 					}
@@ -1021,66 +1020,39 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			return this.w;
 		}
 
-		// metodo interno usato dal comando esecutore di fasi
-		private Object executesAllPhasesUpToHere() {
-			Object obj = null;
-			int indexThis = getValue() - 1; // pos-array-level
-			for (int i = 0; i < indexThis; i++) {
-				obj = t.phases.get(i).execute();
-				if (obj != null) {
-					System.out.println(obj);
-				}
-			}
-			return obj;
-		}
-
-		// Esegue dalla fase corrente a quella annunciata : PROVVISORIO ...
-		// qui posso raccogliere i risultati in un arraylist.
-		// Approfondire ...
-		private Object executesFromCurrentPhaseUpTo() {
+		// segnalare per bene, possiamo fare che restituisce
+		// un arraylist poi se ci sarà la necessità
+		private void executesFromCurrentPhaseUpTo() {
 			Object result = null ;
 			if (t.currentPhase == null)
-				return null;
+				return;
 			int currentPhaseIndex = t.currentPhase.getValue() - 1;
 			int thisPhaseIndex = getValue() - 1;
-			if (currentPhaseIndex < 0 || thisPhaseIndex < 0)
-				return null;
-			PhaseGroup group = null ;
-			// okok mi faccio un primo giro per cercare di ottenere il gruppo
+			if (currentPhaseIndex < 0 || thisPhaseIndex < 0)return;
+			PhaseGroup firstGroup = null ; // questa è il gruppo di cui si cominciano a eseguire fasi
 			for (int i = currentPhaseIndex; i <= thisPhaseIndex; i++) {
 				Phase ph = t.phases.get(i);
-				if (ph.membershipGroup()!=null) {
-					group = ph.membershipGroup(); // il primo elemento con gruppo lo prendo ed esco
-					break;
-				}
-			}
-			// qui sappiamo se vi sono elementi con gruppo o meno
-			if (group!=null) {
-				// okok ci è un gruppo da rispettare ...
-				for (int i = currentPhaseIndex; i <= thisPhaseIndex; i++) {
-					Phase ph = t.phases.get(i);
-					// adesso qui è facoltativa, posso fare
-					// fin da subito che se non si rispetta 
-					// quel tipo, non si esegue un cacchio
-					if (ph.membershipGroup()!=null) {
-						if (ph.membershipGroup().equals(group)) {
-							// okok si può eseguire qui, poichè è lo stesso tipo
-							result = ph.execute();
+				if (i==currentPhaseIndex)firstGroup = ph.membershipGroup(); // prendo il primo gruppo
+				if (firstGroup!=null) {
+					// se il primo gruppo, è uguale a quello della fase corrente esegui la fase
+					if (firstGroup.equals(ph.membershipGroup())) {
+						result = ph.execute();
+						if (result!=null) {
+							System.out.println(result);
 						}
 					}
-					else {
-						break; // si esce, poichè si deve rispettare un gruppo
+				}
+				else {
+					// esegui fin quando non trovi una con il gruppo
+					if (ph.membershipGroup()==null) {
+						result = ph.execute();
+						if (result!=null) {
+							System.out.println(result);
+						}
 					}
+					else break;
 				}
 			}
-			else {
-				// possiamo eseguire normalmente le fasi
-				for (int i = currentPhaseIndex; i <= thisPhaseIndex; i++) {
-					Phase ph = t.phases.get(i);
-					result = ph.execute();
-				}
-			}
-			return result;
 		}
 
 		@Override
