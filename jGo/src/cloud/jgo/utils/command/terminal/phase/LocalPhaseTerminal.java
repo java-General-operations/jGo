@@ -435,6 +435,8 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 				if (phasesExecutorCommand.getInputValue() != null) {
 					// abbiamo una fase specificata da input
 					String phaseName = phasesExecutorCommand.getInputValue();
+					// riporto a null
+					phasesExecutorCommand.setInputValue(null);
 					for (Phase phase : phases) {
 						if (phase.phaseName().equals(phaseName)) {
 							// okok abbiamo trovato la fase che vogliamo eseguire
@@ -448,11 +450,42 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					if (currentPhase != null) {
 						return_ = currentPhase.execute();
 					}
+					else {
+						// chiedo la fase che vogliamo eseguire ...
+						System.out.print("Phase Name:");
+						String phaseName = £._I();
+						// okok verifico se esiste questo parametro nel comando
+						Parameter phaseParam = phasesExecutorCommand.param(phaseName);
+						if(phaseParam!=null)return_ = phaseParam.execute();
+						else return_ = "This phase is not exist #";
+					}
 				}
 				return return_;
 			}
 		});
 		this.pointerCommand = new LocalCommand("phase-goto", "This command points to a specific phase");
+		this.pointerCommand.setInputValueExploitable(true);
+		this.pointerCommand.setExecution(new Execution() {
+			
+			@Override
+			public Object exec() {
+				Object obj = null ;
+				Parameter phaseParam = null ;
+				if (pointerCommand.getInputValue()!=null) {
+					phaseParam = pointerCommand.param(pointerCommand.getInputValue());
+					pointerCommand.setInputValue(null); // riporto il valore a null
+				}
+				else {
+					// chiedo la fase
+					System.out.print("Phase Name:");
+					String phaseName = £._I();
+					phaseParam = pointerCommand.param(phaseName);
+				}
+				if (phaseParam!=null) obj =  phaseParam.execute();
+				else {obj = "This phase is not exist #";}
+				return obj ;
+			}
+		});
 		this.describerCommand = new LocalCommand("describe", "This command describes a specific phase");
 		this.describerCommand.setExecution(new Execution() {
 
@@ -1013,16 +1046,39 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			if (currentPhaseIndex < 0 || thisPhaseIndex < 0)
 				return null;
 			PhaseGroup group = null ;
+			// okok mi faccio un primo giro per cercare di ottenere il gruppo
 			for (int i = currentPhaseIndex; i <= thisPhaseIndex; i++) {
 				Phase ph = t.phases.get(i);
-				if(group!=null) {
-					if (ph.membershipGroup()==null)break;/* qui esco, poichè c'è un gruppo, però si è riscontrato un elemento che non ha proprio il gruppo*/
-					if (!ph.membershipGroup().equals(group))break;/* anche qui esco, in quanto il gruppo dell'elemento non compacia con quello registrato in group*/
+				if (ph.membershipGroup()!=null) {
+					group = ph.membershipGroup(); // il primo elemento con gruppo lo prendo ed esco
+					break;
 				}
-				if (i == currentPhaseIndex)group = ph.membershipGroup();	
-				// se gruppo non ha un valore, eseguo la fase ed esco
-				if(group==null) {result = ph.execute();break;}
-				else result = ph.execute(); 
+			}
+			// qui sappiamo se vi sono elementi con gruppo o meno
+			if (group!=null) {
+				// okok ci è un gruppo da rispettare ...
+				for (int i = currentPhaseIndex; i <= thisPhaseIndex; i++) {
+					Phase ph = t.phases.get(i);
+					// adesso qui è facoltativa, posso fare
+					// fin da subito che se non si rispetta 
+					// quel tipo, non si esegue un cacchio
+					if (ph.membershipGroup()!=null) {
+						if (ph.membershipGroup().equals(group)) {
+							// okok si può eseguire qui, poichè è lo stesso tipo
+							result = ph.execute();
+						}
+					}
+					else {
+						break; // si esce, poichè si deve rispettare un gruppo
+					}
+				}
+			}
+			else {
+				// possiamo eseguire normalmente le fasi
+				for (int i = currentPhaseIndex; i <= thisPhaseIndex; i++) {
+					Phase ph = t.phases.get(i);
+					result = ph.execute();
+				}
 			}
 			return result;
 		}

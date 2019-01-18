@@ -107,6 +107,7 @@ public class PhaseExecutionTest {
 		
 		new PhaseGroup("gestione-online",connection,migration,download,update);
 		
+		
 		t.open();
 		
 
