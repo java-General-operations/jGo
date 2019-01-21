@@ -231,3 +231,4 @@ lo spazio tra le stringhe.
 - La localPhase adesso ha come campo, un array di tipo :PhaseExecutionType
 - Creata una nuova classe nel package delle fasi : PhaseGroup
 - nuovo metodo nell'interfaccia Phase:membershipGroup()
+ - sto aggiungendo un nuovo metodo nel punto di accesso potenziato jGo, per inviare email.

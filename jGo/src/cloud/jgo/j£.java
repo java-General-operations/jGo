@@ -379,8 +379,11 @@ public final class j£ extends cloud.jgo.£ {
 	// version 1.0.9
 	/**
 	 * This method colors the string passed as a parameter
-	 * @param string the string
-	 * @param color the color
+	 * 
+	 * @param string
+	 *            the string
+	 * @param color
+	 *            the color
 	 * @return the colored string
 	 */
 	public static String colors(String string, org.fusesource.jansi.Ansi.Color color) {
@@ -391,6 +394,7 @@ public final class j£ extends cloud.jgo.£ {
 	// version 1.0.9 :
 	/**
 	 * This method creates a colored string
+	 * 
 	 * @return the colored string
 	 */
 	public static ColorString getString() {
@@ -400,8 +404,11 @@ public final class j£ extends cloud.jgo.£ {
 	// version 1.0.9 :
 	/**
 	 * This method creates a colored string
-	 * @param string the string
-	 * @param color the color
+	 * 
+	 * @param string
+	 *            the string
+	 * @param color
+	 *            the color
 	 * @return the colored string
 	 */
 	public static ColorString getString(String string, org.fusesource.jansi.Ansi.Color color) {
@@ -411,8 +418,11 @@ public final class j£ extends cloud.jgo.£ {
 	// version 1.0.9:
 	/**
 	 * This method colors everything that is reported in double quotes
-	 * @param string the string
-	 * @param color the color
+	 * 
+	 * @param string
+	 *            the string
+	 * @param color
+	 *            the color
 	 * @return the colored string
 	 */
 	public static String colorTheStringsSyntax(String string, Color color) {
@@ -1031,6 +1041,98 @@ public final class j£ extends cloud.jgo.£ {
 	 *            smtp host
 	 * @param smtp_port
 	 *            smtp port
+	 * @param username
+	 *            sender username
+	 * @param password
+	 *            sender password
+	 * @param attached
+	 *            attached file
+	 * @param contentType
+	 *            the content type
+	 * @param okCallBack
+	 *            positive callback
+	 * @param noCallBack
+	 *            negative callback
+	 * @return the jGo access point
+	 */
+	public static j£ sendSimpleEmailWithAuthentication(String recipient, String sender, String subject, String text,
+			String smtp_host, int smtp_port, String username, String password, File attached, String contentType,
+			£Func okCallBack, £Func noCallBack) {
+		j£ inst = null;
+
+		Properties props = new Properties();
+
+		props.put("mail.smtp.host", smtp_host);
+
+		props.put("mail.smtp.port", smtp_port);
+
+		props.put("mail.smtp.starttls.enable", "true");
+
+		props.put("mail.smtp.auth", "true");
+
+		Authenticator autentication = new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				// TODO Auto-generated method stub
+				return new PasswordAuthentication(username, password);
+			}
+		};
+		Session session = Session.getDefaultInstance(props, autentication);
+
+		MimeMessage message = new MimeMessage(session);
+
+		try {
+			message.setFrom(new InternetAddress(sender));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			message.setSubject(subject);
+			message.setContent(text, contentType);
+			if (attached != null) {
+				if (attached.exists()) {
+					message.setFileName(attached.getPath());
+				}
+			}
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Transport.send(message);
+			okCallBack.function(null); // eseguo la funzione
+			inst = getPowerfulInstance();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			// eseguo la funzione
+			noCallBack.function(null);
+		}
+		return inst;
+	}
+
+	/**
+	 * This method sends an email, but authenticating itself. Requires the sender's
+	 * login credentials.
+	 * 
+	 * @param recipient
+	 *            email recipient
+	 * @param sender
+	 *            email sender
+	 * @param subject
+	 *            email subject
+	 * @param text
+	 *            email text
+	 * @param smtp_host
+	 *            smtp host
+	 * @param smtp_port
+	 *            smtp port
 	 * @param successLog
 	 *            the log that is printed in case the email is sent correctly
 	 * @param username
@@ -1132,6 +1234,7 @@ public final class j£ extends cloud.jgo.£ {
 		}
 		return inst;
 	}
+
 	/**
 	 * This method closes the webcam
 	 * 
@@ -1149,11 +1252,11 @@ public final class j£ extends cloud.jgo.£ {
 		}
 		return inst;
 	}
+
 	// version 1.0.5
 	/**
-	 * This method returns a desktop application for webcam monitoring. 
-	 * It works only if the webcam has been activated,
-	 * so if the open method has been called
+	 * This method returns a desktop application for webcam monitoring. It works
+	 * only if the webcam has been activated, so if the open method has been called
 	 * 
 	 * @param title
 	 *            jframe title
@@ -1182,9 +1285,8 @@ public final class j£ extends cloud.jgo.£ {
 	}
 
 	/**
-	 * This method returns a desktop application for webcam monitoring.
-	 * It works only if the webcam has been activated,
-	 * so if the open method has been called
+	 * This method returns a desktop application for webcam monitoring. It works
+	 * only if the webcam has been activated, so if the open method has been called
 	 * 
 	 * @param title
 	 *            jframe title
@@ -1263,6 +1365,7 @@ public final class j£ extends cloud.jgo.£ {
 		}
 		return inst;
 	}
+
 	// version 1.0.9 : crea un terminale colorato:locale
 	public static ColorLocalPhaseTerminal createColorPhaseTerminal() {
 		return new ColorLocalPhaseTerminal();
