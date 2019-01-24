@@ -17,9 +17,12 @@ public class BarCodeTest {
 @SuppressWarnings("static-access")
 public static void main(String[] args) {
 	
+	// scrivi
+	j£.writeBarcode("9191919", "png", BarcodeFormat.EAN_8,"ean_8.png",300,100);
+	// leggi
+	String barCodeText = j£.readBarcode("ean_8.png");
 	
-	j£.writeBarcode("ciao", "gif", BarcodeFormat.QR_CODE,"ciao.gif",400,300);
-	System.out.println("Bene");
+	System.out.println(barCodeText);
 	
 }
 }
