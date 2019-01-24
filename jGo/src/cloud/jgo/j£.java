@@ -30,7 +30,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringBufferInputStream;
 import java.util.Properties;
@@ -60,6 +62,35 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import com.google.gson.Gson;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Reader;
+import com.google.zxing.Result;
+import com.google.zxing.Writer;
+import com.google.zxing.WriterException;
+import com.google.zxing.aztec.AztecWriter;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.datamatrix.DataMatrixWriter;
+import com.google.zxing.oned.CodaBarWriter;
+import com.google.zxing.oned.Code128Writer;
+import com.google.zxing.oned.Code39Writer;
+import com.google.zxing.oned.Code93Writer;
+import com.google.zxing.oned.EAN13Writer;
+import com.google.zxing.oned.EAN8Writer;
+import com.google.zxing.oned.ITFWriter;
+import com.google.zxing.oned.UPCAWriter;
+import com.google.zxing.oned.UPCEWriter;
+import com.google.zxing.oned.rss.expanded.RSSExpandedReader;
+import com.google.zxing.pdf417.PDF417Writer;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.net.Server;
@@ -1370,4 +1401,163 @@ public final class j£ extends cloud.jgo.£ {
 	public static ColorLocalPhaseTerminal createColorPhaseTerminal() {
 		return new ColorLocalPhaseTerminal();
 	}
+	
+	// version 1.0.9
+	public static String readBarcode(String imageFileName) {
+		InputStream in=null;
+		try {
+			in = new FileInputStream(imageFileName);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		BufferedImage buff=null;
+		try {
+			buff = ImageIO.read(in);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		LuminanceSource source = new BufferedImageLuminanceSource(buff);
+		BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+		Reader reader = new MultiFormatReader();
+		Result result=null;
+		try {
+			result = reader.decode(bitmap);
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ChecksumException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result.getText();
+	}
+	// version 1.0.9 : default values : 400 / 300
+	public static j£ writeBarcode(String text,String imgFormat,BarcodeFormat codeFormat,String fileName,int width,int height) {
+		j£ inst = null ;
+		boolean valid = false ;
+		for (String format:ImageIO.getWriterFormatNames()) {
+			if (format.equals(imgFormat)) {
+				valid = true ;
+				break;
+			}
+		}
+		if (valid) {
+			BitMatrix bitMatrix=null;
+			switch(codeFormat) {
+			case EAN_8:
+				try {
+					bitMatrix = new EAN8Writer().encode(text,codeFormat, width, height);
+				} catch (WriterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+			case EAN_13:
+				try {
+					bitMatrix = new EAN13Writer().encode(text,codeFormat, width, height);
+				} catch (WriterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+			case AZTEC:
+				bitMatrix = new AztecWriter().encode(text,codeFormat, width, height);
+				break;
+			case CODABAR:
+				try {
+					bitMatrix = new CodaBarWriter().encode(text,codeFormat, width, height);
+				} catch (WriterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+			case CODE_128:
+				try {
+					bitMatrix = new Code128Writer().encode(text,codeFormat, width, height);
+				} catch (WriterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+			case CODE_39:
+				try {
+					bitMatrix = new Code39Writer().encode(text,codeFormat, width, height);
+				} catch (WriterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+			case CODE_93:
+				try {
+					bitMatrix = new Code93Writer().encode(text,codeFormat, width, height);
+				} catch (WriterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+			case DATA_MATRIX:
+				bitMatrix = new DataMatrixWriter().encode(text,codeFormat, width, height);
+				break;
+			case ITF:
+				try {
+					bitMatrix = new ITFWriter().encode(text,codeFormat, width, height);
+				} catch (WriterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+			case PDF_417:
+				try {
+					bitMatrix = new PDF417Writer().encode(text,codeFormat, width, height);
+				} catch (WriterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+			case QR_CODE:
+				try {
+					bitMatrix = new QRCodeWriter().encode(text,codeFormat, width, height);
+				} catch (WriterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+			case UPC_A:
+				try {
+					bitMatrix = new UPCAWriter().encode(text,codeFormat, width, height);
+				} catch (WriterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+			case UPC_E:
+				try {
+					bitMatrix = new UPCEWriter().encode(text,codeFormat, width, height);
+				} catch (WriterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				break;
+				default:
+					break;
+			}
+			try {
+				MatrixToImageWriter.writeToStream(bitMatrix, imgFormat, new FileOutputStream(new File(fileName)));
+				inst = getPowerfulInstance();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return inst ;
+	}
+	
 }
