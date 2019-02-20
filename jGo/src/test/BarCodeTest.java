@@ -18,7 +18,7 @@ public class BarCodeTest {
 public static void main(String[] args) {
 	
 	// scrivi
-	j£.writeBarcode("9191919", "png", BarcodeFormat.EAN_8,"ean_8.png",300,100);
+	j£.writeBarcode("9191919", "png", BarcodeFormat.QR_CODE,"ean_8.png",300,100);
 	// leggi
 	String barCodeText = j£.readBarcode("ean_8.png");
 	
