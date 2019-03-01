@@ -169,71 +169,104 @@ Version 1.0.8 - 13/12/2018
 Version 1.0.9 - in dev
 
 - I add the methods to color the strings to the main point jGo
+
 - New class added: ColorString
+
 - Added new method to the Terminal class:getName();
+
 - I redefined a Terminal method : getCommandRequest();
+
 - I have perfected the LocalPhaseTerminal class
+
 - New Method > LocalPhaseTerminal > setPointerName();
+
 - New Method > LocalCommand > setCommand();
+
 - We deleted the welcome field in the DefaultPhase class, and then updated the serial version.
+
 - New constructor for the XMLDocument class, for creating a blank document.
+
 - appendChild () method of the XMLDocument class: redefined
+
 - Serial version update
+
 - Eliminated unexpected printing of the shareObject () method of the LocalCommand class
+
 - Added new packages for colored nodes
+
 - Added new class : TerminalColors
+
 - Added new method in the JjDom class:documentTypeUsed()
+
 - New exception in JjDom:InvalidDocumentTypeException()
+
 - New jGo method:colorTheStringsSyntax()
+
 - I have adapted different methods of the LocalCommand class, taking into account the subclasses
+
 - New interface:Colorable
+
 - fixed webcam bugs in the jGo enhanced access point
+
 - Created two new methods in the Shareable interface
+
 - New method > shared() > Parameter
+
 - New method > getUnSharedParameters() > LocalCommand
+
 - New Interface > Sharer
+
 - New Interface > SharedExecution
+
 - Added new static method in the HTMLElement interface:createNewElement()
+
 - Now you can create new predefined types of html elements
-- sto perfezionando il metodo shareObject della classe LocalCommand, cosi da permettere all'utente di sce
-gliere il nome del parametro che stampa il to_string degli oggetti condivisi
-- Inoltre ho aggiunto alla classe Parameter il metodo setHelp, per settare l'help del parametro
-- Aggiunto il metodo statico toString alla classe ColorLocalCommand/LocalCommand
-- aggiunto un overloading del metodo shareObject, quest'ultimo prende come param un comando
-che sarà il comando sul quale verrà aggiunto il parametro che stampa il toString dell'oggetto condiviso
-- aggiunto il metodo get del nome del parametro che stampa toString dell'oggetto condiviso
-- quando condividiamo un oggetto con il metodo shareObject che prende anche un comando,
-si devono creare i parametri automatici in relazione dei fields dell'oggetto condiviso
-- voglio creare delle annotazioni che si posson usare facoltativamente, per impostare un oggetto tramite comando
-aggiunto nuovo packages
-- aggiunti tutti i metodi che si trovavano in DomT4j, alla classe ColorLocalPhaseTerminal
-- abbiamo completato provvisoriamente i metodi : toString e getCommandByObject della classe LocalCommand e sotto classe.
-- Voglio aggiungere una nuova funzionalità alla fase, cioè ci deve essere un comando che esegue le fasi ed eseguire una fase
-deve significare che tutti i comandi contenuti al suo interno vengono eseguiti, nell'ordine in cui sono stati inseriti nella fase.
-Inoltre se in una fase a ci sono i comandi ac,ac2,ac3 e voglio creare un altra fase b, che contenga i comandi di a, lo devo poter fare
-- Ho creato il comando statico phasesExecutorCommand, da documentare ...
-- aggiunto nuovo metodo createPhase nella classe LocalPhaseTerminal e sotto classe
-- aggiunta nuova enum nell'interfaccia executable
-- comandi, fasi e parametri possono decidere di eseguirsi solo in determinate circostanze
-- abbiamo aggiunto un altra feature:possiamo bloccare l'esecuzione di un comando o parametro finchè la fase associata non è soddisfatta o accessibile
-- perfetto adesso sia un comando/parametro che fase possono eseguirsi in base dei criteri specifici
-- creato un nuovo comando nel terminale delle fasi, si tratta di "status".
-- creato il metodo cleanTerminal() per pulire il terminale
-- aggiunto nuovo metodo al punto di accesso jGo:execConnectingOutputChannel() - ottimo metodo
-- aggiunta nuova classe nel package delle annotazioni per i comandi:Configurable
-- aggunto nuova annotazione:ParameterMethod
-- Quando vogliamo specificare un argomento stringa per un parametro din un metodo, usiamo il simbolo £ per fare 
-lo spazio tra le stringhe.
-- bene quando eseguiamo una fase, possiamo eseguire le fasi precedenti a ques'ultima
-- nuovo metodo in JjDom - isMigrated()
-- nuovo metodo in JjDom - isDownloaded()
-- Aggiunta nuova enum nell'interfaccia phase e nuovo metodo sempre in quest'ultima, per settare l'esecuzione della fase.
-- La localPhase adesso ha come campo, un array di tipo :PhaseExecutionType
-- Creata una nuova classe nel package delle fasi : PhaseGroup
-- nuovo metodo nell'interfaccia Phase:membershipGroup()
- - sto aggiungendo un nuovo metodo nel punto di accesso potenziato jGo, per inviare email.
- - ho aggiunto i metodi per legger/scrivere un barcode
- - Adesso anche la classe Phase può condividere una esecuzione
-- Adesso devo permettere all'esecuzione di una fase, l'eventuale spostamento su di questa.
-- Ho creato una nuova classe, è la PhaseExecution, esecuzione specifica per le fasi.
-- Aggiunto il metodo nel terminale delle fasi : setCustomExecution()
+
+- I have perfected the shareObject method of the LocalCommand class, so as to allow the sce user
+
+give the name of the parameter that prints the to_string of the shared objects.
+
+- I added the setHelp () method to the Parameter class
+
+- I added the static "toString" method to the ColorLocalCommand class.
+
+- I created the annotations that allow you to transform a runtime, an object in command.
+
+- A new command has been added to the phase terminal, which takes care of performing the phases, based on certain criteria.
+
+- New static command :phasesExecutorCommand
+
+- Now, commands, phases and parameters can decide to execute only under certain circumstances.
+
+- We added another feature: we can block the execution of a command or parameter until the associated phase is not satisfied or accessible
+
+- Now commands, phases and parameters can be performed according to specific criteria
+
+- New command : status > localPhaseTerminal 
+
+- Created the cleanTerminal () method to clean the terminal
+
+- Added new method to access point jGo: execConnectingOutputChannel () - excellent method 
+
+- New Class cloud/jgo/utils/command/annotations/Configurable
+
+- New command annotation : ParameterMethod
+
+- When we want to specify a string argument for a parameter of a method, we use the £ symbol to do
+the space between the strings.
+
+- New JjDom methods - isMigrated() ecc ecc
+
+- New phase enum : PhaseExecutionType
+
+- New Phase class : PhaseGroup
+
+- New method in the Phase interface: membershipGroup ()
+
+- New features in the enhanced access point
+
+- Now the Phase class can also share an execution
+
+- I created a new class, it's PhaseExecution, a specific execution for the phases.
+
+- New method in phase terminal : setCustomExecution()

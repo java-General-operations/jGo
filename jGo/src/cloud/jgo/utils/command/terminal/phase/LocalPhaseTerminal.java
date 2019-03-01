@@ -64,10 +64,13 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			"This command executes a phase");
 	protected static LocalCommand statusCommand = new LocalCommand("status", "View the report of the current phase");
 
+	/**
+	 * 
+	 * @return the statusCommand
+	 */
 	public static LocalCommand getStatusCommand() {
 		return statusCommand;
 	}
-
 	/**
 	 * This method returns the current phase
 	 * 
@@ -107,7 +110,15 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			phase.setExecution(execution,PhaseExecutionType.CUSTOM);
 		}
 	}
-
+	
+	/**
+	 * This is the command that performs the phases
+	 * @return the phasesExecutorCommand
+	 */
+	public static LocalCommand getPhasesExecutorCommand() {
+		return phasesExecutorCommand;
+	}
+	
 	/**
 	 * This method creates a phase.<br>
 	 * The negative numerical values are not possible
