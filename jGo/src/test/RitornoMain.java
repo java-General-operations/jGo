@@ -6,6 +6,7 @@ import cloud.jgo.utils.command.Sharer;
 import cloud.jgo.utils.command.Sharer.Type;
 import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
+import cloud.jgo.utils.command.execution.Executable.When;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
@@ -24,8 +25,7 @@ public class RitornoMain {
 
 		/*
 		 * ###########################################################################
-		 * 2) Stabilire che in una fase, senza certa criteri non si ci può entrare 3) se
-		 * una fase ha delle regole, può essere kmq eseguita da un altra fase ?
+		 * 1) Adesso, devo aggiungere la feature .. questa è la prossima cosa da fare
 		 * ###########################################################################
 		 */
 		// bene ultimiamo le fasi una volta per tutte
@@ -155,7 +155,13 @@ public class RitornoMain {
 		new PhaseGroup("test", ciaoPhase, helloPhase);
 
 		// attivo il terminale
-
+		
+		
+		// adesso indico le due fasi di saluto, non devono essere mai eseguite
+		
+		ciaoPhase.validExecution(When.NEVER);
+		helloPhase.validExecution(When.NEVER);
+		
 		t.open();
 
 	}

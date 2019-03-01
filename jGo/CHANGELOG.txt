@@ -233,3 +233,5 @@ lo spazio tra le stringhe.
 - nuovo metodo nell'interfaccia Phase:membershipGroup()
  - sto aggiungendo un nuovo metodo nel punto di accesso potenziato jGo, per inviare email.
  - ho aggiunto i metodi per legger/scrivere un barcode
+ - Adesso anche la classe Phase può condividere una esecuzione
+- Adesso devo permettere all'esecuzione di una fase, l'eventuale spostamento su di questa.
