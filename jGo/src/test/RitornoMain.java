@@ -14,6 +14,16 @@ import cloud.jgo.utils.command.terminal.phase.PhaseGroup;
  */
 public class RitornoMain {
 	public static void main(String[] args) {
+		
+		/*
+		 * ###########################################################################
+		 * 1) Implementare una esecuzione condivisa fra le fasi della gestione online
+		 * 2) Stabilire che in una fase, senza certa criteri non si ci può entrare
+		 * 3) se una fase ha delle regole, può essere kmq eseguita da un altra fase ?
+		 * ###########################################################################
+		 */
+		
+		
 
 		// bene ultimiamo le fasi una volta per tutte
 
