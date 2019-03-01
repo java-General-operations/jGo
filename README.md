@@ -98,7 +98,7 @@ To add jGo to your project, include the following dependency in your pom.xml :<b
 </pre>
 <hr></hr>
 <h2>Copyright and License</h2>
-Copyright © 2018 - Marco Martire (www.jgo.cloud)
+Copyright © [2018-2019] Marco Martire (www.jgo.cloud)
 This program is free software: you can redistribute it and/or modify
 it under the terms of the MIT License.
 You may obtain a copy of License at :
