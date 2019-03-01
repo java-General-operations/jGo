@@ -37,7 +37,7 @@ import cloud.jgo.net.tcp.http.jor.annotations.JOR;
  * @author Martire91
  * @see JOR
  * @see JORHandlerConnection
- * @version 1.0.4 <!--Author : *** Marco Martire *** -->
+ * @version 1.0.5 <!--Author : *** Marco Martire *** -->
  *          <h1 style='color: #282828;'>jGo<span style='color:
  *          green;'>.cloud</span>/<a
  *          id='link'href='https://www.jgo.cloud/jor'>JOR</a></h1> <img
