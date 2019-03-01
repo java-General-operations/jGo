@@ -235,3 +235,5 @@ lo spazio tra le stringhe.
  - ho aggiunto i metodi per legger/scrivere un barcode
  - Adesso anche la classe Phase può condividere una esecuzione
 - Adesso devo permettere all'esecuzione di una fase, l'eventuale spostamento su di questa.
+- Ho creato una nuova classe, è la PhaseExecution, esecuzione specifica per le fasi.
+- Aggiunto il metodo nel terminale delle fasi : setCustomExecution()

@@ -37,6 +37,7 @@ import cloud.jgo.utils.command.execution.Execution;
 import cloud.jgo.utils.command.execution.SharedExecution;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.TerminalColors;
+import cloud.jgo.utils.command.terminal.phase.Phase.PhaseExecutionType;
 
 // se si estende questa classe, vuol dire che si vuole ridefinire il metodo useResponseObjectData
 // che ci permette di ottenere la risposta oggetto di ogni comando dato
@@ -99,6 +100,12 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 
 		}
 		return text;
+	}
+	// version 1.0.9
+	public static void setCustomExecution(SharedExecution execution, Phase...phases) {
+		for (Phase phase : phases) {
+			phase.setExecution(execution,PhaseExecutionType.CUSTOM);
+		}
 	}
 
 	/**
@@ -1041,6 +1048,9 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					// se il primo gruppo, è uguale a quello della fase corrente esegui la fase
 					if (firstGroup.equals(ph.membershipGroup())) {
 						result = ph.execute();
+//						// eliminare da qui fino @
+//						t.currentPhase = ph ;
+//						// @
 						if (result!=null) {
 							System.out.println(result);
 						}
@@ -1053,6 +1063,9 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 					// esegui fin quando non trovi una con il gruppo
 					if (ph.membershipGroup()==null) {
 						result = ph.execute();
+//						// eliminare da qui fino @
+//						t.currentPhase = ph ;
+//						// @
 						if (result!=null) {
 							System.out.println(result);
 						}

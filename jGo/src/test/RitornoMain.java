@@ -159,9 +159,6 @@ public class RitornoMain {
 		
 		// adesso indico le due fasi di saluto, non devono essere mai eseguite
 		
-		ciaoPhase.validExecution(When.NEVER);
-		helloPhase.validExecution(When.NEVER);
-		
 		t.open();
 
 	}
