@@ -56,42 +56,36 @@ public class RitornoMain2 {
 		downloadPhase = t.createPhase(3, "download", "Download");
 		updatePhase = t.createPhase(4, "update", "Update");
 
-		// stabilisco l'esecuzione si start
-
-		// okok qui creo una esecuzione di fase
-		
-		PhaseExecution execution = new PhaseExecution(t) {
-			
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected Object sharedExec(Phase phase) {
-				
-				if (phase.equals(startPhase)) {
-					System.out.println("Esecuzione iniziale eseguita");
-				}
-				else if(phase.equals(connectPhase)) {
-					System.out.println("Connessione eseguita");
-				}
-				else if(phase.equals(downloadPhase)) {
-					System.out.println("Scaricamento eseguito");
-				}
-				else if(phase.equals(updatePhase)) {
-					System.out.println("Aggiornamento eseguito");
-				}
-				return null ;
-			}
-		};
-		
-		
-		LocalPhaseTerminal.setCustomExecution(execution, startPhase,connectPhase,downloadPhase,updatePhase);
-		
-		// avvio il terminale 
+		LocalPhaseTerminal.setCustomExecution(new MyPhaseExecution(t),startPhase,connectPhase,downloadPhase,updatePhase);
 		
 		t.open();
+	}
+	
+	public static class MyPhaseExecution extends PhaseExecution{
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		/**
+		 * @param t
+		 */
+		public MyPhaseExecution(LocalPhaseTerminal t) {
+			super(t);
+			// imposto un flag
+			setAsCurrentAfterExecution(false);
+		}
+
+		/* (non-Javadoc)
+		 * @see cloud.jgo.utils.command.terminal.phase.PhaseExecution#sharedExec(cloud.jgo.utils.command.terminal.phase.Phase)
+		 */
+		@Override
+		protected Object sharedExec(Phase phase) {
+			// TODO Auto-generated method stub
+			System.out.println("Esecuzione della fase "+phase.phaseName()+"...");
+			return null ;
+		}
+		
 	}
 }
