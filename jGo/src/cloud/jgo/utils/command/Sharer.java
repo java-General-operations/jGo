@@ -29,5 +29,5 @@ package cloud.jgo.utils.command;
  */
 public interface Sharer {
 	public abstract Type getSharerType();
-	public static enum Type{COMMAND,PARAMETER}
+	public static enum Type{COMMAND,PARAMETER,PHASE}
 }

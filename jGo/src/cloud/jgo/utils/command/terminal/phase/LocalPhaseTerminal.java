@@ -34,6 +34,7 @@ import cloud.jgo.utils.command.Command;
 import cloud.jgo.utils.command.LocalCommand;
 import cloud.jgo.utils.command.Parameter;
 import cloud.jgo.utils.command.execution.Execution;
+import cloud.jgo.utils.command.execution.SharedExecution;
 import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.TerminalColors;
 
@@ -978,6 +979,9 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 			// okok qui devo verificare se a questa fase
 			// corrisponde un parametro sul comando esecutore
 			// in tal caso aggiorno l'esecuzione del parametro
+			if (getExecution()instanceof SharedExecution) {
+				((SharedExecution)getExecution()).setCurrentSharer(this);
+			}
 			if (hasAnExecution()) {
 				switch (w) {
 				case ALWAYS:
@@ -1138,6 +1142,15 @@ public class LocalPhaseTerminal extends LocalTerminal implements Structure {
 		
 		public void setMembershipGroup(PhaseGroup group){
 			this.group = group ;
+		}
+
+		/* (non-Javadoc)
+		 * @see cloud.jgo.utils.command.Sharer#getSharerType()
+		 */
+		@Override
+		public Type getSharerType() {
+			// TODO Auto-generated method stub
+			return Type.PHASE;
 		}
 	}
 }

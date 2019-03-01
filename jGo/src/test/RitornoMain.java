@@ -2,7 +2,11 @@ package test;
 
 import cloud.jgo.£;
 import cloud.jgo.utils.command.LocalCommand;
+import cloud.jgo.utils.command.Sharer;
+import cloud.jgo.utils.command.Sharer.Type;
 import cloud.jgo.utils.command.execution.Execution;
+import cloud.jgo.utils.command.execution.SharedExecution;
+import cloud.jgo.utils.command.terminal.LocalTerminal;
 import cloud.jgo.utils.command.terminal.phase.LocalPhaseTerminal;
 import cloud.jgo.utils.command.terminal.phase.Phase;
 import cloud.jgo.utils.command.terminal.phase.Phase.PhaseExecutionType;
@@ -52,176 +56,84 @@ public class RitornoMain {
 		connectPhase = t.createPhase(2, "connect", "Connessione");
 		downloadPhase = t.createPhase(3, "download", "Download");
 		updatePhase = t.createPhase(4, "update", "Update");
-		openCmdPhase = t.createPhase(5, "open_cmd", "Apre il terminale");
-		openNotepadPhase = t.createPhase(6, "open_notepad", "Apre il notepad");
-		openRegeditPhase = t.createPhase(7, "open_regedit", "Apre il registro");
-		penultimatePhase = t.createPhase(8, "#end", "Penultima fase");
-		finalPhase = t.createPhase(9, "end", "Fase finale");
-
-		// stabilisco le esecuzioni personalizzate del primo gruppo di fasi
-
+		
+		
+		
+		// stabilisco l'esecuzione si start
+		
 		startPhase.setExecution(new Execution() {
-
+			
 			@Override
 			public Object exec() {
-
+				// TODO Auto-generated method stub
 				return "Fase iniziale eseguita @";
-
 			}
-		}, PhaseExecutionType.CUSTOM);
-
-		connectPhase.setExecution(new Execution() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Object exec() {
-				// TODO Auto-generated method stub
-				return "connessione eseguita @" + "";
-			}
-		}, PhaseExecutionType.CUSTOM);
-
-		downloadPhase.setExecution(new Execution() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Object exec() {
-				// TODO Auto-generated method stub
-				return "Scaricamento eseguito @" + "";
-			}
-		}, PhaseExecutionType.CUSTOM);
-
-		updatePhase.setExecution(new Execution() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Object exec() {
-				// TODO Auto-generated method stub
-				return "Aggiornamento eseguito @" + "";
-			}
-		}, PhaseExecutionType.CUSTOM);
-
-		penultimatePhase.setExecution(new Execution() {
-
-			@Override
-			public Object exec() {
-
-				return "Fase penultima eseguita @";
-
-			}
-		}, PhaseExecutionType.CUSTOM);
-
-		finalPhase.setExecution(new Execution() {
-
-			@Override
-			public Object exec() {
-
-				return "Fase finale eseguita @";
-
-			}
-		}, PhaseExecutionType.CUSTOM);
-
-		// definisco le fasi del secondo gruppo :
-
-		openCmdPhase.setExecution(new Execution() {
-
-			@Override
-			public Object exec() {
-
-				return £.openTerminal();
-
-			}
-		}, PhaseExecutionType.CUSTOM);
-
-		openNotepadPhase.setExecution(new Execution() {
-
-			@Override
-			public Object exec() {
-
-				return £.openNotepad();
-
-			}
-		}, PhaseExecutionType.CUSTOM);
-
-		openRegeditPhase.setExecution(new Execution() {
-
-			@Override
-			public Object exec() {
-
-				return £.openRegedit();
-
-			}
-		}, PhaseExecutionType.CUSTOM);
-
-		// fine delle esecuzioni
-
-		// qui mi creo qualche comando che farà parte delle fasi del gruppo :
-		// "root_executables"
-
-		// comandi della fase open_cmd
-
-		LocalCommand cmdCommand = new LocalCommand("cmd", "Apre il terminale");
-		LocalCommand notepadCommand = new LocalCommand("notepad","Apre il notepad");
-		LocalCommand regeditCommand = new LocalCommand("regedit","Apre il registro");
-		cmdCommand.setInputValueExploitable(true);
-		notepadCommand.setInputValueExploitable(true);
-		regeditCommand.setInputValueExploitable(true);
-		cmdCommand.setExecution(new Execution() {
-
-			@Override
-			public Object exec() {
-				int times = Integer.parseInt(cmdCommand.getInputValue());
-				£.openTerminal(times);
-				return null;
-			}
-		});
-		notepadCommand.setExecution(new Execution() {
-
-			@Override
-			public Object exec() {
-				int times = Integer.parseInt(cmdCommand.getInputValue());
-				£.openNotepad(times);
-				return null;
-			}
-		});
-		regeditCommand.setExecution(new Execution() {
-
-			@Override
-			public Object exec() {
-				int times = Integer.parseInt(cmdCommand.getInputValue());
-				£.openRegedit(times);
-				return null;
-			}
-		});
+		},PhaseExecutionType.CUSTOM);
 		
-		// aggiungo i comandi alle fasi apposite
+		// stabilisco l'esecuzione condivisa del primo gruppo di fasi
+
+		SharedExecution execution = new SharedExecution() {
+			
+			@Override
+			protected Object sharedExec(Sharer sharer) {
+				Phase phase = (Phase) sharer ;
+				if (phase.phaseName().equals("connect")) {
+					return "Connessione eseguita @";
+				}
+				else if(phase.phaseName().equals("download")){
+					return "Scaricamento eseguito @";
+				}
+				else if(phase.phaseName().equals("update")){
+					return "Aggiornamento eseguito @";
+				}
+				else {
+					return null ;
+				}
+			}
+		};
+		connectPhase.setExecution(execution, PhaseExecutionType.CUSTOM);
+		downloadPhase.setExecution(execution, PhaseExecutionType.CUSTOM);
+		updatePhase.setExecution(execution, PhaseExecutionType.CUSTOM);
+
+		// aggiungo queste fasi ad un primo gruppo 
 		
-		t.addCommandsToPhase(openCmdPhase,cmdCommand);
-		t.addCommandsToPhase(openNotepadPhase, notepadCommand);
-		t.addCommandsToPhase(openRegeditPhase, regeditCommand);
+		new PhaseGroup("online-management",connectPhase,downloadPhase,updatePhase);
 		
-		// indico un gruppo di fasi - 1
-
-		new PhaseGroup("online-management", connectPhase, downloadPhase, updatePhase);
-
-		// indico un gruppo di fasi - 2
-
-		new PhaseGroup("root_executables", openCmdPhase, openNotepadPhase, openRegeditPhase);
-
-		// avvio il terminale
-
+		
+		// adesso mi creo altre semplici fasi da inserire in un altro gruppo
+		
+		Phase ciaoPhase, helloPhase ;
+		
+		ciaoPhase = t.createPhase(5, "ciao","Saluta in Italiano");
+		helloPhase = t.createPhase(6, "hello","Saluta in Inglese");
+	
+	
+		// mi creo una esecuzione condivisa 
+		
+		SharedExecution execution2 =  new SharedExecution() {
+			
+			@Override
+			protected Object sharedExec(Sharer sharer) {
+				Phase p = (Phase) sharer ;
+				if (p.phaseName().equals("ciao")) {
+					return "Ciao !!";
+				}
+				else {
+					return "Hello !!";
+				}
+			}
+		};
+		
+		ciaoPhase.setExecution(execution2,PhaseExecutionType.CUSTOM);
+		helloPhase.setExecution(execution2,PhaseExecutionType.CUSTOM);
+		
+		// creo un altro gruppo 
+		
+		new PhaseGroup("test",ciaoPhase,helloPhase);
+		
+		// attivo il terminale 
+		
 		t.open();
-
+	
 	}
 }
