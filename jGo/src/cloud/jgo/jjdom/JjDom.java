@@ -88,32 +88,6 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  * @version 1.0.5 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'>--> <!--Author : *** Marco
  *          Martire *** -->
- *          <!-- code to delete (for Maven project) until @-->
-   <style>
-   div.cm_source {
-  overflow: auto;
-  padding: 1em;
-  background-color: #eee;
-  font-family: courier new;
-  font-size: 10pt;
-}
-code.cm_n_n_n_0 {
-  color: #000000;
-}
-code.cm_n_n_n_2A00FF {
-  color: #2A00FF;
-}
-code.cm_b_n_n_7F0055 {
-  font-weight: bold;
-  color: #7F0055;
-}
-code.cm_n_n_n_0 {
-  color: #000000;
-}
-.costants{color:blue;}
-.overrides{color:darkgray;}
-   </style>
-   <!-- @ -->
  *          <h1 style='color: #282828;'>jGo<strong style='color:
  *          green;'>.cloud</strong>/<a
  *          id='link'href='https://www.jgo.cloud/jjdom'>JjDom</a></h1> <img
@@ -319,7 +293,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 */
 	public static String $these = null; // non è altro che la selezione corrente
 	// version 1.0.9 : segnalare
-	public static Class<?extends HTMLDocument>documentTypeUsed = null ; // default value
+	public static Class<? extends HTMLDocument> documentTypeUsed = null; // default value
 	/**
 	 * It is the "this" jquery, and therefore works only with the jquery results
 	 */
@@ -374,14 +348,17 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 */
 	public static List<jQuerySelector> availableSelectors = new ArrayList<jQuerySelector>();
 	// version 1.0.9
-	private static boolean migrated=false;
-	private static boolean downloaded = false ;
+	private static boolean migrated = false;
+	private static boolean downloaded = false;
 	static {
 		// init-list
 		availableSelectors.add(jQuerySelector.VISIBLE);
 		availableSelectors.add(jQuerySelector.HIDDEN);
 	}
-	private JjDom() {}
+
+	private JjDom() {
+	}
+
 	/**
 	 * 
 	 * @author Martire91<br>
@@ -483,7 +460,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 		}
 		return inst;
 	}
-	
+
 	// version 1.0.9
 	/**
 	 * This method connects to the server, using an ftp:
@@ -493,18 +470,18 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 * @param ftpHost
 	 *            the ftp host - example: ftp.website.com
 	 * @param ftpPort
-	 * 			  the ftp port - example: 21
+	 *            the ftp port - example: 21
 	 * @param ftpUser
 	 *            the ftp username
 	 * @param ftpPassw
 	 *            the ftp password
 	 * @return the JjDom instance
 	 */
-	public static JjDom connect(String ftpHost,int ftpPort,String ftpUser, String ftpPassw) {
+	public static JjDom connect(String ftpHost, int ftpPort, String ftpUser, String ftpPassw) {
 		// per prima cosa mi connetto
 		JjDom inst = null;
 		try {
-			String[] response = ftp_client.connect(ftpHost,ftpPort);
+			String[] response = ftp_client.connect(ftpHost, ftpPort);
 			for (String reply : response) {
 				System.out.println(reply);
 			}
@@ -532,6 +509,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 		}
 		return inst;
 	}
+
 	// agisce sul documento di JjDom
 	/**
 	 * This method migrates the JjDom html document, associating a correct URL in
@@ -553,7 +531,8 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 *            document URL
 	 * @param document
 	 *            the document
-	 * @param log notify if the upload has occurred
+	 * @param log
+	 *            notify if the upload has occurred
 	 * @return the JjDom instance
 	 */
 	public static JjDom migrate(String urlResource, Document document, boolean log) {
@@ -596,8 +575,8 @@ public final class JjDom implements jQuerySupport, Serializable {
 				if (log) {
 					System.out.println("Uploads completed successfully !!");
 				}
-				migrated = true ;
-				downloaded = false ; // diciamo che se il documento è stato uplodato, non può risultare già scaricato
+				migrated = true;
+				downloaded = false; // diciamo che se il documento è stato uplodato, non può risultare già scaricato
 				JjDom.documentURL = urlResource;
 				inst = instance;
 			} catch (IllegalStateException e) {
@@ -661,9 +640,9 @@ public final class JjDom implements jQuerySupport, Serializable {
 				java.io.File serFile = new java.io.File("tmp.dat");
 				ftp_client.download(urlResource, serFile);
 				inst = JjDom.deserializes(serFile.getPath());
-				downloaded = true ;
+				downloaded = true;
 				// quando il documento viene scaricato : impostiamo il migrated a false
-				migrated = false ;
+				migrated = false;
 				if (inst instanceof HTMLDocument) {
 					JjDom.document = (HTMLDocument) inst;
 				}
@@ -726,13 +705,15 @@ public final class JjDom implements jQuerySupport, Serializable {
 	public static boolean isConnected() {
 		return ftp_client.isConnected();
 	}
+
 	// version 1.0.9
-		public static boolean isMigrated() {
-			return migrated ;
-		}
-		public static boolean isDownloaded() {
-			return downloaded ;
-		}
+	public static boolean isMigrated() {
+		return migrated;
+	}
+
+	public static boolean isDownloaded() {
+		return downloaded;
+	}
 
 	/**
 	 * This method checks if the document is selected
@@ -802,7 +783,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-//			htmlPreview.delete(); da controllare ...
+			// htmlPreview.delete(); da controllare ...
 			htmlPreview.deleteOnExit();
 		}
 		return instance;
@@ -867,40 +848,41 @@ public final class JjDom implements jQuerySupport, Serializable {
 		document.printMarkup();
 		return instance;
 	}
+
 	// default : CHARSET_UTF_8
 	/**
-	 * This method creates a new html document.
-	 * Takes into account the type of document used.
+	 * This method creates a new html document. Takes into account the type of
+	 * document used.
+	 * 
 	 * @see #newDocument(String)
 	 * @see #newVoidDocument(String)
 	 * @return the html document
 	 */
 	public static HTMLDocument newDocument() {
-		if (documentTypeUsed==null) {
+		if (documentTypeUsed == null) {
 			document = new HTMLDefaultDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
-			migrated = false ;
-			downloaded = false ;
-		}
-		else {
+			migrated = false;
+			downloaded = false;
+		} else {
 			if (documentTypeUsed.getSimpleName().equals("HTMLDefaultDocument")) {
 				document = new HTMLDefaultDocument(HTMLDocument.CHARSET_UTF_8, null, instance);
-				migrated = false ;
-				downloaded = false ;
-			}
-			else if(documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
-				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8,instance);
-				migrated = false ;
-				downloaded = false ;
-			}
-			else {
+				migrated = false;
+				downloaded = false;
+			} else if (documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
+				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8, instance);
+				migrated = false;
+				downloaded = false;
+			} else {
 				// qui dare una eccezzione ...
 			}
 		}
 		return document;
 	}
+
 	/**
-	 * This method creates a new html document.
-	 * Takes into account the type of document used.
+	 * This method creates a new html document. Takes into account the type of
+	 * document used.
+	 * 
 	 * @see #newDocument()
 	 * @see #newVoidDocument(String)
 	 * @param charsetName
@@ -908,23 +890,20 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 * @return the html document
 	 */
 	public static HTMLDocument newDocument(String charsetName) {
-		if (documentTypeUsed==null) {
+		if (documentTypeUsed == null) {
 			document = new HTMLDefaultDocument(charsetName, null, instance);
-			migrated = false ;
-			downloaded = false ;
-		}
-		else {
+			migrated = false;
+			downloaded = false;
+		} else {
 			if (documentTypeUsed.getSimpleName().equals("HTMLDefaultDocument")) {
 				document = new HTMLDefaultDocument(charsetName, null, instance);
-				migrated = false ;
-				downloaded = false ;
-			}
-			else if(documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
-				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8,instance);
-				migrated = false ;
-				downloaded = false ;
-			}
-			else {
+				migrated = false;
+				downloaded = false;
+			} else if (documentTypeUsed.getSimpleName().equals("HTMLColorDocument")) {
+				document = new HTMLColorDocument(HTMLDocument.CHARSET_UTF_8, instance);
+				migrated = false;
+				downloaded = false;
+			} else {
 				// qui dare una eccezzione ...
 				try {
 					throw new InvalidDocumentTypeException(documentTypeUsed);
@@ -938,8 +917,8 @@ public final class JjDom implements jQuerySupport, Serializable {
 	}
 
 	/**
-	 * This method creates a new void document.
-	 * Does not take into account the type of document used.
+	 * This method creates a new void document. Does not take into account the type
+	 * of document used.
 	 * 
 	 * @see #newDocument()
 	 * @see #newDocument(String)
@@ -948,10 +927,10 @@ public final class JjDom implements jQuerySupport, Serializable {
 	 * @return the html document
 	 */
 	public static HTMLDocument newVoidDocument(String charsetName) {
-		 document = HTMLDefaultDocument.newVoidDocument(charsetName, instance);
-		 migrated = false ;
-		 downloaded = false ;
-		 return document ;
+		document = HTMLDefaultDocument.newVoidDocument(charsetName, instance);
+		migrated = false;
+		downloaded = false;
+		return document;
 	}
 
 	/**
@@ -3895,6 +3874,7 @@ public final class JjDom implements jQuerySupport, Serializable {
 		}
 
 	}
+
 	/**
 	 * I risultati jquery e dom possono non compaciare
 	 */

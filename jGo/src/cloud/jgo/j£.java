@@ -110,33 +110,7 @@ import cloud.jgo.utils.command.terminal.phase.ColorLocalPhaseTerminal;
  * @see £#_W
  * @version 1.0.3 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'> --><br>
- *          <!--Author : *** Marco Martire *** -->
- *          <!-- code to delete (for Maven project) until @-->
-   <style>
-   div.cm_source {
-  overflow: auto;
-  padding: 1em;
-  background-color: #eee;
-  font-family: courier new;
-  font-size: 10pt;
-}
-code.cm_n_n_n_0 {
-  color: #000000;
-}
-code.cm_n_n_n_2A00FF {
-  color: #2A00FF;
-}
-code.cm_b_n_n_7F0055 {
-  font-weight: bold;
-  color: #7F0055;
-}
-code.cm_n_n_n_0 {
-  color: #000000;
-}
-.costants{color:blue;}
-.overrides{color:darkgray;}
-   </style>
-   <!-- @ --> <img
+ *          <!--Author : *** Marco Martire *** --> <img
  *          id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'
  *          style='float: left;margin-right:15px;'><br>
  *          <h1 style='color: #282828;'>jGo<strong style='color:
@@ -1427,17 +1401,17 @@ public final class j£ extends cloud.jgo.£ {
 	public static ColorLocalPhaseTerminal createColorPhaseTerminal() {
 		return new ColorLocalPhaseTerminal();
 	}
-	
+
 	// version 1.0.9
 	public static String readBarcode(String imageFileName) {
-		InputStream in=null;
+		InputStream in = null;
 		try {
 			in = new FileInputStream(imageFileName);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		BufferedImage buff=null;
+		BufferedImage buff = null;
 		try {
 			buff = ImageIO.read(in);
 		} catch (IOException e) {
@@ -1447,7 +1421,7 @@ public final class j£ extends cloud.jgo.£ {
 		LuminanceSource source = new BufferedImageLuminanceSource(buff);
 		BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 		Reader reader = new MultiFormatReader();
-		Result result=null;
+		Result result = null;
 		try {
 			result = reader.decode(bitmap);
 		} catch (NotFoundException e) {
@@ -1462,22 +1436,24 @@ public final class j£ extends cloud.jgo.£ {
 		}
 		return result.getText();
 	}
+
 	// version 1.0.9 : default values : 400 / 300
-	public static j£ writeBarcode(String text,String imgFormat,BarcodeFormat codeFormat,String fileName,int width,int height) {
-		j£ inst = null ;
-		boolean valid = false ;
-		for (String format:ImageIO.getWriterFormatNames()) {
+	public static j£ writeBarcode(String text, String imgFormat, BarcodeFormat codeFormat, String fileName, int width,
+			int height) {
+		j£ inst = null;
+		boolean valid = false;
+		for (String format : ImageIO.getWriterFormatNames()) {
 			if (format.equals(imgFormat)) {
-				valid = true ;
+				valid = true;
 				break;
 			}
 		}
 		if (valid) {
-			BitMatrix bitMatrix=null;
-			switch(codeFormat) {
+			BitMatrix bitMatrix = null;
+			switch (codeFormat) {
 			case EAN_8:
 				try {
-					bitMatrix = new EAN8Writer().encode(text,codeFormat, width, height);
+					bitMatrix = new EAN8Writer().encode(text, codeFormat, width, height);
 				} catch (WriterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1485,18 +1461,18 @@ public final class j£ extends cloud.jgo.£ {
 				break;
 			case EAN_13:
 				try {
-					bitMatrix = new EAN13Writer().encode(text,codeFormat, width, height);
+					bitMatrix = new EAN13Writer().encode(text, codeFormat, width, height);
 				} catch (WriterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				break;
 			case AZTEC:
-				bitMatrix = new AztecWriter().encode(text,codeFormat, width, height);
+				bitMatrix = new AztecWriter().encode(text, codeFormat, width, height);
 				break;
 			case CODABAR:
 				try {
-					bitMatrix = new CodaBarWriter().encode(text,codeFormat, width, height);
+					bitMatrix = new CodaBarWriter().encode(text, codeFormat, width, height);
 				} catch (WriterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1504,7 +1480,7 @@ public final class j£ extends cloud.jgo.£ {
 				break;
 			case CODE_128:
 				try {
-					bitMatrix = new Code128Writer().encode(text,codeFormat, width, height);
+					bitMatrix = new Code128Writer().encode(text, codeFormat, width, height);
 				} catch (WriterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1512,7 +1488,7 @@ public final class j£ extends cloud.jgo.£ {
 				break;
 			case CODE_39:
 				try {
-					bitMatrix = new Code39Writer().encode(text,codeFormat, width, height);
+					bitMatrix = new Code39Writer().encode(text, codeFormat, width, height);
 				} catch (WriterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1520,18 +1496,18 @@ public final class j£ extends cloud.jgo.£ {
 				break;
 			case CODE_93:
 				try {
-					bitMatrix = new Code93Writer().encode(text,codeFormat, width, height);
+					bitMatrix = new Code93Writer().encode(text, codeFormat, width, height);
 				} catch (WriterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				break;
 			case DATA_MATRIX:
-				bitMatrix = new DataMatrixWriter().encode(text,codeFormat, width, height);
+				bitMatrix = new DataMatrixWriter().encode(text, codeFormat, width, height);
 				break;
 			case ITF:
 				try {
-					bitMatrix = new ITFWriter().encode(text,codeFormat, width, height);
+					bitMatrix = new ITFWriter().encode(text, codeFormat, width, height);
 				} catch (WriterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1539,7 +1515,7 @@ public final class j£ extends cloud.jgo.£ {
 				break;
 			case PDF_417:
 				try {
-					bitMatrix = new PDF417Writer().encode(text,codeFormat, width, height);
+					bitMatrix = new PDF417Writer().encode(text, codeFormat, width, height);
 				} catch (WriterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1547,7 +1523,7 @@ public final class j£ extends cloud.jgo.£ {
 				break;
 			case QR_CODE:
 				try {
-					bitMatrix = new QRCodeWriter().encode(text,codeFormat, width, height);
+					bitMatrix = new QRCodeWriter().encode(text, codeFormat, width, height);
 				} catch (WriterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1555,7 +1531,7 @@ public final class j£ extends cloud.jgo.£ {
 				break;
 			case UPC_A:
 				try {
-					bitMatrix = new UPCAWriter().encode(text,codeFormat, width, height);
+					bitMatrix = new UPCAWriter().encode(text, codeFormat, width, height);
 				} catch (WriterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -1563,14 +1539,14 @@ public final class j£ extends cloud.jgo.£ {
 				break;
 			case UPC_E:
 				try {
-					bitMatrix = new UPCEWriter().encode(text,codeFormat, width, height);
+					bitMatrix = new UPCEWriter().encode(text, codeFormat, width, height);
 				} catch (WriterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				break;
-				default:
-					break;
+			default:
+				break;
 			}
 			try {
 				MatrixToImageWriter.writeToStream(bitMatrix, imgFormat, new FileOutputStream(new File(fileName)));
@@ -1583,7 +1559,7 @@ public final class j£ extends cloud.jgo.£ {
 				e.printStackTrace();
 			}
 		}
-		return inst ;
+		return inst;
 	}
-	
+
 }

@@ -181,33 +181,7 @@ import cloud.jgo.utils.swing.SlideToggle;
  * @see £#_W
  * @version 1.0.9 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'> --><br>
- *          <!--Author : *** Marco Martire *** --> 
- *          <!-- code to delete (for Maven project) until @-->
-   <style>
-   div.cm_source {
-  overflow: auto;
-  padding: 1em;
-  background-color: #eee;
-  font-family: courier new;
-  font-size: 10pt;
-}
-code.cm_n_n_n_0 {
-  color: #000000;
-}
-code.cm_n_n_n_2A00FF {
-  color: #2A00FF;
-}
-code.cm_b_n_n_7F0055 {
-  font-weight: bold;
-  color: #7F0055;
-}
-code.cm_n_n_n_0 {
-  color: #000000;
-}
-.costants{color:blue;}
-.overrides{color:darkgray;}
-   </style>
-   <!-- @ --><img
+ *          <!--Author : *** Marco Martire *** --> <img
  *          id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'
  *          style='float: left;margin-right:15px;'><br>
  *          <h1 style='color: #282828;'>jGo<strong style='color:
@@ -457,6 +431,7 @@ public class £ {
 		SLOW, REALLY_SLOW, FAST, IMPERCEPTIBLE, REALLY_FAST, SUPER_FAST, VERTICAL, HORIZONTAL, CRAZY, TRANSPARENCY, MAXIMIZED, MINIMIZED
 		// continuare da qui facendo la costante super fast
 	}
+
 	/**
 	 * The constant represents a textual space
 	 */
@@ -601,6 +576,7 @@ public class £ {
 	 * development</em>
 	 */
 	public final static WebUtils _W = new WebUtils();
+
 	// nuovi metodi - version 1.0.5
 	/**
 	 * This method iterates the array as if it were a loop
@@ -1473,12 +1449,15 @@ public class £ {
 
 	/**
 	 * This method creates a phase terminal.
-	 * @param terminalName terminal name
+	 * 
+	 * @param terminalName
+	 *            terminal name
 	 * @return the created terminal
 	 */
 	public static LocalPhaseTerminal createPhaseTerminal(String terminalName) {
 		return new LocalPhaseTerminal(terminalName);
 	}
+
 	/**
 	 * this method creates a server that can be accessed with the login
 	 * 
@@ -3915,8 +3894,7 @@ public class £ {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		else {
+		} else {
 			try {
 				SHELL.command(cmd_command);
 			} catch (IOException e) {
@@ -3929,28 +3907,28 @@ public class £ {
 		}
 		return instance;
 	}
+
 	// version 1.0.9
 	public static £ execConnectingOutputChannel(String cmd_command) {
-		 if (System.getProperty("os.name").contains("Windows")) {
-			 try {
-					new ProcessBuilder("cmd", "/c",cmd_command).inheritIO().start().waitFor();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		}
-		else {
+		if (System.getProperty("os.name").contains("Windows")) {
+			try {
+				new ProcessBuilder("cmd", "/c", cmd_command).inheritIO().start().waitFor();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
 			try {
 				Runtime.getRuntime().exec(cmd_command);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		 }
-		 return instance ;
+		}
+		return instance;
 	}
 
 	/**
