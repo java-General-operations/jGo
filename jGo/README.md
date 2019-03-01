@@ -50,8 +50,8 @@
     </code>
     </pre>
 <br>
-Also thanks to jGo you can use jquery in the java code :
-<h2>jGo/<a href='https://www.jgo.cloud/jjdom/'>JjDom</a> - Java jQuery Dom</h2>
+Also thanks to jGo you can use <a href='https://jquery.com/'>jquery</a> in the java code :
+<h2>jGo/<a href='https://www.jgo.cloud/jjdom/'>JjDom</a> - Java <a href='https://jquery.com/'>jQuery</a> Dom</h2>
 <pre>
 <code>
 $("#container p").hide("slow").show("slow");
@@ -91,7 +91,7 @@ To add jGo to your project, include the following dependency in your pom.xml :<b
 &lt;dependency&gt;
     &lt;groupId&gt;cloud.jgo&lt;/groupId&gt;
     &lt;artifactId&gt;jGo&lt;/artifactId&gt;
-    &lt;version&gt;1.0.6&lt;/version&gt;
+    &lt;version&gt;1.0.9&lt;/version&gt;
 &lt;/dependency&gt;
 </code>
 </pre>
