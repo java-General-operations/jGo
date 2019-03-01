@@ -89,6 +89,7 @@ public class LocalCommand implements Command, Iterable<Entry<String, Parameter>>
 	 * @see ParameterField
 	 * @see ParameterMethod
 	 * @param a The class you want to convert into command
+	 * @param <A> type
 	 * @return the command
 	 */
 	public static <A> LocalCommand getCommandByType(Class<?> a) {

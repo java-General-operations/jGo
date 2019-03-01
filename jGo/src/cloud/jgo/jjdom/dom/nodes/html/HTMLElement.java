@@ -208,10 +208,11 @@ public interface HTMLElement extends Element, Home {
 		 * 
 		 * @param flag
 		 *            the flag
+		 * @return this element
 		 */
 		public HTMLElementType setClosingTag(boolean flag) {
 			this.hasClosingTag = flag;
-			return this ;
+			return this;
 		}
 
 		/**
@@ -219,10 +220,11 @@ public interface HTMLElement extends Element, Home {
 		 * 
 		 * @param flag
 		 *            the flag
+		 * @return this element
 		 */
 		public HTMLElementType setThereCanBeMore(boolean flag) {
 			this.thereCanBeMore = flag;
-			return this ;
+			return this;
 		}
 
 		private HTMLElementType(String tagName, boolean hasClosingTag, boolean thereCanBeMore) {
@@ -285,55 +287,60 @@ public interface HTMLElement extends Element, Home {
 		public static List<HTMLElementType> availableTypes = new ArrayList<>();
 		static {
 			/*
-			 
-			 	HTML, HEAD, 
-			 	TITLE, 
-			 	SCRIPT, LINK,
-				BODY, DIV, 
-				TABLE, TH,
-				TR, TD,
-				TBODY, THEAD,
-				TFOOT,
-				STRONG, IMG,
-				H1, H2, H3,
-				H4, P, A,
-				BR, UL, OL,
-				LI,
-				SPAN, EM, FORM,
-				INPUT,
-				LABEL, OPTION, SELECT,
-				TIME, VIDEO, META,
-				STYLE,
-				CODE, BUTTON, ARTICLE,
-				ASIDE, CANVAS, CAPTION,
-				COL,
-				COL_GROUP 
-			 
+			 * 
+			 * HTML, HEAD, TITLE, SCRIPT, LINK, BODY, DIV, TABLE, TH, TR, TD, TBODY, THEAD,
+			 * TFOOT, STRONG, IMG, H1, H2, H3, H4, P, A, BR, UL, OL, LI, SPAN, EM, FORM,
+			 * INPUT, LABEL, OPTION, SELECT, TIME, VIDEO, META, STYLE, CODE, BUTTON,
+			 * ARTICLE, ASIDE, CANVAS, CAPTION, COL, COL_GROUP
+			 * 
 			 */
-			availableTypes.add(HTML);availableTypes.add(HEAD);
-			availableTypes.add(TITLE);availableTypes.add(SCRIPT);
-			availableTypes.add(LINK);availableTypes.add(BODY);
-			availableTypes.add(DIV);availableTypes.add(TABLE);
-			availableTypes.add(TH);availableTypes.add(TR);
-			availableTypes.add(TD);availableTypes.add(TBODY);
-			availableTypes.add(THEAD);availableTypes.add(TFOOT);
-			availableTypes.add(STRONG);availableTypes.add(IMG);
-			availableTypes.add(H1);availableTypes.add(H2);
-			availableTypes.add(H3);availableTypes.add(H4);
-			availableTypes.add(P);availableTypes.add(A);
-			availableTypes.add(BR);availableTypes.add(UL);
-			availableTypes.add(OL);availableTypes.add(LI);
-			availableTypes.add(SPAN);availableTypes.add(EM);
-			availableTypes.add(FORM);availableTypes.add(INPUT);
-			availableTypes.add(LABEL);availableTypes.add(OPTION);
-			availableTypes.add(SELECT);availableTypes.add(TIME);
-			availableTypes.add(VIDEO);availableTypes.add(META);
-			availableTypes.add(STYLE);availableTypes.add(CODE);
-			availableTypes.add(BUTTON);availableTypes.add(ARTICLE);
-			availableTypes.add(ASIDE);availableTypes.add(CANVAS);
-			availableTypes.add(CAPTION);availableTypes.add(COL);
+			availableTypes.add(HTML);
+			availableTypes.add(HEAD);
+			availableTypes.add(TITLE);
+			availableTypes.add(SCRIPT);
+			availableTypes.add(LINK);
+			availableTypes.add(BODY);
+			availableTypes.add(DIV);
+			availableTypes.add(TABLE);
+			availableTypes.add(TH);
+			availableTypes.add(TR);
+			availableTypes.add(TD);
+			availableTypes.add(TBODY);
+			availableTypes.add(THEAD);
+			availableTypes.add(TFOOT);
+			availableTypes.add(STRONG);
+			availableTypes.add(IMG);
+			availableTypes.add(H1);
+			availableTypes.add(H2);
+			availableTypes.add(H3);
+			availableTypes.add(H4);
+			availableTypes.add(P);
+			availableTypes.add(A);
+			availableTypes.add(BR);
+			availableTypes.add(UL);
+			availableTypes.add(OL);
+			availableTypes.add(LI);
+			availableTypes.add(SPAN);
+			availableTypes.add(EM);
+			availableTypes.add(FORM);
+			availableTypes.add(INPUT);
+			availableTypes.add(LABEL);
+			availableTypes.add(OPTION);
+			availableTypes.add(SELECT);
+			availableTypes.add(TIME);
+			availableTypes.add(VIDEO);
+			availableTypes.add(META);
+			availableTypes.add(STYLE);
+			availableTypes.add(CODE);
+			availableTypes.add(BUTTON);
+			availableTypes.add(ARTICLE);
+			availableTypes.add(ASIDE);
+			availableTypes.add(CANVAS);
+			availableTypes.add(CAPTION);
+			availableTypes.add(COL);
 			availableTypes.add(COL_GROUP);
 		}
+
 		public static HTMLElementType parse(String type) {
 			HTMLElementType typ = null;
 			for (int i = 0; i < availableTypes.size(); i++) {
@@ -344,6 +351,7 @@ public interface HTMLElement extends Element, Home {
 			}
 			return typ;
 		}
+
 		@Override
 		public String toString() {
 			// TODO Auto-generated method stub
@@ -380,10 +388,12 @@ public interface HTMLElement extends Element, Home {
 		}
 
 	}
+
 	// version 1.0.9 : serve per creare elementi il cui tipo non è predefinito
-	public static HTMLElement createNewElement(String elementName,HTMLElement.HTMLElementType newType, HTMLDocument document) {
+	public static HTMLElement createNewElement(String elementName, HTMLElement.HTMLElementType newType,
+			HTMLDocument document) {
 		HTMLElement element = new HTMLDefaultElement(elementName, document);
-		((HTMLDefaultElement)element).setType(newType);
-		return element ;
+		((HTMLDefaultElement) element).setType(newType);
+		return element;
 	}
 }

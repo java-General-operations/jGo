@@ -27,7 +27,7 @@ import cloud.jgo.utils.command.Sharer.Type;
 import cloud.jgo.utils.command.execution.SharedExecution;
 
 /**
- * @author Martire91 - <https://github.com/wasp91>
+ * @author Martire91 - https://github.com/wasp91
  * @version 1.0.9
  * This execution boasts a possible particularity,
  * when the phase is executed, it can become the current one
