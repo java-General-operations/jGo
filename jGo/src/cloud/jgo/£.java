@@ -73,6 +73,7 @@ import java.net.SocketException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -576,6 +577,64 @@ public class £ {
 	 * development</em>
 	 */
 	public final static WebUtils _W = new WebUtils();
+
+	// version 1.1.0
+	/**
+	 * This method loads the package from the outside
+	 * @see £#loadClass(String, ClassLoader)
+	 * @see £#loadClass(String, boolean, ClassLoader)
+	 * @param jarFile the jar file
+	 * @return returns a special class loader
+	 */
+	public static URLClassLoader loadJar(cloud.jgo.io.File jarFile) {
+		URLClassLoader loader = null;
+		try {
+			loader = new URLClassLoader(new URL[] { jarFile.toURI().toURL() }, instance.getClass().getClassLoader());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return loader;
+	}
+
+	// version 1.1.0
+	/**
+	 * This method loads the package from the outside
+	 * @see £#loadJar(cloud.jgo.io.File)
+	 * @param className class name
+	 * @param loader class loader
+	 * @return the loaded class
+	 */
+	public static Class<?> loadClass(String className, ClassLoader loader) {
+		Class<?> clazz = null;
+		try {
+			clazz = Class.forName(className, true, loader);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return clazz;
+	}
+
+	// version 1.1.0
+	/**
+	 * This method loads the package from the outside
+	 * @see £#loadJar(cloud.jgo.io.File)
+	 * @param className class name
+	 * @param initializeClass if it is true, initialize the class
+	 * @param loader class loader
+	 * @return the loaded class
+	 */
+	public static Class<?> loadClass(String className, boolean initializeClass, ClassLoader loader) {
+		Class<?> clazz = null;
+		try {
+			clazz = Class.forName(className,initializeClass, loader);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return clazz;
+	}
 
 	// nuovi metodi - version 1.0.5
 	/**

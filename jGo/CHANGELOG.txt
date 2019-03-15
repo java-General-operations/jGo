@@ -270,3 +270,9 @@ the space between the strings.
 - I created a new class, it's PhaseExecution, a specific execution for the phases.
 
 - New method in phase terminal : setCustomExecution()
+
+
+
+Version 1.1.0 - in dev
+
+- Nuovi metodi al punto di accesso jGo, per caricare jar e classi esterne.
