@@ -14,6 +14,12 @@ public class MyJorHandler extends JORHandlerConnection{
 	// Bene sviluppare questo gestore di richieste JOR ...
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	@Override
 	protected void organizesObjectsRootPage(Map<Object, String> structure, HTTPResponse response,
 			String originalUrlPattern) {

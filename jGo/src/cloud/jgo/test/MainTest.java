@@ -18,20 +18,5 @@ public class MainTest {
 public static void main(String[] args) {
 	
 	
-	JORServer server = new JORServer();
-	server.setMultiConnections(true);
-	server.setRootFolder("C:\\test");
-	server.setServerName("my jor server");
-	server.setLocalPort(80);
-	server.setModel(null);
-	// mi creo gli oggetti da condividere 
-	Magazzino primo = new Magazzino("conad",1500);
-	Magazzino secondo = new Magazzino("despar", 2500);
-	server.addToMatrix(new Magazzino[] {primo,secondo});
-	
-	// serializzo l'oggetto
-	
-	
-	
 }
 }
