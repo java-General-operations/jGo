@@ -18,5 +18,14 @@ public class MainTest {
 public static void main(String[] args) {
 	
 	
+	// dbbiamo creare un server JORServer
+	// e configurarlo per poi ottenere
+	// il file di configurazione, dunque
+	// verificare il tag active
+	
+	
+	
+	
+	
 }
 }

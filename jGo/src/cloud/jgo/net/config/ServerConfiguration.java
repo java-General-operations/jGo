@@ -68,6 +68,8 @@ public abstract class ServerConfiguration extends Configuration {
 			ServerConfiguration.class);
 	public final static ConfigurationKey LHOST = new ConfigurationKey("jgo.net.server.lhost", String.class,
 			ServerConfiguration.class);
+	public final static ConfigurationKey ACTIVE = new ConfigurationKey("jgo.net.server.active", Boolean.class,
+			ServerConfiguration.class);
 	// available
 	protected static List<ConfigurationKey> availableConfigurations = new ArrayList<ConfigurationKey>();
 	static {
@@ -76,6 +78,7 @@ public abstract class ServerConfiguration extends Configuration {
 		availableConfigurations.add(LHOST);
 		availableConfigurations.add(SERVER_NAME);
 		availableConfigurations.add(SERVER_TYPE);
+		availableConfigurations.add(ACTIVE);
 		// init xml builder
 		try {
 			builder = factory.newDocumentBuilder();
