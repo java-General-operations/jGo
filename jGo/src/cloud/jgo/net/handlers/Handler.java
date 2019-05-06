@@ -21,13 +21,16 @@
  * 
  */
 package cloud.jgo.net.handlers;
+
+import java.io.Serializable;
+
 /**
  * 
  * @author Martire91<br>
  * This interface represents the handler.
  * (Product)
  */
-public interface Handler extends Runnable{
+public interface Handler extends Serializable, Runnable{
 	/**
 	 * 
 	 * @return the session id

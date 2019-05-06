@@ -32,6 +32,10 @@ import java.util.logging.Logger;
  *
  */
 public abstract class Configuration extends Hashtable<String,Object> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public final static ConfigurationKey TIMER = new ConfigurationKey("jgo.net.timer",Integer.class,Configuration.class);
 	/**
 		 * 

@@ -23,6 +23,7 @@
 package cloud.jgo.net;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
@@ -34,7 +35,7 @@ import cloud.jgo.net.tcp.NoReadingSourceException;
  * @author Martire91<br>
  * This class is an abstract server
  */
-public interface Server extends Runnable{
+public interface Server extends Serializable, Runnable{
 
 	/**
 	 * Let the server listen

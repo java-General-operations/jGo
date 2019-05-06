@@ -37,6 +37,8 @@ import cloud.jgo.net.Server;
  */
 public abstract class HandlerConnection implements Connection, Handler {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * This method manages the connection. (Server/side)
 	 * 

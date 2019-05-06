@@ -40,6 +40,7 @@ import cloud.jgo.net.handlers.Handler;
 import cloud.jgo.net.tcp.DefaultSocket;
 
 public abstract class HTTPHandlerConnection implements Handler {
+	private static final long serialVersionUID = 1L;
 	@Retention(value = RetentionPolicy.RUNTIME)
 	@Target(value = { ElementType.METHOD })
 	public @interface £_HTTPServer {
@@ -47,7 +48,6 @@ public abstract class HTTPHandlerConnection implements Handler {
 
 		String value_1();
 	}
-
 	private HTTPRequest request = null;
 	private HTTPResponse response = null;
 	private static boolean notifyConnections = false;

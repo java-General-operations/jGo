@@ -46,6 +46,7 @@ import cloud.jgo.utils.command.RemoteCommand;
  * @author Martire91 Handler TCP
  */
 public abstract class TCPHandlerConnection extends HandlerConnection implements Controllable, Control {
+	private static final long serialVersionUID = 1L;
 	@Override
 	public boolean enterRemoteCommand(RemoteCommand commnd, String... parameters) {
 		boolean entered = false;

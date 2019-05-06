@@ -11,7 +11,8 @@ import cloud.jgo.net.config.Configuration.ConfigurationKey;
 import cloud.jgo.net.handlers.Handler;
 
 public class TCPServerConfiguration extends ServerConfiguration {
-	private Logger logger = null;
+	private static final long serialVersionUID = 1L;
+	private transient Logger logger = null;
 	// creo le costanti di questa classe :
 	public final static ConfigurationKey DEFAULT_PRINT_FOR_ACCEPTANCE_SOCKET = new ServerConfiguration.ServerConfigurationKey(
 			"jgo.net.server.default_print", Boolean.class, TCPServerConfiguration.class);

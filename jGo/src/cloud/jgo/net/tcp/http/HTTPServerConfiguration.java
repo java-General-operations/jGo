@@ -8,6 +8,7 @@ import cloud.jgo.net.tcp.TCPServerConfiguration;
 import cloud.jgo.net.tcp.TCPServerTypes;
 
 public class HTTPServerConfiguration extends TCPServerConfiguration {
+	private static final long serialVersionUID = 1L;
 	public final static ConfigurationKey ROOT_FOLDER = new ServerConfiguration.ServerConfigurationKey(
 			"jgo.net.server.root_dir", String.class, HTTPServerConfiguration.class);
 	static {

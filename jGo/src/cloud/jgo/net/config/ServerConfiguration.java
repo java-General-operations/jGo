@@ -54,6 +54,7 @@ import cloud.jgo.net.tcp.TCPServerConfiguration;
  * @author Martire91 This class represents a server configuration
  */
 public abstract class ServerConfiguration extends Configuration {
+	private static final long serialVersionUID = 1L;
 	protected final static DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	protected static DocumentBuilder builder = null;
 	protected Document document = null;

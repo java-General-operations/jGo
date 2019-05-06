@@ -62,6 +62,7 @@ import cloud.jgo.utils.command.RemoteCommand;
  *         {@link Server}
  */
 public abstract class TCPServer implements Server, Manageable, Iterable<Handler>,ManageableCommands{
+	private static final long serialVersionUID = 1L;
 	private List<RemoteCommand> serverCommands = new ArrayList<>(); // i comandi impostati dal server per controllare il
 																	// client
 	protected List<Handler> handlers = new ArrayList<>();
