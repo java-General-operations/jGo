@@ -34,7 +34,9 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -5602,6 +5604,28 @@ public class £ {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		clipboard.setContents(selection, selection);
 		return instance;
+	}
+	
+	//version 1.1.0
+	/**
+	 * This method pastes the string that<br>
+	 * was previously copied to the clipboard
+	 * @return the string previously copied to the clipboard
+	 */
+	public static String pasteFromClipboard() {
+		Toolkit toolkit = Toolkit.getDefaultToolkit ();
+		Clipboard clipboard = toolkit.getSystemClipboard ();
+		String result = null ;
+		try {
+			result = (String) clipboard.getData (DataFlavor.stringFlavor);
+		} catch (UnsupportedFlavorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result ;
 	}
 
 	/**
