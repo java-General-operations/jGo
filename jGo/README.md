@@ -1,7 +1,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/cloud.jgo/jGo.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22cloud.jgo%22%20AND%20a:%22jGo%22)
 [![Javadocs](https://www.javadoc.io/badge/cloud.jgo/jGo.svg?)](https://www.javadoc.io/doc/cloud.jgo/jGo)
 <html>
-   <h1><img id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'></h1>
+   <h1><img id='logo'src='https://www.jgo.cloud/jgo2.png' alt='logo jgo'></h1>
    <h2>java General operations</h2>
    jGo-Website:<a href='https://www.jgo.cloud/'>https://www.jgo.cloud/</a><br>
    <strong>Description :</strong><br> This class facilitates all the difficult tasks
@@ -19,10 +19,10 @@
    <pre>
    <code> 
     public static void main(<em class='type'>String</em>[]args){<br>
-    <em class='type'>£</em>._O("Welcome in JGO").<em class='method'>screenshot</em>(new <em class='type'>£Func</em>() {<br>
+    <em class='type'>Â£</em>._O("Welcome in JGO").<em class='method'>screenshot</em>(new <em class='type'>Â£Func</em>() {<br>
     <strong style='color:darkgray'>@Override</strong><br>
     public Object <em style='#303030'>function</em>(<em class='type'>Object</em> e) {<br>
-    <em class='type'>£</em>.<em class='method'>alert</em>("Hello World");<br>
+    <em class='type'>Â£</em>.<em class='method'>alert</em>("Hello World");<br>
     return null ;<br>
     }}).<em class='method'>beep</em>().<em class='method'>beep</em>();<br>
     &nbsp;}
@@ -32,21 +32,21 @@
     <strong>2 Example</strong>  -  <em class='explanations'>Emits an acoustic signal and opens the windows cmd for 3 times and opens windows notepad :</em><br>
     <pre>
     <code>
-    <em class='type'>£</em>.<em class='method'>beep</em>().<em class='method'>openCmd</em>(3).<em class='method'>openNotepad</em>();
+    <em class='type'>Â£</em>.<em class='method'>beep</em>().<em class='method'>openCmd</em>(3).<em class='method'>openNotepad</em>();
    </code> 
     </pre>
     <br><br>
     <strong>3 Example</strong>  -  <em class='explanations'>Slide panel :</em><br>
    <pre>
    <code> 
-    <em class='type'>£</em>._<font color='#006200'>S</font>.<em class='method'>slide</em>(panel,Effect.<font color='#006200'>VERTICAL</font>,Effect.<font color='#006200'>FAST</font>);
+    <em class='type'>Â£</em>._<font color='#006200'>S</font>.<em class='method'>slide</em>(panel,Effect.<font color='#006200'>VERTICAL</font>,Effect.<font color='#006200'>FAST</font>);
     </code>
     </pre>
     <br><br>
     <strong>4 Example</strong>  -  <em class='explanations'>Moves two times the frame :</em><br>
     <pre>
     <code>
-    <em class='type'>£</em>._<em style='color:#282828'>S</em>.<em class='method'>moveJFrame</em>(frm, 0, 0,<font color='#006200'>Effect</font>.SLOW).<em class='method'>moveJFrame</em>(frm, 300, 300, Effect.<font color='#006200'>FAST</font>);
+    <em class='type'>Â£</em>._<em style='color:#282828'>S</em>.<em class='method'>moveJFrame</em>(frm, 0, 0,<font color='#006200'>Effect</font>.SLOW).<em class='method'>moveJFrame</em>(frm, 300, 300, Effect.<font color='#006200'>FAST</font>);
     </code>
     </pre>
 <br>
@@ -79,9 +79,9 @@ jquery("p").toggle("slow");<br><br>
 <hr></hr>
 <h2>Phases</h2>
 <ul>
-<li><a href='https://www.jgo.cloud/_a'>£._A</a> - AndroidUtils <em>(<a href='#'><code>cloud.jgo.£.AndroidUtils</code></a>)</em></li>
-<li><a href='https://www.jgo.cloud/_s'>£._S</a> - SwingUtils<em>(<a href='#'><code>cloud.jgo.£.SwingUtils</code></a>)</em></li>
-<li><a href='https://www.jgo.cloud/_w'>£._W</a> - WebUtils<em>(<a href='#'><code>cloud.jgo.£.WebUtils</code></a>)</em></li>
+<li><a href='https://www.jgo.cloud/_a'>Â£._A</a> - AndroidUtils <em>(<a href='#'><code>cloud.jgo.Â£.AndroidUtils</code></a>)</em></li>
+<li><a href='https://www.jgo.cloud/_s'>Â£._S</a> - SwingUtils<em>(<a href='#'><code>cloud.jgo.Â£.SwingUtils</code></a>)</em></li>
+<li><a href='https://www.jgo.cloud/_w'>Â£._W</a> - WebUtils<em>(<a href='#'><code>cloud.jgo.Â£.WebUtils</code></a>)</em></li>
 </ul>
 <hr></hr>
 <h2>Dependencies and Artifacts</h2>
@@ -97,7 +97,7 @@ To add jGo to your project, include the following dependency in your pom.xml :<b
 </pre>
 <hr></hr>
 <h2>Copyright and License</h2>
-Copyright © [2018-2019] Marco Martire (www.jgo.cloud)
+Copyright Â© [2018-2019] Marco Martire (www.jgo.cloud)
 This program is free software: you can redistribute it and/or modify
 it under the terms of the MIT License.
 You may obtain a copy of License at :
@@ -106,7 +106,7 @@ To collaborate on this project, you need to do it from the software site.
 <hr></hr>
 <h2>Open source</h2>
 Open source
-jGo è un progetto open source distribuito sotto la licenza liberale del MIT . Il codice sorgente è disponibile su GitHub .
+jGo Ã¨ un progetto open source distribuito sotto la licenza liberale del MIT . Il codice sorgente Ã¨ disponibile su GitHub .
 <hr></hr>
 <h2>Start using</h2>
 <ol>
