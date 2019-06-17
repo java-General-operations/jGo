@@ -2,6 +2,7 @@ package cloud.jgo.test;
 
 import cloud.jgo.£;
 import cloud.jgo.io.File;
+import cloud.jgo.jjdom.JjDom;
 import cloud.jgo.net.Server;
 import cloud.jgo.net.factorys.ServersFactory;
 import cloud.jgo.net.tcp.NegativeListeningException;
@@ -22,8 +23,6 @@ public static void main(String[] args) {
 	// e configurarlo per poi ottenere
 	// il file di configurazione, dunque
 	// verificare il tag active
-	
-	
 	
 	
 	

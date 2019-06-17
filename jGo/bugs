@@ -1,0 +1,31 @@
+	- Nel gestore di richieste jor, dobbiamo restituire un JORserver possibilmente
+	- Completare il discorso sulle fasi
+	- verificare presenza di bug all'interno del metodo executesFromCurrentPhaseUpTo()
+	- completare la classe PhaseGroup
+	- gestire i metodo createPhase del terminale delle fasi
+	- gestire gli input value dei parametri preconfezionati, riportarli a null al momento opportuno,vedere anche nel terminale colorato
+	- un altro bug, tutti i comandi preimpostatinel terminale che prendono valori da input, stare attenti
+	perchè se a un comando che prende valore da input, passiamo l'input, tuttavia se il comando
+	ha anche una esecuzione senza valore da input, non sarà più in grado di intercettarla, poichè
+	il valore da input non viene più riportato a null
+	- aggiungere il valore da input al comando che punta alle fasi, nella colorTerminal
+	- aggiungere esecuzione al comando che punta alle fase nel terminale colorato e l'esecuzione dell'execute-phase
+	- Il comando phase-goto se non gli si fornisce un parametro, deve chiederci
+	  in quale fasi vogliamo spostarci, stessa cosa per il comando phase-execute
+	  se nn trova una fase da input
+	- Approfondire metodo che esegue dalla fase corrente a quella annunciata
+	- creare eccezzione per metodio createDocument di JjDom
+	- Okok vogliamo poter arrivare a una fase anche se quelle precedenti a quest'ultima non sono soddisfatte
+	- completare i metodi toString e getCommandByObject, i dettagli, quindi array ecc ecc, come rappresentarli
+	- non ho commentato i nodi specifici colorati javadoc
+	- devo aggiornare il commento copyright
+	
+	// completare la classe ColorString, creare i metodi per eliminare e sostituire parti della stringa
+
+	// ultimare metodo che colora la sintassi delle stringhe
+
+	// ultimare metodo preview di JjDom
+
+	// alla fine devo assicurarmi che mi fa utilizzare jGo, almeno le classi principali senza problemi dovuti alle librerie transitive
+	// segnalare come il comando esecutore esegue le fasi
+			// FINE 1.0.9

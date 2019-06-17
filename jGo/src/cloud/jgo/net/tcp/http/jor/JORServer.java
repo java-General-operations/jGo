@@ -41,7 +41,7 @@ import cloud.jgo.net.tcp.http.jor.annotations.JOR;
  *          <h1 style='color: #282828;'>jGo<span style='color:
  *          green;'>.cloud</span>/<a
  *          id='link'href='https://www.jgo.cloud/jor'>JOR</a></h1> <img
- *          id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'
+ *          id='logo'src='https://www.jgo.cloud/jgo2.png' alt='logo jgo'
  *          width='50px' height='50px'><br>
  *          <strong>Description :</strong><br>
  *          This technology allows you to represent java objects on the web.<br>
@@ -78,6 +78,7 @@ import cloud.jgo.net.tcp.http.jor.annotations.JOR;
  *          implementation of {@link HTTPServer}
  */
 public class JORServer extends HTTPServer {
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Object> matrix = new ArrayList<>();
 
 	/**

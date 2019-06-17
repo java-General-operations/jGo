@@ -111,7 +111,7 @@ import cloud.jgo.utils.command.terminal.phase.ColorLocalPhaseTerminal;
  * @version 1.0.3 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'> --><br>
  *          <!--Author : *** Marco Martire *** --> <img
- *          id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'
+ *          id='logo'src='https://www.jgo.cloud/jgo2.png' alt='logo jgo'
  *          style='float: left;margin-right:15px;'><br>
  *          <h1 style='color: #282828;'>jGo<strong style='color:
  *          green;'>.cloud</strong>/<a href='#'>Boosted</a></h1> <em>To be used

@@ -1,17 +1,29 @@
 package cloud.jgo;
 
+import static cloud.jgo.jjdom.JjDom.*;
+
+import cloud.jgo.jjdom.JjDom;
+import cloud.jgo.jjdom.function;
+import cloud.jgo.jjdom.css.CSSSelection;
+import cloud.jgo.jjdom.css.CSSSelector;
+import cloud.jgo.jjdom.dom.nodes.Document;
+import cloud.jgo.jjdom.dom.nodes.Element;
+import cloud.jgo.jjdom.dom.nodes.Elements;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLDocument;
+import cloud.jgo.jjdom.dom.nodes.html.HTMLElement;
+import cloud.jgo.jjdom.jquery.Event;
+import cloud.jgo.jjdom.jquery.jQueryfunction;
+
 /**
  * @author Martire91 - <https://github.com/wasp91>
- * @version 1.0.0
  */
 public class MainTest {
-public static void main(String[] args) {
+	@SuppressWarnings("static-access")
+	public static void main(String[] args) {
+
 	
-	£.copyToClipboard("Hello");
-	
-	String result = £.pasteFromClipboard();
-	
-	System.out.println(result);
-	
-}
+		
+		£.executeGoogleQuery_2("Cane");
+
+	}
 }

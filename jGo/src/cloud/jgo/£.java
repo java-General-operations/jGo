@@ -185,7 +185,7 @@ import cloud.jgo.utils.swing.SlideToggle;
  * @version 1.0.9 <!--<link rel='styleSheet' href=
  *          'https://www.jgo.cloud/docStyle.css'> --><br>
  *          <!--Author : *** Marco Martire *** --> <img
- *          id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'
+ *          id='logo'src='https://www.jgo.cloud/jgo2.png' alt='logo jgo'
  *          style='float: left;margin-right:15px;'><br>
  *          <h1 style='color: #282828;'>jGo<strong style='color:
  *          green;'>.cloud</strong></h1> <em>java General operations</em><br>

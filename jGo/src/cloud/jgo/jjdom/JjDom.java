@@ -91,7 +91,7 @@ import cloud.jgo.jjdom.jquery.Event.EventType;
  *          <h1 style='color: #282828;'>jGo<strong style='color:
  *          green;'>.cloud</strong>/<a
  *          id='link'href='https://www.jgo.cloud/jjdom'>JjDom</a></h1> <img
- *          id='logo'src='https://www.jgo.cloud/jgo2/' alt='logo jgo'
+ *          id='logo'src='https://www.jgo.cloud/jgo2.png' alt='logo jgo'
  *          width='50px' height='50px'><br>
  *          <strong>Description :</strong><br>
  *          This technology basically allows you to create or work on a single
